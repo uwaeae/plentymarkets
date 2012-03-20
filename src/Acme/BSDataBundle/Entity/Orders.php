@@ -4,6 +4,7 @@ namespace Acme\BSDataBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * Acme\BSDataBundle\Entity\Orders
  *
@@ -31,7 +32,7 @@ class Orders
     /**
      * @var integer $OrderID
      *
-     * @ORM\Column(name="OrderID", type="integer")
+     * @ORM\Column(name="OrderID", type="integer", unique="true")
      */
     private $OrderID;
 
@@ -149,19 +150,16 @@ class Orders
      */
     private $TotalBrutto;
 
-    /**
-     * @var string $Info
-     *
-     * @ORM\Column(name="Info", type="string", length=255,nullable=true)
-     */
-    private $Info;
 
     /**
-     * @var string $InfoCustomer
-     *
-     * @ORM\Column(name="InfoCustomer", type="string", length=255,nullable=true)
+     * @ORM\OneToMany(targetEntity="OrdersInfo", mappedBy="Orders")
+     * @var ArrayCollection $OrdersInfos
      */
-    private $InfoCustomer;
+    private $OrdersInfos;
+
+
+
+
 
 
     /**
@@ -514,45 +512,6 @@ class Orders
         return $this->TotalBrutto;
     }
 
-    /**
-     * Set Info
-     *
-     * @param string $info
-     */
-    public function setInfo($info)
-    {
-        $this->Info = $info;
-    }
-
-    /**
-     * Get Info
-     *
-     * @return string 
-     */
-    public function getInfo()
-    {
-        return $this->Info;
-    }
-
-    /**
-     * Set InfoCustomer
-     *
-     * @param string $infoCustomer
-     */
-    public function setInfoCustomer($infoCustomer)
-    {
-        $this->InfoCustomer = $infoCustomer;
-    }
-
-    /**
-     * Get InfoCustomer
-     *
-     * @return string 
-     */
-    public function getInfoCustomer()
-    {
-        return $this->InfoCustomer;
-    }
 
     /**
      * Set OrderID
@@ -592,5 +551,31 @@ class Orders
     public function getOrderStatus()
     {
         return $this->OrderStatus;
+    }
+
+  
+    public function __construct()
+    {
+        $this->OrdersInfos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add OrdersInfos
+     *
+     * @param Acme\BSDataBundle\Entity\OrdersInfo $ordersInfos
+     */
+    public function addOrdersInfo(\Acme\BSDataBundle\Entity\OrdersInfo $ordersInfos)
+    {
+        $this->OrdersInfos[] = $ordersInfos;
+    }
+
+    /**
+     * Get OrdersInfos
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getOrdersInfos()
+    {
+        return $this->OrdersInfos;
     }
 }

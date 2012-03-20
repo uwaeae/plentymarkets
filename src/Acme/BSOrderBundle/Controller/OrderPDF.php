@@ -10,13 +10,15 @@ namespace Acme\BSOrderBundle\Controller;
 include 'lib/fpdf/fpdf.php';
 use FPDF;
 use Acme\BSDataBundle\Entity\Product;
+use Acme\BSDataBundle\Entity\Orders;
+use \Acme\BSDataBundle\Entity\OrdersInfo;
 
 
 class OrderPDF extends \FPDF
 {
 
 
-    function OrderHeader(\Acme\BSDataBundle\Entity\Orders $Order){
+    function OrderHeader(Orders $Order,array $aInfo){
 
         $this->SetFont('Arial','B',16);
         $this->SetTextColor(0,0,0);
@@ -27,12 +29,18 @@ class OrderPDF extends \FPDF
         $this->Text(120,10,$Order->getZIP().' '.$Order->getCity());
 
         $this->Text(120,15,$Order->getTelephone());
-
+        $i= 0 ;
+        foreach($aInfo as $info){
+            $this->Text(120,25+($i*5),utf8_decode($info->getText()));
+            $i++;
+        }
+        $this->SetFont('Arial','B',12);
+        $this->Text(100,25,"INFO:");
         $this->SetFont('Arial','',6);
         $this->Text(10,15,'Bestellnummer');
         $this->Text(40,15,'Vorname');
         $this->Text(80,15,'Nachname');
-        $this->Ln(10);
+        $this->Ln(10+($i*10));
     }
 
     function ItemsHeader($cellHight){

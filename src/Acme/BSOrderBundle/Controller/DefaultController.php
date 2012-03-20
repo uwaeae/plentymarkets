@@ -97,7 +97,12 @@ class DefaultController extends Controller
             $repository = $this->getDoctrine()->getRepository('BSDataBundle:Orders');
             $oOrder = $repository->findOneBy(array('OrderID' => $rOrder));
 
-            $pdf->OrderHeader($oOrder);
+            $repository = $this->getDoctrine()->getRepository('BSDataBundle:OrdersInfo');
+            $aOrderInfo = $repository->findBy(array('OrderID' => $rOrder));
+
+
+
+            $pdf->OrderHeader($oOrder,$aOrderInfo);
 
 
             $pdf->ItemsHeader($cellHight);

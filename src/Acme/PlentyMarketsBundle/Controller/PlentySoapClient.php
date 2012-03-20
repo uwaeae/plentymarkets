@@ -18,11 +18,12 @@
  */
 
 namespace Acme\PlentyMarketsBundle\Controller;
+use \DateTime;
 use \SoapFault;
 use Acme\PlentyMarketsBundle\Entity\Token;
 use Acme\BSDataBundle\Entity\Orders;
 use Acme\BSDataBundle\Entity\OrdersItem;
-
+use Acme\BSDataBundle\Entity\OrdersInfo;
 
 
 class PlentySoapClient extends \SoapClient
@@ -265,6 +266,7 @@ class PlentySoapClient extends \SoapClient
         $options['GetOrderDeliveryAddress'] = true;
         $options['GetOrderCustomerAddress'] = true;
         $options['Page'] = null;
+        $options['GetOrderInfo'] = true;
 
         //$options = $option + $options;
 
@@ -293,6 +295,8 @@ class PlentySoapClient extends \SoapClient
 
                 $oOrder = $repository->findOneBy(array('OrderID' => $AOorder->OrderHead->OrderID));
 
+                //$aOrder[] =  $this->syncOrderData($AOorder,$oOrder);
+
                 if(!$oOrder)  $aOrder[] =  $this->syncOrderData($AOorder,new Orders());
 
                 else if($oOrder->getLastUpdate() != $AOorder->OrderHead->LastUpdate )
@@ -309,13 +313,16 @@ class PlentySoapClient extends \SoapClient
         }
     }
 
-    private function syncOrderData($AOorder, $order){
-
+    private function syncOrderData($AOorder,Orders $order){
+        $em = $this->controller->getDoctrine()->getEntityManager();
         // Order HEAD
         $order->setOrderID($AOorder->OrderHead->OrderID);
         $order->setLastUpdate($AOorder->OrderHead->LastUpdate);
         $order->setCustomerID($AOorder->OrderHead->CustomerID);
-        $order->setInfo($AOorder->OrderHead->OrderInfos);
+
+
+
+
         //$order->setInfoCustomer($AOorder->OrderHead->OrderInfos); // TODO: Florian OrderInfos Testen
         $order->setPackageNumber($AOorder->OrderHead->PackageNumber);
         $order->setTotalBrutto($AOorder->OrderHead->TotalBrutto);
@@ -333,10 +340,31 @@ class PlentySoapClient extends \SoapClient
         $order->setCountryID($AOorder->OrderCustomerAddress->CountryID);
         $order->setTelephone($AOorder->OrderCustomerAddress->Telephone);
         $order->setEmail($AOorder->OrderCustomerAddress->Email);
+        $em->persist($order);
+        $em->flush();
+
+
+        if($AOorder->OrderHead->OrderInfos != null){
+            foreach($AOorder->OrderHead->OrderInfos->item as $aoOorderInfo){
+                $oOrdersInfo = new OrdersInfo();
+                //$oOrdersInfo->setOrderID($AOorder->OrderHead->OrderID);
+                $oOrdersInfo->setText($aoOorderInfo->Info);
+                $oOrdersInfo->setiscreated(new DateTime("now"));
+                $oOrdersInfo->setOrderID($AOorder->OrderHead->OrderID);
+                $oOrdersInfo->setOrders($order);
+                $em->persist($oOrdersInfo);
+                $em->flush();
+
+                //$order->addOrdersInfo($oOrdersInfo);
+
+            }
+        }
 
 
 
-        $em = $this->controller->getDoctrine()->getEntityManager();
+        //$order->setInfo($AOorder->OrderHead->OrderInfos);
+
+
         $aOrderItems = $em->getRepository('BSDataBundle:OrdersItem')->findBy(array('OrderID' => $AOorder->OrderHead->OrderID));
         if($aOrderItems){
             foreach( $aOrderItems as $item){
@@ -362,8 +390,7 @@ class PlentySoapClient extends \SoapClient
 
         }
 
-        $em->persist($order);
-        $em->flush();
+
         return $order;
     }
 

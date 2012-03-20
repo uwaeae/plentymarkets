@@ -75,15 +75,6 @@ class Stock
         return $this->name;
     }
 
-    /**
-     * Add stockground
-     *
-     * @param Acme\BSDataBundle\Entity\StockGround $stockground
-     */
-    public function addStockGround(\Acme\BSDataBundle\Entity\StockGround $stockground)
-    {
-        $this->stockground[] = $stockground;
-    }
 
     /**
      * Get stockground
@@ -95,4 +86,14 @@ class Stock
         return $this->stockground;
     }
 
+
+    /**
+     * Add stockground
+     *
+     * @param Acme\BSDataBundle\Entity\Stockground $stockground
+     */
+    public function addStockground(\Acme\BSDataBundle\Entity\Stockground $stockground)
+    {
+        $this->stockground[] = $stockground;
+    }
 }
