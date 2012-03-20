@@ -105,20 +105,40 @@ class DefaultController extends Controller
             $pdf->OrderHeader($oOrder,$aOrderInfo);
 
 
-            $pdf->ItemsHeader($cellHight);
+            //$pdf->ItemsHeader($cellHight);
             $pdf->SetFont('Arial','',10);
             $repository = $this->getDoctrine()->getRepository('BSDataBundle:OrdersItem');
             $aOrderItem = $repository->findBy(array('OrderID' => $rOrder));
+            $aSortOrderItems = array();
+            $aSortPicklistItems = array();
             foreach($aOrderItem as $item){
                 $SKU = explode("-", $item->getSKU());
                 $repository = $this->getDoctrine()->getRepository('BSDataBundle:Product');
-
                 $product = $repository->findOneBy(array('article_id' => $SKU[0]));
+                $aSortOrderItems[($product->getStockground()?$product->getStockground():'KeinLager')][] = array('product'=>$product,'item'=>$item );
 
+                $PLIstock = ($product->getStockground()?$product->getStockground():'KeinLager');
+                $PLIartID=  $product->getArticleID();
+
+                $PLIarray = array('name'=>utf8_decode($item->getItemText()),
+                                  'quantity'=>(isset($aSortPicklistItems[ $PLIstock][$PLIartID])? $aSortPicklistItems[ $PLIstock][$PLIartID]['quantity'] + $item->getQuantity():$item->getQuantity()));
+                $aSortPicklistItems[ $PLIstock][$PLIartID] = $PLIarray;
                 //$oItem = $oPlentySoapClient->doGetItemBase(array('ItemNo'=> $SKU[0] ));
                 //$oItemStock = $oPlentySoapClient->doGetItemsStock(array('SKU' => $item->getSKU() ));
-                $pdf->ItemsBody($product,$item,$cellHight);
                 }
+            foreach($aSortOrderItems as $key => $sitem){
+                    $pdf->ItemsHeader($key,$cellHight);
+                foreach($sitem as $item) {
+
+                    $pdf->ItemsBody($item['product'],$item['item'],$cellHight);
+                }
+
+
+
+
+            }
+
+
 
             // Fooder
 

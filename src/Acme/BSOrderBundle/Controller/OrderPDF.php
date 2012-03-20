@@ -43,14 +43,13 @@ class OrderPDF extends \FPDF
         $this->Ln(10+($i*10));
     }
 
-    function ItemsHeader($cellHight){
-
-
+    function ItemsHeader($Stock,$cellHight){
         $this->SetFont('Arial','B',12);
+        $this->Cell(180,$cellHight,$Stock,'B',1,'L');
+        $this->SetFont('Arial','',10);
         $this->SetTextColor(0,0,0);
-        $this->Cell(20,$cellHight,'Lagerort','B',0,'L');
         $this->Cell(30,$cellHight,'ArtikelID','B',0,'L');
-        $this->Cell(15,$cellHight,'Menge','B',0,'L');
+        $this->Cell(15,$cellHight,'Menge','B',0,'C');
         $this->Cell(100,$cellHight,'Artikelname','B',0,'L');
         //$this->Cell(20,$cellHight,'Update','B',0,'L');
         //$this->Cell(20,$cellHight,'Lager','B',0,'L');
@@ -61,17 +60,17 @@ class OrderPDF extends \FPDF
     function ItemsBody( $Product,\Acme\BSDataBundle\Entity\OrdersItem $item,$cellHight){
         $this->SetFont('Arial','',12);
         if($Product){
-            $this->Cell(20,$cellHight,($Product->getStockground()?$Product->getStockground():''),'B',0,'L'); // TODO: florian Lagerort finden
-            $this->Cell(30,$cellHight,utf8_decode($Product->getArticleNo()),'B',0,'L');
+            //$this->Cell(20,$cellHight,($Product->getStockground()?$Product->getStockground():''),'B',0,'L'); // TODO: florian Lagerort finden
+            $this->Cell(30,$cellHight,utf8_decode($Product->getArticleNo()),'',0,'L');
         } else{
-            $this->Cell(20,$cellHight,'','B',0,'L'); // TODO: florian Lagerort finden
-            $this->Cell(30,$cellHight,'','B',0,'L');
+            //$this->Cell(20,$cellHight,'','B',0,'L'); // TODO: florian Lagerort finden
+            $this->Cell(30,$cellHight,'','',0,'L');
         }
 
-        $this->Cell(15,$cellHight,$item->getQuantity(),'B',0,'L');
-        $this->Cell(100,$cellHight,utf8_decode($item->getItemText()),'B',0,'L');
+        $this->Cell(15,$cellHight,$item->getQuantity(),'',0,'C');
+        $this->Cell(100,$cellHight,utf8_decode($item->getItemText()),'',0,'L');
         //$this->Cell(20,$cellHight,(isset($oItem->LastUpdate)?$oItem->LastUpdate:''),'B',0,'L');
-        $this->Cell(20,$cellHight,sprintf("%01.2f " , $item->getPrice()).EURO,'B',1,'L');
+        $this->Cell(20,$cellHight,sprintf("%01.2f " , $item->getPrice()).EURO,'',1,'L');
 
 
     }
