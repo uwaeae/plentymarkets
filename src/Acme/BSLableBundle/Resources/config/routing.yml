@@ -1,0 +1,3 @@
+AcmeBSLableBundle_homepage:
+    pattern:  /lable
+    defaults: { _controller: BSLableBundle:Default:index }

@@ -1,0 +1,44 @@
+
+{% extends '::base.html.twig' %}
+{% block title %}Lager - Platz{% endblock %}
+
+
+{% block body %}
+<h1>StockGround list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Lager</th>
+            <th>Platz</th>
+            <th>Aktionen</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td>{{ entity.stock }}</td>
+            <td>{{ entity.name }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('BSData_stockground_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('BSData_stockground_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('BSData_stockground_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>
+{% endblock %}

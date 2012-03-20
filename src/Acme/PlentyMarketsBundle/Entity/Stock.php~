@@ -1,0 +1,91 @@
+<?php
+
+namespace Acme\PlentyMarketsOrderBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Acme\PlentyMarketsOrderBundle\Entity\Stock
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class Stock
+{
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string $name
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="StockGround", mappedBy="Stock")
+     */
+    protected $stockground;
+
+    public function __construct()
+    {
+        $this->stockground = new ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Add stockground
+     *
+     * @param Acme\PlentyMarketsOrderBundle\Entity\StockGround $stockground
+     */
+    public function addStockGround(\Acme\PlentyMarketsOrderBundle\Entity\StockGround $stockground)
+    {
+        $this->stockground[] = $stockground;
+    }
+
+    /**
+     * Get stockground
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getStockground()
+    {
+        return $this->stockground;
+    }
+}

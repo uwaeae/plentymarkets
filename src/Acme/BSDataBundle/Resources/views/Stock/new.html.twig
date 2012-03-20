@@ -1,0 +1,22 @@
+{% extends '::base.html.twig' %}
+{% block title %}Lager{% endblock %}
+
+
+{% block body %}
+<h1>Stock creation</h1>
+
+<form action="{{ path('BSData_stock_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Create</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('BSData_stock') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+        {% endblock %}

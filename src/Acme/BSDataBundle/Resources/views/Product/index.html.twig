@@ -1,0 +1,62 @@
+
+{% extends '::base.html.twig' %}
+{% block title %}Produkte{% endblock %}
+
+
+{% block body %}
+
+<h1>Product list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Article_id</th>
+            <th>Article_no</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Short_description</th>
+            <th>Label_text</th>
+            <th>Botanical</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in pagination %}
+        <tr>
+            <td><a href="{{ path('BSData_product_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.articleid }}</td>
+            <td>{{ entity.articleno }}</td>
+            <td>{{ entity.name }}</td>
+            <td>{{ entity.price }}</td>
+            <td>{{ entity.description }}</td>
+            <td>{{ entity.shortdescription }}</td>
+            <td>{{ entity.labeltext }}</td>
+            <td>{{ entity.botanical }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('BSData_product_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('BSData_product_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div class="navigation">
+    {{ pagination.render()|raw }}
+</div>
+
+<ul>
+    <li>
+        <a href="{{ path('BSData_product_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>
+        {% endblock %}

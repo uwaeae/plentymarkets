@@ -1,0 +1,53 @@
+{# src/Acme/SecurityBundle/Resources/views/Security/login.html.twig #}
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('/css/login.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+{% block title %}Die Gärtner der Blumenschule - Login{% endblock %}
+
+
+{% block body %}
+
+<div id="login">
+
+{% if error %}
+<div>{{ error.message }}</div>
+{% endif %}
+
+<form action="{{ path('login_check') }}" method="post">
+    <table>
+        <tr>
+            <td>
+                <strong><label for="username">Benutzername:</label> </strong>
+            </td>
+            <td>
+                <input type="text" id="username" name="_username" value="{{ last_username }}" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong><label for="password">Password:</label> </strong>
+            </td>
+            <td>
+                <input type="password" id="password" name="_password" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+
+            </td>
+            <td>
+                <input type="submit" name="login" value="Login" />
+            </td>
+        </tr>
+    </table>
+
+    <input type="hidden" name="_target_path" value="/" />
+</form>
+</div>
+
+
+{% endblock %}

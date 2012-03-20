@@ -1,0 +1,25 @@
+{# src/Acme/BSLable/Resources/views/Default/base.html.twig #}
+{% extends '::base.html.twig' %}
+
+{% block title %}Auftragsbearbeitung{% endblock %}
+
+
+{% block body %}
+
+
+
+<object data="{{urlPDF}}" type="application/pdf" width="800" height="900"  > </object>
+
+
+<div id="menu2">
+
+    <ul>
+
+        <li><a href="{{ path('BSOrder_menu') }}" >zurück</a></li>
+
+    </ul>
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends '::base.html.twig' %}
+
+{% block title %} Die Gärtner der Blumenschule {% endblock %}
+
+
+{% block body %}
+
+<div id="title">
+    Hauptmenü
+</div>
+
+<div id="menu">
+
+    <ul>
+        <li><a href="{{ path('BSOrder_menu') }}">Aufträge</a></li>
+        <li><a href="{{ path('BSData_menu') }}">Daten</a></li>
+
+
+    </ul>
+
+</div>
+
+
+{% endblock %}

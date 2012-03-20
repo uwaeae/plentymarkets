@@ -1,0 +1,26 @@
+{% extends '::base.html.twig' %}
+
+{% block title %} Aufträge {% endblock %}
+
+
+{% block body %}
+
+<div id="title">
+    Auftagsverwaltung
+</div>
+
+<div id="menu">
+
+    <ul>
+        <li><a href="{{ path('BSOrder_search') }}">Suche</a></li>
+        <li><a href="{{ path('BSOrder_state') }}">Sammelpack</a></li>
+        <li><a href="{{ path('BSOrder_invoice') }}">Lieferschein</a></li>
+        <li><a href="{{ path('BSOrder_packet') }}">Versand</a></li>
+        <li><a href="{{ path('BSData_mainmenu') }}" >zurück</a></li>
+
+    </ul>
+
+</div>
+
+
+        {% endblock %}

@@ -1,0 +1,43 @@
+
+login:
+    pattern:   /login
+    defaults:  { _controller: AcmeSecurityBundle:Security:login }
+
+login_check:
+    pattern:   /login_check
+
+logout:
+    pattern:   /logout
+
+
+
+
+BSDataBundle:
+    resource: "@BSDataBundle/Resources/config/routing.yml"
+    prefix:   /
+PlentyMarketsBundle:
+    resource: "@PlentyMarketsBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+BSOrderBundle:
+    resource: "@BSOrderBundle/Resources/config/routing.yml"
+    prefix:   /
+
+_welcome:
+    pattern:  /
+    defaults: { _controller: PlentyMarketsOrderBundle:Default:index }
+
+
+
+BSLableBundle:
+    resource: "@BSLableBundle/Resources/config/routing.yml"
+    prefix:   /
+
+
+
+
+# Internal routing configuration to handle ESI
+#_internal:
+#   resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
+#   prefix:   /_internal

@@ -1,0 +1,26 @@
+
+BSOrder_menu:
+    pattern:  /orders
+    defaults: { _controller: BSOrderBundle:Default:index }
+
+
+BSOrder_search:
+    pattern:  /orders/search
+    defaults: { _controller: BSOrderBundle:Default:index }
+
+BSOrder_invoice:
+    pattern:  /orders/invoice
+    defaults: { _controller: BSOrderBundle:Default:invoice }
+
+BSOrder_packet:
+    pattern:  /orders/packets
+    defaults: { _controller: BSOrderBundle:Default:index }
+
+BSOrder_state:
+    pattern:  /orders/state/{state}
+    defaults: { _controller: BSOrderBundle:Default:state, state:5 }
+
+BSOrder_print:
+    pattern:  /orders/print
+    defaults: { _controller: BSOrderBundle:Default:print }
+

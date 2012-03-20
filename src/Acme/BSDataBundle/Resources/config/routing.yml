@@ -1,0 +1,99 @@
+BSData_mainmenu:
+        pattern:  /
+        defaults: { _controller: BSDataBundle:Default:index }
+
+
+BSData_menu:
+     pattern:  /data
+     defaults: { _controller: BSDataBundle:Default:data }
+
+BSData_product_show:
+        pattern:  /product/show/{id}
+        defaults: { _controller: BSDataBundle:Product:show }
+
+BSData_product_edit:
+        pattern:  /product/edit/{id}
+        defaults: { _controller: BSDataBundle:Product:edit }
+
+BSData_product_new:
+        pattern:  /product/new
+        defaults: { _controller: BSDataBundle:Product:new }
+
+BSData_product_create:
+        pattern:  /product/create
+        defaults: { _controller: BSDataBundle:Product:create }
+
+BSData_product_delete:
+        pattern:  /product/delete/{id}
+        defaults: { _controller: BSDataBundle:Product:delete }
+
+BSData_product_update:
+        pattern:  /product/delete/{id}
+        defaults: { _controller: BSDataBundle:Product:delete }
+
+BSData_product:
+    pattern:  /product/{page}
+    defaults: { _controller: BSDataBundle:Product:index,page: 1 }
+
+
+
+
+BSData_stock_show:
+        pattern:  /stock/show/{id}
+        defaults: { _controller: BSDataBundle:stock:show }
+
+BSData_stock_edit:
+        pattern:  /stock/edit/{id}
+        defaults: { _controller: BSDataBundle:stock:edit }
+
+BSData_stock_new:
+        pattern:  /stock/new
+        defaults: { _controller: BSDataBundle:stock:new }
+
+BSData_stock_create:
+        pattern:  /stock/create
+        defaults: { _controller: BSDataBundle:stock:create }
+
+BSData_stock_delete:
+        pattern:  /stock/delete/{id}
+        defaults: { _controller: BSDataBundle:stock:delete }
+
+BSData_stock_update:
+        pattern:  /stock/delete/{id}
+        defaults: { _controller: BSDataBundle:stock:delete }
+
+BSData_stock:
+    pattern:  /stock/{page}
+    defaults: { _controller: BSDataBundle:stock:index,page: 1 }
+
+
+
+
+BSData_stockground_show:
+        pattern:  /stockground/show/{id}
+        defaults: { _controller: BSDataBundle:stockground:show }
+
+BSData_stockground_edit:
+        pattern:  /stockground/edit/{id}
+        defaults: { _controller: BSDataBundle:stockground:edit }
+
+BSData_stockground_new:
+        pattern:  /stockground/new
+        defaults: { _controller: BSDataBundle:stockground:new }
+
+BSData_stockground_create:
+        pattern:  /stockground/create
+        defaults: { _controller: BSDataBundle:stockground:create }
+
+BSData_stockground_delete:
+        pattern:  /stockground/delete/{id}
+        defaults: { _controller: BSDataBundle:stockground:delete }
+
+BSData_stockground_update:
+        pattern:  /stockground/delete/{id}
+        defaults: { _controller: BSDataBundle:stockground:delete }
+
+BSData_stockground:
+    pattern:  /stockground/{page}
+    defaults: { _controller: BSDataBundle:stockground:index,page: 1 }
+

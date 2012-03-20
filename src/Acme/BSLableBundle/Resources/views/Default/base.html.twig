@@ -1,0 +1,29 @@
+{# src/Acme/BSLable/Resources/views/Default/base.html.twig #}
+{% extends '::base.html.twig' %}
+
+{% block title %}Etikettendruck{% endblock %}
+
+
+{% block body %}
+
+
+
+        {% for item in orders %}
+        <table>
+
+            <tr>
+              <td>
+               {{item.OrderHead.OrderID}}
+              </td>
+            </tr>
+
+        </table>
+
+        {% endfor %}
+
+
+Plenty Server Time {{ time }}
+
+
+
+{% endblock %}

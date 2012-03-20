@@ -1,0 +1,7 @@
+parameters:
+#    acme_bs_lable.example.class: Acme\BSLableBundle\Example
+
+services:
+#    acme_bs_lable.example:
+#        class: %acme_bs_lable.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

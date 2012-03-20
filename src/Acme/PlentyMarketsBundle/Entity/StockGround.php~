@@ -1,0 +1,121 @@
+<?php
+
+namespace Acme\PlentyMarketsOrderBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Acme\PlentyMarketsOrderBundle\Entity\StockGround
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class StockGround
+{
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string $name
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Stock", inversedBy="stockground")
+     * @ORM\JoinColumn(name="stock_id", referencedColumnName="id")
+     */
+    protected $stock;
+
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="StockGround")
+     */
+    protected $product;
+
+    public function __construct()
+    {
+        $this->product = new ArrayCollection();
+    }
+
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Add product
+     *
+     * @param Acme\PlentyMarketsOrderBundle\Entity\Product $product
+     */
+    public function addProduct(\Acme\PlentyMarketsOrderBundle\Entity\Product $product)
+    {
+        $this->product[] = $product;
+    }
+
+    /**
+     * Get product
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * Set stock
+     *
+     * @param Acme\PlentyMarketsOrderBundle\Entity\Stock $stock
+     */
+    public function setStock(\Acme\PlentyMarketsOrderBundle\Entity\Stock $stock)
+    {
+        $this->stock = $stock;
+    }
+
+    /**
+     * Get stock
+     *
+     * @return Acme\PlentyMarketsOrderBundle\Entity\Stock 
+     */
+    public function getStock()
+    {
+        return $this->stock;
+    }
+}
