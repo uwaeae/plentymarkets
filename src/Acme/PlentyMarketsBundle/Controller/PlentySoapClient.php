@@ -492,6 +492,18 @@ class PlentySoapClient extends \SoapClient
         }
     }
 
+    public function getItem($ArtileID){
+        $repository = $this->getDoctrine()->getRepository('BSDataBundle:Product');
+        $item = $repository->findOneBy(array('article_id' => $ArtileID));
+        if($item) return §item;
+        else{
+
+
+        }
+    }
+
+
+
 
     public function doGetItemBase( array $option )
     {
