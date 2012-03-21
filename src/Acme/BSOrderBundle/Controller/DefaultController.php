@@ -151,11 +151,11 @@ class DefaultController extends Controller
 
         }
         $timestamp = date("YmdHis");
-        $pdf->Output("print/Packliste".$oOrder->getOrderID().".pdf",'F');
+        $pdf->Output("print/Packliste".$timestamp.".pdf",'F');
 
 
         return $this->render('BSOrderBundle:Order:print.html.twig', array(
-            'urlPDF'=> "/print/Packliste".$oOrder->getOrderID().".pdf"
+            'urlPDF'=> "/print/Packliste".$timestamp.".pdf"
         ));
 
 
