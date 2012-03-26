@@ -25,22 +25,24 @@ class OrderPDF extends \FPDF
         $this->Text(10,10,$Order->getOrderID());
         $this->Text(40,10,$Order->getFirstname());
         $this->Text(80,10,$Order->getLastname());
-        $this->SetFont('Arial','',12);
         $this->Text(120,10,$Order->getZIP().' '.$Order->getCity());
-
         $this->Text(120,15,$Order->getTelephone());
+
+        $this->SetFont('Arial','B',12);
+        $this->Text(10,20,"INFO:");
+        $this->Ln(20);
         $i= 0 ;
+        $this->SetFont('Arial','',8);
         foreach($aInfo as $info){
-            $this->Text(120,25+($i*5),utf8_decode($info->getText()));
+            $this->MultiCell(0,5,utf8_decode($info->getText()));
             $i++;
         }
-        $this->SetFont('Arial','B',12);
-        $this->Text(100,25,"INFO:");
+
         $this->SetFont('Arial','',6);
         $this->Text(10,15,'Bestellnummer');
         $this->Text(40,15,'Vorname');
         $this->Text(80,15,'Nachname');
-        $this->Ln(10+($i*10));
+       // $this->Ln(10+($i*10));
     }
 
     function ItemsHeader($Stock,$cellHight){

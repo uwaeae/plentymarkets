@@ -23,6 +23,15 @@ class Stock
     private $id;
 
     /**
+     * @var integer $number
+     *
+     * @ORM\Column(name="number", type="integer")
+    */
+
+    private $number;
+
+
+    /**
      * @var string $name
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -30,15 +39,9 @@ class Stock
     private $name;
 
 
-    /**
-     * @ORM\OneToMany(targetEntity="Stockground", mappedBy="stock")
-     */
-    protected $stockground;
 
-    public function __construct()
-    {
-        $this->stockground = new ArrayCollection();
-    }
+
+
 
     public function __toString()
     {
@@ -77,23 +80,42 @@ class Stock
 
 
     /**
-     * Get stockground
+     * Set parant
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @param Acme\BSDataBundle\Entity\Stock $parant
      */
-    public function getStockground()
+    public function setParant(\Acme\BSDataBundle\Entity\Stock $parant)
     {
-        return $this->stockground;
+        $this->parant = $parant;
     }
 
+    /**
+     * Get parant
+     *
+     * @return Acme\BSDataBundle\Entity\Stock 
+     */
+    public function getParant()
+    {
+        return $this->parant;
+    }
 
     /**
-     * Add stockground
+     * Set number
      *
-     * @param Acme\BSDataBundle\Entity\Stockground $stockground
+     * @param integer $number
      */
-    public function addStockground(\Acme\BSDataBundle\Entity\Stockground $stockground)
+    public function setNumber($number)
     {
-        $this->stockground[] = $stockground;
+        $this->number = $number;
+    }
+
+    /**
+     * Get number
+     *
+     * @return integer 
+     */
+    public function getNumber()
+    {
+        return $this->number;
     }
 }

@@ -68,7 +68,7 @@ class DefaultController extends Controller
     public function printAction(Request $request)
     {
 
-        $oPlentySoapClient	=	new PlentySoapClient($this);
+
         $aOrders = array();
         //$orders = $oPlentySoapClient->doGetOrdersWithState(array('OrderStatus'=> doubleval(5)));
         //$OrderArray = $orders->item;
@@ -113,13 +113,16 @@ class DefaultController extends Controller
             $aSortPicklistItems = array();
             foreach($aOrderItem as $item){
                 $SKU = explode("-", $item->getSKU());
-                //$product = $oPlentySoapClient->getItem($SKU[0]);
-                $repository = $this->getDoctrine()->getRepository('BSDataBundle:Product');
-                $product = $repository->findOneBy(array('article_id' => $SKU[0]));
-                if($product){
-                    $aSortOrderItems[($product->getStockground()?$product->getStockground():'KeinLager')][] = array('product'=>$product,'item'=>$item );
 
-                    $PLIstock = ($product->getStockground()?$product->getStockground():'KeinLager');
+
+
+                //$repository = $this->getDoctrine()->getRepository('BSDataBundle:Product');
+                $product = $this->getItem( $SKU[0]);
+                //$repository->findOneBy(array('article_id' => $SKU[0]));
+                if($product){
+                    $aSortOrderItems[($product->getStock()?$product->getStock():'KeinLager')][] = array('product'=>$product,'item'=>$item );
+
+                    $PLIstock = ($product->getStock()?$product->getStock():'KeinLager');
                     $PLIartID=  $product->getArticleID();
 
                     $PLIarray = array('name'=>utf8_decode($item->getItemText()),
@@ -159,6 +162,24 @@ class DefaultController extends Controller
         ));
 
 
+    }
+
+    public function getItem($ArtileID){
+
+
+
+        $repository = $this->getDoctrine()->getRepository('BSDataBundle:Product');
+        $item = $repository->findOneBy(array('article_id' => $ArtileID));
+        if($item) return $item;
+        else{
+            $em = $this->getDoctrine()->getEntityManager();
+            $oPlentySoapClient	=	new PlentySoapClient($this);
+            $item = new Product();
+            $item->newPMSoapProduct($oPlentySoapClient->doGetItemBase(array('ItemID'=>$ArtileID)));
+            $em->persist($item);
+            $em->flush();
+            return $item;
+        }
     }
 
 

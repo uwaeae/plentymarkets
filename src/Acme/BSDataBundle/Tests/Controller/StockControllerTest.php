@@ -1,6 +1,6 @@
 <?php
 
-namespace Acme\PlentyMarketsOrderBundle\Tests\Controller;
+namespace Acme\BSDataBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -13,7 +13,7 @@ class StockControllerTest extends WebTestCase
         $client = static::createClient();
 
         // Create a new entry in the database
-        $crawler = $client->request('GET', '/PlentyMarketsOrder_stock/');
+        $crawler = $client->request('GET', '/BSData/stock/');
         $this->assertTrue(200 === $client->getResponse()->getStatusCode());
         $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
 

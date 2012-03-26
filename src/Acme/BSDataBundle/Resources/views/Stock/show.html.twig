@@ -1,8 +1,3 @@
-{% extends '::base.html.twig' %}
-{% block title %}Lager{% endblock %}
-
-
-{% block body %}
 <h1>Stock</h1>
 
 <table class="record_properties">
@@ -10,6 +5,10 @@
         <tr>
             <th>Id</th>
             <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Number</th>
+            <td>{{ entity.number }}</td>
         </tr>
         <tr>
             <th>Name</th>
@@ -36,4 +35,3 @@
         </form>
     </li>
 </ul>
-        {% endblock %}

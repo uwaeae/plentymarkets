@@ -68,6 +68,7 @@ class PlentySoapClient extends \SoapClient
 	 */
 	public function __construct($controller)
 	{
+
 		parent::__construct($this->WSDL_URL, $this->getSoapClientOptions());
     $this->controller = $controller;
     $this->doAuthenticication();
@@ -253,13 +254,13 @@ class PlentySoapClient extends \SoapClient
     /**
      * Get Orders mit einem bestimmten Status
      */
-    public function doGetOrdersWithState($state = 0 )
+    public function doGetOrdersWithState($state = 6 )
     {
 
         $oResponse	= null;
 
         $options['OrderType'] = null;
-        $options['OrderStatus'] =  doubleval($state);
+        $options['OrderStatus'] =  floatval($state);
         $options['MultishopID'] = 0;
         $options['OrderID'] = null;
         $options['LastUpdate'] = null;
@@ -347,6 +348,8 @@ class PlentySoapClient extends \SoapClient
         if($AOorder->OrderHead->OrderInfos != null){
             foreach($AOorder->OrderHead->OrderInfos->item as $aoOorderInfo){
                 $oOrdersInfo = new OrdersInfo();
+
+
                 //$oOrdersInfo->setOrderID($AOorder->OrderHead->OrderID);
                 $oOrdersInfo->setText($aoOorderInfo->Info);
                 $oOrdersInfo->setiscreated(new DateTime("now"));
@@ -492,15 +495,7 @@ class PlentySoapClient extends \SoapClient
         }
     }
 
-    public function getItem($ArtileID){
-        $repository = $this->getDoctrine()->getRepository('BSDataBundle:Product');
-        $item = $repository->findOneBy(array('article_id' => $ArtileID));
-        if($item) return §item;
-        else{
 
-
-        }
-    }
 
 
 
@@ -532,15 +527,15 @@ class PlentySoapClient extends \SoapClient
         }
 
         if(isset($oResponse->Success)){
-        if(  $oResponse->Success == TRUE)
-        {
-            return($oResponse->ResponseObject);
-        }
-        else
-        {
-            return($oResponse->ErrorMessages);
-        }
-        }
+            if(  $oResponse->Success == TRUE)
+                {
+                    return($oResponse->ItemBase);
+                }
+                else
+                {
+                    return($oResponse->ErrorMessages);
+                }
+            }
         else return($oResponse->Message);
     }
 

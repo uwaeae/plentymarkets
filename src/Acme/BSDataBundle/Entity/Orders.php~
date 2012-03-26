@@ -76,7 +76,7 @@ class Orders
     /**
      * @var string $Company
      *
-     * @ORM\Column(name="Company", type="string", length=255)
+     * @ORM\Column(name="Company", type="string", length=255,nullable=true)
      */
     private $Company;
 
@@ -158,8 +158,7 @@ class Orders
     private $OrdersInfos;
 
 
-
-
+    
 
 
     /**
@@ -577,5 +576,25 @@ class Orders
     public function getOrdersInfos()
     {
         return $this->OrdersInfos;
+    }
+
+    /**
+     * Set Printed
+     *
+     * @param integer $printed
+     */
+    public function setPrinted($printed)
+    {
+        $this->Printed = $printed;
+    }
+
+    /**
+     * Get Printed
+     *
+     * @return integer 
+     */
+    public function getPrinted()
+    {
+        return $this->Printed;
     }
 }

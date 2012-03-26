@@ -52,39 +52,27 @@ class Product
     /**
      * @var text $description
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text",nullable= true)
      */
-    private $description;
 
-    /**
-     * @var text $short_description
-     *
-     * @ORM\Column(name="short_description", type="text")
-     */
-    private $short_description;
-
-    /**
-     * @var text $label_text
-     *
-     * @ORM\Column(name="label", type="text")
-     */
     private $label_text;
 
     /**
-     * @var text $botanical
      *
-     * @ORM\Column(name="botanical", type="text")
+     * @ORM\ManyToMany(targetEntity="Plant", inversedBy="products")
+     * @ORM\JoinColumn(name="plant_id", referencedColumnName="produkt_id",nullable= true)
+
      */
-    private $botanical;
+    private $plants;
 
 
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="StockGround", inversedBy="products")
-     * @ORM\JoinColumn(name="stockground_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Stock", inversedBy="products")
+     * @ORM\JoinColumn(name="stock_id", referencedColumnName="id")
      */
-    protected $stockground;
+    protected $stock;
 
 
     /**
@@ -100,9 +88,9 @@ class Product
     /**
      * Set article_no
      *
-     * @param sting $articleNo
+     * @param string $articleNo
      */
-    public function setArticleNo(\sting $articleNo)
+    public function setArticleNo( $articleNo)
     {
         $this->article_no = $articleNo;
     }
@@ -110,7 +98,7 @@ class Product
     /**
      * Get article_no
      *
-     * @return sting 
+     * @return string
      */
     public function getArticleNo()
     {
@@ -197,25 +185,6 @@ class Product
         return $this->short_description;
     }
 
-    /**
-     * Set stockground
-     *
-     * @param Acme\PlentyMarketsOrderBundle\Entity\StockGround $stockground
-     */
-    public function setStockground(\Acme\BSDataBundle\Entity\StockGround $stockground)
-    {
-        $this->stockground = $stockground;
-    }
-
-    /**
-     * Get stockground
-     *
-     * @return Acme\PlentyMarketsOrderBundle\Entity\StockGround 
-     */
-    public function getStockground()
-    {
-        return $this->stockground;
-    }
 
     /**
      * Set label_text
@@ -275,5 +244,67 @@ class Product
     public function getArticleId()
     {
         return $this->article_id;
+    }
+
+    public function newPMSoapProduct($item)
+    {
+
+
+        $this->setArticleId($item->ItemID);
+        $this->setArticleNo( $item->ItemNo );
+        $this->setBotanical($item->FreeTextFields->Free2);
+        $this->setDescription($item->Texts->LongDescription);
+        $this->setLabelText($item->FreeTextFields->Free3);
+        $this->setName($item->Texts->Name);
+        $this->setPrice($item->PriceSet->Price);
+        $this->setShortDescription($item->Texts->ShortDescription);
+        //$this->setStockground();
+
+    }
+
+
+
+    /**
+     * Set stock
+     *
+     * @param Acme\BSDataBundle\Entity\Stock $stock
+     */
+    public function setStock(\Acme\BSDataBundle\Entity\Stock $stock)
+    {
+        $this->stock = $stock;
+    }
+
+    /**
+     * Get stock
+     *
+     * @return Acme\BSDataBundle\Entity\Stock 
+     */
+    public function getStock()
+    {
+        return $this->stock;
+    }
+    public function __construct()
+    {
+        $this->plants = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add plants
+     *
+     * @param Acme\BSDataBundle\Entity\Plant $plants
+     */
+    public function addPlant(\Acme\BSDataBundle\Entity\Plant $plants)
+    {
+        $this->plants[] = $plants;
+    }
+
+    /**
+     * Get plants
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getPlants()
+    {
+        return $this->plants;
     }
 }
