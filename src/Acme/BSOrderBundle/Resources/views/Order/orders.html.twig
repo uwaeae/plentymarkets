@@ -28,29 +28,33 @@
                     <th>
                         Auftragswert
                     </th>
+                    <th>
+                        Geändert
+                    </th>
                 </tr>
             </thead>
             <tbody>
-            {% for item in orders %}
+            {% for order in orders %}
             <tr>
                 <td rowspan="2">
-                    <input type="checkbox" name="ID{{item.OrderHead.OrderID}}" value="{{item.OrderHead.OrderID}}">
+                    <input type="checkbox" name="ID{{order.head.getOrderID}}" value="{{order.head.getOrderID}}">
                 </td>
 
                 <td rowspan="2">
-               {{item.OrderHead.OrderID}}
+               {{order.head.getOrderID}}
               </td>
                 <td rowspan="2">
-                    {{item.OrderHead.OrderStatus}}
+                    {{order.head.getOrderStatus| number_format(2, ',', '.') }}
+
                </td>
                 <td>
-                    {{item.OrderCustomerAddress.FirstName}}  {{item.OrderCustomerAddress.Surname}}
+                    {{order.head.getFirstName}}  {{order.head.getLastname}}
                 </td>
                 <td>
-                    {{item.OrderHead.TotalBrutto| number_format(2, ',', '.') }} &euro;
+                    {{order.head.getTotalBrutto| number_format(2, ',', '.') }} &euro;
                 </td>
                 <td>
-                    {{item.OrderHead.EstimatedTimeOfShipment |date("d.m.Y")}}
+                    {{order.head.getLastUpdate |date("d.m.Y")}}
                 </td>
 
             </tr>
@@ -60,16 +64,21 @@
                 <td colspan="3">
                     <div>
                         <table>
-                            {% for oitem in item.OrderItems.item %}
+                            {% for item in order.items %}
                             <tr>
                             <td>
-                               {{oitem.Quantity}}
+                               {{item.getQuantity}}
                             </td>
                             <td>
-                               {{oitem.ItemText}}
+                               {{item.getArticleCode}}
+                            </td>
+
+
+                                <td>
+                               {{item.getItemText}}
                             </td>
                             <td>
-                                {{oitem.Price | number_format(2, ',', '.') }} &euro;
+                                {{item.getPrice | number_format(2, ',', '.') }} &euro;
                             </td>
                             </tr>
 

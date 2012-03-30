@@ -252,15 +252,52 @@ class PlentySoapClient extends \SoapClient
 	}
 
     /**
+     * Mit dem Call GetServerTime wird geprüft, ob der SoapHeader korrekt ist und
+     * die Benutzerrechte stimmen. Bekommt man einen Zeitstempel zurückgeliefert,
+     * sind alle Einstellungen korrekt.
+     */
+    public function doSetOrderStatus( $orderID, $state)
+
+    {
+        $oResponse	= null;
+
+        $options['OrderID'] = null;
+        $options['OrderStatus'] =  doubleval($state);
+
+
+        try
+        {
+            $oResponse	=	$this->__soapCall('SetOrderStatus',array( $options));
+        }
+        catch(\SoapFault $sf)
+        {
+            echo("Es kam zu einem Fehler beim Call GetAuthentificationToken<br>");
+            echo($sf->getMessage());
+        }
+
+
+        if( isset($oResponse->Success) )
+        {
+            return(true);
+        }
+        else
+        {
+            return("Es ist folgender Fehler aufgetreten : ");//.$oResponse->ErrorMessages->item[0]->Message;
+        }
+    }
+
+
+
+    /**
      * Get Orders mit einem bestimmten Status
      */
-    public function doGetOrdersWithState($state = 6 )
+    public function doGetOrdersWithState($state = 5.5 )
     {
 
         $oResponse	= null;
 
         $options['OrderType'] = null;
-        $options['OrderStatus'] =  floatval($state);
+        $options['OrderStatus'] =  doubleval($state);
         $options['MultishopID'] = 0;
         $options['OrderID'] = null;
         $options['LastUpdate'] = null;
@@ -283,73 +320,111 @@ class PlentySoapClient extends \SoapClient
         }
 
 
-        if( isset($oResponse->Success) )
+        if( isset($oResponse->Success) and $oResponse->Orders != null )
         {
 
-            $aOrder = array();
-
-            foreach( $oResponse->Orders->item as $AOorder){
-
-
-                $repository = $this->controller->getDoctrine()
-                    ->getRepository('BSDataBundle:Orders');
-
-                $oOrder = $repository->findOneBy(array('OrderID' => $AOorder->OrderHead->OrderID));
-
-                //$aOrder[] =  $this->syncOrderData($AOorder,$oOrder);
-
-                if(!$oOrder)  $aOrder[] =  $this->syncOrderData($AOorder,new Orders());
-
-                else if($oOrder->getLastUpdate() != $AOorder->OrderHead->LastUpdate )
-                    $aOrder[] =  $this->syncOrderData($AOorder,$oOrder);
-
-            }
-
-
-            return($oResponse->Orders);
+            return($this->syncOrders($oResponse->Orders->item));
         }
         else
         {
-            return($oResponse->ErrorMessages);
+            return(array());
         }
     }
 
-    private function syncOrderData($AOorder,Orders $order){
+    private function syncOrders($aoOrders){
+
+        $OrderRepro = $this->controller->getDoctrine()
+            ->getRepository('BSDataBundle:Orders');
+
+        $OrderItemRepro = $this->controller->getDoctrine()
+            ->getRepository('BSDataBundle:OrdersItem');
+
+        $OrderInfoRepro = $this->controller->getDoctrine()
+            ->getRepository('BSDataBundle:OrdersInfo');
+
+
+        $orders = array();
+        foreach($aoOrders  as $PMOrder){
+
+
+
+            $BSOrder = $OrderRepro->findOneBy(array('OrderID' => $PMOrder->OrderHead->OrderID));
+
+            //$aOrder[] =  $this->syncOrderData($AOorder,$oOrder);
+            if(!$BSOrder OR $BSOrder->getLastUpdate() != $PMOrder->OrderHead->LastUpdate ) {
+                $OrderHead = $this->syncOrderData($PMOrder);
+                $OrderInfo = $this->syncOrderInfoData($PMOrder, $OrderHead);
+                $OrderItem = $this->syncOrderItemsData($PMOrder);
+            }
+            else{
+                $OrderHead = $BSOrder;
+                $OrderItem = $OrderItemRepro->findBy(array('OrderID' => $OrderHead->getOrderID()));
+                $OrderInfo = $OrderInfoRepro->findBy(array('OrderID' => $OrderHead->getOrderID()));
+
+            }
+
+            $orders[] = array('head'=> $OrderHead,'infos'=> $OrderInfo, 'items'=>$OrderItem );
+
+        }
+
+        return $orders;
+    }
+
+    private function syncOrderData($AOorder){
+
         $em = $this->controller->getDoctrine()->getEntityManager();
         // Order HEAD
+        $order = new Orders();
         $order->setOrderID($AOorder->OrderHead->OrderID);
         $order->setLastUpdate($AOorder->OrderHead->LastUpdate);
         $order->setCustomerID($AOorder->OrderHead->CustomerID);
-
-
-
-
-        //$order->setInfoCustomer($AOorder->OrderHead->OrderInfos); // TODO: Florian OrderInfos Testen
         $order->setPackageNumber($AOorder->OrderHead->PackageNumber);
         $order->setTotalBrutto($AOorder->OrderHead->TotalBrutto);
         $order->setOrderStatus($AOorder->OrderHead->OrderStatus);
-        //Adresse
-        $order->setTitle($AOorder->OrderCustomerAddress->Title);
-        $order->setFirstname($AOorder->OrderCustomerAddress->FirstName);
-        $order->setLastname($AOorder->OrderCustomerAddress->Surname);
-        $order->setAdditionalName($AOorder->OrderCustomerAddress->AdditionalName);
-        $order->setCompany($AOorder->OrderCustomerAddress->Company);
-        $order->setStreet($AOorder->OrderCustomerAddress->Street);
-        $order->setHouseNumber($AOorder->OrderCustomerAddress->HouseNumber);
-        $order->setCity($AOorder->OrderCustomerAddress->City);
-        $order->setZIP($AOorder->OrderCustomerAddress->ZIP);
-        $order->setCountryID($AOorder->OrderCustomerAddress->CountryID);
-        $order->setTelephone($AOorder->OrderCustomerAddress->Telephone);
-        $order->setEmail($AOorder->OrderCustomerAddress->Email);
+        if(isset($AOorder->OrderDeliveryAddress->Street)){
+           // $order->setTitle($AOorder->OrderDeliveryAddress->Title);
+            $order->setFirstname($AOorder->OrderDeliveryAddress->FirstName);
+            $order->setLastname($AOorder->OrderDeliveryAddress->Surname);
+            $order->setAdditionalName($AOorder->OrderDeliveryAddress->AdditionalName);
+            $order->setCompany($AOorder->OrderDeliveryAddress->Company);
+            $order->setStreet($AOorder->OrderDeliveryAddress->Street);
+            $order->setHouseNumber($AOorder->OrderDeliveryAddress->HouseNumber);
+            $order->setCity($AOorder->OrderDeliveryAddress->City);
+            $order->setZIP($AOorder->OrderDeliveryAddress->ZIP);
+            $order->setCountryID($AOorder->OrderDeliveryAddress->CountryID);
+            $order->setTelephone($AOorder->OrderDeliveryAddress->Telephone);
+            $order->setEmail($AOorder->OrderDeliveryAddress->Email);
+        }
+        else {
+            $order->setTitle($AOorder->OrderCustomerAddress->Title);
+            $order->setFirstname($AOorder->OrderCustomerAddress->FirstName);
+            $order->setLastname($AOorder->OrderCustomerAddress->Surname);
+            $order->setAdditionalName($AOorder->OrderCustomerAddress->AdditionalName);
+            $order->setCompany($AOorder->OrderCustomerAddress->Company);
+            $order->setStreet($AOorder->OrderCustomerAddress->Street);
+            $order->setHouseNumber($AOorder->OrderCustomerAddress->HouseNumber);
+            $order->setCity($AOorder->OrderCustomerAddress->City);
+            $order->setZIP($AOorder->OrderCustomerAddress->ZIP);
+            $order->setCountryID($AOorder->OrderCustomerAddress->CountryID);
+            $order->setTelephone($AOorder->OrderCustomerAddress->Telephone);
+            $order->setEmail($AOorder->OrderCustomerAddress->Email);
+
+
+        }
         $em->persist($order);
         $em->flush();
+        return $order;
+    }
+
+    private function syncOrderInfoData($AOorder,$order){
 
 
+        $em = $this->controller->getDoctrine()->getEntityManager();
+        $aOrderInfos = array();
         if($AOorder->OrderHead->OrderInfos != null){
+
             foreach($AOorder->OrderHead->OrderInfos->item as $aoOorderInfo){
                 $oOrdersInfo = new OrdersInfo();
-
-
                 //$oOrdersInfo->setOrderID($AOorder->OrderHead->OrderID);
                 $oOrdersInfo->setText($aoOorderInfo->Info);
                 $oOrdersInfo->setiscreated(new DateTime("now"));
@@ -357,18 +432,23 @@ class PlentySoapClient extends \SoapClient
                 $oOrdersInfo->setOrders($order);
                 $em->persist($oOrdersInfo);
                 $em->flush();
-
+                $aOrderInfos[]= $oOrdersInfo;
                 //$order->addOrdersInfo($oOrdersInfo);
 
             }
         }
+        return $aOrderInfos;
+
+    }
+
+    private function syncOrderItemsData($AOorder){
 
 
-
-        //$order->setInfo($AOorder->OrderHead->OrderInfos);
+        $em = $this->controller->getDoctrine()->getEntityManager();
 
 
         $aOrderItems = $em->getRepository('BSDataBundle:OrdersItem')->findBy(array('OrderID' => $AOorder->OrderHead->OrderID));
+
         if($aOrderItems){
             foreach( $aOrderItems as $item){
                 $em->remove($item);
@@ -376,7 +456,7 @@ class PlentySoapClient extends \SoapClient
                 }
 
             }
-
+        $aOrderItems = array();
         foreach($AOorder->OrderItems->item as $item){
             $orderitem = new OrdersItem();
             $orderitem->setSKU($item->SKU);
@@ -390,11 +470,12 @@ class PlentySoapClient extends \SoapClient
             $orderitem->setVAT($item->VAT);
             $em->persist($orderitem);
             $em->flush();
+             $aOrderItems[]= $orderitem;
 
         }
 
 
-        return $order;
+        return $aOrderItems;
     }
 
 

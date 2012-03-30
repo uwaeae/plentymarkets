@@ -6,16 +6,18 @@
 
 {% block body %}
 
+<div id="PDF">
+    <object data="{{urlPDF}}" type="application/pdf" width="800" height="900"  > </object>
+</div>
 
-
-<object data="{{urlPDF}}" type="application/pdf" width="800" height="900"  > </object>
 
 
 <div id="menu2">
 
     <ul>
+        <li><a href="{{ path('BSOrder_state') }}" >Status 6 setzen</a></li>
 
-        <li><a href="{{ path('BSOrder_menu') }}" >zurück</a></li>
+        <li><a href="{{ path('BSOrder_state') }}" >zurück</a></li>
 
     </ul>
 

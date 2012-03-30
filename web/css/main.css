@@ -25,7 +25,8 @@ div#menu{
 
 }
 
-div#menu ul li{
+div#menu ul li,
+div#menu2 ul li{
     list-style: none;
     width: 250px;
     padding: 10px;
@@ -33,7 +34,8 @@ div#menu ul li{
 
 }
 
-div#menu  ul li a {
+div#menu  ul li a,
+div#menu2 ul li a{
 
     display:block;
     font-family:Verdana,Tahoma,Arial,sans-serif;
@@ -53,6 +55,14 @@ div#menu  ul li a:hover{
     background-color: #00b000;
 
 
+}
+
+div#menu2{
+    float: right;
+
+}
+div#PDF{
+   float: left;
 }
 
 

@@ -37,9 +37,8 @@ class Orders
     private $OrderID;
 
     /**
-     * @var integer $OrderStatus
-     *
-     * @ORM\Column(name="OrderStatus", type="integer")
+     * @var decimal $OrderStatus
+     * @ORM\Column(name="OrderStatus",type="decimal", scale=2)
      */
     private $OrderStatus;
 
@@ -535,7 +534,7 @@ class Orders
     /**
      * Set OrderStatus
      *
-     * @param integer $orderStatus
+     * @param double $orderStatus
      */
     public function setOrderStatus($orderStatus)
     {
@@ -545,7 +544,7 @@ class Orders
     /**
      * Get OrderStatus
      *
-     * @return integer 
+     * @return double
      */
     public function getOrderStatus()
     {

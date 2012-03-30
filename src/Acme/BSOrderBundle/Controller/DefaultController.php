@@ -48,17 +48,14 @@ class DefaultController extends Controller
          */
         //$time = $oPlentySoapClient->doGetServerTime();
         $orders = array();
-        $orders = $oPlentySoapClient->doGetOrdersWithState( doubleval($state));
+        $orders = $oPlentySoapClient->doGetOrdersWithState( $state);
         // $time = $oPlentySoapClient->doGetServerTime();
-        $OrderArray = array();
-        if(!is_null($orders))  $OrderArray = $orders->item;
 
 
 
 
         return $this->render('BSOrderBundle:Order:orders.html.twig', array(
-            'orders'=>$OrderArray
-        ));
+            'orders'=>$orders        ));
     }
 
     public function invoiceAction(Request $request){
