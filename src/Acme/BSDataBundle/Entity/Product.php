@@ -262,6 +262,19 @@ class Product
 
     }
 
+    public function newPMSoapOrderProduct(OrdersItem $item)
+    {
+        $this->setArticleId($item->getArticleID());
+        $this->setArticleNo($item->getArticleID());
+        //$this->setBotanical($item->FreeTextFields->Free2);
+        $this->setDescription($item->getItemText());
+        //$this->setLabelText($item->FreeTextFields->Free3);
+        $this->setName($item->getItemText());
+        $this->setPrice($item->getPrice());
+        $this->setShortDescription($item->getItemText());
+    }
+
+
 
 
     /**

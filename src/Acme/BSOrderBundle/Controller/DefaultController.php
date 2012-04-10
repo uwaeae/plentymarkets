@@ -114,7 +114,7 @@ class DefaultController extends Controller
 
 
                 //$repository = $this->getDoctrine()->getRepository('BSDataBundle:Product');
-                $product = $this->getItem( $SKU[0]);
+                $product = $this->getItem( $item);
                 //$repository->findOneBy(array('article_id' => $SKU[0]));
                 if($product){
                     $aSortOrderItems[($product->getStock()?$product->getStock():'KeinLager')][] = array('product'=>$product,'item'=>$item );
@@ -161,9 +161,9 @@ class DefaultController extends Controller
 
     }
 
-    public function getItem($ArtileID){
+    public function getItem($OrderItem){
 
-
+        $ArtileID = explode("-",  $OrderItem->getSKU());
 
         $repository = $this->getDoctrine()->getRepository('BSDataBundle:Product');
         $item = $repository->findOneBy(array('article_id' => $ArtileID));
@@ -172,7 +172,9 @@ class DefaultController extends Controller
             $em = $this->getDoctrine()->getEntityManager();
             $oPlentySoapClient	=	new PlentySoapClient($this);
             $item = new Product();
-            $item->newPMSoapProduct($oPlentySoapClient->doGetItemBase(array('ItemID'=>$ArtileID)));
+            $PMItem = $oPlentySoapClient->doGetItemBase(array('ItemID'=>$ArtileID));
+            if(isset($item->ItemID)) $item->newPMSoapProduct($PMItem );
+            else $item->newPMSoapOrderProduct($OrderItem);
             $em->persist($item);
             $em->flush();
             return $item;

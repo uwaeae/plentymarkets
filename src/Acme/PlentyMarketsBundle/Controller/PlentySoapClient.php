@@ -351,8 +351,13 @@ class PlentySoapClient extends \SoapClient
             $BSOrder = $OrderRepro->findOneBy(array('OrderID' => $PMOrder->OrderHead->OrderID));
 
             //$aOrder[] =  $this->syncOrderData($AOorder,$oOrder);
-            if(!$BSOrder OR $BSOrder->getLastUpdate() != $PMOrder->OrderHead->LastUpdate ) {
-                $OrderHead = $this->syncOrderData($PMOrder);
+            if(!$BSOrder) {
+                $OrderHead = $this->syncOrderData($PMOrder, new Orders());
+                $OrderInfo = $this->syncOrderInfoData($PMOrder, $OrderHead);
+                $OrderItem = $this->syncOrderItemsData($PMOrder);
+            }
+            else if ( $BSOrder->getLastUpdate() != $PMOrder->OrderHead->LastUpdate ){
+                $OrderHead = $this->syncOrderData($PMOrder, $BSOrder);
                 $OrderInfo = $this->syncOrderInfoData($PMOrder, $OrderHead);
                 $OrderItem = $this->syncOrderItemsData($PMOrder);
             }
@@ -370,11 +375,11 @@ class PlentySoapClient extends \SoapClient
         return $orders;
     }
 
-    private function syncOrderData($AOorder){
+    private function syncOrderData($AOorder,Orders $order){
 
         $em = $this->controller->getDoctrine()->getEntityManager();
         // Order HEAD
-        $order = new Orders();
+
         $order->setOrderID($AOorder->OrderHead->OrderID);
         $order->setLastUpdate($AOorder->OrderHead->LastUpdate);
         $order->setCustomerID($AOorder->OrderHead->CustomerID);

@@ -1,4 +1,11 @@
 {% extends '::base.html.twig' %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('/js/orders.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+
 
 {% block title %}Auftragsbearbeitung{% endblock %}
 
@@ -8,7 +15,9 @@
 <div id="title"> Aufträge zur Kommisonierung</div>
 
 
-<form action="{{ path('BSOrder_print') }}" method="post" >
+<a href='' onclick="selectAll()" >
+ alle auswählen
+</a>
 
         <table class="table_orders">
             <thead>
@@ -33,6 +42,7 @@
                     </th>
                 </tr>
             </thead>
+            <form action="{{ path('BSOrder_print') }}" method="post" >
             <tbody>
             {% for order in orders %}
             <tr>
@@ -94,10 +104,12 @@
 
             {% endfor %}
             </tbody>
+                <input type="submit" value="Sammeldruck erstellen" />
+            </form>
         </table>
 
-    <input type="submit" value="Sammeldruck erstellen" />
-</form>
+
+
 
 
 
