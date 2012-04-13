@@ -103,8 +103,11 @@ class DefaultController extends Controller
             foreach($aOrderItem as $item){
                 $product = $this->getItem( $item);
                 if($product){
-
-                    $PLIstock = $product->getStock()->getName();
+                    if($product->getStock()){
+                        $PLIstock = "[".$product->getStock()->getNumber()."] ".$product->getStock()->getName() ;
+                    }else{
+                        $PLIstock = "[0] Kein Lager";
+                    }
                     $aSortOrderItems[$PLIstock][] = array('product'=>$product,'item'=>$item );
                     $PLIartID=  $product->getArticleID();
                     $PLIarray = array('item'=>$item,'product'=>$product,
