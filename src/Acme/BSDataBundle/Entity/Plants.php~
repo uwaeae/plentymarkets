@@ -1,0 +1,255 @@
+<?php
+
+namespace Acme\BSDataBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Acme\BSDataBundle\Entity\Plants
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class Plants
+{
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string $name
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @var integer $botanic
+     *
+     * @ORM\Column(name="botanic", type="integer")
+     */
+    private $botanic;
+
+    /**
+     * @var string $winter
+     *
+     * @ORM\Column(name="winter", type="string", length=255)
+     */
+    private $winter;
+
+    /**
+     * @var string $standort
+     *
+     * @ORM\Column(name="standort", type="string", length=255)
+     */
+    private $standort;
+
+    /**
+     * @var datetime $LastUpdate
+     *
+     * @ORM\Column(name="LastUpdate", type="datetime",nullable=true)
+     */
+    private $LastUpdate;
+
+
+
+    /**
+     * @var string $gattung
+     *
+     * @ORM\Column(name="gattung", type="string", length=255)
+     */
+    private $gattung;
+
+    /**
+     * @var string $synonym
+     *
+     * @ORM\Column(name="synonym", type="string", length=255)
+     */
+    private $synonym;
+
+    /**
+     * @var string $bluetezeit
+     *
+     * @ORM\Column(name="bluetezeit", type="string", length=255,nullable=true)
+     */
+    private $bluetezeit;
+
+
+    /**
+     * @var string $pflege
+     *
+     * @ORM\Column(name="pflege", type="string", length=255,nullable=true)
+     */
+    private $pflege;
+
+
+    /**
+     * @var integer $h_von
+     * @orm\Column(name="h_von",type="integer",nullable=true)
+     */
+    private $h_von;
+
+    /**
+     * @var integer $h_bis
+     * @orm\Column(name="h_bis",type="integer",nullable=true)
+     */
+    private $h_bis;
+
+    /**
+     * @var integer $pabstand
+     * @orm\Column(name="pabstand",type="integer",nullable=true)
+     */
+    private $pabstand;
+
+    /**
+     * @var integer $b_von
+     * @orm\Column(name="b_von",type="integer",nullable=true)
+     */
+    private $b_von;
+
+    /**
+     * @var integer $b_bis
+     * @orm\Column(name="b_bis",type="integer",nullable=true)
+     */
+    private $b_bis;
+
+    /**
+     * @var string $b_farbe
+     *
+     *
+     * @ORM\Column(name="b_farbe", type="string", length=255,nullable=true)
+     */
+    private $b_farbe;
+
+    /**
+     * @var string $duft
+     *
+     *
+     * @ORM\Column(name="duft", type="string", length=255,nullable=true)
+     */
+    private $duft;
+
+
+
+    //Zähler	Pflanzen_Id	Gattung_ID	Art	Sorte	D_Gattung	D_Präfix	D_Synonym	Standort	Blütezeit	Etikettentext
+    //Nur_Mutterpflanze	Lat_Synonym	PflegeTxt_ID	Pflege	Höhe_von	Höhe_bis	PAbstand	Schl_Überwint_ID
+    //Schl_Blütenfarbe_ID	Schl_SBereich_ID	Schl_SBoden_ID	Schl_SHabitus_ID	Schl_SLicht_ID	Schl_PGruppe_ID	P_Sort_Kat_Id
+    //Sortiment	Duft	Marker	bl1	bl2	bl3	bl4	bl5	bl6	bl7	bl8	bl9	bl10	bl11	bl12	Blüte_von	Blüte_bis	Gattung_alt
+    //Familie_ID_x	Deutscher Name_x
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set Name
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->Name = $name;
+    }
+
+    /**
+     * Get Name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->Name;
+    }
+
+    /**
+     * Set botanic
+     *
+     * @param integer $botanic
+     */
+    public function setBotanic($botanic)
+    {
+        $this->botanic = $botanic;
+    }
+
+    /**
+     * Get botanic
+     *
+     * @return integer 
+     */
+    public function getBotanic()
+    {
+        return $this->botanic;
+    }
+
+    /**
+     * Set winter
+     *
+     * @param string $winter
+     */
+    public function setWinter($winter)
+    {
+        $this->winter = $winter;
+    }
+
+    /**
+     * Get winter
+     *
+     * @return string 
+     */
+    public function getWinter()
+    {
+        return $this->winter;
+    }
+
+    /**
+     * Set standort
+     *
+     * @param string $standort
+     */
+    public function setStandort($standort)
+    {
+        $this->standort = $standort;
+    }
+
+    /**
+     * Get standort
+     *
+     * @return string 
+     */
+    public function getStandort()
+    {
+        return $this->standort;
+    }
+
+    /**
+     * Set LastUpdate
+     *
+     * @param datetime $lastUpdate
+     */
+    public function setLastUpdate($lastUpdate)
+    {
+        $this->LastUpdate = $lastUpdate;
+    }
+
+    /**
+     * Get LastUpdate
+     *
+     * @return datetime 
+     */
+    public function getLastUpdate()
+    {
+        return $this->LastUpdate;
+    }
+}
