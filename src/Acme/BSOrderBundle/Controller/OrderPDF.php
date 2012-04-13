@@ -48,7 +48,7 @@ class OrderPDF extends \FPDF
 
     function ItemsHeader($Stock,$cellHight){
         $this->SetFont('Arial','B',12);
-        $this->Cell(180,$cellHight,$Stock,'B',1,'L');
+        $this->Cell(180,$cellHight,utf8_decode($Stock),'B',1,'L');
         $this->SetFont('Arial','',10);
 
         $this->SetTextColor(0,0,0);
@@ -97,7 +97,7 @@ class OrderPDF extends \FPDF
 
     function ItemsPickHeader($Stock,$cellHight){
         $this->SetFont('Arial','B',12);
-        $this->Cell(180,$cellHight,$Stock,'B',1,'L');
+        $this->Cell(180,$cellHight,utf8_decode($Stock),'B',1,'L');
         $this->SetFont('Arial','',10);
         $this->SetTextColor(0,0,0);
         $this->Cell(25,$cellHight,'Code','B',0,'L');

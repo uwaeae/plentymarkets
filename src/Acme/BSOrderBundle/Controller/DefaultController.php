@@ -123,6 +123,11 @@ class DefaultController extends Controller
                     foreach($sitem as $item) {
                         $pdf->ItemsBody($item['product'],$item['item'],$cellHight);
                         $row++;
+
+                    }
+                    if($row >21 ) {
+                        $row = 0;
+                        $pdf->Ln(80);
                     }
                 }
 
