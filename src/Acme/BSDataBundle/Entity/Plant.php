@@ -9,6 +9,22 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity
+ *
+ *
+$em = $this->get('doctrine.orm.entity_manager');
+$dql = "SELECT a FROM BSDataBundle:Plant a";
+$query = $em->createQuery($dql);
+
+$paginator = $this->get('knp_paginator');
+$pagination = $paginator->paginate(
+$query,
+$this->get('request')->query->get('page', 1),
+10
+);
+return array('pagination' => $pagination);
+
+ *
+ *
  */
 class Plant
 {
@@ -24,30 +40,37 @@ class Plant
     /**
      * @var string $name
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255,nullable=true)
      */
     private $name;
 
     /**
-     * @var integer $botanic
+     * @var string $code
      *
-     * @ORM\Column(name="botanic", type="integer")
+     * @ORM\Column(name="code", type="string", length=255)
      */
-    private $botanic;
+    private $code;
 
     /**
-     * @var string $winter
+     * @var integer $latein
      *
-     * @ORM\Column(name="winter", type="string", length=255)
+     * @ORM\Column(name="latein",  type="string", length=255)
      */
-    private $winter;
+    private $latein;
 
     /**
-     * @var string $standort
+     * @var string $hardy
      *
-     * @ORM\Column(name="standort", type="string", length=255)
+     * @ORM\Column(name="hardy", type="string", length=255,nullable=true)
      */
-    private $standort;
+    private $hardy;
+
+    /**
+     * @var string $place
+     *
+     * @ORM\Column(name="place", type="string", length=255,nullable=true)
+     */
+    private $place;
 
     /**
      * @var datetime $LastUpdate
@@ -57,97 +80,137 @@ class Plant
     private $LastUpdate;
 
 
-
-    /**
-     * @var string $gattung
-     *
-     * @ORM\Column(name="gattung", type="string", length=255)
-     */
-    private $gattung;
-
     /**
      * @var string $synonym
      *
-     * @ORM\Column(name="synonym", type="string", length=255)
+     * @ORM\Column(name="synonym", type="string", length=255,nullable=true)
      */
     private $synonym;
 
+
     /**
-     * @var string $bluetezeit
+     * @var string $instructions
      *
-     * @ORM\Column(name="bluetezeit", type="string", length=255,nullable=true)
+     * @ORM\Column(name="instructions", type="text",nullable=true)
      */
-    private $bluetezeit;
+    private $instructions;
 
 
     /**
-     * @var string $pflege
-     *
-     * @ORM\Column(name="pflege", type="string", length=255,nullable=true)
+     * @var integer $h_from
+     * @orm\Column(name="h_from",type="integer",nullable=true)
      */
-    private $pflege;
+    private $h_from;
+
+    /**
+     * @var integer $h_to
+     * @orm\Column(name="h_to",type="integer",nullable=true)
+     */
+    private $h_to;
 
 
     /**
-     * @var integer $h_von
-     * @orm\Column(name="h_von",type="integer",nullable=true)
+     * @var integer $b_from
+     * @orm\Column(name="b_from",type="integer",nullable=true)
      */
-    private $h_von;
+    private $b_from;
 
     /**
-     * @var integer $h_bis
-     * @orm\Column(name="h_bis",type="integer",nullable=true)
+     * @var integer $b_to
+     * @orm\Column(name="b_to",type="integer",nullable=true)
      */
-    private $h_bis;
+    private $b_to;
 
     /**
-     * @var integer $pabstand
-     * @orm\Column(name="pabstand",type="integer",nullable=true)
-     */
-    private $pabstand;
-
-    /**
-     * @var integer $b_von
-     * @orm\Column(name="b_von",type="integer",nullable=true)
-     */
-    private $b_von;
-
-    /**
-     * @var integer $b_bis
-     * @orm\Column(name="b_bis",type="integer",nullable=true)
-     */
-    private $b_bis;
-
-    /**
-     * @var string $b_farbe
+     * @var string $b_color
      *
      *
-     * @ORM\Column(name="b_farbe", type="string", length=255,nullable=true)
+     * @ORM\Column(name="b_color", type="string", length=255,nullable=true)
      */
-    private $b_farbe;
+    private $b_color;
 
     /**
-     * @var string $duft
+     * @var string $flavour
      *
      *
-     * @ORM\Column(name="duft", type="string", length=255,nullable=true)
+     * @ORM\Column(name="flavour", type="string", length=255,nullable=true)
      */
-    private $duft;
+    private $flavour;
 
     /**
+     * @var string $light
      *
-     * @ORM\ManyToMany(targetEntity="Product", inversedBy="plants")
-     * @ORM\JoinColumn(name="product_id", referencedColumnName="plants_id",nullable= true)
+     *
+     * @ORM\Column(name="light", type="string", length=255,nullable=true)
      */
-    private $plant;
+    private $light;
+
+    /**
+     * @var string $base
+     *
+     *
+     * @ORM\Column(name="base", type="string", length=255,nullable=true)
+     */
+    private $base;
+
+    /**
+     * @var string $labeltext
+     *
+     *
+     * @ORM\Column(name="labeltext", type="text", nullable=true)
+     */
+    private $labeltext;
+
+    /**
+ * @var string $habitus
+ *
+ *
+ * @ORM\Column(name="habitus", type="string", length=255,nullable=true)
+ */
+    private $habitus;
+
+    /**
+     * @var string $pricegroup
+     *
+     *
+     * @ORM\Column(name="pricegroup", type="integer",nullable=true)
+     */
+    private $pricegroup;
+
+    /**
+     * @var string $potsize
+     *
+     *
+     * @ORM\Column(name="potsize", type="string", length=255,nullable=true)
+     */
+    private $potsize;
 
 
+    /**
+     * @var string $aviable
+     *
+     *
+     * @ORM\Column(name="aviable", type="string", length=255,nullable=true)
+     */
+    private $aviable;
 
-    //Zähler	Pflanzen_Id	Gattung_ID	Art	Sorte	D_Gattung	D_Präfix	D_Synonym	Standort	Blütezeit	Etikettentext
-    //Nur_Mutterpflanze	Lat_Synonym	PflegeTxt_ID	Pflege	Höhe_von	Höhe_bis	PAbstand	Schl_Überwint_ID
-    //Schl_Blütenfarbe_ID	Schl_SBereich_ID	Schl_SBoden_ID	Schl_SHabitus_ID	Schl_SLicht_ID	Schl_PGruppe_ID	P_Sort_Kat_Id
-    //Sortiment	Duft	Marker	bl1	bl2	bl3	bl4	bl5	bl6	bl7	bl8	bl9	bl10	bl11	bl12	Blüte_von	Blüte_bis	Gattung_alt
-    //Familie_ID_x	Deutscher Name_x
+
+    /**
+     * @var string $comment
+     *
+     *
+     * @ORM\Column(name="comment", type="string", length=255,nullable=true)
+     */
+
+    private $comment;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Stock", inversedBy="plant")
+     * @ORM\JoinColumn(name="stock_id", referencedColumnName="id",nullable= true)
+     */
+    protected $stock;
+
 
 
     /**
@@ -161,83 +224,103 @@ class Plant
     }
 
     /**
-     * Set Name
+     * Set name
      *
      * @param string $name
      */
     public function setName($name)
     {
-        $this->Name = $name;
+        $this->name = $name;
     }
 
     /**
-     * Get Name
+     * Get name
      *
      * @return string 
      */
     public function getName()
     {
-        return $this->Name;
+        return $this->name;
     }
 
     /**
-     * Set botanic
+     * Set code
      *
-     * @param integer $botanic
+     * @param string $code
      */
-    public function setBotanic($botanic)
+    public function setCode($code)
     {
-        $this->botanic = $botanic;
+        $this->code = $code;
     }
 
     /**
-     * Get botanic
-     *
-     * @return integer 
-     */
-    public function getBotanic()
-    {
-        return $this->botanic;
-    }
-
-    /**
-     * Set winter
-     *
-     * @param string $winter
-     */
-    public function setWinter($winter)
-    {
-        $this->winter = $winter;
-    }
-
-    /**
-     * Get winter
+     * Get code
      *
      * @return string 
      */
-    public function getWinter()
+    public function getCode()
     {
-        return $this->winter;
+        return $this->code;
     }
 
     /**
-     * Set standort
+     * Set latein
      *
-     * @param string $standort
+     * @param string $latein
      */
-    public function setStandort($standort)
+    public function setLatein($latein)
     {
-        $this->standort = $standort;
+        $this->latein = $latein;
     }
 
     /**
-     * Get standort
+     * Get latein
      *
      * @return string 
      */
-    public function getStandort()
+    public function getLatein()
     {
-        return $this->standort;
+        return $this->latein;
+    }
+
+    /**
+     * Set hardy
+     *
+     * @param string $hardy
+     */
+    public function setHardy($hardy)
+    {
+        $this->hardy = $hardy;
+    }
+
+    /**
+     * Get hardy
+     *
+     * @return string 
+     */
+    public function getHardy()
+    {
+        return $this->hardy;
+    }
+
+    /**
+     * Set place
+     *
+     * @param string $place
+     */
+    public function setPlace($place)
+    {
+        $this->place = $place;
+    }
+
+    /**
+     * Get place
+     *
+     * @return string 
+     */
+    public function getPlace()
+    {
+        return $this->place;
     }
 
     /**
@@ -261,26 +344,6 @@ class Plant
     }
 
     /**
-     * Set gattung
-     *
-     * @param string $gattung
-     */
-    public function setGattung($gattung)
-    {
-        $this->gattung = $gattung;
-    }
-
-    /**
-     * Get gattung
-     *
-     * @return string 
-     */
-    public function getGattung()
-    {
-        return $this->gattung;
-    }
-
-    /**
      * Set synonym
      *
      * @param string $synonym
@@ -301,207 +364,322 @@ class Plant
     }
 
     /**
-     * Set bluetezeit
+     * Set instructions
      *
-     * @param string $bluetezeit
+     * @param string $instructions
      */
-    public function setBluetezeit($bluetezeit)
+    public function setInstructions($instructions)
     {
-        $this->bluetezeit = $bluetezeit;
+        $this->instructions = $instructions;
     }
 
     /**
-     * Get bluetezeit
+     * Get instructions
      *
      * @return string 
      */
-    public function getBluetezeit()
+    public function getInstructions()
     {
-        return $this->bluetezeit;
+        return $this->instructions;
     }
 
     /**
-     * Set pflege
+     * Set h_from
      *
-     * @param string $pflege
+     * @param integer $hFrom
      */
-    public function setPflege($pflege)
+    public function setHFrom($hFrom)
     {
-        $this->pflege = $pflege;
+        $this->h_from = $hFrom;
     }
 
     /**
-     * Get pflege
+     * Get h_from
+     *
+     * @return integer 
+     */
+    public function getHFrom()
+    {
+        return $this->h_from;
+    }
+
+    /**
+     * Set h_to
+     *
+     * @param integer $hTo
+     */
+    public function setHTo($hTo)
+    {
+        $this->h_to = $hTo;
+    }
+
+    /**
+     * Get h_to
+     *
+     * @return integer 
+     */
+    public function getHTo()
+    {
+        return $this->h_to;
+    }
+
+    /**
+     * Set b_from
+     *
+     * @param integer $bFrom
+     */
+    public function setBFrom($bFrom)
+    {
+        $this->b_from = $bFrom;
+    }
+
+    /**
+     * Get b_from
+     *
+     * @return integer 
+     */
+    public function getBFrom()
+    {
+        return $this->b_from;
+    }
+
+    /**
+     * Set b_to
+     *
+     * @param integer $bTo
+     */
+    public function setBTo($bTo)
+    {
+        $this->b_to = $bTo;
+    }
+
+    /**
+     * Get b_to
+     *
+     * @return integer 
+     */
+    public function getBTo()
+    {
+        return $this->b_to;
+    }
+
+    /**
+     * Set b_color
+     *
+     * @param string $bColor
+     */
+    public function setBColor($bColor)
+    {
+        $this->b_color = $bColor;
+    }
+
+    /**
+     * Get b_color
      *
      * @return string 
      */
-    public function getPflege()
+    public function getBColor()
     {
-        return $this->pflege;
+        return $this->b_color;
     }
 
     /**
-     * Set h_von
+     * Set flavour
      *
-     * @param integer $hVon
+     * @param string $flavour
      */
-    public function setHVon($hVon)
+    public function setFlavour($flavour)
     {
-        $this->h_von = $hVon;
+        $this->flavour = $flavour;
     }
 
     /**
-     * Get h_von
-     *
-     * @return integer 
-     */
-    public function getHVon()
-    {
-        return $this->h_von;
-    }
-
-    /**
-     * Set h_bis
-     *
-     * @param integer $hBis
-     */
-    public function setHBis($hBis)
-    {
-        $this->h_bis = $hBis;
-    }
-
-    /**
-     * Get h_bis
-     *
-     * @return integer 
-     */
-    public function getHBis()
-    {
-        return $this->h_bis;
-    }
-
-    /**
-     * Set pabstand
-     *
-     * @param integer $pabstand
-     */
-    public function setPabstand($pabstand)
-    {
-        $this->pabstand = $pabstand;
-    }
-
-    /**
-     * Get pabstand
-     *
-     * @return integer 
-     */
-    public function getPabstand()
-    {
-        return $this->pabstand;
-    }
-
-    /**
-     * Set b_von
-     *
-     * @param integer $bVon
-     */
-    public function setBVon($bVon)
-    {
-        $this->b_von = $bVon;
-    }
-
-    /**
-     * Get b_von
-     *
-     * @return integer 
-     */
-    public function getBVon()
-    {
-        return $this->b_von;
-    }
-
-    /**
-     * Set b_bis
-     *
-     * @param integer $bBis
-     */
-    public function setBBis($bBis)
-    {
-        $this->b_bis = $bBis;
-    }
-
-    /**
-     * Get b_bis
-     *
-     * @return integer 
-     */
-    public function getBBis()
-    {
-        return $this->b_bis;
-    }
-
-    /**
-     * Set b_farbe
-     *
-     * @param string $bFarbe
-     */
-    public function setBFarbe($bFarbe)
-    {
-        $this->b_farbe = $bFarbe;
-    }
-
-    /**
-     * Get b_farbe
+     * Get flavour
      *
      * @return string 
      */
-    public function getBFarbe()
+    public function getFlavour()
     {
-        return $this->b_farbe;
+        return $this->flavour;
     }
 
     /**
-     * Set duft
+     * Set light
      *
-     * @param string $duft
+     * @param string $light
      */
-    public function setDuft($duft)
+    public function setLight($light)
     {
-        $this->duft = $duft;
+        $this->light = $light;
     }
 
     /**
-     * Get duft
+     * Get light
      *
      * @return string 
      */
-    public function getDuft()
+    public function getLight()
     {
-        return $this->duft;
-    }
-
-    public function __construct()
-    {
-        $this->plant = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-    /**
-     * Add plant
-     *
-     * @param Acme\BSDataBundle\Entity\Product $plant
-     */
-    public function addProduct(\Acme\BSDataBundle\Entity\Product $plant)
-    {
-        $this->plant[] = $plant;
+        return $this->light;
     }
 
     /**
-     * Get plant
+     * Set base
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @param string $base
      */
-    public function getPlant()
+    public function setBase($base)
     {
-        return $this->plant;
+        $this->base = $base;
+    }
+
+    /**
+     * Get base
+     *
+     * @return string 
+     */
+    public function getBase()
+    {
+        return $this->base;
+    }
+
+    /**
+     * Set labeltext
+     *
+     * @param text $labeltext
+     */
+    public function setLabeltext($labeltext)
+    {
+        $this->labeltext = $labeltext;
+    }
+
+    /**
+     * Get labeltext
+     *
+     * @return text 
+     */
+    public function getLabeltext()
+    {
+        return $this->labeltext;
+    }
+
+    /**
+     * Set habitus
+     *
+     * @param string $habitus
+     */
+    public function setHabitus($habitus)
+    {
+        $this->habitus = $habitus;
+    }
+
+    /**
+     * Get habitus
+     *
+     * @return string 
+     */
+    public function getHabitus()
+    {
+        return $this->habitus;
+    }
+
+    /**
+     * Set pricegroup
+     *
+     * @param integer $pricegroup
+     */
+    public function setPricegroup($pricegroup)
+    {
+        $this->pricegroup = $pricegroup;
+    }
+
+    /**
+     * Get pricegroup
+     *
+     * @return integer 
+     */
+    public function getPricegroup()
+    {
+        return $this->pricegroup;
+    }
+
+    /**
+     * Set potsize
+     *
+     * @param string $potsize
+     */
+    public function setPotsize($potsize)
+    {
+        $this->potsize = $potsize;
+    }
+
+    /**
+     * Get potsize
+     *
+     * @return string 
+     */
+    public function getPotsize()
+    {
+        return $this->potsize;
+    }
+
+    /**
+     * Set aviable
+     *
+     * @param string $aviable
+     */
+    public function setAviable($aviable)
+    {
+        $this->aviable = $aviable;
+    }
+
+    /**
+     * Get aviable
+     *
+     * @return string 
+     */
+    public function getAviable()
+    {
+        return $this->aviable;
+    }
+
+    /**
+     * Set comment
+     *
+     * @param string $comment
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
+    }
+
+    /**
+     * Get comment
+     *
+     * @return string 
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
+
+    /**
+     * Set stock
+     *
+     * @param Acme\BSDataBundle\Entity\Stock $stock
+     */
+    public function setStock(\Acme\BSDataBundle\Entity\Stock $stock)
+    {
+        $this->stock = $stock;
+    }
+
+    /**
+     * Get stock
+     *
+     * @return Acme\BSDataBundle\Entity\Stock 
+     */
+    public function getStock()
+    {
+        return $this->stock;
     }
 }

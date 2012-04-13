@@ -43,6 +43,20 @@ class Product
     private $name;
 
     /**
+     * @var string $name2
+     *
+     * @ORM\Column(name="name2", type="string", length=255,nullable= true)
+     */
+    private $name2;
+
+    /**
+     * @var string $name3
+     *
+     * @ORM\Column(name="name3", type="string", length=255,nullable= true)
+     */
+    private $name3;
+
+    /**
      * @var float $price
      *
      * @ORM\Column(name="price", type="float")
@@ -58,12 +72,12 @@ class Product
     private $label_text;
 
     /**
+     * @var text $quantity
      *
-     * @ORM\ManyToMany(targetEntity="Plant", inversedBy="products")
-     * @ORM\JoinColumn(name="plant_id", referencedColumnName="produkt_id",nullable= true)
-
+     * @ORM\Column(name="quantity", type="integer",nullable= true)
      */
-    private $plants;
+
+    private $quantity;
 
 
 
@@ -256,6 +270,7 @@ class Product
         $this->setDescription($item->Texts->LongDescription);
         $this->setLabelText($item->FreeTextFields->Free3);
         $this->setName($item->Texts->Name);
+        $this->setName2($item->Texts->Name2);
         $this->setPrice($item->PriceSet->Price);
         $this->setShortDescription($item->Texts->ShortDescription);
         //$this->setStockground();
@@ -267,11 +282,17 @@ class Product
         $this->setArticleId($item->getArticleID());
         $this->setArticleNo($item->getArticleID());
         //$this->setBotanical($item->FreeTextFields->Free2);
-        $this->setDescription($item->getItemText());
+        $this->setDescription( $item->getItemText());
         //$this->setLabelText($item->FreeTextFields->Free3);
         $this->setName($item->getItemText());
         $this->setPrice($item->getPrice());
         $this->setShortDescription($item->getItemText());
+    }
+
+    public function  __toString(){
+
+        return $this->getName();
+
     }
 
 
@@ -319,5 +340,65 @@ class Product
     public function getPlants()
     {
         return $this->plants;
+    }
+
+    /**
+     * Set name2
+     *
+     * @param string $name2
+     */
+    public function setName2($name2)
+    {
+        $this->name2 = $name2;
+    }
+
+    /**
+     * Get name2
+     *
+     * @return string 
+     */
+    public function getName2()
+    {
+        return $this->name2;
+    }
+
+    /**
+     * Set name3
+     *
+     * @param string $name3
+     */
+    public function setName3($name3)
+    {
+        $this->name3 = $name3;
+    }
+
+    /**
+     * Get name3
+     *
+     * @return string 
+     */
+    public function getName3()
+    {
+        return $this->name3;
+    }
+
+    /**
+     * Set quantity
+     *
+     * @param integer $quantity
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+    }
+
+    /**
+     * Get quantity
+     *
+     * @return integer 
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
     }
 }

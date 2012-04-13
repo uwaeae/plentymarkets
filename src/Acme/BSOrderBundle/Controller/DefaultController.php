@@ -27,7 +27,7 @@ class DefaultController extends Controller
         return $this->render('BSOrderBundle:Default:index.html.twig');
     }
 
-    public function stateAction($state = 5)
+    public function stateAction($state )
     {
         /**
          * Es wird ein neuer Soap-Client angelegt.
@@ -55,7 +55,7 @@ class DefaultController extends Controller
 
 
         return $this->render('BSOrderBundle:Order:orders.html.twig', array(
-            'orders'=>$orders        ));
+            'orders'=>$orders , 'state'=> $state       ));
     }
 
     public function invoiceAction(Request $request){
@@ -79,77 +79,68 @@ class DefaultController extends Controller
         $pdf = new OrderPDF();
 
 
-
-        $data = array();
+        $cellHight= 6;
+        $aSortPicklistItems = array();
 
         foreach($oRequest as $rOrder){
-            $cellHight= 8;
+
             $pdf->AddPage();
-            //Bestellung aus der SOAP Api abrufen
-            //$oOrder = $oPlentySoapClient->doGetOrder($rOrder);
-            //$aOrders[] = $oOrder;
-            //$oCustomer = $oPlentySoapClient->doGetCustomer(array('CustomerID'=> $oOrder->OrderHead->CustomerID));
-            //$aWarehouseList = $oPlentySoapClient->doGetWarehouseList();
-            //Bestellungskopf erstellen
+
+            //Bestellungsdaten aus localer Datenbank holen
             $repository = $this->getDoctrine()->getRepository('BSDataBundle:Orders');
             $oOrder = $repository->findOneBy(array('OrderID' => $rOrder));
-
+            //Betsellinformattionen holen aus localer Datenbank
             $repository = $this->getDoctrine()->getRepository('BSDataBundle:OrdersInfo');
             $aOrderInfo = $repository->findBy(array('OrderID' => $rOrder));
-
-
-
+            //Bestellungskopf erstellen
             $pdf->OrderHeader($oOrder,$aOrderInfo);
-
-
-            //$pdf->ItemsHeader($cellHight);
             $pdf->SetFont('Arial','',10);
             $repository = $this->getDoctrine()->getRepository('BSDataBundle:OrdersItem');
             $aOrderItem = $repository->findBy(array('OrderID' => $rOrder));
             $aSortOrderItems = array();
-            $aSortPicklistItems = array();
+            $oOrderQuantity = 0;
+            //Bestellprositonen zusammen stellen und nach Lagerort Sortieren
             foreach($aOrderItem as $item){
-                $SKU = explode("-", $item->getSKU());
-
-
-
-                //$repository = $this->getDoctrine()->getRepository('BSDataBundle:Product');
                 $product = $this->getItem( $item);
-                //$repository->findOneBy(array('article_id' => $SKU[0]));
                 if($product){
-                    $aSortOrderItems[($product->getStock()?$product->getStock():'KeinLager')][] = array('product'=>$product,'item'=>$item );
 
-                    $PLIstock = ($product->getStock()?$product->getStock():'KeinLager');
+                    $PLIstock = $product->getStock()->getName();
+                    $aSortOrderItems[$PLIstock][] = array('product'=>$product,'item'=>$item );
                     $PLIartID=  $product->getArticleID();
-
-                    $PLIarray = array('name'=>utf8_decode($item->getItemText()),
-                                      'quantity'=>(isset($aSortPicklistItems[ $PLIstock][$PLIartID])? $aSortPicklistItems[ $PLIstock][$PLIartID]['quantity'] + $item->getQuantity():$item->getQuantity()));
+                    $PLIarray = array('item'=>$item,'product'=>$product,
+                            'quantity'=>(isset($aSortPicklistItems[ $PLIstock][$PLIartID])? $aSortPicklistItems[ $PLIstock][$PLIartID]['quantity'] + $item->getQuantity():$item->getQuantity()));
                     $aSortPicklistItems[ $PLIstock][$PLIartID] = $PLIarray;
-                    //$oItem = $oPlentySoapClient->doGetItemBase(array('ItemNo'=> $SKU[0] ));
-                    //$oItemStock = $oPlentySoapClient->doGetItemsStock(array('SKU' => $item->getSKU() ));}
+                    $oOrderQuantity +=  $item->getQuantity();
                     }
                 }
+            $row = 0;
             foreach($aSortOrderItems as $key => $sitem){
                     $pdf->ItemsHeader($key,$cellHight);
-                foreach($sitem as $item) {
-
-                    $pdf->ItemsBody($item['product'],$item['item'],$cellHight);
+                    $row++;
+                    foreach($sitem as $item) {
+                        $pdf->ItemsBody($item['product'],$item['item'],$cellHight);
+                        $row++;
+                    }
                 }
 
-
-
+            // Fooder
+            $pdf->OrderFooder($oOrder,$oOrderQuantity );
 
             }
 
+        $pdf->AddPage();
+        $pdf->PicklistHeader($oRequest);
+        foreach($aSortPicklistItems as $key => $sitem){
+            $pdf->ItemsPickHeader($key,$cellHight);
 
-
-            // Fooder
-
-            $pdf->OrderFooder($oOrder);
-
-
-
+            foreach($sitem as $item) {
+                $pdf->ItemsPickBody($item['quantity'],$item['product'],$item['item'],$cellHight);
+                $row++;
+            }
         }
+
+
+
         $timestamp = date("YmdHis");
         $pdf->Output("print/Packliste".$timestamp.".pdf",'F');
 
@@ -160,6 +151,9 @@ class DefaultController extends Controller
 
 
     }
+
+
+
 
     public function getItem($OrderItem){
 
@@ -172,9 +166,13 @@ class DefaultController extends Controller
             $em = $this->getDoctrine()->getEntityManager();
             $oPlentySoapClient	=	new PlentySoapClient($this);
             $item = new Product();
-            $PMItem = $oPlentySoapClient->doGetItemBase(array('ItemID'=>$ArtileID));
-            if(isset($item->ItemID)) $item->newPMSoapProduct($PMItem );
-            else $item->newPMSoapOrderProduct($OrderItem);
+            $PMItem = $oPlentySoapClient->doGetItemBase(array('ItemID'=>$ArtileID[0]));
+            if(isset($PMItem->ItemID)) {
+                $item->newPMSoapProduct($PMItem );
+                }
+            else{
+                $item->newPMSoapOrderProduct($OrderItem);
+                 }
             $em->persist($item);
             $em->flush();
             return $item;

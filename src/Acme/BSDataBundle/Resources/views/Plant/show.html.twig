@@ -1,0 +1,117 @@
+<h1>Plant</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{ entity.name }}</td>
+        </tr>
+        <tr>
+            <th>Code</th>
+            <td>{{ entity.code }}</td>
+        </tr>
+        <tr>
+            <th>Latein</th>
+            <td>{{ entity.latein }}</td>
+        </tr>
+        <tr>
+            <th>Hardy</th>
+            <td>{{ entity.hardy }}</td>
+        </tr>
+        <tr>
+            <th>Place</th>
+            <td>{{ entity.place }}</td>
+        </tr>
+        <tr>
+            <th>Lastupdate</th>
+            <td>{{ entity.LastUpdate|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Synonym</th>
+            <td>{{ entity.synonym }}</td>
+        </tr>
+        <tr>
+            <th>Instructions</th>
+            <td>{{ entity.instructions }}</td>
+        </tr>
+        <tr>
+            <th>H_from</th>
+            <td>{{ entity.hfrom }}</td>
+        </tr>
+        <tr>
+            <th>H_to</th>
+            <td>{{ entity.hto }}</td>
+        </tr>
+        <tr>
+            <th>B_from</th>
+            <td>{{ entity.bfrom }}</td>
+        </tr>
+        <tr>
+            <th>B_to</th>
+            <td>{{ entity.bto }}</td>
+        </tr>
+        <tr>
+            <th>B_color</th>
+            <td>{{ entity.bcolor }}</td>
+        </tr>
+        <tr>
+            <th>Flavour</th>
+            <td>{{ entity.flavour }}</td>
+        </tr>
+        <tr>
+            <th>Light</th>
+            <td>{{ entity.light }}</td>
+        </tr>
+        <tr>
+            <th>Base</th>
+            <td>{{ entity.base }}</td>
+        </tr>
+        <tr>
+            <th>Labeltext</th>
+            <td>{{ entity.labeltext }}</td>
+        </tr>
+        <tr>
+            <th>Habitus</th>
+            <td>{{ entity.habitus }}</td>
+        </tr>
+        <tr>
+            <th>Pricegroup</th>
+            <td>{{ entity.pricegroup }}</td>
+        </tr>
+        <tr>
+            <th>Potsize</th>
+            <td>{{ entity.potsize }}</td>
+        </tr>
+        <tr>
+            <th>Aviable</th>
+            <td>{{ entity.aviable }}</td>
+        </tr>
+        <tr>
+            <th>Comment</th>
+            <td>{{ entity.comment }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('BSData_plant') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('BSData_plant_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('BSData_plant_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>

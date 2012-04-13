@@ -1,4 +1,11 @@
 
+ {
+     padding: 0;
+     margin: 0;
+
+}
+
+
 div#title{
     width: 400px;
     font-size: 30px;
@@ -10,32 +17,35 @@ div#title{
 
 }
 
-div#menu{
-
-    position: absolute;
-
-
-    top: 20%;
-    left: 50%;
-    margin-top: -75px;
-    margin-left: -100px;
+div .menu{
+    float: left;
+    margin: 10px;
     background-color: #0080cc;
     padding: 20px;
     border-radius: 10px;
 
 }
+div .menu h1{
+    padding: 0;
+    margin: 0;
+}
 
-div#menu ul li,
-div#menu2 ul li{
+ div .menu ul{
+     padding: 0;
+     margin: 0;
+ }
+
+div .menu ul li,
+div .menu2 ul li{
     list-style: none;
     width: 250px;
     padding: 10px;
-    margin-left: -35px;
+
 
 }
 
-div#menu  ul li a,
-div#menu2 ul li a{
+div .menu  ul li a,
+div .menu2 ul li a{
 
     display:block;
     font-family:Verdana,Tahoma,Arial,sans-serif;
@@ -51,13 +61,13 @@ div#menu2 ul li a{
     border-radius: 10px;
 }
 
-div#menu  ul li a:hover{
+div .menu  ul li a:hover{
     background-color: #00b000;
 
 
 }
 
-div#menu2{
+div .menu2{
     float: right;
 
 }
@@ -174,6 +184,41 @@ th.specalt {
     background: #f5fafa url(/images/bullet2.gif) no-repeat;
     font: bold 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
     color: #797268;
+}
+
+.button{
+
+    font-family:Verdana,Tahoma,Arial,sans-serif;
+    font-size: 14px;
+    font-weight:normal;
+    text-align:center;
+    text-decoration:none;
+    color: #000000;
+    background-color: #00C800;
+    height:20px;
+    line-height:20px;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    border-radius: 5px;
+
+}
+
+.button:hover{
+    background-color:#90E894;
+    color:#0B3B0E;
+}
+
+.buttons{
+
+    list-style: none;
+}
+
+.buttons li{
+    float: left;
+    padding-left: 5px;
+
 }
 
 .pagination { padding:10px 0px 0px 0px; text-align:center; font-size:13px;}

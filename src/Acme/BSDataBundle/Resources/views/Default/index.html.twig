@@ -9,14 +9,30 @@
     Hauptmenü
 </div>
 
-<div id="menu">
+<div class="menu">
 
-    <ul>
-        <li><a href="{{ path('BSOrder_menu') }}">Aufträge</a></li>
-        <li><a href="{{ path('BSData_menu') }}">Daten</a></li>
-
+    <h1>Aufträge</h1>
+    <ul >
+        <!-- <li><a href="{{ path('BSOrder_search') }}">Suche</a></li> -->
+        <li><a href="{{ path('BSOrder_state',{ 'state': 5.5 })  }}">Sammelpack</a></li>
+        <li><a href="{{ path('BSOrder_state_open',{ 'state': 4 }) }}">Offene</a></li>
+        <!-- <li><a href="{{ path('BSOrder_packet') }}">Versand</a></li> -->
 
     </ul>
+
+
+</div>
+
+
+<div class="menu">
+    <h1>Daten</h1>
+    <ul>
+        <li><a href="{{ path('BSData_plant', { 'page': 1 }) }}" >Pflanzen</a></li>
+        <li><a href="{{ path('BSData_product', { 'page': 1 }) }}" >Waren</a></li>
+        <li><a href="{{ path('BSData_stock') }}" >Lager</a></li>
+
+    </ul>
+
 
 </div>
 

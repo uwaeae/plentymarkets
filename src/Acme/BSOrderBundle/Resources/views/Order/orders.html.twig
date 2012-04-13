@@ -1,7 +1,13 @@
 {% extends '::base.html.twig' %}
-{% block javascripts %}
-    {{ parent() }}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('/css/orders.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src=" http://code.jquery.com/jquery-1.7.2.js" type="text/javascript"></script>
     <script src="{{ asset('/js/orders.js') }}" type="text/javascript"></script>
 {% endblock %}
 
@@ -12,12 +18,11 @@
 
 {% block body %}
 
-<div id="title"> Aufträge zur Kommisonierung</div>
+<div id="title"> Aufträge Status {{state}} zur Kommisonierung</div>
 
 
-<a href='' onclick="selectAll()" >
- alle auswählen
-</a>
+
+
 
         <table class="table_orders">
             <thead>
@@ -50,14 +55,14 @@
                     <input type="checkbox" name="ID{{order.head.getOrderID}}" value="{{order.head.getOrderID}}">
                 </td>
 
-                <td rowspan="2">
+                <td rowspan="2" class="Order_NO">
                {{order.head.getOrderID}}
               </td>
                 <td rowspan="2">
                     {{order.head.getOrderStatus| number_format(2, ',', '.') }}
 
                </td>
-                <td>
+                <td class="Order_Name">
                     {{order.head.getFirstName}}  {{order.head.getLastname}}
                 </td>
                 <td>
@@ -106,6 +111,7 @@
             </tbody>
                 <input type="submit" value="Sammeldruck erstellen" />
             </form>
+
         </table>
 
 

@@ -1,0 +1,93 @@
+
+{% extends '::base.html.twig' %}
+{% block title %}Pflanzen{% endblock %}
+
+
+{% block javascripts %}
+<script src="{{ asset('/js/jquery.js') }}" type="text/javascript"></script>
+<script src="{{ asset('/js/plant.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+
+
+{% block body %}
+<h1>Pflanzenliste</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>{{ pagination.sortable('Name', 'a.name')|raw }}</th>
+            <th>{{ pagination.sortable('Code', 'a.code')|raw }}</th>
+            <th>{{ pagination.sortable('Latein', 'a.latein')|raw }}</th>
+            <th>Winterhärte</th>
+            <th>Standort</th>
+            <th>Synonym</th>
+            <th>Höhe</th>
+            <th>Blütezeit</th>
+            <th>Farbe</th>
+            <th>Duft</th>
+            <th>Licht</th>
+            <th>Boden</th>
+            <th>Habitus</th>
+            <th>Preisgruppe</th>
+            <th>Topfgröße</th>
+            <th>Lieferbar</th>
+            <th>Bemerkung</th>
+            <th>Aktionen</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in pagination %}
+        <tr onclick="$('div .plantshow').load('{{ path('BSData_plant_edit', { 'id': entity.id }) }}'); ">
+            <td>{{ entity.name }}</td>
+            <td>{{ entity.code }}</td>
+            <td>{{ entity.latein }}</td>
+            <td>{{ entity.hardy }}</td>
+            <td>{{ entity.place }}</td>
+            <td>{{ entity.synonym }}</td>
+            <td>{{ entity.hfrom }} - {{ entity.hto }}</td>
+            <td>{{ entity.bfrom }} - {{ entity.bto }}</td>
+            <td>{{ entity.bcolor }}</td>
+            <td>{{ entity.flavour }}</td>
+            <td>{{ entity.light }}</td>
+            <td>{{ entity.base }}</td>
+            <td>{{ entity.habitus }}</td>
+            <td>{{ entity.pricegroup }}</td>
+            <td>{{ entity.potsize }}</td>
+            <td>{{ entity.aviable }}</td>
+            <td>{{ entity.comment }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('BSData_plant_edit', { 'id': entity.id }) }}">Bearbeiten</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+
+    {% endfor %}
+    </tbody>
+</table>
+<div class="navigation">
+
+
+
+    {{ pagination.render()|raw }}
+
+    <ul class="buttons">
+        <li>
+            <a class="button" href="{{ path('BSData_plant_new') }}">
+                Neue Pflanze
+            </a>
+        </li>
+        <li><a class="button" href="{{ path('BSData_mainmenu') }}" >zurück</a></li>
+
+    </ul>
+
+</div>
+
+
+
+<div class="plantshow"> </div>
+
+        {% endblock %}
