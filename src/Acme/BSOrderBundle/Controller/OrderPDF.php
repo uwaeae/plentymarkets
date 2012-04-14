@@ -119,7 +119,7 @@ class OrderPDF extends \FPDF
         }
 
         $this->Cell(10,$cellHight,$item->getQuantity(),'',0,'C');
-        $this->Cell(130,$cellHight,utf8_decode($item->getItemText()),'',0,'L');
+        $this->Cell(130,$cellHight,substr(utf8_decode($Product->getName2()." ".$item->getItemText()),0,65),'',0,'L');
         $this->Cell(20,$cellHight,sprintf("%01.2f " , $item->getPrice()).EURO,'',0,'L');
         $this->Cell(5,$cellHight,' ' ,1,1,'L');
 
