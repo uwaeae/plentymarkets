@@ -88,7 +88,7 @@ class OrderPDF extends \FPDF
         $this->SetTextColor(0,0,0);
         $this->Cell(25,8,utf8_decode("für die Aufträge:"),'',1,'L');
        foreach($Order as $o){
-           $this->Cell(25,8,$o,'',0,'L');
+           $this->Cell(15,8,$o.',','',0,'L');
        }
        $this->Ln(10);
 
@@ -100,8 +100,8 @@ class OrderPDF extends \FPDF
         $this->Cell(180,$cellHight,utf8_decode($Stock),'B',1,'L');
         $this->SetFont('Arial','',10);
         $this->SetTextColor(0,0,0);
-        $this->Cell(25,$cellHight,'Code','B',0,'L');
         $this->Cell(10,$cellHight,'Menge','B',0,'C');
+        $this->Cell(25,$cellHight,'Code','B',0,'L');
         $this->Cell(130,$cellHight,'Bezeichung','B',0,'L');
         $this->Cell(15,$cellHight,'Preis','B',0,'L');
         $this->Cell(5,$cellHight,'OK','B',1,'L');
@@ -110,6 +110,7 @@ class OrderPDF extends \FPDF
 
     function ItemsPickBody( $Quantity, $Product,\Acme\BSDataBundle\Entity\OrdersItem $item,$cellHight){
         $this->SetFont('Arial','',12);
+        $this->Cell(10,$cellHight,$item->getQuantity(),'',0,'C');
         if($Product){
             //$this->Cell(20,$cellHight,($Product->getStockground()?$Product->getStockground():''),'B',0,'L'); // TODO: florian Lagerort finden
             $this->Cell(25,$cellHight,utf8_decode($Product->getArticleNo()),'',0,'L');
@@ -118,7 +119,6 @@ class OrderPDF extends \FPDF
             $this->Cell(25,$cellHight,'','',0,'L');
         }
 
-        $this->Cell(10,$cellHight,$item->getQuantity(),'',0,'C');
         $this->Cell(130,$cellHight,substr(utf8_decode($Product->getName2()." ".$item->getItemText()),0,65),'',0,'L');
         $this->Cell(20,$cellHight,sprintf("%01.2f " , $item->getPrice()).EURO,'',0,'L');
         $this->Cell(5,$cellHight,' ' ,1,1,'L');
