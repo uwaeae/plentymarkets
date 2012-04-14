@@ -138,7 +138,7 @@ class OrderPDF extends \FPDF
         $this->SetFont('Arial','B',48);
         $this->SetTextColor(0,0,0);
         $this->Text(10, $hdelta + 20,$Order->getOrderID());
-        $this->Text(10, $hdelta + 50,$Order->getLastname());
+        $this->Text(10, $hdelta + 50,utf8_decode($Order->getLastname()));
         $this->SetFont('Arial','',24);
         $this->Text(80, $hdelta + 20,utf8_decode($Order->getZIP().' '.$Order->getCity()));
 
