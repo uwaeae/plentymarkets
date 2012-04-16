@@ -110,7 +110,7 @@ class DefaultController extends Controller
                         $PLIstock = "[0] Kein Lager";
                     }
                     $aSortOrderItems[$PLIstock][] = array('product'=>$product,'item'=>$item );
-                    $PLIartID=  $product->getArticleID();
+                    $PLIartID=  $product->getArticleNo();
 
 
                     if(isset($aSortPicklistItems[ $PLIstock][$PLIartID])){
@@ -169,6 +169,8 @@ class DefaultController extends Controller
 
 
             $pdf->ItemsPickHeader($key,$cellHight);
+
+            ksort($sitem);
 
             foreach($sitem as $item) {
                 $pdf->ItemsPickBody($item,$cellHight);
