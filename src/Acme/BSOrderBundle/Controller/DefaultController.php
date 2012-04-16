@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 
 use Acme\BSDataBundle\Entity\Product;
+use Acme\BSDataBundle\Entity\Orders;
 
 use Acme\BSDataBundle\Form\ProductType;
 //use Acme\BSOrderBundle\Controller\OrderPDF;
@@ -88,7 +89,7 @@ class DefaultController extends Controller
 
             //Bestellungsdaten aus localer Datenbank holen
             $repository = $this->getDoctrine()->getRepository('BSDataBundle:Orders');
-            $oOrder = $repository->findOneBy(array('OrderID' => $rOrder));
+            $oOrder =  $repository->findOneBy(array('OrderID' => $rOrder));
             //Betsellinformattionen holen aus localer Datenbank
             $repository = $this->getDoctrine()->getRepository('BSDataBundle:OrdersInfo');
             $aOrderInfo = $repository->findBy(array('OrderID' => $rOrder));
@@ -110,9 +111,32 @@ class DefaultController extends Controller
                     }
                     $aSortOrderItems[$PLIstock][] = array('product'=>$product,'item'=>$item );
                     $PLIartID=  $product->getArticleID();
-                    $PLIarray = array('item'=>$item,'product'=>$product,
-                            'quantity'=>(isset($aSortPicklistItems[ $PLIstock][$PLIartID])? $aSortPicklistItems[ $PLIstock][$PLIartID]['quantity'] + $item->getQuantity():$item->getQuantity()));
+
+
+                    if(isset($aSortPicklistItems[ $PLIstock][$PLIartID])){
+                        $PLIorder = $aSortPicklistItems[ $PLIstock][$PLIartID]['orders'];
+                        $PLIorder[] = array('OrderID'=>$rOrder,'Name'=> utf8_decode($oOrder->getLastname()),'Quantity'=>$item->getQuantity());
+                        $PLIarray = array(  'item'=>$item,
+                            'product'=>$product,
+                            'orders'=> $PLIorder,
+                            'quantity'=>( $aSortPicklistItems[ $PLIstock][$PLIartID]['quantity'] + $item->getQuantity())
+                            );
+                    }else{
+                        $PLIorder = array();
+                        $PLIorder[] = array('OrderID'=>$rOrder,'Name'=> utf8_decode($oOrder->getLastname()),'Quantity'=>$item->getQuantity());
+                        $PLIarray = array(  'item'=>$item,
+                            'product'=>$product,
+                            'orders'=> $PLIorder,
+                            'quantity'=>( $item->getQuantity())
+                        );
+                    }
+
+
+
                     $aSortPicklistItems[ $PLIstock][$PLIartID] = $PLIarray;
+
+
+
                     $oOrderQuantity +=  $item->getQuantity();
                     }
                 }
@@ -136,13 +160,18 @@ class DefaultController extends Controller
 
             }
 
-        $pdf->AddPage();
+        $pdf->AddPage('L');
         $pdf->PicklistHeader($oRequest);
+        ksort($aSortPicklistItems);
+
         foreach($aSortPicklistItems as $key => $sitem){
+
+
+
             $pdf->ItemsPickHeader($key,$cellHight);
 
             foreach($sitem as $item) {
-                $pdf->ItemsPickBody($item['quantity'],$item['product'],$item['item'],$cellHight);
+                $pdf->ItemsPickBody($item,$cellHight);
                 $row++;
             }
         }
