@@ -1,4 +1,10 @@
-<h1>Stock edit</h1>
+{% extends '::base.html.twig' %}
+{% block title %}Lager- {{ entity.name }} - Bearbeiten{% endblock %}
+
+
+{% block body %}
+
+<h1>Lager - {{ entity.name }} - Bearbeiten</h1>
 
 <form action="{{ path('BSData_stock_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
     {{ form_widget(edit_form) }}
@@ -7,16 +13,17 @@
     </p>
 </form>
 
-<ul class="record_actions">
+<ul class="record_actions buttons">
     <li>
-        <a href="{{ path('BSData_stock') }}">
+        <a class="button" href="{{ path('BSData_stock') }}">
             Back to the list
         </a>
     </li>
     <li>
-        <form action="{{ path('BSData_stock_delete', { 'id': entity.id }) }}" method="post">
+        <form  action="{{ path('BSData_stock_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+            <button class="button" type="submit">Delete</button>
         </form>
     </li>
 </ul>
+        {% endblock %}

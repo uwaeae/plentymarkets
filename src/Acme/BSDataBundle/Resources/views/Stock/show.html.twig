@@ -1,4 +1,10 @@
-<h1>Stock</h1>
+{% extends '::base.html.twig' %}
+{% block title %}Lager{% endblock %}
+
+
+{% block body %}
+
+<h1>Lager - {{ entity.name }}</h1>
 
 <table class="record_properties">
     <tbody>
@@ -17,21 +23,22 @@
     </tbody>
 </table>
 
-<ul class="record_actions">
+<ul class="record_actions buttons">
     <li>
-        <a href="{{ path('BSData_stock') }}">
-            Back to the list
+        <a class="button" href="{{ path('BSData_stock') }}">
+            zurück
         </a>
     </li>
     <li>
-        <a href="{{ path('BSData_stock_edit', { 'id': entity.id }) }}">
-            Edit
+        <a class="button" href="{{ path('BSData_stock_edit', { 'id': entity.id }) }}">
+            Bearbeiten
         </a>
     </li>
     <li>
         <form action="{{ path('BSData_stock_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+            <button class="button" type="submit">Löschen</button>
         </form>
     </li>
 </ul>
+        {% endblock %}

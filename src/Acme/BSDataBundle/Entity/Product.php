@@ -159,45 +159,6 @@ class Product
         return $this->price;
     }
 
-    /**
-     * Set description
-     *
-     * @param text $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
-    /**
-     * Get description
-     *
-     * @return text 
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Set short_description
-     *
-     * @param text $shortDescription
-     */
-    public function setShortDescription($shortDescription)
-    {
-        $this->short_description = $shortDescription;
-    }
-
-    /**
-     * Get short_description
-     *
-     * @return text 
-     */
-    public function getShortDescription()
-    {
-        return $this->short_description;
-    }
 
 
     /**
@@ -220,25 +181,8 @@ class Product
         return $this->label_text;
     }
 
-    /**
-     * Set botanical
-     *
-     * @param text $botanical
-     */
-    public function setBotanical($botanical)
-    {
-        $this->botanical = $botanical;
-    }
 
-    /**
-     * Get botanical
-     *
-     * @return text 
-     */
-    public function getBotanical()
-    {
-        return $this->botanical;
-    }
+
 
     /**
      * Set article_id

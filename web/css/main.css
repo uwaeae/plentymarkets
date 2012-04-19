@@ -137,6 +137,8 @@ caption {
     text-align: right;
 }
 
+
+
 th {
     font: bold 11px  Arial, Helvetica, sans-serif;
     color: #4f6b72;
@@ -161,10 +163,17 @@ td {
     border-right: 1px solid #C1DAD7;
     border-bottom: 1px solid #C1DAD7;
     background: #fff;
-    xpadding: 6px 6px 6px 12px;
+    padding: 0px 6px 0px 12px;
     color: #4f6b72;
+    font-size: 14pt;
+    text-align: left;
+    height: 1em;
 }
 
+td ul{
+    margin: 0;
+    padding: 0
+}
 
 td.alt {
     background: #F5FAFA;
@@ -185,6 +194,7 @@ th.specalt {
     font: bold 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
     color: #797268;
 }
+
 
 .button{
 

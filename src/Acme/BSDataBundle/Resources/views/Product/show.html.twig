@@ -28,22 +28,12 @@
             <th>Price</th>
             <td>{{ entity.price }}</td>
         </tr>
-        <tr>
-            <th>Description</th>
-            <td>{{ entity.description }}</td>
-        </tr>
-        <tr>
-            <th>Short_description</th>
-            <td>{{ entity.shortdescription }}</td>
-        </tr>
+
         <tr>
             <th>Label_text</th>
             <td>{{ entity.labeltext }}</td>
         </tr>
-        <tr>
-            <th>Botanical</th>
-            <td>{{ entity.botanical }}</td>
-        </tr>
+
     </tbody>
 </table>
 
@@ -61,7 +51,7 @@
     <li>
         <form action="{{ path('BSData_product_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+            <button class="button" type="submit">Löschen</button>
         </form>
     </li>
 </ul>

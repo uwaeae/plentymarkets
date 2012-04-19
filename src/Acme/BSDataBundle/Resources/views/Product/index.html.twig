@@ -5,35 +5,34 @@
 
 {% block body %}
 
-<h1>Product list</h1>
+<h1>Artikel </h1>
 
 <table class="records_list">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Article_id</th>
-            <th>Article_no</th>
-            <th>Name</th>
+
+            <th>{{ pagination.sortable('Code', 'a.article_no')|raw }}</th>
+            <th>{{ pagination.sortable('Name', 'a.name')|raw }}</th>
             <th>Price</th>
-            <th>Description</th>
-            <th>Short_description</th>
-            <th>Label_text</th>
-            <th>Botanical</th>
+            <th>Lager</th>
+
+
+
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
     {% for entity in pagination %}
         <tr>
-            <td><a href="{{ path('BSData_product_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.articleid }}</td>
+
+
             <td>{{ entity.articleno }}</td>
             <td>{{ entity.name }}</td>
             <td>{{ entity.price }}</td>
-            <td>{{ entity.description }}</td>
-            <td>{{ entity.shortdescription }}</td>
-            <td>{{ entity.labeltext }}</td>
-            <td>{{ entity.botanical }}</td>
+            <td>{{ entity.stock }}</td>
+
+
+
             <td>
                 <ul>
                     <li>
@@ -52,12 +51,12 @@
     {{ pagination.render()|raw }}
 </div>
 
-<ul>
+<ul class="buttons">
     <li>
-        <a href="{{ path('BSData_product_new') }}">
-            Create a new entry
+        <a class="button" href="{{ path('BSData_product_new') }}">
+            Neu
         </a>
     </li>
-    <li><a href="{{ path('BSData_mainmenu') }}" >zurück</a></li>
+    <li><a class="button" href="{{ path('BSData_mainmenu') }}" >zurück</a></li>
 </ul>
         {% endblock %}
