@@ -210,13 +210,13 @@ class Product
 
         $this->setArticleId($item->ItemID);
         $this->setArticleNo( $item->ItemNo );
-        $this->setBotanical($item->FreeTextFields->Free2);
-        $this->setDescription($item->Texts->LongDescription);
+       // $this->setBotanical($item->FreeTextFields->Free2);
+       // $this->setDescription($item->Texts->LongDescription);
         $this->setLabelText($item->FreeTextFields->Free3);
         $this->setName($item->Texts->Name);
         $this->setName2($item->Texts->Name2);
         $this->setPrice($item->PriceSet->Price);
-        $this->setShortDescription($item->Texts->ShortDescription);
+       // $this->setShortDescription($item->Texts->ShortDescription);
         //$this->setStockground();
 
     }
@@ -226,11 +226,11 @@ class Product
         $this->setArticleId($item->getArticleID());
         $this->setArticleNo($item->getArticleID());
         //$this->setBotanical($item->FreeTextFields->Free2);
-        $this->setDescription( $item->getItemText());
+        //$this->setDescription( $item->getItemText());
         //$this->setLabelText($item->FreeTextFields->Free3);
         $this->setName($item->getItemText());
         $this->setPrice($item->getPrice());
-        $this->setShortDescription($item->getItemText());
+      //  $this->setShortDescription($item->getItemText());
     }
 
     public function  __toString(){
