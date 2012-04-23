@@ -40,7 +40,7 @@ class Plant
     /**
      * @var string $name
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255,nullable=true)
      */
     private $name;
 
@@ -61,14 +61,14 @@ class Plant
     /**
      * @var string $hardy
      *
-     * @ORM\Column(name="hardy", type="string", length=255)
+     * @ORM\Column(name="hardy", type="string", length=255,nullable=true)
      */
     private $hardy;
 
     /**
      * @var string $place
      *
-     * @ORM\Column(name="place", type="string", length=255)
+     * @ORM\Column(name="place", type="string", length=255,nullable=true)
      */
     private $place;
 

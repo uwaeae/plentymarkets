@@ -18,7 +18,7 @@
 
 {% block body %}
 
-<div id="title"> Aufträge Status {{state}} zur Kommisonierung</div>
+<div id="title"> Alle Zwischengespeicherten Aufträge</div>
 
 
 
@@ -58,7 +58,7 @@
                 <td rowspan="2" class="Order_NO">
                {{order.head.getOrderID}}
               </td>
-                <td rowspan="1">
+                <td rowspan="2">
                     {{order.head.getOrderStatus| number_format(2, ',', '.') }}
 
                </td>
@@ -75,13 +75,10 @@
             </tr>
             <tr>
 
-                <td colspan="1">
-                    {{order.head.getOrderType}}
-                </td>
+
                 <td colspan="3">
                     <div>
-                        <a class="order_items_view " href="javascript:none;"> Details</a>
-                        <table class="order_items">
+                        <table>
                             {% for item in order.items %}
                             <tr>
                             <td>

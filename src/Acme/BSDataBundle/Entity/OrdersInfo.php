@@ -21,15 +21,7 @@ class OrdersInfo
      */
     private $id;
 
-    /**
- * @var integer $orders
- *
- *
- * @ORM\ManyToOne(targetEntity="Orders", inversedBy="ordersinfos")
- * @ORM\JoinColumn(name="orders_id", referencedColumnName="id")
- */
 
-    private $orders;
 
     /**
      * @var integer $OrderID

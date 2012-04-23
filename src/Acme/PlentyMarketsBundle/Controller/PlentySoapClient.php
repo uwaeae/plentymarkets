@@ -386,6 +386,7 @@ class PlentySoapClient extends \SoapClient
         $order->setPackageNumber($AOorder->OrderHead->PackageNumber);
         $order->setTotalBrutto($AOorder->OrderHead->TotalBrutto);
         $order->setOrderStatus($AOorder->OrderHead->OrderStatus);
+        $order->setOrderType($AOorder->OrderHead->OrderType);
         if(isset($AOorder->OrderDeliveryAddress->Street)){
            // $order->setTitle($AOorder->OrderDeliveryAddress->Title);
             $order->setFirstname($AOorder->OrderDeliveryAddress->FirstName);

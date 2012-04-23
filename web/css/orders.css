@@ -1,5 +1,25 @@
 
 
+.order_items_view{
+    cursor: pointer;
+    text-decoration: none;
+    background-color: #ddffdd;
+    color: #000000;
+    font-size: 8pt;
+    padding: 2px;
+}
+.order_items_view:hover{
+
+
+    background-color: #33ff33
+}
+
+
+
+.order_items{
+    display: none;
+
+}
 
 .Order_NO{
     font-size: 16pt;

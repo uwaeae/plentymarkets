@@ -15,7 +15,14 @@
 <div id="menu2">
 
     <ul>
-        <li><a href="{{ path('BSOrder_state') }}" >Status 6 setzen</a></li>
+        <li>   <form action="{{ path('BSOrder_set_state') }}" method="post" >
+            {% for order in orders %}
+                    <input type="hidden" name="ID{{order}}" value="{{order}}">
+            {% endfor %}
+                    <input type="submit" value="Status 6 setzen" />
+                </form>
+
+         </li>
 
         <li><a href="{{ path('BSOrder_state') }}" >zurück</a></li>
 

@@ -41,7 +41,12 @@ class Orders
      * @ORM\Column(name="OrderStatus",type="decimal", scale=2)
      */
     private $OrderStatus;
-
+    /**
+     * @var string $OrderType
+     *
+     * @ORM\Column(name="OrderType", type="string", length=255)
+     */
+    private $OrderType;
 
 
     /**
@@ -143,6 +148,13 @@ class Orders
     private $PackageNumber;
 
     /**
+     * @var string $Picklist
+     *
+     * @ORM\Column(name="Picklist", type="string", length=255,nullable=true)
+     */
+    private $Picklist;
+
+    /**
      * @var float $TotalBrutto
      *
      * @ORM\Column(name="TotalBrutto", type="float")
@@ -150,11 +162,11 @@ class Orders
     private $TotalBrutto;
 
 
-    /**
-     * @ORM\OneToMany(targetEntity="OrdersInfo", mappedBy="Orders")
-     * @var ArrayCollection $OrdersInfos
-     */
-    private $OrdersInfos;
+
+
+
+
+
 
 
     
@@ -595,5 +607,45 @@ class Orders
     public function getPrinted()
     {
         return $this->Printed;
+    }
+
+    /**
+     * Set Picklist
+     *
+     * @param string $picklist
+     */
+    public function setPicklist($picklist)
+    {
+        $this->Picklist = $picklist;
+    }
+
+    /**
+     * Get Picklist
+     *
+     * @return string 
+     */
+    public function getPicklist()
+    {
+        return $this->Picklist;
+    }
+
+    /**
+     * Set OrderType
+     *
+     * @param string $orderType
+     */
+    public function setOrderType($orderType)
+    {
+        $this->OrderType = $orderType;
+    }
+
+    /**
+     * Get OrderType
+     *
+     * @return string 
+     */
+    public function getOrderType()
+    {
+        return $this->OrderType;
     }
 }

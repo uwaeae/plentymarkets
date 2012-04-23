@@ -25,7 +25,21 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('BSOrderBundle:Default:index.html.twig');
+
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = "SELECT a FROM BSDataBundle:Orders a";
+        $query = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $this->get('request')->query->get('page', 1),
+            10
+        );
+       // return array('pagination' => $pagination);
+
+        return $this->render('BSOrderBundle:Order:orderslocal.html.twig', array(
+            'orders'=>$pagination      ));
     }
 
     public function stateAction($state )
@@ -63,10 +77,28 @@ class DefaultController extends Controller
         return "TEST";//$pdf->Output();
     }
 
+
+    public function setStateAction(Request $request,$state){
+        $oRequest = array();
+
+        foreach($request->request->all() as $Order) {
+            $oRequest[] = strval($Order);
+        }
+
+        $oPlentySoapClient	=	new PlentySoapClient($this);
+
+        foreach($oRequest as $rOrder){
+            $oPlentySoapClient->doSetOrderStatus($rOrder,$state);
+
+        }
+
+
+    }
+
     public function printAction(Request $request)
     {
 
-
+        $Packlistname = "Packliste-".date("YmdHis");
         $aOrders = array();
         //$orders = $oPlentySoapClient->doGetOrdersWithState(array('OrderStatus'=> doubleval(5)));
         //$OrderArray = $orders->item;
@@ -90,6 +122,10 @@ class DefaultController extends Controller
             //Bestellungsdaten aus localer Datenbank holen
             $repository = $this->getDoctrine()->getRepository('BSDataBundle:Orders');
             $oOrder =  $repository->findOneBy(array('OrderID' => $rOrder));
+            $oOrder->setPicklist($Packlistname);
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->persist($oOrder);
+            $em->flush();
             //Betsellinformattionen holen aus localer Datenbank
             $repository = $this->getDoctrine()->getRepository('BSDataBundle:OrdersInfo');
             $aOrderInfo = $repository->findBy(array('OrderID' => $rOrder));
@@ -180,12 +216,13 @@ class DefaultController extends Controller
 
 
 
-        $timestamp = date("YmdHis");
-        $pdf->Output("print/Packliste".$timestamp.".pdf",'F');
+
+        $pdf->Output("print/".$Packlistname.".pdf",'F');
 
 
         return $this->render('BSOrderBundle:Order:print.html.twig', array(
-            'urlPDF'=> "/print/Packliste".$timestamp.".pdf"
+            'urlPDF'=> "/print/".$Packlistname.".pdf",
+            "orders"=> $oRequest
         ));
 
 
