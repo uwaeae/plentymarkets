@@ -88,7 +88,12 @@ class OrderPDF extends \FPDF
         $this->SetTextColor(0,0,0);
         $this->Cell(25,8,utf8_decode("für die Aufträge:"),'',1,'L');
        foreach($Order as $o){
-           $this->Cell(15,8,$o.',','',0,'L');
+
+           $this->Cell(15,8,$o->getOrderID(),'',0,'L');
+           $this->Cell(30,8,utf8_decode($o->getLastname().' '.$o->getFirstname()),'',0,'L');
+           $this->Cell(50,8,utf8_decode($o->getZIP().' '.$o->getCity()),'',0,'L');
+           $this->Cell(30,8,$o->getCountryID(),'',0,'L');
+           $this->Cell(30,8,$o->getTelephone(),'',1,'L');
        }
        $this->Ln(10);
 

@@ -58,6 +58,8 @@ class PlentySoapClient extends \SoapClient
 	private $SOAP_USERNAME	=	'Florian';
 	private $SOAP_USERPASS	=	'blumenschule';
   private $controller;
+  private $doctrine;
+
 	
 	/**
      * Der Konstruktor übergibt die WSDL-URL an die Superklasse SoapClient.
@@ -66,11 +68,12 @@ class PlentySoapClient extends \SoapClient
      * 
      * http://www.php.net/manual/de/class.soapclient.php
 	 */
-	public function __construct($controller)
+	public function __construct($controller,$doctrine)
 	{
 
 		parent::__construct($this->WSDL_URL, $this->getSoapClientOptions());
     $this->controller = $controller;
+    $this->doctrine = $doctrine;
     $this->doAuthenticication();
   }
 	
@@ -125,8 +128,7 @@ class PlentySoapClient extends \SoapClient
 		 * Durch den try-catch Block werden SoapFault abgefangen. Hierbei
 		 * handelt es sich um allgemeine SOAP-Fehler.
 		 */
-      $repository = $this->controller->getDoctrine()
-          ->getRepository('PlentyMarketsBundle:Token');
+      $repository = $this->doctrine->getRepository('PlentyMarketsBundle:Token');
 
       $query = $repository->createQueryBuilder('t')
           ->where(' t.date = CURRENT_DATE()')
@@ -165,7 +167,7 @@ class PlentySoapClient extends \SoapClient
           $oToken->setToken($Token);
           $oToken->setUserid($UserID);
           $oToken->setDate($today);
-          $em = $this->controller->getDoctrine()->getEntityManager();
+          $em = $this->doctrine->getEntityManager();
           $em->persist($oToken);
           $em->flush();
           $this->createSoapHeader($UserID, $Token);
@@ -291,11 +293,11 @@ class PlentySoapClient extends \SoapClient
     /**
      * Get Orders mit einem bestimmten Status
      */
-    public function doGetOrdersWithState($state = 5.5 )
+    public function doGetOrdersWithState($state = 5.5,$page = 1 )
     {
 
         $oResponse	= null;
-
+        $options['Page'] = null;
         $options['OrderType'] = null;
         $options['OrderStatus'] =  doubleval($state);
         $options['MultishopID'] = 0;
@@ -303,43 +305,58 @@ class PlentySoapClient extends \SoapClient
         $options['LastUpdate'] = null;
         $options['GetOrderDeliveryAddress'] = true;
         $options['GetOrderCustomerAddress'] = true;
-        $options['Page'] = null;
+
         $options['GetOrderInfo'] = true;
 
         //$options = $option + $options;
-
-
+        $output = array();
         try
         {
             $oResponse	=	$this->__soapCall('SearchOrders',array( $options));
         }
         catch(\SoapFault $sf)
-            {
+        {
             print_r("Es kam zu einem Fehler beim Call GetAuthentificationToken<br>");
             print_r($sf->getMessage());
         }
+        if ( isset($oResponse->Success) and $oResponse->Orders != null ){
+            $output = array_merge($output, $this->syncOrders($oResponse->Orders->item));
+            if(isset($oResponse->Pages)) $page = $oResponse->Pages;
+        }
 
-
-        if( isset($oResponse->Success) and $oResponse->Orders != null )
+        for($i = 2; $i < $page; $i++)
         {
 
-            return($this->syncOrders($oResponse->Orders->item));
-        }
-        else
-        {
-            return(array());
-        }
+            $options['Page'] = $i  ;
+            try
+            {
+                $oResponse	=	$this->__soapCall('SearchOrders',array( $options));
+            }
+            catch(\SoapFault $sf)
+                {
+                print_r("Es kam zu einem Fehler beim Call GetAuthentificationToken<br>");
+                print_r($sf->getMessage());
+            }
+            if ( isset($oResponse->Success) and $oResponse->Orders != null ){
+                $output = array_merge($output, $this->syncOrders($oResponse->Orders->item));
+
+            }
+
+            }
+
+        return $output;
+
     }
 
     private function syncOrders($aoOrders){
 
-        $OrderRepro = $this->controller->getDoctrine()
+        $OrderRepro = $this->doctrine
             ->getRepository('BSDataBundle:Orders');
 
-        $OrderItemRepro = $this->controller->getDoctrine()
+        $OrderItemRepro = $this->doctrine
             ->getRepository('BSDataBundle:OrdersItem');
 
-        $OrderInfoRepro = $this->controller->getDoctrine()
+        $OrderInfoRepro = $this->doctrine
             ->getRepository('BSDataBundle:OrdersInfo');
 
 
@@ -348,7 +365,7 @@ class PlentySoapClient extends \SoapClient
 
 
 
-            $BSOrder = $OrderRepro->findOneBy(array('OrderID' => $PMOrder->OrderHead->OrderID));
+            $BSOrder =  $OrderRepro->findOneBy(array('OrderID' => $PMOrder->OrderHead->OrderID));
 
             //$aOrder[] =  $this->syncOrderData($AOorder,$oOrder);
             if(!$BSOrder) {
@@ -377,7 +394,7 @@ class PlentySoapClient extends \SoapClient
 
     private function syncOrderData($AOorder,Orders $order){
 
-        $em = $this->controller->getDoctrine()->getEntityManager();
+        $em = $this->doctrine->getEntityManager();
         // Order HEAD
 
         $order->setOrderID($AOorder->OrderHead->OrderID);
@@ -387,6 +404,10 @@ class PlentySoapClient extends \SoapClient
         $order->setTotalBrutto($AOorder->OrderHead->TotalBrutto);
         $order->setOrderStatus($AOorder->OrderHead->OrderStatus);
         $order->setOrderType($AOorder->OrderHead->OrderType);
+        $order->setPaymentID($AOorder->OrderHead->MethodOfPaymentID);
+        $order->setInvoiceNumber($AOorder->OrderHead->InvoiceNumber);
+
+
         if(isset($AOorder->OrderDeliveryAddress->Street)){
            // $order->setTitle($AOorder->OrderDeliveryAddress->Title);
             $order->setFirstname($AOorder->OrderDeliveryAddress->FirstName);
@@ -425,7 +446,7 @@ class PlentySoapClient extends \SoapClient
     private function syncOrderInfoData($AOorder,$order){
 
 
-        $em = $this->controller->getDoctrine()->getEntityManager();
+        $em = $this->doctrine->getEntityManager();
         $aOrderInfos = array();
         if($AOorder->OrderHead->OrderInfos != null){
 
@@ -450,7 +471,7 @@ class PlentySoapClient extends \SoapClient
     private function syncOrderItemsData($AOorder){
 
 
-        $em = $this->controller->getDoctrine()->getEntityManager();
+        $em = $this->doctrine->getEntityManager();
 
 
         $aOrderItems = $em->getRepository('BSDataBundle:OrdersItem')->findBy(array('OrderID' => $AOorder->OrderHead->OrderID));

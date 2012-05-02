@@ -47,7 +47,7 @@ class DefaultController extends Controller
         /**
          * Es wird ein neuer Soap-Client angelegt.
          */
-        $oPlentySoapClient	=	new PlentySoapClient($this);
+        $oPlentySoapClient	=	new PlentySoapClient($this,$this->getDoctrine() );
 
         /**
          * Nachdem dieser angelegt wurde, startet die Authentifizierung
@@ -85,7 +85,7 @@ class DefaultController extends Controller
             $oRequest[] = strval($Order);
         }
 
-        $oPlentySoapClient	=	new PlentySoapClient($this);
+        $oPlentySoapClient	=	new PlentySoapClient($this,$this->getDoctrine());
 
         foreach($oRequest as $rOrder){
             $oPlentySoapClient->doSetOrderStatus($rOrder,$state);
@@ -114,6 +114,7 @@ class DefaultController extends Controller
 
         $cellHight= 6;
         $aSortPicklistItems = array();
+        $aSortPicklistHeader = array();
 
         foreach($oRequest as $rOrder){
 
@@ -126,6 +127,7 @@ class DefaultController extends Controller
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($oOrder);
             $em->flush();
+            $aSortPicklistHeader[] = $oOrder;
             //Betsellinformattionen holen aus localer Datenbank
             $repository = $this->getDoctrine()->getRepository('BSDataBundle:OrdersInfo');
             $aOrderInfo = $repository->findBy(array('OrderID' => $rOrder));
@@ -135,6 +137,8 @@ class DefaultController extends Controller
             $repository = $this->getDoctrine()->getRepository('BSDataBundle:OrdersItem');
             $aOrderItem = $repository->findBy(array('OrderID' => $rOrder));
             $aSortOrderItems = array();
+
+
             $oOrderQuantity = 0;
             //Bestellprositonen zusammen stellen und nach Lagerort Sortieren
             foreach($aOrderItem as $item){
@@ -169,7 +173,7 @@ class DefaultController extends Controller
 
 
 
-                    $aSortPicklistItems[ $PLIstock][$PLIartID] = $PLIarray;
+                    $aSortPicklistItems[$PLIstock][$PLIartID] = $PLIarray;
 
 
 
@@ -196,8 +200,9 @@ class DefaultController extends Controller
 
             }
 
+        $pdf->AddPage('');
+        $pdf->PicklistHeader($aSortPicklistHeader);
         $pdf->AddPage('L');
-        $pdf->PicklistHeader($oRequest);
         ksort($aSortPicklistItems);
 
         foreach($aSortPicklistItems as $key => $sitem){
@@ -240,7 +245,7 @@ class DefaultController extends Controller
         if($item) return $item;
         else{
             $em = $this->getDoctrine()->getEntityManager();
-            $oPlentySoapClient	=	new PlentySoapClient($this);
+            $oPlentySoapClient	=	new PlentySoapClient($this,$this->getDoctrine());
             $item = new Product();
             $PMItem = $oPlentySoapClient->doGetItemBase(array('ItemID'=>$ArtileID[0]));
             if(isset($PMItem->ItemID)) {

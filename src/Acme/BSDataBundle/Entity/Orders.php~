@@ -162,14 +162,31 @@ class Orders
     private $TotalBrutto;
 
 
+    /**
+     * @var string $invoiceNumber
+     *
+     * @ORM\Column(name="invoice", type="string", length=255,nullable=true)
+     */
+    private $invoiceNumber;
+
+
+    /**
+     * @var integer $paymentID
+     *
+     * @ORM\Column(name="paymentID", type="integer" )
+     */
+    private $paymentID;
+
+    /**
+     * @var string $exportDate
+     *
+     * @ORM\Column(name="exportDate", type="string", length=255,nullable=true)
+     */
+    private $exportDate;
 
 
 
 
-
-
-
-    
 
 
     /**
@@ -647,5 +664,45 @@ class Orders
     public function getOrderType()
     {
         return $this->OrderType;
+    }
+
+    /**
+     * Set invoiceNumber
+     *
+     * @param string $invoiceNumber
+     */
+    public function setInvoiceNumber($invoiceNumber)
+    {
+        $this->invoiceNumber = $invoiceNumber;
+    }
+
+    /**
+     * Get invoiceNumber
+     *
+     * @return string 
+     */
+    public function getInvoiceNumber()
+    {
+        return $this->invoiceNumber;
+    }
+
+    /**
+     * Set paymentID
+     *
+     * @param integer $paymentID
+     */
+    public function setPaymentID($paymentID)
+    {
+        $this->paymentID = $paymentID;
+    }
+
+    /**
+     * Get paymentID
+     *
+     * @return integer 
+     */
+    public function getPaymentID()
+    {
+        return $this->paymentID;
     }
 }
