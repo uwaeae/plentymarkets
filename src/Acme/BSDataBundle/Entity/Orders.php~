@@ -105,6 +105,8 @@ class Orders
      */
     private $City;
 
+
+
     /**
      * @var string $Telephone
      *
@@ -148,9 +150,9 @@ class Orders
     private $PackageNumber;
 
     /**
-     * @var string $Picklist
+     * @var integer $Picklist
      *
-     * @ORM\Column(name="Picklist", type="string", length=255,nullable=true)
+     * @ORM\Column(name="Picklist", type="integer", nullable=true)
      */
     private $Picklist;
 
@@ -170,18 +172,26 @@ class Orders
     private $invoiceNumber;
 
 
+
+
+
     /**
-     * @var integer $paymentID
      *
-     * @ORM\Column(name="paymentID", type="integer" )
+    
+     *
+     * @ORM\ManyToOne(targetEntity="PaymentMethods", inversedBy="Orders")
+     * @ORM\JoinColumn(name="payment_id", referencedColumnName="id")
      */
-    private $paymentID;
+    private $PaymentMethods;
 
     /**
      * @var string $exportDate
      *
      * @ORM\Column(name="exportDate", type="string", length=255,nullable=true)
      */
+
+
+
     private $exportDate;
 
 
@@ -606,24 +616,26 @@ class Orders
         return $this->OrdersInfos;
     }
 
+  
+
     /**
-     * Set Printed
+     * Set OrderType
      *
-     * @param integer $printed
+     * @param string $orderType
      */
-    public function setPrinted($printed)
+    public function setOrderType($orderType)
     {
-        $this->Printed = $printed;
+        $this->OrderType = $orderType;
     }
 
     /**
-     * Get Printed
+     * Get OrderType
      *
-     * @return integer 
+     * @return string 
      */
-    public function getPrinted()
+    public function getOrderType()
     {
-        return $this->Printed;
+        return $this->OrderType;
     }
 
     /**
@@ -647,26 +659,6 @@ class Orders
     }
 
     /**
-     * Set OrderType
-     *
-     * @param string $orderType
-     */
-    public function setOrderType($orderType)
-    {
-        $this->OrderType = $orderType;
-    }
-
-    /**
-     * Get OrderType
-     *
-     * @return string 
-     */
-    public function getOrderType()
-    {
-        return $this->OrderType;
-    }
-
-    /**
      * Set invoiceNumber
      *
      * @param string $invoiceNumber
@@ -687,22 +679,42 @@ class Orders
     }
 
     /**
-     * Set paymentID
+     * Set exportDate
      *
-     * @param integer $paymentID
+     * @param string $exportDate
      */
-    public function setPaymentID($paymentID)
+    public function setExportDate($exportDate)
     {
-        $this->paymentID = $paymentID;
+        $this->exportDate = $exportDate;
     }
 
     /**
-     * Get paymentID
+     * Get exportDate
      *
-     * @return integer 
+     * @return string 
      */
-    public function getPaymentID()
+    public function getExportDate()
     {
-        return $this->paymentID;
+        return $this->exportDate;
+    }
+
+    /**
+     * Set PaymentMethods
+     *
+     * @param Acme\BSDataBundle\Entity\PaymentMethods $paymentMethods
+     */
+    public function setPaymentMethods(\Acme\BSDataBundle\Entity\PaymentMethods $paymentMethods)
+    {
+        $this->PaymentMethods = $paymentMethods;
+    }
+
+    /**
+     * Get PaymentMethods
+     *
+     * @return Acme\BSDataBundle\Entity\PaymentMethods 
+     */
+    public function getPaymentMethods()
+    {
+        return $this->PaymentMethods;
     }
 }

@@ -24,6 +24,7 @@ use Acme\PlentyMarketsBundle\Entity\Token;
 use Acme\BSDataBundle\Entity\Orders;
 use Acme\BSDataBundle\Entity\OrdersItem;
 use Acme\BSDataBundle\Entity\OrdersInfo;
+use Acme\BSDataBundle\Entity\PaymentMethods;
 
 
 class PlentySoapClient extends \SoapClient
@@ -188,6 +189,7 @@ class PlentySoapClient extends \SoapClient
     }
     else {
         $this->createSoapHeader($aToken[0]->getUserid(), $aToken[0]->getToken());
+
     }
 
 	}
@@ -253,10 +255,48 @@ class PlentySoapClient extends \SoapClient
 		}
 	}
 
+
     /**
-     * Mit dem Call GetServerTime wird geprüft, ob der SoapHeader korrekt ist und
-     * die Benutzerrechte stimmen. Bekommt man einen Zeitstempel zurückgeliefert,
-     * sind alle Einstellungen korrekt.
+     * Mit dem Call GetMethodOfPayments werden die Zahlungsarten abgerufen.
+     * Eine Zahlungsart enthält jeweils eine Liste mit den aktiven Lieferländern und eine Liste mit den aktiven Multishops.
+     */
+    public function doGetMethodOfPayments()
+
+    {
+        $oResponse = null;
+
+
+        $options['ActiveMethodOfPayments'] =  true;
+
+
+        try
+        {
+            $oResponse	=	$this->__soapCall('GetMethodOfPayments', array( $options));
+        }
+        catch(\SoapFault $sf)
+        {
+            echo("Es kam zu einem Fehler beim Call GetAuthentificationToken<br>");
+            echo($sf->getMessage());
+        }
+
+        //echo var_dump($oResponse);
+
+
+        if( isset($oResponse->Success) )
+        {
+            return $this->syncMethodsOfPayment($oResponse->MethodOfPayment);
+        }
+        else
+        {
+            return("Es ist ein Fehler aufgetreten  ");//.$oResponse->ErrorMessages->item[0]->Message;
+        }
+    }
+
+
+
+    /**
+     * Mit diesem Call kann der Status einer Bestellung verändert werden.
+     *
      */
     public function doSetOrderStatus( $orderID, $state)
 
@@ -404,7 +444,8 @@ class PlentySoapClient extends \SoapClient
         $order->setTotalBrutto($AOorder->OrderHead->TotalBrutto);
         $order->setOrderStatus($AOorder->OrderHead->OrderStatus);
         $order->setOrderType($AOorder->OrderHead->OrderType);
-        $order->setPaymentID($AOorder->OrderHead->MethodOfPaymentID);
+        $order->setPaymentMethods($em->getRepository('BSDataBundle:PaymentMethods')->findOneBy(array('id' => $AOorder->OrderHead->MethodOfPaymentID)));
+        //$order->setPaymentID($AOorder->OrderHead->MethodOfPaymentID);
         $order->setInvoiceNumber($AOorder->OrderHead->InvoiceNumber);
 
 
@@ -603,6 +644,41 @@ class PlentySoapClient extends \SoapClient
         }
     }
 
+    /**
+     * Funktion um ein Customer Object mittels SOAP abzufragen
+     * @param array $option
+     * @return mixed
+     */
+    public function doGetOrdersDeliveryNoteDocumentURLs ( array $option )
+    {
+
+
+        $options['OrderIDs'] = null;
+        $options['CustomerNumber'] = null;
+        $options['ExternalCustomerID'] = null;
+        $options = $option + $options;
+
+        try
+        {
+            $oResponse	=	$this->__soapCall('GetOrdersDeliveryNoteDocumentURLs',array( $options));
+        }
+        catch(SoapFault $sf)
+        {
+            print_r("Es kam zu einem Fehler beim Call GetAuthentificationToken<br>");
+            print_r($sf->getMessage());
+        }
+
+
+        if( $oResponse->Success == true)
+        {
+            return($oResponse->ResponseObject);
+        }
+        else
+        {
+            return($oResponse->ErrorMessages);
+        }
+    }
+
 
 
 
@@ -671,5 +747,28 @@ class PlentySoapClient extends \SoapClient
         }
     }
 
+    private function syncMethodsOfPayment($oaMOP){
+
+        $em = $this->doctrine->getEntityManager();
+
+        $Output = array();
+
+        foreach($oaMOP->item as $item ){
+
+            $Output[] =  $item->MethodOfPaymentID.' '.$item->Name;
+            $oPM = $em->getRepository('BSDataBundle:PaymentMethods')->findBy(array('id' => $item->MethodOfPaymentID));
+            if(!$oPM){
+                $oPM = new PaymentMethods();
+                $oPM->setName($item->Name);
+                $oPM->setId($item->MethodOfPaymentID);
+                $em->persist($oPM);
+                $em->flush();
+            }
+
+
+
+        }
+        return $Output;
+    }
 
 }

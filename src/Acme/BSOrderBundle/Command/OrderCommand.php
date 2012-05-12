@@ -30,9 +30,14 @@ protected function execute(InputInterface $input, OutputInterface $output)
     {
 
         $oPlentySoapClient	=	new PlentySoapClient($this,$this->getContainer()->get('doctrine'));
+
+        $oPlentySoapClient->doGetMethodOfPayments();
+
+
+
         $id =  $input->getArgument('state');
 
-        $orders = $oPlentySoapClient->doGetOrdersWithState( ( $id ? $id : 6 ) );
+        $orders = $oPlentySoapClient->doGetOrdersWithState( ( $id ? $id : 7 ) );
 
         foreach($orders as $order){
 

@@ -34,13 +34,36 @@ class DefaultController extends Controller
         $pagination = $paginator->paginate(
             $query,
             $this->get('request')->query->get('page', 1),
-            10
+            25
         );
        // return array('pagination' => $pagination);
 
         return $this->render('BSOrderBundle:Order:orderslocal.html.twig', array(
             'orders'=>$pagination      ));
     }
+
+    public function accountingAction(){
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $qb->add('select', 'o')
+            ->add('from', 'BSDataBundle:Orders o')
+            ->add('where',$qb->expr()->andX(
+                $qb->expr()->isNull('o.exportDate'),
+                $qb->expr()->gte('o.OrderStatus','7')));
+
+        $pagination = $this->get('knp_paginator')->paginate(
+            $qb->getQuery(),
+            $this->get('request')->query->get('page', 1),
+            50
+        );
+        // return array('pagination' => $pagination);
+
+        return $this->render('BSOrderBundle:Order:accounting.html.twig', array(
+            'orders'=>$pagination      ));
+
+    }
+
 
     public function stateAction($state )
     {
@@ -98,7 +121,17 @@ class DefaultController extends Controller
     public function printAction(Request $request)
     {
 
-        $Packlistname = "Packliste-".date("YmdHis");
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $qb->add('select', $qb->expr()->max('o.Picklist'))
+            ->add('from', 'BSDataBundle:Orders o');
+
+        $Packlistname = $qb->getQuery()->getSingleScalarResult();
+        if($Packlistname == 0 or $Packlistname == null  ) $Packlistname = date("Ym") * 1000 + 1;
+        else $Packlistname ++;
+
+        //= "Packliste-".date("Ymd-Hi");
         $aOrders = array();
         //$orders = $oPlentySoapClient->doGetOrdersWithState(array('OrderStatus'=> doubleval(5)));
         //$OrderArray = $orders->item;
@@ -109,7 +142,7 @@ class DefaultController extends Controller
         }
 
 
-        $pdf = new OrderPDF();
+        $pdf = new OrderPDF($Packlistname);
 
 
         $cellHight= 6;
@@ -119,6 +152,7 @@ class DefaultController extends Controller
         foreach($oRequest as $rOrder){
 
             $pdf->AddPage();
+
 
             //Bestellungsdaten aus localer Datenbank holen
             $repository = $this->getDoctrine()->getRepository('BSDataBundle:Orders');
@@ -142,6 +176,7 @@ class DefaultController extends Controller
             $oOrderQuantity = 0;
             //Bestellprositonen zusammen stellen und nach Lagerort Sortieren
             foreach($aOrderItem as $item){
+
                 $product = $this->getItem( $item);
                 if($product){
                     if($product->getStock()){
@@ -149,9 +184,9 @@ class DefaultController extends Controller
                     }else{
                         $PLIstock = "[0] Kein Lager";
                     }
-                    $aSortOrderItems[$PLIstock][] = array('product'=>$product,'item'=>$item );
-                    $PLIartID=  $product->getArticleNo();
 
+                    $PLIartID=  $product->getArticleNo();
+                    $aSortOrderItems[$PLIstock][$PLIartID] = array('product'=>$product,'item'=>$item );
 
                     if(isset($aSortPicklistItems[ $PLIstock][$PLIartID])){
                         $PLIorder = $aSortPicklistItems[ $PLIstock][$PLIartID]['orders'];
@@ -181,9 +216,13 @@ class DefaultController extends Controller
                     }
                 }
             $row = 0;
+
+            // PACKLISTE
+            ksort($aSortOrderItems);
             foreach($aSortOrderItems as $key => $sitem){
                     $pdf->ItemsHeader($key,$cellHight);
                     $row++;
+                    ksort($sitem);
                     foreach($sitem as $item) {
                         $pdf->ItemsBody($item['product'],$item['item'],$cellHight);
                         $row++;
@@ -200,9 +239,10 @@ class DefaultController extends Controller
 
             }
 
-        $pdf->AddPage('');
-        $pdf->PicklistHeader($aSortPicklistHeader);
-        $pdf->AddPage('L');
+        //PICKLISTE
+
+        $pdf->PicklistHeader($aSortPicklistHeader,$Packlistname);
+
         ksort($aSortPicklistItems);
 
         foreach($aSortPicklistItems as $key => $sitem){

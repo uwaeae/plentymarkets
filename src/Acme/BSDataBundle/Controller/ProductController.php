@@ -46,7 +46,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Finds and displays a Product entity.
+     * Search and displays a Product entity.
      *
      * @Route("/{id}/show", name="product_show")
      * @Template()
@@ -65,8 +65,111 @@ class ProductController extends Controller
 
         return array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        );
+            'delete_form' => $deleteForm->createView(),  );
     }
+
+
+
+    /**
+     * Finds and displays a Products by Article_No.
+     *
+     * @Route("/{id}/show", name="product_show")
+     * @Template()
+     */
+    public function searchCodeAction($page,$search)
+    {
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $qb->add('select', 'p')
+            ->add('from', 'BSDataBundle:Product p')
+            ->add('where',
+            $qb->expr()->like('p.article_no', '?1')
+        )->setParameter('1', $search.'%');
+
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $qb->getQuery(),
+            $page,//$this->get('request')->query->get('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+    return $this->render('BSDataBundle:Product:index.html.twig', array(
+            'pagination'=>$pagination  ));
+    }
+    /**
+     * Finds and displays a Products by Article_Name.
+     *
+     * @Route("/{id}/show", name="product_show")
+     * @Template()
+     */
+    public function searchNameAction($page,$search)
+    {
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $qb->add('select', 'p')
+            ->add('from', 'BSDataBundle:Product p')
+            ->add('where',
+            $qb->expr()->like('p.name', '?1')
+        )->setParameter('1', '%'.$search.'%' );
+
+
+
+
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $qb->getQuery(),
+            $page,//$this->get('request')->query->get('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+
+
+        return $this->render('BSDataBundle:Product:index.html.twig', array(
+            'pagination'=>$pagination  ));
+        //return compact('pagination');
+
+    }
+
+    /**
+     * Finds and displays a Products by Article_Name2.
+     *
+     * @param $page
+     * @param $search
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     */
+    public function searchLateinAction($page,$search)
+    {
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $qb->add('select', 'p')
+            ->add('from', 'BSDataBundle:Product p')
+            ->add('where',
+            $qb->expr()->like('p.name2', '?1')
+        )->setParameter('1', '%'.$search.'%' );
+
+
+
+
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $qb->getQuery(),
+            $page,//$this->get('request')->query->get('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+
+
+        return $this->render('BSDataBundle:Product:index.html.twig', array(
+            'pagination'=>$pagination  ));
+        //return compact('pagination');
+
+    }
+
+
 
     /**
      * Displays a form to create a new Product entity.

@@ -18,6 +18,24 @@ class OrderPDF extends \FPDF
 {
 
     private $position = 0;
+    public $title;
+
+    function __construct($title) {
+        parent::__construct();
+        $this->title = $title;
+    }
+
+
+
+
+
+    function Header()
+    {
+        $this->SetFont('Arial','',8);
+        $this->Text(10,10,$this->title);
+        // Line break
+        $this->Ln(2);
+    }
 
 
     function OrderHeader(Orders $Order,array $aInfo){
@@ -25,9 +43,9 @@ class OrderPDF extends \FPDF
         $this->SetFont('Arial','B',24);
         $this->SetTextColor(0,0,0);
         $this->Text(160,13,$Order->getOrderID());
-        $this->Text(10,13,utf8_decode($Order->getLastname().','.$Order->getFirstname()));
-        $this->Text(10,22,utf8_decode($Order->getZIP().' '.$Order->getCity()));
-        $this->Text(10,30,$Order->getTelephone());
+        $this->Text(10,17,utf8_decode($Order->getLastname().','.$Order->getFirstname()));
+        $this->Text(10,27,utf8_decode($Order->getZIP().' '.$Order->getCity()));
+        $this->Text(10,35,$Order->getTelephone());
 
         $this->Ln(10);
         $this->Code39(160,16,$Order->getOrderID(),1,12);
@@ -47,11 +65,12 @@ class OrderPDF extends \FPDF
     }
 
     function ItemsHeader($Stock,$cellHight){
+        $this->Ln(10);
         $this->SetFont('Arial','B',12);
         $this->Cell(180,$cellHight,utf8_decode($Stock),'B',1,'L');
         $this->SetFont('Arial','',10);
 
-        $this->SetTextColor(0,0,0);
+        /*$this->SetTextColor(0,0,0);
         $this->Cell(10,$cellHight,'Menge','B',0,'C');
         $this->Cell(25,$cellHight,'Code','B',0,'L');
         $this->Cell(130,$cellHight,'Artikel','B',0,'L');
@@ -59,13 +78,17 @@ class OrderPDF extends \FPDF
         //$this->Cell(20,$cellHight,'Lager','B',0,'L');
         $this->Cell(15,$cellHight,'Preis','B',0,'L');
         $this->Cell(5,$cellHight,'OK','B',1,'L');
+        */
 
 
     }
 
     function ItemsBody(Product $Product,\Acme\BSDataBundle\Entity\OrdersItem $item,$cellHight){
         $this->SetFont('Arial','',12);
+        $this->Cell(5,$cellHight,' ' ,1,0,'L');
+        $this->SetFont('Arial','B',14);
         $this->Cell(10,$cellHight,$item->getQuantity(),'',0,'C');
+        $this->SetFont('Arial','',12);
         if($Product){
             //$this->Cell(20,$cellHight,($Product->getStockground()?$Product->getStockground():''),'B',0,'L'); // TODO: florian Lagerort finden
             $this->Cell(25,$cellHight,utf8_decode($Product->getArticleNo()),'',0,'L');
@@ -73,46 +96,52 @@ class OrderPDF extends \FPDF
             //$this->Cell(20,$cellHight,'','B',0,'L'); // TODO: florian Lagerort finden
             $this->Cell(25,$cellHight,'','',0,'L');
         }
-        $this->Cell(130,$cellHight,substr(utf8_decode($Product->getName2()." ".$item->getItemText()),0,65),'',0,'L');
+        $this->SetFont('Arial','',12);
+        $this->Cell(130,$cellHight,substr(utf8_decode($Product->getName2()." ".$item->getItemText()),0,63),'',0,'L');
         //$this->Cell(20,$cellHight,(isset($oItem->LastUpdate)?$oItem->LastUpdate:''),'B',0,'L');
-        $this->Cell(20,$cellHight,sprintf("%01.2f " , $item->getPrice()).EURO,'',0,'L');
-        $this->Cell(5,$cellHight,' ' ,1,1,'L');
+        $this->SetFont('Arial','',12);
+        $this->Cell(20,$cellHight,sprintf("%01.2f " , $item->getPrice()).EURO,'',1,'L');
+
 
     }
 
 
-    function PicklistHeader( $Order){
+    function PicklistHeader( $Order,$Picklistname){
+
+        $this->AddPage('');
         $this->SetFont('Arial','B',24);
-        $this->Cell(180,10,"Sammelpack",'B',1,'L');
+        $this->Cell(180,10,"Sammelpack ".$Picklistname,'B',1,'L');
         $this->SetFont('Arial','',10);
         $this->SetTextColor(0,0,0);
         $this->Cell(25,8,utf8_decode("für die Aufträge:"),'',1,'L');
        foreach($Order as $o){
-
-           $this->Cell(15,8,$o->getOrderID(),'',0,'L');
-           $this->Cell(30,8,utf8_decode($o->getLastname().' '.$o->getFirstname()),'',0,'L');
-           $this->Cell(50,8,utf8_decode($o->getZIP().' '.$o->getCity()),'',0,'L');
-           $this->Cell(30,8,$o->getCountryID(),'',0,'L');
-           $this->Cell(30,8,$o->getTelephone(),'',1,'L');
+           $this->SetFont('Arial','',10);
+           $this->Cell(15,8,$o->getOrderID(),'B',0,'L');
+           $this->Cell(50,8,utf8_decode($o->getLastname().' '.$o->getFirstname()),'B',0,'L');
+           $this->Cell(50,8,utf8_decode($o->getZIP().' '.$o->getCity()),'B',0,'L');
+           $this->Cell(50,8,$o->getTelephone(),'B',0,'L');
+           $this->SetFont('Arial','B',10);
+           $this->Cell(25,8,($o->getCountryID()!= 1?'AUSLAND '.$o->getCountryID():' '),'B',1,'L');
        }
-       $this->Ln(10);
+        $this->AddPage('L');
 
     }
 
 
     function ItemsPickHeader($Stock,$cellHight){
-        //$this->Ln(5);
+        $this->Ln(10);
         $this->SetFont('Arial','B',14);
         $this->Cell(100,$cellHight,utf8_decode($Stock),0,1,'L');
         $this->SetFont('Arial','',8);
         $this->SetTextColor(0,0,0);
+        /*
         $this->Cell(10,$cellHight,'Menge','B',0,'C');
         $this->Cell(25,$cellHight,'Code','B',0,'C');
         $this->Cell(80,$cellHight,'Latein','B',0,'L');
         $this->Cell(80,$cellHight,'Deutsch','B',0,'L');
         $this->Cell(20,$cellHight,'Preis','B',0,'L');
         $this->Cell(50,$cellHight,'Bestellung','B',1,'L');
-
+        */
 
 
 
@@ -123,7 +152,10 @@ class OrderPDF extends \FPDF
         //array $orders, $Quantity, $Product,\Acme\BSDataBundle\Entity\OrdersItem $item
 
         $this->SetFont('Arial','',12);
+        $this->Cell(5,$cellHight,' ' ,1,0,'L');
+        $this->SetFont('Arial','B',14);
         $this->Cell(10,$cellHight,$item['quantity'],'T',0,'C');
+        $this->SetFont('Arial','',12);
         if($item['product']){
             $this->Cell(25,$cellHight,utf8_decode($item['product']->getArticleNo()),'T',0,'L');
         } else{
@@ -135,7 +167,7 @@ class OrderPDF extends \FPDF
         $STROrder = '';
 
         foreach($item['orders'] as $order){
-            $STROrder .= $order['Quantity'].' X '.$order['OrderID'].' '.utf8_decode($order['Name'])."\n";
+            $STROrder .= $order['Quantity'].' x '.$order['OrderID'].' '.utf8_decode($order['Name'])."\n";
         }
         $this->MultiCell(0,$cellHight,$STROrder ,'T','J');
         //$this->Cell(100,$cellHight,substr(utf8_decode($item['item']->getItemText()),0,65),'',0,'L');

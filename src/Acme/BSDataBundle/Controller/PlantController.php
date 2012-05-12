@@ -62,6 +62,96 @@ class PlantController extends Controller
     }
 
     /**
+     * Finds and displays a Plant by Article_No.
+     *
+     * @Route("/{id}/show", name="product_show")
+     * @Template()
+     */
+    public function searchCodeAction($page,$search)
+    {
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $qb->add('select', 'p')
+            ->add('from', 'BSDataBundle:Plant p')
+            ->add('where',
+            $qb->expr()->like('p.code', '?1')
+        )->setParameter('1', $search.'%');
+
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $qb->getQuery(),
+            $page,//$this->get('request')->query->get('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+        return $this->render('BSDataBundle:Plant:index.html.twig', array(
+            'pagination'=>$pagination  ));
+    }
+    /**
+     * Finds and displays a Plant by Plant Name.
+     *
+     * @Route("/{id}/show", name="product_show")
+     * @Template()
+     */
+    public function searchNameAction($page,$search)
+    {
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $qb->add('select', 'p')
+            ->add('from', 'BSDataBundle:Plant p')
+            ->add('where',
+            $qb->expr()->like('p.name', '?1')
+        )->setParameter('1', '%'.$search.'%' );
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $qb->getQuery(),
+            $page,//$this->get('request')->query->get('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+        return $this->render('BSDataBundle:Plant:index.html.twig', array(
+            'pagination'=>$pagination  ));
+    }
+
+    /**
+     * Finds and displays a Plant by Plant Name.
+     *
+     * @Route("/{id}/show", name="product_show")
+     * @Template()
+     */
+    public function searchLateinAction($page,$search)
+    {
+
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $qb->add('select', 'p')
+            ->add('from', 'BSDataBundle:Plant p')
+            ->add('where',
+            $qb->expr()->like('p.latein', '?1')
+        )->setParameter('1', $search.'%' );
+
+
+
+
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $qb->getQuery(),
+            $page,//$this->get('request')->query->get('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+        return $this->render('BSDataBundle:Plant:index.html.twig', array(
+            'pagination'=>$pagination  ));
+    }
+
+
+
+
+
+
+    /**
      * Displays a form to create a new Plant entity.
      *
      * @Route("/new", name="BSData_plant_new")

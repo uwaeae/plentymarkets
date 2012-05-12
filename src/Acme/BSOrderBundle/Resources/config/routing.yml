@@ -34,3 +34,8 @@ BSOrder_print:
     pattern:  /orders/print
     defaults: { _controller: BSOrderBundle:Default:print }
 
+
+
+BSOrder_accounting:
+    pattern:  /orders/accounting
+    defaults: { _controller: BSOrderBundle:Default:accounting }

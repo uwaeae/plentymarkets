@@ -150,9 +150,9 @@ class Orders
     private $PackageNumber;
 
     /**
-     * @var string $Picklist
+     * @var integer $Picklist
      *
-     * @ORM\Column(name="Picklist", type="string", length=255,nullable=true)
+     * @ORM\Column(name="Picklist", type="integer", nullable=true)
      */
     private $Picklist;
 
@@ -172,18 +172,26 @@ class Orders
     private $invoiceNumber;
 
 
+
+
+
     /**
-     * @var integer $paymentID
      *
-     * @ORM\Column(name="paymentID", type="integer" )
+    
+     *
+     * @ORM\ManyToOne(targetEntity="PaymentMethods", inversedBy="Orders")
+     * @ORM\JoinColumn(name="payment_id", referencedColumnName="id")
      */
-    private $paymentID;
+    private $PaymentMethods;
 
     /**
      * @var string $exportDate
      *
      * @ORM\Column(name="exportDate", type="string", length=255,nullable=true)
      */
+
+
+
     private $exportDate;
 
 
@@ -608,45 +616,7 @@ class Orders
         return $this->OrdersInfos;
     }
 
-    /**
-     * Set Printed
-     *
-     * @param integer $printed
-     */
-    public function setPrinted($printed)
-    {
-        $this->Printed = $printed;
-    }
-
-    /**
-     * Get Printed
-     *
-     * @return integer 
-     */
-    public function getPrinted()
-    {
-        return $this->Printed;
-    }
-
-    /**
-     * Set Picklist
-     *
-     * @param string $picklist
-     */
-    public function setPicklist($picklist)
-    {
-        $this->Picklist = $picklist;
-    }
-
-    /**
-     * Get Picklist
-     *
-     * @return string 
-     */
-    public function getPicklist()
-    {
-        return $this->Picklist;
-    }
+  
 
     /**
      * Set OrderType
@@ -666,6 +636,26 @@ class Orders
     public function getOrderType()
     {
         return $this->OrderType;
+    }
+
+    /**
+     * Set Picklist
+     *
+     * @param integer $picklist
+     */
+    public function setPicklist($picklist)
+    {
+        $this->Picklist = $picklist;
+    }
+
+    /**
+     * Get Picklist
+     *
+     * @return integer
+     */
+    public function getPicklist()
+    {
+        return $this->Picklist;
     }
 
     /**
@@ -689,26 +679,6 @@ class Orders
     }
 
     /**
-     * Set paymentID
-     *
-     * @param integer $paymentID
-     */
-    public function setPaymentID($paymentID)
-    {
-        $this->paymentID = $paymentID;
-    }
-
-    /**
-     * Get paymentID
-     *
-     * @return integer 
-     */
-    public function getPaymentID()
-    {
-        return $this->paymentID;
-    }
-
-    /**
      * Set exportDate
      *
      * @param string $exportDate
@@ -726,5 +696,25 @@ class Orders
     public function getExportDate()
     {
         return $this->exportDate;
+    }
+
+    /**
+     * Set PaymentMethods
+     *
+     * @param Acme\BSDataBundle\Entity\PaymentMethods $paymentMethods
+     */
+    public function setPaymentMethods(\Acme\BSDataBundle\Entity\PaymentMethods $paymentMethods)
+    {
+        $this->PaymentMethods = $paymentMethods;
+    }
+
+    /**
+     * Get PaymentMethods
+     *
+     * @return Acme\BSDataBundle\Entity\PaymentMethods 
+     */
+    public function getPaymentMethods()
+    {
+        return $this->PaymentMethods;
     }
 }

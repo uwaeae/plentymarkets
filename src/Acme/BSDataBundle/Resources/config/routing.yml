@@ -31,9 +31,24 @@ BSData_product_update:
         pattern:  /data/product/delete/{id}
         defaults: { _controller: BSDataBundle:Product:delete }
 
+
+BSData_product_search_code:
+        pattern:  /data/product/search/code/{search}/{page}
+        defaults: { _controller: BSDataBundle:Product:searchCode,page: 1 }
+BSData_product_search_name:
+        pattern:  /data/product/search/name/{search}/{page}
+        defaults: { _controller: BSDataBundle:Product:searchName,page: 1 }
+BSData_product_search_latein:
+        pattern:  /data/product/search/latein/{search}/{page}
+        defaults: { _controller: BSDataBundle:Product:searchLatein,page: 1 }
+
+
 BSData_product:
     pattern:  /data/product/{page}
     defaults: { _controller: BSDataBundle:Product:index,page: 1 }
+
+
+
 
 
 
@@ -93,6 +108,17 @@ BSData_plant_delete:
 BSData_plant_update:
         pattern:  /data/plant/update/{id}
         defaults: { _controller: BSDataBundle:Plant:update }
+
+
+BSData_plant_search_code:
+        pattern:  /data/plant/search/code/{search}/{page}
+        defaults: { _controller: BSDataBundle:Plant:searchCode,page: 1 }
+BSData_plant_search_name:
+        pattern:  /data/plant/search/name/{search}/{page}
+        defaults: { _controller: BSDataBundle:Plant:searchName,page: 1 }
+BSData_plant_search_latein:
+        pattern:  /data/plant/search/latein/{search}/{page}
+        defaults: { _controller: BSDataBundle:Plant:searchLatein,page: 1 }
 
 BSData_plant:
     pattern:  /data/plant/{page}
