@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 use Acme\BSDataBundle\Entity\Product;
 use Acme\BSDataBundle\Entity\Orders;
@@ -33,7 +34,7 @@ class DefaultController extends Controller
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $query,
-            $this->get('request')->query->get('page', 1),
+            $this->get('request')->query->get('page',1),
             25
         );
        // return array('pagination' => $pagination);
@@ -50,19 +51,161 @@ class DefaultController extends Controller
             ->add('from', 'BSDataBundle:Orders o')
             ->add('where',$qb->expr()->andX(
                 $qb->expr()->isNull('o.exportDate'),
-                $qb->expr()->gte('o.OrderStatus','7')));
+                $qb->expr()->gte('o.OrderStatus','7'),
+                $qb->expr()->gte('o.invoiceNumber','201200000')));
 
         $pagination = $this->get('knp_paginator')->paginate(
             $qb->getQuery(),
-            $this->get('request')->query->get('page', 1),
+            $this->get('request')->attributes->get('page', 1),
             50
         );
+
+
         // return array('pagination' => $pagination);
 
         return $this->render('BSOrderBundle:Order:accounting.html.twig', array(
             'orders'=>$pagination      ));
 
+
+
+
+
     }
+
+    public function exportAction(){
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $qb->add('select', 'o')
+            ->add('from', 'BSDataBundle:Orders o')
+            ->add('where',$qb->expr()->andX(
+            $qb->expr()->isNull('o.exportDate'),
+            $qb->expr()->gte('o.OrderStatus','7'),
+            $qb->expr()->gte('o.invoiceNumber','201200000')
+            ));
+
+        $orders = $qb->getQuery()->getResult();
+        $export[] = array(  'Belegnummer'   => 'Belegnummer',
+                            'Buchungstext'  => 'Buchungstext' ,
+                            'Buchungsbetrag'=>  'Buchungsbetrag',
+                            'MwSt'          =>  'MwSt',
+                            'Sollkonto'     => 'Sollkonto',
+                            'Habenkonto'    =>  'Habenkonto' ,
+                            'Belegdatum'    =>  'Belegdatum',
+                            'Währung'       => utf8_decode('Währung'),
+                            'Kostenstelle'  => 'Kostenstelle',
+                            'Re_Nr'         => 'Re_Nr'   );
+
+
+        foreach($orders as $order ){
+
+            $OrderItemsVAT7 = $this->getOrderItemSumVAT($order->getOrderID(),7);
+            $OrderItemsVAT19 = $this->getOrderItemSumVAT($order->getOrderID(),19);
+            // Buchungssatz für 19% MwSt
+            if($OrderItemsVAT19 > 0){
+
+                $OrderItemsVAT19 += $order->getShippingCosts();
+
+
+                $export[] = array(  'Belegnummer'   => $order->getOrderID(),
+                                    'Buchungstext'  => utf8_decode($order->getOrderID().' '.$order->getLastname() ) ,
+                                    'Buchungsbetrag'=> $OrderItemsVAT19,
+                                    'MwSt'          =>  '19',
+                                    'Sollkonto'     => $order->getPaymentMethods()->getDebitor(),
+                                    'Habenkonto'    => 4401,
+                                    'Belegdatum'    => date("d.m.y",$order->getDoneTimestamp()),
+                                    'Währung'       => 'EUR',
+                                    'Kostenstelle'  => '2000',
+                                    'Re_Nr'         => $order->getInvoiceNumber());
+
+
+
+
+                }
+            else{
+                $OrderItemsVAT7 =  $OrderItemsVAT7  + $order->getShippingCosts();
+            }
+
+            if($OrderItemsVAT7 > 0){
+
+
+                $export[] = array(  'Belegnummer'   => $order->getOrderID(),
+                    'Buchungstext'  => utf8_decode($order->getOrderID().' '.$order->getLastname() ),
+                    'Buchungsbetrag'=> $OrderItemsVAT7 ,
+                    'MwSt'          =>  '7',
+                    'Sollkonto'     => $order->getPaymentMethods()->getDebitor(),
+                    'Habenkonto'    => 4301,
+                    'Belegdatum'    => date("d.m.y",$order->getDoneTimestamp()),
+                    'Währung'       => 'EUR',
+                    'Kostenstelle'  => '2000',
+                    'Re_Nr'         => $order->getInvoiceNumber());
+            }
+            // Buchungssatz für die Zahlung
+            if($order->getPaidTimestamp()){
+                $export[] = array(  'Belegnummer'   => $order->getOrderID(),
+                    'Buchungstext'  => utf8_decode($order->getOrderID().' '.$order->getLastname() ) ,
+                    'Buchungsbetrag'=> $order->getTotalBrutto() + $order->getShippingCosts(),
+                    'Sollkonto'     => $order->getPaymentMethods()->getBankAccount(),
+                    'Habenkonto'    => $order->getPaymentMethods()->getDebitor(),
+                    'Belegdatum'    => date("d.m.y",$order->getPaidTimestamp()),
+                    'Währung'       => 'EUR',
+                    'Kostenstelle'  => '2000',
+                    'Re_Nr'         => $order->getInvoiceNumber());
+                }
+
+
+            }
+
+        $dataname = 'export_'.date('ymd');
+        $fp = fopen('export/'.$dataname, 'w');
+        $output = ' ';
+        foreach ($export as $d) {
+            fputcsv($fp, $d,";");
+            $output .=  $d['Belegnummer'].';'.
+                        $d['Buchungstext'].';'.
+                        $d['Buchungsbetrag'].';'.
+                        $d['Sollkonto'].';'.
+                        $d['Habenkonto'].';'.
+                        $d['Belegdatum'].';'.
+                        $d['Währung'].';'.
+                        $d['Kostenstelle'].';'.
+                        $d['Re_Nr'].';'."\r\n";
+
+        }
+
+
+
+
+        $response = new Response();
+        $response->setStatusCode(200);
+        $response->headers->set('Content-Type', 'application/pdf');
+        $response->headers->set('Content-Disposition',
+                sprintf('attachment;filename="%s.txt"', $dataname ));
+        $response->setContent($output);
+
+        //$response->send();
+
+        return $response;
+
+
+
+
+    }
+
+    private function getOrderItemSumVAT($orderid,$vat){
+        $em = $this->getDoctrine()->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $qb->add('select', 'sum(o.Price * o.Quantity)')
+            ->add('from', 'BSDataBundle:OrdersItem o')
+            ->add('where',$qb->expr()->andX(
+            $qb->expr()->eq('o.OrderID',$orderid),
+            $qb->expr()->eq('o.VAT',$vat)));
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+
+
 
 
     public function stateAction($state )

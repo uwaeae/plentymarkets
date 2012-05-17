@@ -31,7 +31,7 @@ protected function execute(InputInterface $input, OutputInterface $output)
 
         $oPlentySoapClient	=	new PlentySoapClient($this,$this->getContainer()->get('doctrine'));
 
-        $oPlentySoapClient->doGetMethodOfPayments();
+        //$oPlentySoapClient->doGetMethodOfPayments();
 
 
 
@@ -39,11 +39,15 @@ protected function execute(InputInterface $input, OutputInterface $output)
 
         $orders = $oPlentySoapClient->doGetOrdersWithState( ( $id ? $id : 7 ) );
 
+
+        $output->writeln('Syncronisiert '.count($orders));
+       /*
         foreach($orders as $order){
 
-            $output->writeln($order['head']->getOrderId().' '.$order['head']->getTotalBrutto().' '.$order['head']->getPaymentID().' '.$order['head']->getInvoiceNumber());
+            $output->writeln($order['head']->getOrderId().' '.$order['head']->getTotalBrutto().' '.$order['head']->getPaymentMethods()->getId().' '.$order['head']->getInvoiceNumber());
 
         }
+       */
       /*
         $name = $input->getArgument('name');
         if ($name) {

@@ -7,6 +7,47 @@ BSData_menu:
      pattern:  /data
      defaults: { _controller: BSDataBundle:Default:data }
 
+
+
+
+BSData_paymentmethods_show:
+        pattern:  /data/paymentmethods/show/{id}
+        defaults: { _controller: BSDataBundle:PaymentMethods:show }
+
+BSData_paymentmethods_edit:
+        pattern:  /data/paymentmethods/edit/{id}
+        defaults: { _controller: BSDataBundle:PaymentMethods:edit }
+
+BSData_paymentmethods_new:
+        pattern:  /data/paymentmethods/new
+        defaults: { _controller: BSDataBundle:PaymentMethods:new }
+
+BSData_paymentmethods_create:
+        pattern:  /data/paymentmethods/create
+        defaults: { _controller: BSDataBundle:PaymentMethods:create }
+
+BSData_paymentmethods_delete:
+        pattern:  /data/paymentmethods/delete/{id}
+        defaults: { _controller: BSDataBundle:PaymentMethods:delete }
+
+BSData_paymentmethods_update:
+        pattern:  /data/paymentmethods/update/{id}
+        defaults: { _controller: BSDataBundle:PaymentMethods:update }
+
+BSData_paymentmethods:
+    pattern:  /data/paymentmethods/{page}
+    defaults: { _controller: BSDataBundle:PaymentMethods:index,page: 1 }
+
+
+
+
+
+
+
+
+
+
+
 BSData_product_show:
         pattern:  /data/product/show/{id}
         defaults: { _controller: BSDataBundle:Product:show }
@@ -28,8 +69,8 @@ BSData_product_delete:
         defaults: { _controller: BSDataBundle:Product:delete }
 
 BSData_product_update:
-        pattern:  /data/product/delete/{id}
-        defaults: { _controller: BSDataBundle:Product:delete }
+        pattern:  /data/product/update/{id}
+        defaults: { _controller: BSDataBundle:Product:update }
 
 
 BSData_product_search_code:

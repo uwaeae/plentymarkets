@@ -163,6 +163,31 @@ class Orders
      */
     private $TotalBrutto;
 
+    /**
+     * @var float $ShippingCosts
+     *
+     * @ORM\Column(name="ShippingCosts", type="float",nullable=true)
+     */
+    private $ShippingCosts;
+
+    /**
+ * @var float $DoneTimestamp
+ *
+ * @ORM\Column(name="DoneTimestamp", type="string",length=255,nullable=true)
+ */
+    private $DoneTimestamp;
+
+
+    /**
+     * @var float $PaidTimestamp
+     *
+     * @ORM\Column(name="PaidTimestamp", type="string",length=255,nullable=true)
+     */
+    private $PaidTimestamp;
+
+
+
+
 
     /**
      * @var string $invoiceNumber
@@ -716,5 +741,65 @@ class Orders
     public function getPaymentMethods()
     {
         return $this->PaymentMethods;
+    }
+
+    /**
+     * Set ShippingCosts
+     *
+     * @param float $shippingCosts
+     */
+    public function setShippingCosts($shippingCosts)
+    {
+        $this->ShippingCosts = $shippingCosts;
+    }
+
+    /**
+     * Get ShippingCosts
+     *
+     * @return float 
+     */
+    public function getShippingCosts()
+    {
+        return $this->ShippingCosts;
+    }
+
+    /**
+     * Set DoneTimestamp
+     *
+     * @param string $doneTimestamp
+     */
+    public function setDoneTimestamp($doneTimestamp)
+    {
+        $this->DoneTimestamp = $doneTimestamp;
+    }
+
+    /**
+     * Get DoneTimestamp
+     *
+     * @return string 
+     */
+    public function getDoneTimestamp()
+    {
+        return $this->DoneTimestamp;
+    }
+
+    /**
+     * Set PaidTimestamp
+     *
+     * @param string $paidTimestamp
+     */
+    public function setPaidTimestamp($paidTimestamp)
+    {
+        $this->PaidTimestamp = $paidTimestamp;
+    }
+
+    /**
+     * Get PaidTimestamp
+     *
+     * @return string 
+     */
+    public function getPaidTimestamp()
+    {
+        return $this->PaidTimestamp;
     }
 }

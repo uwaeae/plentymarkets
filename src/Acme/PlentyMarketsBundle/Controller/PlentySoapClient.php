@@ -442,12 +442,14 @@ class PlentySoapClient extends \SoapClient
         $order->setCustomerID($AOorder->OrderHead->CustomerID);
         $order->setPackageNumber($AOorder->OrderHead->PackageNumber);
         $order->setTotalBrutto($AOorder->OrderHead->TotalBrutto);
+        $order->setShippingCosts($AOorder->OrderHead->ShippingCosts);
+        $order->setDoneTimestamp($AOorder->OrderHead->DoneTimestamp);
+        $order->setPaidTimestamp($AOorder->OrderHead->PaidTimestamp);
         $order->setOrderStatus($AOorder->OrderHead->OrderStatus);
         $order->setOrderType($AOorder->OrderHead->OrderType);
-        $order->setPaymentMethods($em->getRepository('BSDataBundle:PaymentMethods')->findOneBy(array('id' => $AOorder->OrderHead->MethodOfPaymentID)));
-        //$order->setPaymentID($AOorder->OrderHead->MethodOfPaymentID);
+        $opm = $em->getRepository('BSDataBundle:PaymentMethods')->find( $AOorder->OrderHead->MethodOfPaymentID);
+        $order->setPaymentMethods($opm);
         $order->setInvoiceNumber($AOorder->OrderHead->InvoiceNumber);
-
 
         if(isset($AOorder->OrderDeliveryAddress->Street)){
            // $order->setTitle($AOorder->OrderDeliveryAddress->Title);
@@ -499,7 +501,7 @@ class PlentySoapClient extends \SoapClient
                 $oOrdersInfo->setOrderID($AOorder->OrderHead->OrderID);
                 $oOrdersInfo->setOrders($order);
                 $em->persist($oOrdersInfo);
-                $em->flush();
+               // $em->flush();
                 $aOrderInfos[]= $oOrdersInfo;
                 //$order->addOrdersInfo($oOrdersInfo);
 
@@ -520,7 +522,7 @@ class PlentySoapClient extends \SoapClient
         if($aOrderItems){
             foreach( $aOrderItems as $item){
                 $em->remove($item);
-                $em->flush();
+               // $em->flush();
                 }
 
             }
@@ -537,7 +539,7 @@ class PlentySoapClient extends \SoapClient
             $orderitem->setQuantity($item->Quantity);
             $orderitem->setVAT($item->VAT);
             $em->persist($orderitem);
-            $em->flush();
+           // $em->flush();
              $aOrderItems[]= $orderitem;
 
         }

@@ -29,6 +29,21 @@ class PaymentMethods
      */
     private $Name;
 
+    /**
+     * @var string $Debitor
+     *
+     * @ORM\Column(name="Debitor", type="integer")
+     */
+    private $Debitor;
+
+    /**
+     * @var string $BankAccount
+     *
+     * @ORM\Column(name="BankAccount", type="integer" )
+     */
+    private $BankAccount;
+
+
 
     /**
     * @ORM\OneToMany(targetEntity="Orders", mappedBy="PaymentMethods")
@@ -100,5 +115,45 @@ class PaymentMethods
     public function getOrders()
     {
         return $this->orders;
+    }
+
+    /**
+     * Set Debitor
+     *
+     * @param integer $debitor
+     */
+    public function setDebitor($debitor)
+    {
+        $this->Debitor = $debitor;
+    }
+
+    /**
+     * Get Debitor
+     *
+     * @return integer 
+     */
+    public function getDebitor()
+    {
+        return $this->Debitor;
+    }
+
+    /**
+     * Set BankAccount
+     *
+     * @param integer $bankAccount
+     */
+    public function setBankAccount($bankAccount)
+    {
+        $this->BankAccount = $bankAccount;
+    }
+
+    /**
+     * Get BankAccount
+     *
+     * @return integer 
+     */
+    public function getBankAccount()
+    {
+        return $this->BankAccount;
     }
 }

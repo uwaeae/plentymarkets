@@ -6,7 +6,9 @@
 {% block body %}
 
 <div id="title">
-    Hauptmenü
+
+        <h1>Hauptmenu</h1>
+    <img src="{{ asset('/images/logo_blumenschule.png') }}" alt="Blumenschule Logo" width="400px" style="display: inline"/>
 </div>
 
 <div class="menu">
@@ -35,6 +37,20 @@
 
 
 </div>
+
+
+<div class="menu">
+    <h1>Buchhaltung </h1>
+    <ul>
+        <li><a href="{{ path('BSOrder_accounting' )}}" >Export</a></li>
+        <li><a href="{{ path('BSData_paymentmethods' )}}" >Zahlungsarten</a></li>
+
+
+    </ul>
+
+
+</div>
+
 
 
 {% endblock %}

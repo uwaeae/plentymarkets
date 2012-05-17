@@ -7,13 +7,23 @@
 
 
 div#title{
-    width: 400px;
+
     font-size: 30px;
     font-weight: bolder;
     text-align:center;
     color:#008000;
     letter-spacing: 1.5pt;
     font-variant: small-caps;
+    display: block;
+}
+
+div#title h1 {
+    float: right;
+    display: inline;
+ }
+ div#title img {
+    width: 400px;
+
 
 }
 
@@ -54,15 +64,16 @@ div .menu2 ul li a{
     text-align:center;
     text-decoration:none;
     color: #000000;
-    background-color: #00b000;
+    background-color: #00bb00;
     height:80px;
     line-height:80px;
     padding:0px 0px 0px 8px;
     border-radius: 10px;
+
 }
 
-div .menu  ul li a:hover{
-    background-color: #00b000;
+div.menu  li a:hover{
+    background-color: #00ff00;
 
 
 }
@@ -149,7 +160,9 @@ th {
     text-transform: uppercase;
     text-align: left;
     padding: 6px 6px 6px 12px;
-    background: #CAE8EA url(/images/bg_header.jpg) no-repeat;
+    background-repeat: no-repeat;
+    background-image: url(/images/bg_header.jpg);
+    background-color: #CAE8EA;
 }
 
 th.nobg {
@@ -195,8 +208,36 @@ th.specalt {
     color: #797268;
 }
 
+tr.row_editable{
+    cursor: pointer;
 
-.button{
+}
+ tr.row_editable:hover td{
+     background-color: #00a500;
+
+ }
+
+div.list{
+   display: inline;
+    float: left;
+}
+div.edit{
+    display: inline;
+    float: right;
+}
+ div.loading{
+     display: inline;
+     float: left;
+
+     left: 380px;
+     position: absolute;
+     top: 15px;
+ }
+
+
+
+
+ .button{
     border: 0 none;
     font-family:Verdana,Tahoma,Arial,sans-serif;
     font-size: 14px;
