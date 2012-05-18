@@ -99,6 +99,7 @@ class DefaultController extends Controller
 
         foreach($orders as $order ){
 
+
             $OrderItemsVAT7 = $this->getOrderItemSumVAT($order->getOrderID(),7);
             $OrderItemsVAT19 = $this->getOrderItemSumVAT($order->getOrderID(),19);
             // Buchungssatz für 19% MwSt
@@ -152,10 +153,11 @@ class DefaultController extends Controller
                     'Kostenstelle'  => '2000',
                     'Re_Nr'         => $order->getInvoiceNumber());
                 }
-
+             $order->setExportDate(date('U'));
+             $em->persist($order);
 
             }
-
+        $em->flush();
         $dataname = 'export_'.date('ymd');
         $fp = fopen('export/'.$dataname, 'w');
         $output = ' ';
@@ -178,16 +180,14 @@ class DefaultController extends Controller
 
         $response = new Response();
         $response->setStatusCode(200);
-        $response->headers->set('Content-Type', 'application/pdf');
+        $response->headers->set('Content-Type', 'application/txt');
         $response->headers->set('Content-Disposition',
                 sprintf('attachment;filename="%s.txt"', $dataname ));
         $response->setContent($output);
 
-        //$response->send();
+        $response->send();
 
-        return $response;
-
-
+        //return $this->render('BSOrderBundle:Order:export.html.twig' );
 
 
     }
