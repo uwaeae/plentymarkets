@@ -19,12 +19,24 @@
 {% block body %}
 
 <div id="title"> Aufträge Status {{state}} zur Kommisonierung</div>
+<form action="{{ path('BSOrder_print') }}" method="post" >
+
+<div id="menu2">
+
+    <ul class="buttons">
+        <li>  <input class="button" type="submit" value="Sammeldruck erstellen" />
+        </li>
+
+        <li><a class="button" href="{{ path('BSOrder_state') }}" >zurück</a></li>
+
+    </ul>
+
+</div>
 
 
+<div>
 
-
-
-        <table class="table_orders">
+<table class="table_orders">
             <thead>
                 <tr>
                     <th>
@@ -47,7 +59,7 @@
                     </th>
                 </tr>
             </thead>
-            <form action="{{ path('BSOrder_print') }}" method="post" >
+
             <tbody>
             {% for order in orders %}
             <tr>
@@ -112,16 +124,21 @@
 
             {% endfor %}
             </tbody>
-                <input type="submit" value="Sammeldruck erstellen" />
-            </form>
+
+
+
+
+
 
         </table>
 
 
+</div>
+
+</form>
 
 
 
 
 
-
-        {% endblock %}
+{% endblock %}

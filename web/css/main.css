@@ -45,6 +45,12 @@ div .menu h1{
      margin: 0;
  }
 
+div#menu2 {
+    display: block;
+    height: 50px;
+    width: 900px;
+}
+
 div .menu ul li,
 div .menu2 ul li{
     list-style: none;
@@ -216,6 +222,8 @@ tr.row_editable{
      background-color: #00a500;
 
  }
+
+
 
 div.list{
    display: inline;
