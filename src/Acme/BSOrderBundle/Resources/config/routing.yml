@@ -38,6 +38,10 @@ BSOrder_export:
     pattern:  /orders/export
     defaults: { _controller: BSOrderBundle:Default:export }
 
+BSOrder_export:
+    pattern:  /orders/open
+    defaults: { _controller: BSOrderBundle:Default:open }
+
 BSOrder_accounting:
     pattern:  /orders/accounting/{page}
     defaults: { _controller: BSOrderBundle:Default:accounting,page: 1 }

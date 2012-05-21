@@ -364,7 +364,7 @@ class PlentySoapClient extends \SoapClient
             if(isset($oResponse->Pages)) $page = $oResponse->Pages;
         }
 
-        for($i = 2; $i < $page; $i++)
+        for($i = 1; $i < $page; $i++)
         {
 
             $options['Page'] = $i  ;
@@ -389,7 +389,7 @@ class PlentySoapClient extends \SoapClient
     }
 
     private function syncOrders($aoOrders){
-
+      //  $em = $this->doctrine->getEntityManager();
         $OrderRepro = $this->doctrine
             ->getRepository('BSDataBundle:Orders');
 
@@ -424,6 +424,8 @@ class PlentySoapClient extends \SoapClient
                 $OrderInfo = $OrderInfoRepro->findBy(array('OrderID' => $OrderHead->getOrderID()));
 
             }
+
+           // $em->flush();
 
             $orders[] = array('head'=> $OrderHead,'infos'=> $OrderInfo, 'items'=>$OrderItem );
 
@@ -501,7 +503,7 @@ class PlentySoapClient extends \SoapClient
                 $oOrdersInfo->setOrderID($AOorder->OrderHead->OrderID);
                 $oOrdersInfo->setOrders($order);
                 $em->persist($oOrdersInfo);
-               // $em->flush();
+                $em->flush();
                 $aOrderInfos[]= $oOrdersInfo;
                 //$order->addOrdersInfo($oOrdersInfo);
 
@@ -522,7 +524,7 @@ class PlentySoapClient extends \SoapClient
         if($aOrderItems){
             foreach( $aOrderItems as $item){
                 $em->remove($item);
-               // $em->flush();
+                $em->flush();
                 }
 
             }
@@ -539,7 +541,7 @@ class PlentySoapClient extends \SoapClient
             $orderitem->setQuantity($item->Quantity);
             $orderitem->setVAT($item->VAT);
             $em->persist($orderitem);
-           // $em->flush();
+            $em->flush();
              $aOrderItems[]= $orderitem;
 
         }

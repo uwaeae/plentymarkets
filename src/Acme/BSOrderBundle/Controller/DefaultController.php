@@ -50,9 +50,13 @@ class DefaultController extends Controller
         $qb->add('select', 'o')
             ->add('from', 'BSDataBundle:Orders o')
             ->add('where',$qb->expr()->andX(
+                $qb->expr()->eq('o.OrderType','order'),
                 $qb->expr()->isNull('o.exportDate'),
-                $qb->expr()->gte('o.OrderStatus','7'),
-                $qb->expr()->gte('o.invoiceNumber','201200000')));
+                $qb->expr()->orX(
+                    $qb->expr()->gte('o.OrderStatus','7'),
+                    $qb->expr()->gte('o.OrderStatus','11'))
+
+                ));
 
         $pagination = $this->get('knp_paginator')->paginate(
             $qb->getQuery(),
@@ -79,12 +83,12 @@ class DefaultController extends Controller
         $qb->add('select', 'o')
             ->add('from', 'BSDataBundle:Orders o')
             ->add('where',$qb->expr()->andX(
+            $qb->expr()->eq('o.OrderType','order'),
             $qb->expr()->isNull('o.exportDate'),
-            $qb->expr()->gte('o.OrderStatus','7'),
-            $qb->expr()->gte('o.invoiceNumber','201200000')
+            $qb->expr()->gte('o.OrderStatus','7')
             ));
-
         $orders = $qb->getQuery()->getResult();
+
         $export[] = array(  'Belegnummer'   => 'Belegnummer',
                             'Buchungstext'  => 'Buchungstext' ,
                             'Buchungsbetrag'=>  'Buchungsbetrag',
@@ -96,7 +100,7 @@ class DefaultController extends Controller
                             'Kostenstelle'  => 'Kostenstelle',
                             'Re_Nr'         => 'Re_Nr'   );
 
-
+// Rechnungen Exportieren
         foreach($orders as $order ){
 
 
@@ -157,6 +161,72 @@ class DefaultController extends Controller
              $em->persist($order);
 
             }
+
+     // Gutschriften Exportieren
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $qb->add('select', 'o')
+            ->add('from', 'BSDataBundle:Orders o')
+            ->add('where',$qb->expr()->andX(
+            $qb->expr()->isNull('o.exportDate'),
+
+            $qb->expr()->gte('o.OrderStatus','11')
+        ));
+        $orders = $qb->getQuery()->getResult();
+
+
+
+        foreach($orders as $order ){
+
+
+            $OrderItemsVAT7 = $this->getOrderItemSumVAT($order->getOrderID(),7);
+            $OrderItemsVAT19 = $this->getOrderItemSumVAT($order->getOrderID(),19);
+            if($OrderItemsVAT19 > 0){
+
+                $OrderItemsVAT19 += $order->getShippingCosts();
+
+
+                $export[] = array(  'Belegnummer'   => $order->getOrderID(),
+                    'Buchungstext'  => utf8_decode($order->getOrderID().' '.$order->getLastname() ) ,
+                    'Buchungsbetrag'=> $OrderItemsVAT19 * -1,
+                    'MwSt'          =>  '19',
+                    'Sollkonto'     => $order->getPaymentMethods()->getDebitor(),
+                    'Habenkonto'    => 4401,
+                    'Belegdatum'    => date("d.m.y",$order->getDoneTimestamp()),
+                    'Währung'       => 'EUR',
+                    'Kostenstelle'  => '2000',
+                    'Re_Nr'         => $order->getInvoiceNumber());
+
+
+
+
+            }
+            else{
+                $OrderItemsVAT7 =  $OrderItemsVAT7  + $order->getShippingCosts();
+            }
+
+            if($OrderItemsVAT7 > 0){
+
+
+                $export[] = array(  'Belegnummer'   => $order->getOrderID(),
+                    'Buchungstext'  => utf8_decode($order->getOrderID().' '.$order->getLastname() ),
+                    'Buchungsbetrag'=> $OrderItemsVAT7 * -1 ,
+                    'MwSt'          =>  '7',
+                    'Sollkonto'     => $order->getPaymentMethods()->getDebitor(),
+                    'Habenkonto'    => 4301,
+                    'Belegdatum'    => date("d.m.y",$order->getDoneTimestamp()),
+                    'Währung'       => 'EUR',
+                    'Kostenstelle'  => '2000',
+                    'Re_Nr'         => $order->getInvoiceNumber());
+            }
+
+
+        }
+
+
+
+
         $em->flush();
         $dataname = 'export_'.date('ymd');
         $fp = fopen('export/'.$dataname, 'w');
@@ -205,9 +275,6 @@ class DefaultController extends Controller
     }
 
 
-
-
-
     public function stateAction($state )
     {
         /**
@@ -229,6 +296,26 @@ class DefaultController extends Controller
          */
         //$time = $oPlentySoapClient->doGetServerTime();
         $orders = array();
+        $orders = $oPlentySoapClient->doGetOrdersWithState( $state);
+        // $time = $oPlentySoapClient->doGetServerTime();
+
+
+
+
+        return $this->render('BSOrderBundle:Order:orders.html.twig', array(
+            'orders'=>$orders , 'state'=> $state       ));
+    }
+
+
+
+    public function openAction($state )
+    {
+        /**
+         * Es wird ein neuer Soap-Client angelegt.
+         */
+        $oPlentySoapClient	=	new PlentySoapClient($this,$this->getDoctrine() );
+
+
         $orders = $oPlentySoapClient->doGetOrdersWithState( $state);
         // $time = $oPlentySoapClient->doGetServerTime();
 
@@ -311,6 +398,8 @@ class DefaultController extends Controller
             //Bestellungskopf erstellen
             $pdf->OrderHeader($oOrder,$aOrderInfo);
             $pdf->SetFont('Arial','',10);
+
+            // Bestell Prositionen aus der localen datenbank holen
             $repository = $this->getDoctrine()->getRepository('BSDataBundle:OrdersItem');
             $aOrderItem = $repository->findBy(array('OrderID' => $rOrder));
             $aSortOrderItems = array();
