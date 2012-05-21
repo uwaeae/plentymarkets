@@ -453,14 +453,14 @@ class DefaultController extends Controller
             ksort($aSortOrderItems);
             foreach($aSortOrderItems as $key => $sitem){
                     $pdf->ItemsHeader($key,$cellHight);
-                    $row++;
+                    $row += 2;
                     ksort($sitem);
                     foreach($sitem as $item) {
                         $pdf->ItemsBody($item['product'],$item['item'],$cellHight);
                         $row++;
 
                     }
-                    if($row >21 ) {
+                    if($row >25 ) {
                         $row = 0;
                         $pdf->Ln(80);
                     }

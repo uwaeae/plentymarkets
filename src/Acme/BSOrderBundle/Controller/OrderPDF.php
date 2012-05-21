@@ -53,13 +53,13 @@ class OrderPDF extends \FPDF
         $this->Ln(13);
         $this->Cell(150,10,'',0,0,'r');
         $this->Cell(40,10,'Packetnummer',1,0,'r');
-        $this->SetFont('Arial','B',12);
+        $this->SetFont('Arial','B',16);
         $this->Text(10,40,"INFO:");
-        $this->Ln(20);
+        $this->Ln(5);
         $i= 0 ;
-        $this->SetFont('Arial','',8);
+        $this->SetFont('Arial','B',14);
         foreach($aInfo as $info){
-            $this->MultiCell(0,5,utf8_decode($info->getText()));
+            $this->MultiCell(150,5,utf8_decode($info->getText()));
             $i++;
         }
     }
