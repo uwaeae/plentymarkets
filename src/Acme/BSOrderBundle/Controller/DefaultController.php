@@ -270,6 +270,7 @@ class DefaultController extends Controller
             $output .=  $d['Belegnummer'].';'.
                         $d['Buchungstext'].';'.
                         $d['Buchungsbetrag'].';'.
+                        $d['MwSt'].';'.
                         $d['Sollkonto'].';'.
                         $d['Habenkonto'].';'.
                         $d['Belegdatum'].';'.
