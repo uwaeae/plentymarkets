@@ -13,7 +13,7 @@ use Acme\BSDataBundle\Entity\Product;
 use Acme\BSDataBundle\Entity\Orders;
 
 use Acme\BSDataBundle\Form\ProductType;
-//use Acme\BSOrderBundle\Controller\OrderPDF;
+
 use Acme\PlentyMarketsBundle\Controller\PlentySoapClient;
 
 define('EURO',chr(128));
@@ -123,7 +123,7 @@ class DefaultController extends Controller
             $qb->expr()->eq('o.OrderStatus','7')
             ));
         $orders = $qb->getQuery()->getResult();
-
+        $exportSumme = array();
         $export[] = array(  'Belegnummer'   => 'Belegnummer',
                             'Buchungstext'  => 'Buchungstext' ,
                             'Buchungsbetrag'=>  'Buchungsbetrag',
@@ -146,6 +146,9 @@ class DefaultController extends Controller
 
                 $OrderItemsVAT19 += $order->getShippingCosts();
 
+                if(isset($exportSumme[$order->getPaymentMethods()->getDebitor()]))   $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT19;
+                else  $exportSumme[$order->getPaymentMethods()->getDebitor()] = $OrderItemsVAT19;
+
 
                 $export[] = array(  'Belegnummer'   => $order->getOrderID(),
                                     'Buchungstext'  => utf8_decode($order->getOrderID().' '.$order->getLastname() ) ,
@@ -167,7 +170,8 @@ class DefaultController extends Controller
             }
 
             if($OrderItemsVAT7 > 0){
-
+                if(isset($exportSumme[$order->getPaymentMethods()->getDebitor()]))  $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT7;
+                else $exportSumme[$order->getPaymentMethods()->getDebitor()] = $OrderItemsVAT7;
 
                 $export[] = array(  'Belegnummer'   => $order->getOrderID(),
                     'Buchungstext'  => utf8_decode($order->getOrderID().' '.$order->getLastname() ),
@@ -182,9 +186,12 @@ class DefaultController extends Controller
             }
             // Buchungssatz für die Zahlung
             if($order->getPaidTimestamp()){
+                if(isset($exportSumme[$order->getPaymentMethods()->getBankAccount()])) $exportSumme[$order->getPaymentMethods()->getBankAccount()] += $order->getTotalBrutto() + $order->getShippingCosts();
+                else $exportSumme[$order->getPaymentMethods()->getBankAccount()] = $order->getTotalBrutto() + $order->getShippingCosts();
                 $export[] = array(  'Belegnummer'   => $order->getOrderID(),
                     'Buchungstext'  => utf8_decode($order->getOrderID().' '.$order->getLastname() ) ,
                     'Buchungsbetrag'=> $order->getTotalBrutto() + $order->getShippingCosts(),
+                    'MwSt'          =>  '',
                     'Sollkonto'     => $order->getPaymentMethods()->getBankAccount(),
                     'Habenkonto'    => $order->getPaymentMethods()->getDebitor(),
                     'Belegdatum'    => date("d.m.y",$order->getPaidTimestamp()),
@@ -219,8 +226,8 @@ class DefaultController extends Controller
             if($OrderItemsVAT19 > 0){
 
                 $OrderItemsVAT19 += $order->getShippingCosts();
-
-
+                if( isset($exportSumme[$order->getPaymentMethods()->getDebitor()])) $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT19 * -1;
+                else $exportSumme[$order->getPaymentMethods()->getDebitor()] = $OrderItemsVAT19 * -1;
                 $export[] = array(  'Belegnummer'   => $order->getOrderID(),
                     'Buchungstext'  => utf8_decode($order->getOrderID().' '.$order->getLastname() ) ,
                     'Buchungsbetrag'=> $OrderItemsVAT19 * -1,
@@ -242,7 +249,8 @@ class DefaultController extends Controller
 
             if($OrderItemsVAT7 > 0){
 
-
+                if(isset($exportSumme[$order->getPaymentMethods()->getDebitor()])) $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT7 * -1;
+                else $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT7 * -1;
                 $export[] = array(  'Belegnummer'   => $order->getOrderID(),
                     'Buchungstext'  => utf8_decode($order->getOrderID().' '.$order->getLastname() ),
                     'Buchungsbetrag'=> $OrderItemsVAT7 * -1 ,
@@ -260,16 +268,21 @@ class DefaultController extends Controller
 
 
         }
-
-
-
-
-        $em->flush();
         $dataname = 'export_'.date('ymd');
-        $fp = fopen('export/'.$dataname, 'w');
+        $pdf = new exportPDF($dataname,8);
+
+        ksort($export);
+        ksort($exportSumme);
+        //$pdf->exportHeader(8);
+
+        $fp = fopen('export/broot/'.$dataname, 'w');
         $output = ' ';
         foreach ($export as $d) {
             fputcsv($fp, $d,";");
+
+
+            $pdf->Body($d,8);
+
             $output .=  $d['Belegnummer'].';'.
                         $d['Buchungstext'].';'.
                         $d['Buchungsbetrag'].';'.
@@ -282,20 +295,27 @@ class DefaultController extends Controller
                         $d['Re_Nr'].';'."\r\n";
 
         }
+        $pdf->exportFooder($exportSumme,8);
 
 
 
-
-        $response = new Response();
-        $response->setStatusCode(200);
-        $response->headers->set('Content-Type', 'application/txt');
-        $response->headers->set('Content-Disposition',
-                sprintf('attachment;filename="%s.txt"', $dataname ));
-        $response->setContent($output);
+//        $response = new Response();
+//        $response->setStatusCode(200);
+//        $response->headers->set('Content-Type', 'application/txt');
+//        $response->headers->set('Content-Disposition',
+//                sprintf('attachment;filename="%s.txt"', $dataname ));
+//        $response->setContent($output);
 
         //$response->send();
-         return $response;
-        //return $this->render('BSOrderBundle:Order:export.html.twig' );
+//         return $response;
+
+
+
+        $pdf->Output("print/".$dataname.".pdf",'F');
+
+        $em->flush();
+
+        return $this->render('BSOrderBundle:Order:export.html.twig' ,array('urlPDF'=> "/print/".$dataname.".pdf",));
 
 
     }
@@ -420,7 +440,7 @@ class DefaultController extends Controller
         foreach($oRequest as $rOrder){
 
             $pdf->AddPage();
-
+           // $pdf->AliasNbPages();
 
             //Bestellungsdaten aus localer Datenbank holen
             $repository = $this->getDoctrine()->getRepository('BSDataBundle:Orders');

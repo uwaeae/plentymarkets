@@ -3,7 +3,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>{% block title %}BSPMI{% endblock %}</title>
-
+        {% block javascripts %}
+        {% endblock %}
 
         {% block stylesheets %}
             <link href="{{ asset('/css/main.css') }}" type="text/css" rel="stylesheet" />
@@ -19,6 +20,6 @@
     <div id="content" class="content">
         {% block body %}{% endblock %}
     </div>
-        {% block javascripts %}{% endblock %}
+
     </body>
 </html>
