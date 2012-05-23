@@ -78,7 +78,7 @@ class exportPDF extends \FPDF
     function exportFooder($data,$cellHight){
         $this->Ln(20);
         $this->SetFont('Arial','',12);
-        $this->Cell(20  ,$cellHight,utf8_decode("Summen für die Konten"   )  ,'B',1,'L');
+        $this->Cell(60  ,$cellHight,utf8_decode("Summen für die Konten"   )  ,'B',1,'L');
         foreach($data as $k => $d){
 
             $this->Cell(20  ,$cellHight,$k     ,'B',0,'L');

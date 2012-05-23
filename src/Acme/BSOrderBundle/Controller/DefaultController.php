@@ -275,15 +275,16 @@ class DefaultController extends Controller
         ksort($exportSumme);
         //$pdf->exportHeader(8);
 
-        $fp = fopen('export/broot/'.$dataname, 'w');
+        $fp = fopen('export/broot/'.$dataname.'.csv', 'w');
         $output = ' ';
         foreach ($export as $d) {
             fputcsv($fp, $d,";");
-
-
+        }
+        foreach ($export as $d) {
             $pdf->Body($d,8);
+        }
 
-            $output .=  $d['Belegnummer'].';'.
+          /*  $output .=  $d['Belegnummer'].';'.
                         $d['Buchungstext'].';'.
                         $d['Buchungsbetrag'].';'.
                         $d['MwSt'].';'.
@@ -293,8 +294,9 @@ class DefaultController extends Controller
                         $d['Währung'].';'.
                         $d['Kostenstelle'].';'.
                         $d['Re_Nr'].';'."\r\n";
+          */
 
-        }
+
         $pdf->exportFooder($exportSumme,8);
 
 
@@ -311,11 +313,11 @@ class DefaultController extends Controller
 
 
 
-        $pdf->Output("print/".$dataname.".pdf",'F');
+        $pdf->Output("export/broot/".$dataname.".pdf",'F');
 
-        $em->flush();
+        //$em->flush();
 
-        return $this->render('BSOrderBundle:Order:export.html.twig' ,array('urlPDF'=> "/print/".$dataname.".pdf",));
+        return $this->render('BSOrderBundle:Order:export.html.twig' ,array('urlPDF'=> "/export/broot/".$dataname.".pdf"));
 
 
     }

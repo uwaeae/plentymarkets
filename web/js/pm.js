@@ -1,9 +1,10 @@
-$('.loading').hide();
+$(document).ready(function(){
+    $('.loading').hide();
 
-initlist();
+    initlist();
 
 
-
+});
 
 function initlist(){
     $("tr.row_editable").click(function(){

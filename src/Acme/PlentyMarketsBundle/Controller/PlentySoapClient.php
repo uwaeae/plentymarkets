@@ -335,7 +335,7 @@ class PlentySoapClient extends \SoapClient
      */
     public function doGetOrdersWithState($state = 5.5, $LastUpdate = null, $OrderType = null )
     {
-
+        $page = 1;
         $oResponse	= null;
         $options['Page'] = null;
         $options['OrderType'] = $OrderType;
