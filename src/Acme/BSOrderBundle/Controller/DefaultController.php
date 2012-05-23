@@ -255,6 +255,9 @@ class DefaultController extends Controller
                     'Re_Nr'         => $order->getInvoiceNumber());
             }
 
+            $order->setExportDate(date('U'));
+            $em->persist($order);
+
 
         }
 
