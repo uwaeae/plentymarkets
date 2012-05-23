@@ -333,16 +333,16 @@ class PlentySoapClient extends \SoapClient
     /**
      * Get Orders mit einem bestimmten Status
      */
-    public function doGetOrdersWithState($state = 5.5,$page = 1 )
+    public function doGetOrdersWithState($state = 5.5, $LastUpdate = null, $OrderType = null )
     {
 
         $oResponse	= null;
         $options['Page'] = null;
-        $options['OrderType'] = null;
+        $options['OrderType'] = $OrderType;
         $options['OrderStatus'] =  doubleval($state);
         $options['MultishopID'] = 0;
         $options['OrderID'] = null;
-        $options['LastUpdate'] = null;
+        $options['LastUpdate'] = $LastUpdate ;
         $options['GetOrderDeliveryAddress'] = true;
         $options['GetOrderCustomerAddress'] = true;
 
@@ -389,7 +389,7 @@ class PlentySoapClient extends \SoapClient
     }
 
     private function syncOrders($aoOrders){
-      //  $em = $this->doctrine->getEntityManager();
+        $em = $this->doctrine->getEntityManager();
         $OrderRepro = $this->doctrine
             ->getRepository('BSDataBundle:Orders');
 
@@ -425,7 +425,7 @@ class PlentySoapClient extends \SoapClient
 
             }
 
-           // $em->flush();
+            $em->flush();
 
             $orders[] = array('head'=> $OrderHead,'infos'=> $OrderInfo, 'items'=>$OrderItem );
 
@@ -484,7 +484,7 @@ class PlentySoapClient extends \SoapClient
 
         }
         $em->persist($order);
-        $em->flush();
+        //$em->flush();
         return $order;
     }
 
@@ -503,11 +503,12 @@ class PlentySoapClient extends \SoapClient
                 $oOrdersInfo->setOrderID($AOorder->OrderHead->OrderID);
                 $oOrdersInfo->setOrders($order);
                 $em->persist($oOrdersInfo);
-                $em->flush();
+
                 $aOrderInfos[]= $oOrdersInfo;
                 //$order->addOrdersInfo($oOrdersInfo);
 
             }
+           // $em->flush();
         }
         return $aOrderInfos;
 
@@ -524,9 +525,9 @@ class PlentySoapClient extends \SoapClient
         if($aOrderItems){
             foreach( $aOrderItems as $item){
                 $em->remove($item);
-                $em->flush();
-                }
 
+                }
+            //$em->flush();
             }
         $aOrderItems = array();
         foreach($AOorder->OrderItems->item as $item){
@@ -541,11 +542,11 @@ class PlentySoapClient extends \SoapClient
             $orderitem->setQuantity($item->Quantity);
             $orderitem->setVAT($item->VAT);
             $em->persist($orderitem);
-            $em->flush();
+
              $aOrderItems[]= $orderitem;
 
         }
-
+        //$em->flush();
 
         return $aOrderItems;
     }

@@ -24,6 +24,10 @@ BSOrder_state:
     pattern:  /orders/state/{state}
     defaults: { _controller: BSOrderBundle:Default:state, state:5.5 }
 
+BSOrder_sync:
+    pattern:  /orders/sync/{state}
+    defaults: { _controller: BSOrderBundle:Default:sync, state:7 }
+
 
 BSOrder_set_state:
     pattern:  /orders/setstate/{state}
@@ -38,7 +42,7 @@ BSOrder_export:
     pattern:  /orders/export
     defaults: { _controller: BSOrderBundle:Default:export }
 
-BSOrder_export:
+BSOrder_open:
     pattern:  /orders/open
     defaults: { _controller: BSOrderBundle:Default:open }
 

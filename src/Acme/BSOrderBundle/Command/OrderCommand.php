@@ -22,6 +22,7 @@ protected function configure()
         ->setName('BSOrder:import')
         ->setDescription('Import Invoice Data from Plenty Markets')
         ->addArgument('state', InputArgument::OPTIONAL, 'Order with State?')
+        ->addArgument('daysback', InputArgument::OPTIONAL, 'how many Days?')
        // ->addOption('yell', null, InputOption::VALUE_NONE, 'If set, the task will yell in uppercase letters')
         ;
 }
@@ -37,29 +38,23 @@ protected function execute(InputInterface $input, OutputInterface $output)
 
         $id =  $input->getArgument('state');
 
-        $orders = $oPlentySoapClient->doGetOrdersWithState( ( $id ? $id : 7 ) );
+        $daysback=  $input->getArgument('daysback');
+        $date = date('U',mktime(0, 0, 0, date("m")  , date("d") - $daysback , date("Y"))) ;
+        $orders = $oPlentySoapClient->doGetOrdersWithState( ( $id ? $id : 7 ), $date  );
 
 
-        $output->writeln('Syncronisiert '.count($orders));
-       /*
+        $output->writeln('Syncronisiert '.count($orders).' Datum '.date('d.m.y',mktime(0, 0, 0, date("m")  , date("d") - $daysback , date("Y")) ));
+
         foreach($orders as $order){
 
-            $output->writeln($order['head']->getOrderId().' '.$order['head']->getTotalBrutto().' '.$order['head']->getPaymentMethods()->getId().' '.$order['head']->getInvoiceNumber());
+            $output->writeln($order['head']->getOrderId()
+                    .'   '.($order['head']->getTotalBrutto()+$order['head']->getShippingCosts())
+                    .'   '.$order['head']->getPaymentMethods()->getName()
+                    .'   '.$order['head']->getInvoiceNumber());
 
         }
-       */
-      /*
-        $name = $input->getArgument('name');
-        if ($name) {
-        $text = 'Hello '.$name;
-        } else {
-        $text = 'Hello';
-        }
 
-        if ($input->getOption('yell')) {
-            $text = strtoupper($text);
-        }
-*/
+
 
     }
 }

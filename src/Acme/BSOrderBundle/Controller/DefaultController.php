@@ -50,13 +50,15 @@ class DefaultController extends Controller
         $qb->add('select', 'o')
             ->add('from', 'BSDataBundle:Orders o')
             ->add('where',$qb->expr()->andX(
-                $qb->expr()->eq('o.OrderType','order'),
+                $qb->expr()->neq('o.OrderType','?1'),
                 $qb->expr()->isNull('o.exportDate'),
                 $qb->expr()->orX(
-                    $qb->expr()->gte('o.OrderStatus','7'),
-                    $qb->expr()->gte('o.OrderStatus','11'))
+                    $qb->expr()->eq('o.OrderStatus','7'),
+                    $qb->expr()->eq('o.OrderStatus','11')
+                   )
 
-                ));
+                ))
+               ->setParameter(1, 'delivery');
 
         $pagination = $this->get('knp_paginator')->paginate(
             $qb->getQuery(),
@@ -76,6 +78,39 @@ class DefaultController extends Controller
 
     }
 
+    public function syncAction($state,Request $request )
+    {
+        /**
+         * Es wird ein neuer Soap-Client angelegt.
+         */
+        $oPlentySoapClient	=	new PlentySoapClient($this,$this->getDoctrine() );
+
+        /**
+         * Nachdem dieser angelegt wurde, startet die Authentifizierung
+         */
+        //$oPlentySoapClient->doAuthenticication();
+
+        /**
+         * Die Authentifizierung ist abgeschlossen und der SOAP-Header wurde
+         * dem Client hinzugefügt.
+         *
+         * Dies alles kann am einfachsten mit dem Call GetServerTime getestet werden,
+         * da dieser keine Request-Parameter benötigt.
+         */
+        //$time = $oPlentySoapClient->doGetServerTime();
+        $orders = array();
+        $orders = $oPlentySoapClient->doGetOrdersWithState( $state);
+        // $time = $oPlentySoapClient->doGetServerTime();
+
+
+
+            return "Syncronisiert  ".count($orders);
+
+
+    }
+
+
+
     public function exportAction(){
 
         $em = $this->getDoctrine()->getEntityManager();
@@ -83,9 +118,9 @@ class DefaultController extends Controller
         $qb->add('select', 'o')
             ->add('from', 'BSDataBundle:Orders o')
             ->add('where',$qb->expr()->andX(
-            $qb->expr()->eq('o.OrderType','order'),
+            $qb->expr()->like('o.OrderType','Order'),
             $qb->expr()->isNull('o.exportDate'),
-            $qb->expr()->gte('o.OrderStatus','7')
+            $qb->expr()->eq('o.OrderStatus','7')
             ));
         $orders = $qb->getQuery()->getResult();
 
@@ -170,8 +205,7 @@ class DefaultController extends Controller
             ->add('from', 'BSDataBundle:Orders o')
             ->add('where',$qb->expr()->andX(
             $qb->expr()->isNull('o.exportDate'),
-
-            $qb->expr()->gte('o.OrderStatus','11')
+            $qb->expr()->eq('o.OrderStatus','11')
         ));
         $orders = $qb->getQuery()->getResult();
 
@@ -193,7 +227,7 @@ class DefaultController extends Controller
                     'MwSt'          =>  '19',
                     'Sollkonto'     => $order->getPaymentMethods()->getDebitor(),
                     'Habenkonto'    => 4401,
-                    'Belegdatum'    => date("d.m.y",$order->getDoneTimestamp()),
+                    'Belegdatum'    => date("d.m.y",$order->getLastUpdate()),
                     'Währung'       => 'EUR',
                     'Kostenstelle'  => '2000',
                     'Re_Nr'         => $order->getInvoiceNumber());
@@ -215,7 +249,7 @@ class DefaultController extends Controller
                     'MwSt'          =>  '7',
                     'Sollkonto'     => $order->getPaymentMethods()->getDebitor(),
                     'Habenkonto'    => 4301,
-                    'Belegdatum'    => date("d.m.y",$order->getDoneTimestamp()),
+                    'Belegdatum'    => date("d.m.y",$order->getLastUpdate()),
                     'Währung'       => 'EUR',
                     'Kostenstelle'  => '2000',
                     'Re_Nr'         => $order->getInvoiceNumber());
@@ -255,8 +289,8 @@ class DefaultController extends Controller
                 sprintf('attachment;filename="%s.txt"', $dataname ));
         $response->setContent($output);
 
-        $response->send();
-
+        //$response->send();
+         return $response;
         //return $this->render('BSOrderBundle:Order:export.html.twig' );
 
 
