@@ -131,7 +131,7 @@ class DefaultController extends Controller
                             'Sollkonto'     => 'Sollkonto',
                             'Habenkonto'    =>  'Habenkonto' ,
                             'Belegdatum'    =>  'Belegdatum',
-                            'Währung'       => utf8_decode('Währung'),
+                            'Währung'       => 'Währung',
                             'Kostenstelle'  => 'Kostenstelle',
                             'Re_Nr'         => 'Re_Nr'   );
 
@@ -151,7 +151,7 @@ class DefaultController extends Controller
 
 
                 $export[] = array(  'Belegnummer'   => $order->getOrderID(),
-                                    'Buchungstext'  => utf8_decode($order->getOrderID().' '.$order->getLastname() ) ,
+                                    'Buchungstext'  => $order->getOrderID().' '.$order->getLastname()  ,
                                     'Buchungsbetrag'=> $OrderItemsVAT19,
                                     'MwSt'          =>  '19',
                                     'Sollkonto'     => $order->getPaymentMethods()->getDebitor(),
@@ -174,7 +174,7 @@ class DefaultController extends Controller
                 else $exportSumme[$order->getPaymentMethods()->getDebitor()] = $OrderItemsVAT7;
 
                 $export[] = array(  'Belegnummer'   => $order->getOrderID(),
-                    'Buchungstext'  => utf8_decode($order->getOrderID().' '.$order->getLastname() ),
+                    'Buchungstext'  => $order->getOrderID().' '.$order->getLastname() ,
                     'Buchungsbetrag'=> $OrderItemsVAT7 ,
                     'MwSt'          =>  '7',
                     'Sollkonto'     => $order->getPaymentMethods()->getDebitor(),
@@ -189,7 +189,7 @@ class DefaultController extends Controller
                 if(isset($exportSumme[$order->getPaymentMethods()->getBankAccount()])) $exportSumme[$order->getPaymentMethods()->getBankAccount()] += $order->getTotalBrutto() + $order->getShippingCosts();
                 else $exportSumme[$order->getPaymentMethods()->getBankAccount()] = $order->getTotalBrutto() + $order->getShippingCosts();
                 $export[] = array(  'Belegnummer'   => $order->getOrderID(),
-                    'Buchungstext'  => utf8_decode($order->getOrderID().' '.$order->getLastname() ) ,
+                    'Buchungstext'  => $order->getOrderID().' '.$order->getLastname() ,
                     'Buchungsbetrag'=> $order->getTotalBrutto() + $order->getShippingCosts(),
                     'MwSt'          =>  '',
                     'Sollkonto'     => $order->getPaymentMethods()->getBankAccount(),
@@ -229,7 +229,7 @@ class DefaultController extends Controller
                 if( isset($exportSumme[$order->getPaymentMethods()->getDebitor()])) $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT19 * -1;
                 else $exportSumme[$order->getPaymentMethods()->getDebitor()] = $OrderItemsVAT19 * -1;
                 $export[] = array(  'Belegnummer'   => $order->getOrderID(),
-                    'Buchungstext'  => utf8_decode($order->getOrderID().' '.$order->getLastname() ) ,
+                    'Buchungstext'  =>$order->getOrderID().' '.$order->getLastname()  ,
                     'Buchungsbetrag'=> $OrderItemsVAT19 * -1,
                     'MwSt'          =>  '19',
                     'Sollkonto'     => $order->getPaymentMethods()->getDebitor(),
@@ -252,7 +252,7 @@ class DefaultController extends Controller
                 if(isset($exportSumme[$order->getPaymentMethods()->getDebitor()])) $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT7 * -1;
                 else $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT7 * -1;
                 $export[] = array(  'Belegnummer'   => $order->getOrderID(),
-                    'Buchungstext'  => utf8_decode($order->getOrderID().' '.$order->getLastname() ),
+                    'Buchungstext'  => $order->getOrderID().' '.$order->getLastname() ,
                     'Buchungsbetrag'=> $OrderItemsVAT7 * -1 ,
                     'MwSt'          =>  '7',
                     'Sollkonto'     => $order->getPaymentMethods()->getDebitor(),
@@ -316,8 +316,11 @@ class DefaultController extends Controller
         $pdf->Output("export/broot/".$dataname.".pdf",'F');
 
         //$em->flush();
+        unset($export[0]);
 
-        return $this->render('BSOrderBundle:Order:export.html.twig' ,array('urlPDF'=> "/export/broot/".$dataname.".pdf"));
+        return $this->render('BSOrderBundle:Order:export.html.twig' ,array('urlPDF'=> "/export/broot/".$dataname.".pdf",
+        'export'=> $export,
+        'summe'=>$exportSumme));
 
 
     }

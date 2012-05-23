@@ -1,26 +1,86 @@
 {# src/Acme/BSLable/Resources/views/Default/base.html.twig #}
-{% extends '::base.html.twig' %}
+{# % extends '::base.html.twig' %} #}
 
-{% block title %}Auftragsbearbeitung{% endblock %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <link href="{{ asset('/css/export.css') }}" type="text/css" rel="stylesheet" />
+
+</head>
+<body>
+
+<div>
+
+    <table >
+        <thead>
+        <tr>
+            <td colspan="10">Blumenschule - Plenty Markets zu Lexware Export</td>
+        </tr>
+        <tr>
+            <th>Belegnummer</th>
+            <th>Buchungstext</th>
+            <th >Betrag</th>
+            <th>MwSt</th>
+            <th>Sollkonto</th>
+            <th>Habenkonto</th>
+            <th>Belegdatum</th>
+            <th>Währung</th>
+            <th>Kostenstelle</th>
+            <th>Re_Nr</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for e in export %}
+        <tr>
+            <td>{{ e.Belegnummer }}</td>
+            <td>{{ e.Buchungstext  }}</td>
+            <td class="number">{{ e.Buchungsbetrag  | number_format(2, ',', '.')}}</td>
+            <td>{{ e.MwSt}}</td>
+            <td>{{ e.Sollkonto}}</td>
+            <td>{{ e.Habenkonto}}</td>
+            <td>{{ e.Belegdatum}}</td>
+            <td>{{ e.Währung}}</td>
+            <td>{{ e.Kostenstelle}}</td>
+            <td>{{ e.Re_Nr}}</td>
+        </tr>
+
+        {% endfor %}
+        </tbody>
 
 
-{% block body %}
 
-<div id="PDF">
-    <object data="{{urlPDF}}" type="application/pdf" width="800" height="900"  > </object>
+
+
+
+
+
+    </table>
+
+    <table>
+        <thead>
+        <tr>
+            <th> Summe für die einzelnen Konten</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for k,s in summe %}
+        <tr>
+            <th>{{ k }}</th>
+            <td>{{ s  | number_format(2, ',', '.')}}</td>
+        </tr>
+
+        {% endfor %}
+        </tbody>
+    </table>
+
+
 </div>
 
 
 
-<div id="menu2">
 
-    <ul>
-
-        <li><a href="{{ path('BSOrder_accounting') }}" >zurück</a></li>
-
-    </ul>
-
-</div>
-
-
-{% endblock %}
+</body>
+</html>

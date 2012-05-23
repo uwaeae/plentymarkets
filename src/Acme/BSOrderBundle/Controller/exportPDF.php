@@ -60,7 +60,7 @@ class exportPDF extends \FPDF
     function Body($row,$cellHight){
         $this->SetFont('Arial','',12);
         $this->Cell(20  ,$cellHight,$row['Belegnummer']     ,'B',0,'L');
-        $this->Cell(40  ,$cellHight,$row['Buchungstext']    ,'B',0,'L');
+        $this->Cell(40  ,$cellHight,utf8_decode( $row['Buchungstext'] )   ,'B',0,'L');
         $this->Cell(15  ,$cellHight,sprintf('%01.2f',$row['Buchungsbetrag'] ) ,'B',0,'R');
         $this->Cell(10  ,$cellHight,$row['MwSt']            ,'B',0,'R');
         $this->Cell(20  ,$cellHight,$row['Sollkonto']       ,'B',0,'L');

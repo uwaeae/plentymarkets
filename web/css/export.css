@@ -1,0 +1,28 @@
+table{
+    width: 900px;
+    font-family: sans-serif, arial, helvetica;
+    border-collapse: collapse;
+
+
+}
+
+th{
+    text-align: left;
+    border-bottom: 2px solid;
+
+}
+
+td{
+    padding-right: 5px;
+    border-right: 2px solid grey;
+    border-bottom: 2px solid;
+}
+
+td.number{
+    text-align: right;
+}
+
+td:last-child{
+    border-right:  none ;
+    border-bottom: 2px solid;
+}
