@@ -285,8 +285,13 @@ class DefaultController extends Controller
 
         $fp = fopen('export/broot/'.$dataname.'.txt', 'w');
         $output = ' ';
+
+
         foreach ($export as $d) {
-            $d['Buchungstext'] = utf8_decode($d['Buchungstext']);
+            foreach($d as $i){
+                $i = utf8_decode($i);
+            }
+            
             fputcsv($fp, $d,"\t");
         }
         foreach ($export as $d) {
