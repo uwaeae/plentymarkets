@@ -132,8 +132,8 @@ class DefaultController extends Controller
             ));
         $orders = $qb->getQuery()->getResult();
         $exportSumme = array();
-        $export[] = array(  'Belegnummer'   => 'Belegnummer',
-                            'Buchungstext'  => 'Buchungstext' ,
+        $export[] = array(  'Buchungstext'  => 'Buchungstext' ,
+                            'Belegnummer'   => 'Belegnummer',
                             'Buchungsbetrag'=>  'Buchungsbetrag',
                             'MwSt'          =>  'MwSt',
                             'Sollkonto'     => 'Sollkonto',
@@ -292,7 +292,7 @@ class DefaultController extends Controller
                 $i =  utf8_decode((string) $i);
             }
 
-            fputcsv($fp, $d,"\t");
+            fputcsv($fp, $d,";");
         }
         foreach ($export as $d) {
             $pdf->Body($d,8);
