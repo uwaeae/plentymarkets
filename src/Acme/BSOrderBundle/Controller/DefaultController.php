@@ -283,10 +283,11 @@ class DefaultController extends Controller
         ksort($exportSumme);
         //$pdf->exportHeader(8);
 
-        $fp = fopen('export/broot/'.$dataname.'.csv', 'w');
+        $fp = fopen('export/broot/'.$dataname.'.txt', 'w');
         $output = ' ';
         foreach ($export as $d) {
-            fputcsv($fp, $d,";");
+            $d['Buchungstext'] = utf8_decode($d['Buchungstext']);
+            fputcsv($fp, $d,"\t");
         }
         foreach ($export as $d) {
             $pdf->Body($d,8);
