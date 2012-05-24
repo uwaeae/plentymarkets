@@ -297,7 +297,7 @@ class DefaultController extends Controller
                 $i =  utf8_decode((string) $i);
             }
 
-            fputcsv($fp, $d,";");
+            fputs($fp, implode($d, ';')."\n");
         }
         foreach ($export as $d) {
             $pdf->Body($d,8);
