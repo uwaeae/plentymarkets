@@ -289,9 +289,9 @@ class DefaultController extends Controller
 
         foreach ($export as $d) {
             foreach($d as $i){
-                $i = utf8_decode($i);
+                $i =  utf8_decode((string) $i);
             }
-            
+
             fputcsv($fp, $d,"\t");
         }
         foreach ($export as $d) {
