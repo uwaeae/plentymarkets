@@ -45,6 +45,14 @@ class DefaultController extends Controller
 
     public function accountingAction(){
 
+        $oPlentySoapClient	=	new PlentySoapClient($this,$this->getDoctrine());
+        $daysback=  2;
+        $date = date('U',mktime(0, 0, 0, date("m")  , date("d") - $daysback , date("Y"))) ;
+        $oPlentySoapClient->doGetOrdersWithState( 7, $date  );
+        $oPlentySoapClient->doGetOrdersWithState( 11, $date  );
+
+
+
         $em = $this->getDoctrine()->getEntityManager();
         $qb = $em->createQueryBuilder();
         $qb->add('select', 'o')
