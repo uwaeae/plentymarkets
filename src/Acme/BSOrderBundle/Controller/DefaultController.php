@@ -293,11 +293,8 @@ class DefaultController extends Controller
 
 
         foreach ($export as $d) {
-            foreach($d as $i){
-                $i =  utf8_decode((string) $i);
-            }
-
-            fputs($fp, implode($d, ';')."\n");
+            $d['Buchungstext'] =  utf8_decode($d['Buchungstext']);
+            fputs($fp, implode($d, ';')."\r\n");
         }
         foreach ($export as $d) {
             $pdf->Body($d,8);
