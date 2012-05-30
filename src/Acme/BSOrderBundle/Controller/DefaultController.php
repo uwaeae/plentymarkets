@@ -331,7 +331,7 @@ class DefaultController extends Controller
 
         $pdf->Output("export/broot/".$dataname.".pdf",'F');
 
-        //$em->flush();
+        $em->flush();
         unset($export[0]);
 
         return $this->render('BSOrderBundle:Order:export.html.twig' ,array('urlPDF'=> "/export/broot/".$dataname.".pdf",
@@ -547,6 +547,12 @@ class DefaultController extends Controller
 
             // Fooder
             $pdf->OrderFooder($oOrder,$oOrderQuantity );
+
+
+
+
+
+
 
             }
 
