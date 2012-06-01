@@ -46,8 +46,8 @@ class DefaultController extends Controller
     public function accountingAction(){
 
         $oPlentySoapClient	=	new PlentySoapClient($this,$this->getDoctrine());
-        $daysback=  2;
-        $date = date('U',mktime(0, 0, 0, date("m")  , date("d") - $daysback , date("Y"))) ;
+        $back =  7;
+        $date = date('U',mktime(0, 0, 0, date("m")  , date("d") - $back , date("Y"))) ;
         $oPlentySoapClient->doGetOrdersWithState( 7, $date  );
         $oPlentySoapClient->doGetOrdersWithState( 11, $date  );
 
@@ -159,7 +159,7 @@ class DefaultController extends Controller
 
 
                 $export[] = array(
-                                    'Buchungstext'  => $order->getOrderID().' '.$order->getLastname()  ,
+                                    'Buchungstext'  => 'A '.$order->getOrderID().' '.$order->getLastname()  ,
                                     'Belegnummer'   => $order->getOrderID(),
                                     'Buchungsbetrag'=> $OrderItemsVAT19,
                                     'MwSt'          =>  '19',
@@ -183,7 +183,7 @@ class DefaultController extends Controller
                 else $exportSumme[$order->getPaymentMethods()->getDebitor()] = $OrderItemsVAT7;
 
                 $export[] = array(
-                    'Buchungstext'  => $order->getOrderID().' '.$order->getLastname() ,
+                    'Buchungstext'  => 'A '.$order->getOrderID().' '.$order->getLastname() ,
                     'Belegnummer'   => $order->getOrderID(),
                     'Buchungsbetrag'=> $OrderItemsVAT7 ,
                     'MwSt'          =>  '7',
@@ -199,7 +199,7 @@ class DefaultController extends Controller
                 if(isset($exportSumme[$order->getPaymentMethods()->getBankAccount()])) $exportSumme[$order->getPaymentMethods()->getBankAccount()] += $order->getTotalBrutto() + $order->getShippingCosts();
                 else $exportSumme[$order->getPaymentMethods()->getBankAccount()] = $order->getTotalBrutto() + $order->getShippingCosts();
                 $export[] = array(
-                    'Buchungstext'  => $order->getOrderID().' '.$order->getLastname() ,
+                    'Buchungstext'  => 'Z '.$order->getOrderID().' '.$order->getLastname() ,
                     'Belegnummer'   => $order->getOrderID(),
                     'Buchungsbetrag'=> $order->getTotalBrutto() + $order->getShippingCosts(),
                     'MwSt'          =>  '',
@@ -240,7 +240,7 @@ class DefaultController extends Controller
                 if( isset($exportSumme[$order->getPaymentMethods()->getDebitor()])) $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT19 * -1;
                 else $exportSumme[$order->getPaymentMethods()->getDebitor()] = $OrderItemsVAT19 * -1;
                 $export[] = array(
-                    'Buchungstext'  =>$order->getOrderID().' '.$order->getLastname()  ,
+                    'Buchungstext'  => 'G '.$order->getOrderID().' '.$order->getLastname()  ,
                     'Belegnummer'   => $order->getOrderID(),
                     'Buchungsbetrag'=> $OrderItemsVAT19 * -1,
                     'MwSt'          =>  '19',
@@ -264,7 +264,7 @@ class DefaultController extends Controller
                 if(isset($exportSumme[$order->getPaymentMethods()->getDebitor()])) $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT7 * -1;
                 else $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT7 * -1;
                 $export[] = array(
-                    'Buchungstext'  => $order->getOrderID().' '.$order->getLastname() ,
+                    'Buchungstext'  => 'G '.$order->getOrderID().' '.$order->getLastname() ,
                     'Belegnummer'   => $order->getOrderID(),
                     'Buchungsbetrag'=> $OrderItemsVAT7 * -1 ,
                     'MwSt'          =>  '7',
