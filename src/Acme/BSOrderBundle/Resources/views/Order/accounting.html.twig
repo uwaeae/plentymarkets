@@ -60,13 +60,20 @@
                {{order.getOrderID}}
               </td>
                 <td >
-                    {{order.getOrderStatus| number_format(2, ',', '.') }}
+                    {% if order.getOrderStatus == 7 %}
+                       <p>  Auftrag </p>
+                    {% elseif order.getOrderStatus == 11 %}
+                       <p> Gutschrift </p>
+                    {% else %}
+                       <p> </p>
+                    {% endif %}
+
                </td>
                 <td class="Order_Name">
                     {{order.getFirstName}}  {{order.getLastname}}
                 </td>
                 <td>
-                    {{order.getTotalBrutto| number_format(2, ',', '.') }} &euro;
+                    {{(order.getTotalBrutto + order.getShippingCosts) | number_format(2, ',', '.') }} &euro;
                 </td>
                 <td>
                     {{order.getPaymentMethods.name }}
