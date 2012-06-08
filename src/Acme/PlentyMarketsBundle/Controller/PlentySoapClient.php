@@ -21,6 +21,7 @@ namespace Acme\PlentyMarketsBundle\Controller;
 use \DateTime;
 use \SoapFault;
 use Acme\PlentyMarketsBundle\Entity\Token;
+use Acme\BSDataBundle\Entity\Product;
 use Acme\BSDataBundle\Entity\Orders;
 use Acme\BSDataBundle\Entity\OrdersItem;
 use Acme\BSDataBundle\Entity\OrdersInfo;
@@ -327,6 +328,104 @@ class PlentySoapClient extends \SoapClient
             return("Es ist folgender Fehler aufgetreten : ");//.$oResponse->ErrorMessages->item[0]->Message;
         }
     }
+
+
+    /**
+     * Mit diesem Call können mehere Artikel aus dem Shop abgerufen werden
+     *
+     */
+    public function doGetItemsBase( $lastUpdate = null,$output = null)
+
+    {
+        $oResponse	= null;
+
+        $options['LastUpdate'] = $lastUpdate ;
+        $options['LastInserted'] =null ;
+        $options['Marking1ID'] =null ;
+        $options['Marking2ID'] =null ;
+        $options['Webshop'] = 1 ;
+        $options['WebAPI'] =null;
+        $options['Gimahhot'] =null;
+        $options['GoogleProducts'] =null ;
+        $options['Hitmeister'] =null ;
+        $options['Shopgate'] =null ;
+        $options['Shopperella'] =null ;
+        $options['ShopShare'] =null;
+        $options['Tradoria'] = null ;
+        $options['Yatego'] = null ;
+        $options['Quelle'] = null;
+        $options['MainWarehouseID'] = null ;
+        $options['GetShortDescription'] = null ;
+        $options['GetLongDescription'] = null;
+        $options['GetTechnicalData'] = null ;
+        $options['Page'] = null;
+
+
+        try
+        {
+            $oResponse	=	$this->__soapCall('GetItemsBase',array( $options));
+        }
+        catch(\SoapFault $sf)
+        {
+            print_r("Es kam zu einem Fehler beim Call GetAuthentificationToken<br>");
+            print_r($sf->getMessage());
+        }
+        if ( isset($oResponse->Success) and $oResponse->ItemsBase != null ){
+           // $output = array_merge($output, $oResponse->ItemsBase->item);
+            $this->syncArticle( $oResponse->ItemsBase->item,$output);
+            if(isset($oResponse->Pages)) $page = $oResponse->Pages;
+        }
+
+        for($i = 1; $i < $page; $i++)
+        {
+
+            $options['Page'] = $i  ;
+            try
+            {
+                $oResponse	=	$this->__soapCall('GetItemsBase',array( $options));
+            }
+            catch(\SoapFault $sf)
+            {
+                print_r("Es kam zu einem Fehler beim Call GetAuthentificationToken<br>");
+                print_r($sf->getMessage());
+            }
+            if ( isset($oResponse->Success) and $oResponse->ItemsBase != null ){
+                //$output = array_merge($output, $oResponse->ItemsBase->item);
+                $this->syncArticle( $oResponse->ItemsBase->item,$output);
+            }
+
+        }
+
+        return $output;
+    }
+
+    private function syncArticle($Items,$output = null){
+
+
+        $em = $this->doctrine->getEntityManager();
+        $repository = $this->doctrine->getRepository('BSDataBundle:Product');
+
+
+        foreach($Items as $item){
+            // $id = explode("-",  $item->SKU);
+            $product = $repository->findOneBy(array('article_id' => $item->ItemID));
+            if(!$product) {
+                $product = new Product();
+            }
+
+            $product->PMSoapProduct($item );
+
+            $em->persist($product);
+            if($output) $output->writeln($product->getArticleId().' '.$product->getArticleNo());
+        }
+
+        $em->flush();
+
+
+
+    }
+
+
 
 
 

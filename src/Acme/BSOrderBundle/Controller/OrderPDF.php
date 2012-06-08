@@ -19,6 +19,7 @@ class OrderPDF extends \FPDF
 
     private $position = 0;
     public $title;
+    private $CarePage = 0;
 
     function __construct($title) {
         parent::__construct();
@@ -63,6 +64,57 @@ class OrderPDF extends \FPDF
             $i++;
         }
     }
+
+    function CareListHeader(Orders $Order){
+        $this->CarePage = 1;
+        $this->SetFont('Arial','',12);
+        $this->SetTextColor(80,80,80);
+        $this->Text(140,10,'Bestellung');
+        $this->Text(165,10,$Order->getOrderID());
+        $this->Text(140,15,'Seite');
+        $this->Text(165,15,$this->CarePage);
+        $this->Image('images/bslogo.jpg',50,10,85,25,'JPEG');
+        $this->ln(20);
+        $this->SetFont('Arial','B',24);
+        $this->SetTextColor(0,0,0);
+        $this->Cell(160,15,"Pflegehinweise & Verwendung" ,0,1,'C');
+        $this->SetFont('Arial','B',16);
+        $this->MultiCell(180,8,utf8_decode("Damit Ihre Pflanzen sicherer gedeihen, haben wir hier noch einige Hiweise für sie zum Aufheben zusammengestellt.") );
+        $this->ln(5);
+    }
+
+    function CareListBody(Product $Product,Orders $Order){
+        if($this->getY() > 240){
+            $this->addPage();
+             $this->CarePage++;
+            $this->SetFont('Arial','',12);
+            $this->SetTextColor(80,80,80);
+            $this->Text(140,10,'Bestellung');
+            $this->Text(165,10,$Order->getOrderID());
+            $this->Text(140,15,'Seite');
+            $this->Text(165,15,$this->CarePage);
+            $this->Image('images/bslogo.jpg',50,10,85,25,'JPEG');
+            $this->ln(20);
+            $this->SetFont('Arial','B',24);
+            $this->SetTextColor(0,0,0);
+            $this->Cell(160,15,"Pflegehinweise & Verwendung" ,0,1,'C');
+            $this->SetFont('Arial','B',12);
+            $this->Cell(160,8,"Fortsetzung" ,0,1,'C');
+            $this->ln(5);
+
+        }
+
+        $this->SetFont('Arial','B',12);
+        $this->SetTextColor(0,0,0);
+        $this->Cell(180,12,utf8_decode($Product->getName()).' ('.$Product->getArticleNo().')' ,'T',1,'L');
+        $this->SetFont('Arial','',12);
+        $this->MultiCell(180,5,utf8_decode($Product->getLabelText()));
+        $this->ln(5);
+        //        $this->Cell(180,2,' ' ,'B',1,'L');
+
+    }
+
+
 
     function ItemsHeader($Stock,$cellHight){
         $this->Ln(10);

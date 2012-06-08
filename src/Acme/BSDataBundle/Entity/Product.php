@@ -57,6 +57,14 @@ class Product
     private $name3;
 
     /**
+     * @var string $lastupdate
+     *
+     * @ORM\Column(name="lastupdate", type="string", length=255,nullable= true)
+     */
+    private $lastupdate;
+
+
+    /**
      * @var float $price
      *
      * @ORM\Column(name="price", type="float")
@@ -204,10 +212,8 @@ class Product
         return $this->article_id;
     }
 
-    public function newPMSoapProduct($item)
+    public function PMSoapProduct($item)
     {
-
-
         $this->setArticleId($item->ItemID);
         $this->setArticleNo( $item->ItemNo );
        // $this->setBotanical($item->FreeTextFields->Free2);
@@ -216,6 +222,7 @@ class Product
         $this->setName($item->Texts->Name);
         $this->setName2($item->Texts->Name2);
         $this->setPrice($item->PriceSet->Price);
+        $this->setLastupdate( $item->LastUpdate);
        // $this->setShortDescription($item->Texts->ShortDescription);
         //$this->setStockground();
 
@@ -227,7 +234,7 @@ class Product
         $this->setArticleNo($item->getArticleID());
         //$this->setBotanical($item->FreeTextFields->Free2);
         //$this->setDescription( $item->getItemText());
-        //$this->setLabelText($item->FreeTextFields->Free3);
+
         $this->setName($item->getItemText());
         $this->setPrice($item->getPrice());
       //  $this->setShortDescription($item->getItemText());
@@ -344,5 +351,25 @@ class Product
     public function getQuantity()
     {
         return $this->quantity;
+    }
+
+    /**
+     * Set lastupdate
+     *
+     * @param string $lastupdate
+     */
+    public function setLastupdate($lastupdate)
+    {
+        $this->lastupdate = $lastupdate;
+    }
+
+    /**
+     * Get lastupdate
+     *
+     * @return string 
+     */
+    public function getLastupdate()
+    {
+        return $this->lastupdate;
     }
 }

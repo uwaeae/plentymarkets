@@ -482,7 +482,7 @@ class DefaultController extends Controller
             $repository = $this->getDoctrine()->getRepository('BSDataBundle:OrdersItem');
             $aOrderItem = $repository->findBy(array('OrderID' => $rOrder));
             $aSortOrderItems = array();
-
+            $aCareList = array();
 
             $oOrderQuantity = 0;
             //Bestellprositonen zusammen stellen und nach Lagerort Sortieren
@@ -490,6 +490,7 @@ class DefaultController extends Controller
 
                 $product = $this->getItem( $item);
                 if($product){
+                    if(strlen($product->getLabelText()) > 10) $aCareList[$product->getArticleNo()] =  $product;
                     if($product->getStock()){
                         $PLIstock = "[".$product->getStock()->getNumber()."] ".$product->getStock()->getName() ;
                     }else{
@@ -507,6 +508,7 @@ class DefaultController extends Controller
                             'orders'=> $PLIorder,
                             'quantity'=>( $aSortPicklistItems[ $PLIstock][$PLIartID]['quantity'] + $item->getQuantity())
                             );
+
                     }else{
                         $PLIorder = array();
                         $PLIorder[] = array('OrderID'=>$rOrder,'Name'=> utf8_decode($oOrder->getLastname()),'Quantity'=>$item->getQuantity());
@@ -535,6 +537,7 @@ class DefaultController extends Controller
                     $row += 2;
                     ksort($sitem);
                     foreach($sitem as $item) {
+
                         $pdf->ItemsBody($item['product'],$item['item'],$cellHight);
                         $row++;
 
@@ -548,13 +551,17 @@ class DefaultController extends Controller
             // Fooder
             $pdf->OrderFooder($oOrder,$oOrderQuantity );
 
+            if(count($aCareList)> 0){
+                    ksort($aCareList);
+                    $pdf->AddPage();
+                    $pdf->CareListHeader( $oOrder);
+                    foreach($aCareList as $item){
 
-
-
-
-
-
+                        $pdf->CareListBody($item,$oOrder);
+                    }
+                }
             }
+
 
         //PICKLISTE
 
@@ -594,27 +601,26 @@ class DefaultController extends Controller
 
 
     public function getItem($OrderItem){
-
+        $oPlentySoapClient	=	new PlentySoapClient($this,$this->getDoctrine());
+        $em = $this->getDoctrine()->getEntityManager();
         $ArtileID = explode("-",  $OrderItem->getSKU());
-
         $repository = $this->getDoctrine()->getRepository('BSDataBundle:Product');
-        $item = $repository->findOneBy(array('article_id' => $ArtileID));
-        if($item) return $item;
-        else{
-            $em = $this->getDoctrine()->getEntityManager();
-            $oPlentySoapClient	=	new PlentySoapClient($this,$this->getDoctrine());
-            $item = new Product();
+        $product = $repository->findOneBy(array('article_id' => $ArtileID));
+        if(!$product) {
+            $product = new Product();
             $PMItem = $oPlentySoapClient->doGetItemBase(array('ItemID'=>$ArtileID[0]));
             if(isset($PMItem->ItemID)) {
-                $item->newPMSoapProduct($PMItem );
-                }
+                $product->PMSoapProduct($PMItem );
+            }
             else{
-                $item->newPMSoapOrderProduct($OrderItem);
-                 }
-            $em->persist($item);
+                $product->newPMSoapOrderProduct($OrderItem);
+            }
+            $em->persist($product);
             $em->flush();
-            return $item;
         }
+
+        return $product;
+
     }
 
 

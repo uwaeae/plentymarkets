@@ -57,6 +57,14 @@ class Product
     private $name3;
 
     /**
+     * @var string $lastupdate
+     *
+     * @ORM\Column(name="lastupdate", type="string", length=255,nullable= true)
+     */
+    private $lastupdate;
+
+
+    /**
      * @var float $price
      *
      * @ORM\Column(name="price", type="float")

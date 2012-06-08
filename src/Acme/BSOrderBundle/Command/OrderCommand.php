@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-
+use Acme\BSDataBundle\Entity\Product;
 use Acme\BSDataBundle\Entity\Orders;
 use Acme\PlentyMarketsBundle\Controller\PlentySoapClient;
 
@@ -21,7 +21,6 @@ protected function configure()
     $this
         ->setName('BSOrder:import')
         ->setDescription('Import Invoice Data from Plenty Markets')
-        ->addArgument('state', InputArgument::OPTIONAL, 'Order with State?')
         ->addArgument('daysback', InputArgument::OPTIONAL, 'how many Days?')
        // ->addOption('yell', null, InputOption::VALUE_NONE, 'If set, the task will yell in uppercase letters')
         ;
@@ -36,26 +35,31 @@ protected function execute(InputInterface $input, OutputInterface $output)
 
 
 
-        $id =  $input->getArgument('state');
-
-        $daysback=  $input->getArgument('daysback');
-        $date = date('U',mktime(0, 0, 0, date("m")  , date("d") - $daysback , date("Y"))) ;
-        $orders = $oPlentySoapClient->doGetOrdersWithState( ( $id ? $id : 7 ), $date  );
-
-
-        $output->writeln('Syncronisiert '.count($orders).' Datum '.date('d.m.y',mktime(0, 0, 0, date("m")  , date("d") - $daysback , date("Y")) ));
-
-        foreach($orders as $order){
-
-            $output->writeln($order['head']->getOrderId()
-                    .'   '.($order['head']->getTotalBrutto()+$order['head']->getShippingCosts())
-                    .'   '.$order['head']->getPaymentMethods()->getName()
-                    .'   '.$order['head']->getInvoiceNumber());
-
-        }
-
+       // $state =  $input->getArgument('state');
+        $back=  $input->getArgument('daysback');
+        $output->writeln(' *** Aufträge ***');
+        $this->syncOrders($oPlentySoapClient,7,$output,$back);
+        $output->writeln(' *** Gutschriften ***');
+        $this->syncOrders($oPlentySoapClient,11,$output,$back);
+        $output->writeln(' *** Artikel ***');
+        $oPlentySoapClient->doGetItemsBase(date('U',mktime(0, 0, 0, date("m")  , date("d") - $back , date("Y"))),$output );
 
 
     }
+
+private function syncOrders(PlentySoapClient $oPlentySoapClient,$state,$output, $back ){
+
+    $orders = $oPlentySoapClient->doGetOrdersWithState( 7 ,date('U',mktime(0, 0, 0, date("m")  , date("d") - $back , date("Y")))  );
+    $output->writeln(' Syncronisiert '.count($orders).' Datum '.date('d.m.y',mktime(0, 0, 0, date("m")  , date("d") - $back , date("Y")) ));
+    foreach($orders as $order){
+            $output->writeln($order['head']->getOrderId()
+                .'   '.($order['head']->getTotalBrutto()+$order['head']->getShippingCosts())
+                .'   '.$order['head']->getPaymentMethods()->getName()
+                .'   '.$order['head']->getInvoiceNumber());
+        }
+
+    }
+
+
 }
 
