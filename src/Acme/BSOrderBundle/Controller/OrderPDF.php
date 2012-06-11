@@ -44,6 +44,8 @@ class OrderPDF extends \FPDF
         $this->SetFont('Arial','B',24);
         $this->SetTextColor(0,0,0);
         $this->Text(160,13,$Order->getOrderID());
+        // TODO: Florian hier Firmen Name einsetzen und Prüfen
+        $this->Text(10,10,utf8_decode($Order->getCompany()));
         $this->Text(10,17,utf8_decode($Order->getLastname().','.$Order->getFirstname()));
         $this->Text(10,27,utf8_decode($Order->getZIP().' '.$Order->getCity()));
         $this->Text(10,35,$Order->getTelephone());
