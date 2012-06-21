@@ -124,7 +124,7 @@ protected function execute(InputInterface $input, OutputInterface $output)
 
 
 
-       //$em->flush();
+       $em->flush();
         $output->writeln( " Ergebniss  ");
         $output->writeln( " Export : ".$ExportFail );
         $output->writeln( " Buchung: ".$BookingFail );
