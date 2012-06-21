@@ -8,6 +8,16 @@
 
         {% block stylesheets %}
             <link href="{{ asset('/css/main.css') }}" type="text/css" rel="stylesheet" />
+        <link rel="stylesheet" href="/css/yaml/core/base.min.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/yaml/screen/typography.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/yaml/navigation/hlist.css" type="text/css"/>
+
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/yaml/forms/gray-theme.css" type="text/css"/>
+
+
+
+
         {% endblock %}
 
 
@@ -15,11 +25,17 @@
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+    <header>
+        <div class="ym-wrapper">
+            <div class="ym-wbox">
+            <img width="300px" style="display: inline; float: right;" alt="Blumenschule Logo" src="/images/logo_blumenschule.png">
+
+        {% block body %}
 
 
-    <div id="content" class="content">
-        {% block body %}{% endblock %}
-    </div>
+
+         {% endblock %}
+
 
     </body>
 </html>

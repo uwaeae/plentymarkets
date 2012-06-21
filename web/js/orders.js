@@ -1,7 +1,7 @@
 
 $(document).ready(function(){
 
-    $("div#content input:checkbox")
+    $(" input:checkbox")
         .attr("checked","checked");
 
 

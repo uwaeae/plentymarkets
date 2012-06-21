@@ -1,122 +1,170 @@
 {% extends '::base.html.twig' %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    <link href="{{ asset('/css/orders.css') }}" type="text/css" rel="stylesheet" />
-{% endblock %}
+
+{{ parent() }}
 
 
-{% block javascripts %}
-    <script src=" http://code.jquery.com/jquery-1.7.2.js" type="text/javascript"></script>
 
 {% endblock %}
 
 
-{% block title %}Buchhaltung - Export - Lexware{% endblock %}
+
+
+{% block title %} INTERN - Buchhaltung - Export {% endblock %}
 
 
 {% block body %}
 
-<form action="{{ path('BSOrder_export') }}" method="get" >
-<div id="title"> Buchhaltung - Export - Lexware </div>
+        <h1>Buchhaltung - Export  </h1></div>
+    </div>
+ </header>
+<nav class="ym-hlist">
 
-        <table class="table_orders">
-            <thead>
-                <tr>
-                   <th>
-                       {{ orders.sortable('Auftragsnummer', 'o.OrderID')|raw }}
-                    </th>
-                    <th>
-                        Status
-                    </th>
-                    <th>
-                        {{ orders.sortable('Name', 'o.Lastname')|raw }}
-                    </th>
-                    <th>
-                        {{ orders.sortable('Auftragswert', 'o.TotalBrutto')|raw }}
-                    </th>
-                    <th>
-                        {{ orders.sortable('Zahlungsart', 'o.PaymentMethods')|raw }}
-                    </th>
-                    <th>
-                        {{ orders.sortable('Rechnungsnummer', 'o.invoiceNumber')|raw }}
-                    </th>
-                    <th>
-                        {{ orders.sortable('Zahlungseingang', 'o.PaidTimestamp')|raw }}
-                    </th>
-                    <th>
-                        {{ orders.sortable('Auftragsende', 'o.DoneTimestamp')|raw }}
-                    </th>
+    <ul>
 
-
-                </tr>
-            </thead>
-
-            <tbody>
-            {% for order in orders %}
-            <tr>
-
-                <td  class="Order_NO">
-               {{order.getOrderID}}
-              </td>
-                <td >
-                    {% if order.getOrderStatus == 7 %}
-                       <p>  Auftrag </p>
-                    {% elseif order.getOrderStatus == 11 %}
-                       <p> Gutschrift </p>
-                    {% else %}
-                       <p> </p>
-                    {% endif %}
-
-               </td>
-                <td class="Order_Name">
-                    {{order.getFirstName}}  {{order.getLastname}}
-                </td>
-                <td>
-                    {{(order.getTotalBrutto + order.getShippingCosts) | number_format(2, ',', '.') }} &euro;
-                </td>
-                <td>
-                    {{order.getPaymentMethods.name }}
-                </td>
-                <td>
-                    {{order.getInvoiceNumber }}
-                </td>
-                <td>
-                    {{order.getPaidTimestamp |date("d.m.Y")}}
-                </td>
-                <td>
-                    {{order.getDoneTimestamp |date("d.m.Y")}}
-                </td>
-
-            </tr>
-
-
-            {% endfor %}
-            </tbody>
-
-
-        </table>
-<div class="navigation">
-
-
-
-    {{ orders.render()|raw }}
-
-    <ul class="buttons">
-        <li>
-            <input class="button" type="submit" value="EXPORT" />
-
+        <li><a  href="{{ path('BSData_mainmenu') }}">
+            zurück
+        </a>
         </li>
-        <li><a class="button" href="{{ path('BSData_mainmenu') }}" >zurück</a></li>
-
     </ul>
+</nav>
 
+<div class="ym-column">
+    <div class="ym-col3">
+        <div class="ym-cbox">
+            <table class="bordertable">
+                <thead>
+                <tr>
+                    <th>
+                        Export Datum
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for export in exported %}
+                <tr>
+                    <td>
+
+
+                      <h5> <a  href=" {{ path('BSOrder_exported', { 'date': export.exportDate }) }}" > {{ export.exportDate |date("d.m.Y H:i:s")}}</a></h5>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+
+
+    </div>
+
+    <div class="ym-col1">
+
+        <div class="ym-cbox">
+
+                <table class="bordertable">
+                    <thead>
+                        <tr>
+                           <th>
+                               {{ orders.sortable('Auftragsnummer', 'o.OrderID')|raw }}
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th>
+                                {{ orders.sortable('Name', 'o.Lastname')|raw }}
+                            </th>
+                            <th>
+                                {{ orders.sortable('Auftragswert', 'o.TotalBrutto')|raw }}
+                            </th>
+                            <th>
+                                {{ orders.sortable('Zahlungsart', 'o.PaymentMethods')|raw }}
+                            </th>
+                            <th>
+                                {{ orders.sortable('Rechnungsnummer', 'o.invoiceNumber')|raw }}
+                            </th>
+                            <th>
+                                {{ orders.sortable('Zahlungseingang', 'o.PaidTimestamp')|raw }}
+                            </th>
+                            <th>
+                                {{ orders.sortable('Auftragsende', 'o.DoneTimestamp')|raw }}
+                            </th>
+
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for order in orders %}
+                    <tr>
+
+                        <td >
+                       <h3> {{order.getOrderID}}</h3>
+                      </td>
+                        <td >
+                            <h4>
+                            {% if order.getOrderStatus == 7 %}
+                                 Auftrag
+                            {% elseif order.getOrderStatus == 11 %}
+                               Gutschrift
+                            {% else %}
+
+                            {% endif %}
+                            </h4>
+
+                       </td>
+                        <td >
+                           <h4>{{order.getFirstName}}  {{order.getLastname}} </h4>
+                        </td>
+                        <td>
+                           <h5>{{(order.getTotalBrutto + order.getShippingCosts) | number_format(2, ',', '.') }} &euro;</h5>
+                        </td>
+                        <td>
+                          <h5> {{order.getPaymentMethods.name }}</h5>
+                        </td>
+                        <td>
+                           <h5>{{order.getInvoiceNumber }}</h5>
+                        </td>
+                        <td>
+                           <h5>{{order.getPaidTimestamp |date("d.m.Y")}}</h5>
+                        </td>
+                        <td>
+                           <h5>{{order.getDoneTimestamp |date("d.m.Y")}}</h5>
+                        </td>
+
+                    </tr>
+
+
+                    {% endfor %}
+                    </tbody>
+
+                    <tfoot>
+
+                    <tr>
+                        <td colspan="7">
+                            {{ orders.render()|raw }}
+                        </td>
+
+                        <td  colspan="1">
+                            <form action="{{ path('BSOrder_export') }}" method="post" >
+                                <button class="ym-button">EXPORT</button>
+
+
+                            </form>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+
+
+
+
+
+        </div>
+    </div>
 </div>
 
 
-</form>
 
-
-
-
-        {% endblock %}
+{% endblock %}

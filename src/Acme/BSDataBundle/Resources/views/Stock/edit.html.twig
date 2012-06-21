@@ -1,10 +1,24 @@
 {% extends '::base.html.twig' %}
-{% block title %}Lager- {{ entity.name }} - Bearbeiten{% endblock %}
+{% block title %}INTERN - Lager- {{ entity.name }} - Bearbeiten{% endblock %}
 
 
 {% block body %}
 
 <h1>Lager - {{ entity.name }} - Bearbeiten</h1>
+</div>
+</header>
+<nav class="ym-hlist">
+
+    <ul >
+        <li>
+            <a  href="{{ path('BSData_stock_new') }}">
+                Neur Lagerplatz
+            </a>
+        </li>
+        <li><a href="{{ path('BSData_mainmenu') }}" >zurück</a></li>
+    </ul>
+
+</nav>
 
 <form action="{{ path('BSData_stock_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
     {{ form_widget(edit_form) }}

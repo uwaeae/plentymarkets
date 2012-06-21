@@ -338,7 +338,7 @@ class PlentySoapClient extends \SoapClient
 
     {
         $oResponse	= null;
-
+        $page = 0;
         $options['LastUpdate'] = $lastUpdate ;
         $options['LastInserted'] =null ;
         $options['Marking1ID'] =null ;

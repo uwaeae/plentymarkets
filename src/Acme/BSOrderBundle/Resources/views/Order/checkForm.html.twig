@@ -1,0 +1,92 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="/css/yaml/core/base.min.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/yaml/screen/typography.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/yaml/navigation/vlist.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/yaml/forms/gray-theme.css" type="text/css"/>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src=" http://code.jquery.com/jquery-1.7.2.js" type="text/javascript"></script>
+
+{% endblock %}
+
+
+{% block title %}Buchhaltung - Prüfung- Lexware{% endblock %}
+
+
+{% block body %}
+
+
+    <header>
+        <div class="ym-wrapper" >
+            <div  class="ym-wrapper"id="title"> <h1>Buchhaltung - Prüfung - Lexware </h1></div>
+        </div>
+    </header>
+
+<div class="ym-column">
+    <div class="ym-col3">
+        <div class="ym-cbox">
+
+
+            <nav class="ym-vlist">
+
+
+
+
+
+                <ul class="buttons">
+
+
+                    <li>
+                        <a  href="{{ path('BSOrder_accounting') }}" >Buchhaltung - Export</a>
+
+                    </li>
+                    <li>
+                        <a  href="{{ path('BSOrder_accounting') }}" >Buchhaltung - Export</a>
+
+                    </li>
+
+                    <li><a  href="{{ path('BSData_mainmenu') }}" >Hauptmenu</a></li>
+
+                </ul>
+
+
+            </nav>
+        </div>
+    </div>
+
+
+
+    <div class="ym-col1">
+
+        <div class="ym-cbox">
+
+            <form class="ym-form" action="{{ path('BSOrder_check') }}" method="post" {{ form_enctype(form) }}>
+
+                <div class="ym-fbox-text">
+                    {{ form_label(form.data) }}
+                    {{ form_widget(form.data, { 'attr': {'size': '40'} })  }}
+                </div>
+
+
+
+
+
+                <input class="ym-button" type="submit" value="Prüfen"/>
+            </form>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}

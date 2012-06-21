@@ -1,0 +1,73 @@
+@media screen and ( max-width: 760px )  {
+    /* linearization for grid module */
+    .linearize-level-1,
+    .linearize-level-1 > [class*="ym-g"] {
+        display: block;
+        float: none;
+        padding: 0;
+        margin: 0;
+        width: 100% !important;
+    }
+    /* reset defined gutter values */
+    .linearize-level-1 > [class*="ym-g"] > [class*="ym-gbox"] {
+        overflow: hidden; /* optional for containing floats */
+        padding: 0;
+        margin: 0;
+    }
+}
+
+
+
+
+
+body > header {
+
+    min-width: 760px;
+    background-color: #8ADD00;
+
+    min-height: 110px;
+
+
+}
+
+
+h1 {
+    color: #008000;
+
+}
+
+.bordertable thead th{
+    background-color: #00BB00;
+
+}
+
+.sidebar_scrollable_400{
+
+    height: 400px;
+    overflow: scroll;
+}
+
+
+.ym-wrapper {
+    max-width: 80em;
+
+}
+.ym-wbox { padding: 10px; }
+
+.ym-column {
+    display: block;
+    overflow: hidden;
+    padding-right: 250px; /* column width */
+    width: auto;
+}
+.ym-col1 { /* content */
+    position: relative;
+    float: right;
+    width: 100%;
+}
+.ym-col3 { /* sidebar */
+    position: relative;
+    float: right;
+    width: 250px; /* column width */
+    margin: 0 -250px 0 0;
+}

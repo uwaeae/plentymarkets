@@ -1,0 +1,147 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src=" http://code.jquery.com/jquery-1.7.2.js" type="text/javascript"></script>
+
+{% endblock %}
+
+
+{% block title %}INTERN - Buchhaltung - Export {% endblock %}
+
+
+{% block body %}
+
+                <h1>Buchhaltung - Export  </h1>
+            </div>
+        </div>
+    </header>
+
+<nav class="ym-hlist">
+
+    <ul>
+        <li>
+            <a  href="{{ path('BSData_paymentmethods') }}" >Zahungsarten</a>
+
+        </li>
+        <li><a  href="{{ path('BSData_mainmenu') }}">
+            zurück
+        </a>
+        </li>
+    </ul>
+</nav>
+
+<div class="ym-column">
+
+
+
+
+    <div class="ym-col1">
+
+        <div class="ym-cbox">
+
+            <table class="bordertable">
+                <thead>
+                <tr>
+                    <th>
+                        {{ orders.sortable('Auftragsnummer', 'o.OrderID')|raw }}
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        {{ orders.sortable('Name', 'o.Lastname')|raw }}
+                    </th>
+                    <th>
+                        {{ orders.sortable('Auftragswert', 'o.TotalBrutto')|raw }}
+                    </th>
+                    <th>
+                        {{ orders.sortable('Zahlungsart', 'o.PaymentMethods')|raw }}
+                    </th>
+                    <th>
+                        {{ orders.sortable('Rechnungsnummer', 'o.invoiceNumber')|raw }}
+                    </th>
+                    <th>
+                        {{ orders.sortable('Zahlungseingang', 'o.PaidTimestamp')|raw }}
+                    </th>
+                    <th>
+                        {{ orders.sortable('Auftragsende', 'o.DoneTimestamp')|raw }}
+                    </th>
+
+
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for order in orders %}
+                <tr>
+
+                    <td >
+                        <h3> {{order.getOrderID}}</h3>
+                    </td>
+                    <td >
+                        <h4>
+                            {% if order.getOrderStatus == 7 %}
+                            Auftrag
+                            {% elseif order.getOrderStatus == 11 %}
+                            Gutschrift
+                            {% else %}
+
+                            {% endif %}
+                        </h4>
+
+                    </td>
+                    <td >
+                        <h4>{{order.getFirstName}}  {{order.getLastname}} </h4>
+                    </td>
+                    <td>
+                        <h5>{{(order.getTotalBrutto + order.getShippingCosts) | number_format(2, ',', '.') }} &euro;</h5>
+                    </td>
+                    <td>
+                        <h5> {{order.getPaymentMethods.name }}</h5>
+                    </td>
+                    <td>
+                        <h5>{{order.getInvoiceNumber }}</h5>
+                    </td>
+                    <td>
+                        <h5>{{order.getPaidTimestamp |date("d.m.Y")}}</h5>
+                    </td>
+                    <td>
+                        <h5>{{order.getDoneTimestamp |date("d.m.Y")}}</h5>
+                    </td>
+
+                </tr>
+
+
+                {% endfor %}
+                </tbody>
+
+                <tfoot>
+
+                <tr>
+                    <td colspan="7">
+                        {{ orders.render()|raw }}
+                    </td>
+
+
+                </tr>
+                </tfoot>
+            </table>
+
+
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}

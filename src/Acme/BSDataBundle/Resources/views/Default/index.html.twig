@@ -1,56 +1,56 @@
 {% extends '::base.html.twig' %}
 
-{% block title %} Die Gärtner der Blumenschule {% endblock %}
+{% block title %} INTERN - Hauptmenu {% endblock %}
 
 
 {% block body %}
 
-<div id="title">
 
-        <h1>Hauptmenu</h1>
-    <img src="{{ asset('/images/logo_blumenschule.png') }}" alt="Blumenschule Logo" width="400px" style="display: inline"/>
-</div>
-
-<div class="menu">
-
-    <h1>Aufträge</h1>
-    <ul >
-        <!-- <li><a href="{{ path('BSOrder_search') }}">Suche</a></li> -->
-        <li><a href="{{ path('BSOrder_state',{ 'state': 5.5 })  }}">Sammelpack</a></li>
-        <li><a href="{{ path('BSOrder_state_open',{ 'state': 4 }) }}">Offene</a></li>
-        <!-- <li><a href="{{ path('BSOrder_packet') }}">Versand</a></li> -->
-
-    </ul>
-
+<h1>Hauptmenu</h1>
 
 </div>
+</header>
+<div class="ym-grid">
+
+    <div class="ym-g33 ym-gl">
+        <div class="ym-gbox menu">
+
+            <h2>Aufträge</h2>
+            <ul>
+                <!-- <li><a href="{{ path('BSOrder_search') }}">Suche</a></li> -->
+                <li><a href="{{ path('BSOrder_state',{ 'state': 5.5 })  }}">Sammelpack</a></li>
+                <li><a href="{{ path('BSOrder_state_open',{ 'state': 4 }) }}">Offene</a></li>
+                <!-- <li><a href="{{ path('BSOrder_packet') }}">Versand</a></li> -->
+
+            </ul>
+        </div>
+    </div>
+    <div class="ym-g33 ym-gl">
+        <div class="ym-gbox menu">
+            <h2>Daten</h2>
+            <ul>
+                <li><a href="{{ path('BSData_plant', { 'page': 1 }) }}">Pflanzen</a></li>
+                <li><a href="{{ path('BSData_product', { 'page': 1 }) }}">Waren</a></li>
+                <li><a href="{{ path('BSData_stock') }}">Lager</a></li>
+
+            </ul>
+
+        </div>
+    </div>
+    <div class="ym-g33 ym-gl">
+        <div class="ym-gbox menu">
+            <h2>Buchhaltung </h2>
+            <ul>
+                <li><a href="{{ path('BSOrder_accounting' )}}">Export</a></li>
+                <li><a href="{{ path('BSData_paymentmethods' )}}">Zahlungsarten</a></li>
 
 
-<div class="menu">
-    <h1>Daten</h1>
-    <ul>
-        <li><a href="{{ path('BSData_plant', { 'page': 1 }) }}" >Pflanzen</a></li>
-        <li><a href="{{ path('BSData_product', { 'page': 1 }) }}" >Waren</a></li>
-        <li><a href="{{ path('BSData_stock') }}" >Lager</a></li>
-
-    </ul>
+            </ul>
+        </div>
+    </div>
 
 
 </div>
-
-
-<div class="menu">
-    <h1>Buchhaltung </h1>
-    <ul>
-        <li><a href="{{ path('BSOrder_accounting' )}}" >Export</a></li>
-        <li><a href="{{ path('BSData_paymentmethods' )}}" >Zahlungsarten</a></li>
-
-
-    </ul>
-
-
-</div>
-
 
 
 {% endblock %}

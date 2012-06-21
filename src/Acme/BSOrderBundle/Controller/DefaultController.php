@@ -13,6 +13,7 @@ use Acme\BSDataBundle\Entity\Product;
 use Acme\BSDataBundle\Entity\Orders;
 
 use Acme\BSDataBundle\Form\ProductType;
+use Acme\BSOrderBundle\Form\BookingDataType;
 
 use Acme\PlentyMarketsBundle\Controller\PlentySoapClient;
 
@@ -31,8 +32,8 @@ class DefaultController extends Controller
         $dql = "SELECT a FROM BSDataBundle:Orders a";
         $query = $em->createQuery($dql);
 
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
+        $paginate = $this->get('knp_paginator');
+        $pagination = $paginate->paginate(
             $query,
             $this->get('request')->query->get('page',1),
             25
@@ -43,13 +44,168 @@ class DefaultController extends Controller
             'orders'=>$pagination      ));
     }
 
+
+    public function checkFormAction(){
+
+
+
+    }
+
+
+
+    public function checkAction(Request $request){
+
+        $form = $this->createFormBuilder()
+            ->add('data', 'file',array('label'=>'Buchungsdaten'))
+            ->getForm();
+
+
+        if ($request->getMethod() == 'POST') {
+            $form->bindRequest($request);
+
+
+
+                $someNewFilename = "import_".date("YmdHi").".csv";
+
+                $form['data']->getData()->move("import/", $someNewFilename);
+
+                $aIN = array();
+                $aOUT = array();
+
+
+                if (($handle = fopen("import/".$someNewFilename, "r")) !== FALSE) {
+                    while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+
+                        $aIN[] = $data;
+                    }
+                    fclose($handle);
+
+                }
+                else{
+                    return $this->redirect($this->generateUrl('check_failure'));
+                }
+                $em = $this->getDoctrine()->getEntityManager();
+                $qb = $em->createQueryBuilder();
+                $qb->add('select', 'o')
+                    ->add('from', 'BSDataBundle:Orders o');
+
+                $qb  ->add('where',$qb->expr()->andX(
+                    $qb->expr()->like('o.OrderType','Order'),
+                    $qb->expr()->eq('o.OrderStatus','7')
+
+                ));
+
+                $orders = $qb->getQuery()->getResult();
+                $output_fail_orders = array();
+                $output_fail_booking = array();
+
+                $Accounting = array("50000","50001","50002","50003","1801","1800","1802","1803");
+
+                foreach($orders as $order){
+
+                    //$key = array_search(strval($order->getOrderID()),$aIN);
+                    $konto = array();
+                    foreach($aIN as $row){
+                        if(!empty($row[0])){
+                            $r =  strstr($row[0],strval($order->getOrderID()) );
+                            //foreach($Accounting as $k)    $konto[] = array_search($k,$row);
+                            if($r){
+                                //  $output->writeln( "     ".implode($row, ';')."\r\n");
+                                $result[$order->getOrderID()] = $row;
+                           }
+                        }
+                    }
+
+                    if(!isset($result[$order->getOrderID()])) {
+                        // $output->writeln( $order->getOrderID() );
+                        $output_fail_orders[] = $order->getOrderID();
+                    }
+                    else{
+                        $delta = 0;
+                        foreach($result as  $r){
+
+                            $r[2] += $delta;
+                        }
+                        if($delta != 0) {
+                            //$output->writeln( "Buchungsfehler "."\r\n");
+                            $BookingRows = array();
+                            foreach($result as  $r){
+                                $BookingRows[] = $r; //$output->writeln( "     ".implode($r, ';')."\r\n");
+                            }
+                             $output_fail_booking[$order->getOrderID()] = $BookingRows;
+                        }
+
+                    }
+
+            }
+        return $this->render('BSOrderBundle:Order:check.html.twig', array( 'orders' => $output_fail_orders, 'booking' => $output_fail_booking
+            ));
+
+
+
+        }
+
+
+
+        return $this->render('BSOrderBundle:Order:checkForm.html.twig', array(
+            'form'=>$form->createView()     ));
+
+
+    }
+
+    public function exportedAction(){
+
+        // $oPlentySoapClient	=	new PlentySoapClient($this,$this->getDoctrine());
+        // $back =  7;
+        // $date = date('U',mktime(0, 0, 0, date("m")  , date("d") - $back , date("Y"))) ;
+        // $oPlentySoapClient->doGetOrdersWithState( 7, $date  );
+        // $oPlentySoapClient->doGetOrdersWithState( 11, $date  );
+
+
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $qb->add('select', 'o')
+            ->add('from', 'BSDataBundle:Orders o')
+            ->add('where',$qb->expr()->andX(
+            $qb->expr()->neq('o.OrderType','?1'),
+            $qb->expr()->eq('o.exportDate',$this->get('request')->attributes->get('date',1)),
+            $qb->expr()->orX(
+                $qb->expr()->eq('o.OrderStatus','7'),
+                $qb->expr()->eq('o.OrderStatus','11')
+            )
+
+        ))
+            ->setParameter(1, 'delivery');
+
+        $pagination = $this->get('knp_paginator')->paginate(
+            $qb->getQuery(),
+            $this->get('request')->attributes->get('page', 1),
+            50
+        );
+
+
+        // return array('pagination' => $pagination);
+
+        return $this->render('BSOrderBundle:Order:exported.html.twig', array(
+            'orders'=>$pagination      ));
+
+
+
+
+
+    }
+
+
+
+
     public function accountingAction(){
 
-        $oPlentySoapClient	=	new PlentySoapClient($this,$this->getDoctrine());
-        $back =  7;
-        $date = date('U',mktime(0, 0, 0, date("m")  , date("d") - $back , date("Y"))) ;
-        $oPlentySoapClient->doGetOrdersWithState( 7, $date  );
-        $oPlentySoapClient->doGetOrdersWithState( 11, $date  );
+       // $oPlentySoapClient	=	new PlentySoapClient($this,$this->getDoctrine());
+       // $back =  7;
+       // $date = date('U',mktime(0, 0, 0, date("m")  , date("d") - $back , date("Y"))) ;
+       // $oPlentySoapClient->doGetOrdersWithState( 7, $date  );
+       // $oPlentySoapClient->doGetOrdersWithState( 11, $date  );
 
 
 
@@ -75,10 +231,30 @@ class DefaultController extends Controller
         );
 
 
+        $qb->add('select', 'o.exportDate')
+            ->add('from', 'BSDataBundle:Orders o')
+            ->add('where',$qb->expr()->andX(
+            $qb->expr()->neq('o.OrderType','?1'),
+            $qb->expr()->isNotNull('o.exportDate'),
+            $qb->expr()->orX(
+                $qb->expr()->eq('o.OrderStatus','7'),
+                $qb->expr()->eq('o.OrderStatus','11')
+            )
+
+        ))
+            ->setParameter(1, 'delivery');
+        $qb->groupBy('o.exportDate');
+
+        $lastExports =   $qb->getQuery()->getResult();
+
+
+
+
         // return array('pagination' => $pagination);
 
         return $this->render('BSOrderBundle:Order:accounting.html.twig', array(
-            'orders'=>$pagination      ));
+            'orders'=>$pagination  ,
+            'exported' => $lastExports ));
 
 
 
@@ -119,224 +295,261 @@ class DefaultController extends Controller
 
 
 
-    public function exportAction(){
+    public function exportAction(Request $request){
 
-        $em = $this->getDoctrine()->getEntityManager();
-        $qb = $em->createQueryBuilder();
-        $qb->add('select', 'o')
-            ->add('from', 'BSDataBundle:Orders o')
-            ->add('where',$qb->expr()->andX(
-            $qb->expr()->like('o.OrderType','Order'),
-            $qb->expr()->isNull('o.exportDate'),
-            $qb->expr()->eq('o.OrderStatus','7')
-            ));
-        $orders = $qb->getQuery()->getResult();
-        $exportSumme = array();
-        $export[] = array(  'Buchungstext'  => 'Buchungstext' ,
-                            'Belegnummer'   => 'Belegnummer',
-                            'Buchungsbetrag'=>  'Buchungsbetrag',
-                            'MwSt'          =>  'MwSt',
-                            'Sollkonto'     => 'Sollkonto',
-                            'Habenkonto'    =>  'Habenkonto' ,
-                            'Belegdatum'    =>  'Belegdatum',
-                            'Währung'       => 'Währung',
-                            'Kostenstelle'  => 'Kostenstelle',
-                            'Re_Nr'         => 'Re_Nr'   );
+        if ($request->getMethod() == 'POST') {
 
-// Rechnungen Exportieren
-        foreach($orders as $order ){
+            $date =  $this->get('request')->attributes->get('date');
+
+            $em = $this->getDoctrine()->getEntityManager();
+            $qb = $em->createQueryBuilder();
+            $qb->add('select', 'o')
+                ->add('from', 'BSDataBundle:Orders o');
+            if($date and $date != 1){
+                $qb  ->add('where',$qb->expr()->andX(
+                    $qb->expr()->like('o.OrderType','Order'),
+                    $qb->expr()->eq('o.exportDate',$date),
+                    $qb->expr()->eq('o.OrderStatus','7')
+                ));
+            }else
+            {
+                $qb  ->add('where',$qb->expr()->andX(
+                    $qb->expr()->like('o.OrderType','Order'),
+                    $qb->expr()->isNull('o.exportDate'),
+                    $qb->expr()->eq('o.OrderStatus','7')
+                ));
+            }
 
 
-            $OrderItemsVAT7 = $this->getOrderItemSumVAT($order->getOrderID(),7);
-            $OrderItemsVAT19 = $this->getOrderItemSumVAT($order->getOrderID(),19);
-            // Buchungssatz für 19% MwSt
-            if($OrderItemsVAT19 > 0){
 
-                $OrderItemsVAT19 += $order->getShippingCosts();
+            $orders = $qb->getQuery()->getResult();
+            $exportSumme = array();
+            $export[] = array(  'Buchungstext'  => 'Buchungstext' ,
+                                'Belegnummer'   => 'Belegnummer',
+                                'Buchungsbetrag'=>  'Buchungsbetrag',
+                                'MwSt'          =>  'MwSt',
+                                'Sollkonto'     => 'Sollkonto',
+                                'Habenkonto'    =>  'Habenkonto' ,
+                                'Belegdatum'    =>  'Belegdatum',
+                                'Währung'       => 'Währung',
+                                'Kostenstelle'  => 'Kostenstelle',
+                                'Re_Nr'         => 'Re_Nr'   );
 
-                if(isset($exportSumme[$order->getPaymentMethods()->getDebitor()]))   $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT19;
-                else  $exportSumme[$order->getPaymentMethods()->getDebitor()] = $OrderItemsVAT19;
+    // Rechnungen Exportieren
+            foreach($orders as $order ){
 
 
-                $export[] = array(
-                                    'Buchungstext'  => 'A '.$order->getOrderID().' '.$order->getLastname()  ,
-                                    'Belegnummer'   => $order->getOrderID(),
-                                    'Buchungsbetrag'=> $OrderItemsVAT19,
-                                    'MwSt'          =>  '19',
-                                    'Sollkonto'     => $order->getPaymentMethods()->getDebitor(),
-                                    'Habenkonto'    => 4401,
-                                    'Belegdatum'    => date("d.m.y",$order->getDoneTimestamp()),
-                                    'Währung'       => 'EUR',
-                                    'Kostenstelle'  => '2000',
-                                    'Re_Nr'         => $order->getInvoiceNumber());
+                $OrderItemsVAT7 = $this->getOrderItemSumVAT($order->getOrderID(),7);
+                $OrderItemsVAT19 = $this->getOrderItemSumVAT($order->getOrderID(),19);
+                $exportDate = date('U');
+
+
+
+                // Buchungssatz für 19% MwSt
+                if($OrderItemsVAT19 > 0){
+
+                    $OrderItemsVAT19 += $order->getShippingCosts();
+
+                    if(isset($exportSumme[$order->getPaymentMethods()->getDebitor()]))   $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT19;
+                    else  $exportSumme[$order->getPaymentMethods()->getDebitor()] = $OrderItemsVAT19;
+
+
+                    $export[] = array(
+                                        'Buchungstext'  => 'A '.$order->getOrderID().' '.$order->getLastname()  ,
+                                        'Belegnummer'   => $order->getOrderID(),
+                                        'Buchungsbetrag'=> $OrderItemsVAT19,
+                                        'MwSt'          =>  '19',
+                                        'Sollkonto'     => $order->getPaymentMethods()->getDebitor(),
+                                        'Habenkonto'    => 4401,
+                                        'Belegdatum'    => date("d.m.y",$order->getDoneTimestamp()),
+                                        'Währung'       => 'EUR',
+                                        'Kostenstelle'  => '2000',
+                                        'Re_Nr'         => $order->getInvoiceNumber());
+
+
+
+
+                    }
+                else{
+                    $OrderItemsVAT7 =  $OrderItemsVAT7  + $order->getShippingCosts();
+                }
+
+                if($OrderItemsVAT7 > 0){
+                    if(isset($exportSumme[$order->getPaymentMethods()->getDebitor()]))  $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT7;
+                    else $exportSumme[$order->getPaymentMethods()->getDebitor()] = $OrderItemsVAT7;
+
+                    $export[] = array(
+                        'Buchungstext'  => 'A '.$order->getOrderID().' '.$order->getLastname() ,
+                        'Belegnummer'   => $order->getOrderID(),
+                        'Buchungsbetrag'=> $OrderItemsVAT7 ,
+                        'MwSt'          =>  '7',
+                        'Sollkonto'     => $order->getPaymentMethods()->getDebitor(),
+                        'Habenkonto'    => 4301,
+                        'Belegdatum'    => date("d.m.y",$order->getDoneTimestamp()),
+                        'Währung'       => 'EUR',
+                        'Kostenstelle'  => '2000',
+                        'Re_Nr'         => $order->getInvoiceNumber());
+                }
+                // Buchungssatz für die Zahlung
+                if($order->getPaidTimestamp()){
+                    if(isset($exportSumme[$order->getPaymentMethods()->getBankAccount()])) $exportSumme[$order->getPaymentMethods()->getBankAccount()] += $order->getTotalBrutto() + $order->getShippingCosts();
+                    else $exportSumme[$order->getPaymentMethods()->getBankAccount()] = $order->getTotalBrutto() + $order->getShippingCosts();
+                    $export[] = array(
+                        'Buchungstext'  => 'Z '.$order->getOrderID().' '.$order->getLastname() ,
+                        'Belegnummer'   => $order->getOrderID(),
+                        'Buchungsbetrag'=> $order->getTotalBrutto() + $order->getShippingCosts(),
+                        'MwSt'          =>  '',
+                        'Sollkonto'     => $order->getPaymentMethods()->getBankAccount(),
+                        'Habenkonto'    => $order->getPaymentMethods()->getDebitor(),
+                        'Belegdatum'    => date("d.m.y",$order->getPaidTimestamp()),
+                        'Währung'       => 'EUR',
+                        'Kostenstelle'  => '2000',
+                        'Re_Nr'         => $order->getInvoiceNumber());
+                    }
+                 $order->setExportDate($exportDate);
+                 $em->persist($order);
+
+                }
+
+         // Gutschriften Exportieren
+
+            $em = $this->getDoctrine()->getEntityManager();
+            $qb = $em->createQueryBuilder();
+            $qb->add('select', 'o')
+                ->add('from', 'BSDataBundle:Orders o');
+                //->add('where',$qb->expr()->andX(
+                //$qb->expr()->isNull('o.exportDate'),
+                //$qb->expr()->eq('o.OrderStatus','11')
+                //));
+            if($date){
+                $qb  ->add('where',$qb->expr()->andX(
+                    $qb->expr()->eq('o.exportDate',$date),
+                    $qb->expr()->eq('o.OrderStatus','11')
+                ));
+            }else
+            {
+                $qb  ->add('where',$qb->expr()->andX(
+                    $qb->expr()->isNull('o.exportDate'),
+                    $qb->expr()->eq('o.OrderStatus','11')
+                ));
+            }
+
+
+            $orders = $qb->getQuery()->getResult();
+
+
+
+            foreach($orders as $order ){
+
+
+                $OrderItemsVAT7 = $this->getOrderItemSumVAT($order->getOrderID(),7);
+                $OrderItemsVAT19 = $this->getOrderItemSumVAT($order->getOrderID(),19);
+                if($OrderItemsVAT19 > 0){
+
+                    $OrderItemsVAT19 += $order->getShippingCosts();
+                    if( isset($exportSumme[$order->getPaymentMethods()->getDebitor()])) $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT19 * -1;
+                    else $exportSumme[$order->getPaymentMethods()->getDebitor()] = $OrderItemsVAT19 * -1;
+                    $export[] = array(
+                        'Buchungstext'  => 'G '.$order->getOrderID().' '.$order->getLastname()  ,
+                        'Belegnummer'   => $order->getOrderID(),
+                        'Buchungsbetrag'=> $OrderItemsVAT19 * -1,
+                        'MwSt'          =>  '19',
+                        'Sollkonto'     => $order->getPaymentMethods()->getDebitor(),
+                        'Habenkonto'    => 4401,
+                        'Belegdatum'    => date("d.m.y",$order->getLastUpdate()),
+                        'Währung'       => 'EUR',
+                        'Kostenstelle'  => '2000',
+                        'Re_Nr'         => $order->getInvoiceNumber());
 
 
 
 
                 }
-            else{
-                $OrderItemsVAT7 =  $OrderItemsVAT7  + $order->getShippingCosts();
-            }
-
-            if($OrderItemsVAT7 > 0){
-                if(isset($exportSumme[$order->getPaymentMethods()->getDebitor()]))  $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT7;
-                else $exportSumme[$order->getPaymentMethods()->getDebitor()] = $OrderItemsVAT7;
-
-                $export[] = array(
-                    'Buchungstext'  => 'A '.$order->getOrderID().' '.$order->getLastname() ,
-                    'Belegnummer'   => $order->getOrderID(),
-                    'Buchungsbetrag'=> $OrderItemsVAT7 ,
-                    'MwSt'          =>  '7',
-                    'Sollkonto'     => $order->getPaymentMethods()->getDebitor(),
-                    'Habenkonto'    => 4301,
-                    'Belegdatum'    => date("d.m.y",$order->getDoneTimestamp()),
-                    'Währung'       => 'EUR',
-                    'Kostenstelle'  => '2000',
-                    'Re_Nr'         => $order->getInvoiceNumber());
-            }
-            // Buchungssatz für die Zahlung
-            if($order->getPaidTimestamp()){
-                if(isset($exportSumme[$order->getPaymentMethods()->getBankAccount()])) $exportSumme[$order->getPaymentMethods()->getBankAccount()] += $order->getTotalBrutto() + $order->getShippingCosts();
-                else $exportSumme[$order->getPaymentMethods()->getBankAccount()] = $order->getTotalBrutto() + $order->getShippingCosts();
-                $export[] = array(
-                    'Buchungstext'  => 'Z '.$order->getOrderID().' '.$order->getLastname() ,
-                    'Belegnummer'   => $order->getOrderID(),
-                    'Buchungsbetrag'=> $order->getTotalBrutto() + $order->getShippingCosts(),
-                    'MwSt'          =>  '',
-                    'Sollkonto'     => $order->getPaymentMethods()->getBankAccount(),
-                    'Habenkonto'    => $order->getPaymentMethods()->getDebitor(),
-                    'Belegdatum'    => date("d.m.y",$order->getPaidTimestamp()),
-                    'Währung'       => 'EUR',
-                    'Kostenstelle'  => '2000',
-                    'Re_Nr'         => $order->getInvoiceNumber());
+                else{
+                    $OrderItemsVAT7 =  $OrderItemsVAT7  + $order->getShippingCosts();
                 }
-             $order->setExportDate(date('U'));
-             $em->persist($order);
 
-            }
+                if($OrderItemsVAT7 > 0){
 
-     // Gutschriften Exportieren
+                    if(isset($exportSumme[$order->getPaymentMethods()->getDebitor()])) $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT7 * -1;
+                    else $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT7 * -1;
+                    $export[] = array(
+                        'Buchungstext'  => 'G '.$order->getOrderID().' '.$order->getLastname() ,
+                        'Belegnummer'   => $order->getOrderID(),
+                        'Buchungsbetrag'=> $OrderItemsVAT7 * -1 ,
+                        'MwSt'          =>  '7',
+                        'Sollkonto'     => $order->getPaymentMethods()->getDebitor(),
+                        'Habenkonto'    => 4301,
+                        'Belegdatum'    => date("d.m.y",$order->getLastUpdate()),
+                        'Währung'       => 'EUR',
+                        'Kostenstelle'  => '2000',
+                        'Re_Nr'         => $order->getInvoiceNumber());
+                }
 
-        $em = $this->getDoctrine()->getEntityManager();
-        $qb = $em->createQueryBuilder();
-        $qb->add('select', 'o')
-            ->add('from', 'BSDataBundle:Orders o')
-            ->add('where',$qb->expr()->andX(
-            $qb->expr()->isNull('o.exportDate'),
-            $qb->expr()->eq('o.OrderStatus','11')
-        ));
-        $orders = $qb->getQuery()->getResult();
-
-
-
-        foreach($orders as $order ){
-
-
-            $OrderItemsVAT7 = $this->getOrderItemSumVAT($order->getOrderID(),7);
-            $OrderItemsVAT19 = $this->getOrderItemSumVAT($order->getOrderID(),19);
-            if($OrderItemsVAT19 > 0){
-
-                $OrderItemsVAT19 += $order->getShippingCosts();
-                if( isset($exportSumme[$order->getPaymentMethods()->getDebitor()])) $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT19 * -1;
-                else $exportSumme[$order->getPaymentMethods()->getDebitor()] = $OrderItemsVAT19 * -1;
-                $export[] = array(
-                    'Buchungstext'  => 'G '.$order->getOrderID().' '.$order->getLastname()  ,
-                    'Belegnummer'   => $order->getOrderID(),
-                    'Buchungsbetrag'=> $OrderItemsVAT19 * -1,
-                    'MwSt'          =>  '19',
-                    'Sollkonto'     => $order->getPaymentMethods()->getDebitor(),
-                    'Habenkonto'    => 4401,
-                    'Belegdatum'    => date("d.m.y",$order->getLastUpdate()),
-                    'Währung'       => 'EUR',
-                    'Kostenstelle'  => '2000',
-                    'Re_Nr'         => $order->getInvoiceNumber());
-
-
+                $order->setExportDate($exportDate);
+                $em->persist($order);
 
 
             }
-            else{
-                $OrderItemsVAT7 =  $OrderItemsVAT7  + $order->getShippingCosts();
+            if($date) $dataname = 'export_'.date('ymd',$date);
+            else $dataname = 'export_'.date('y_m_d_his');
+            $pdf = new exportPDF($dataname,8);
+
+            ksort($export);
+            ksort($exportSumme);
+            //$pdf->exportHeader(8);
+
+            $fp = fopen('export/broot/'.$dataname.'.txt', 'w');
+            $output = ' ';
+
+
+            foreach ($export as $d) {
+                $d['Buchungstext'] =  utf8_decode($d['Buchungstext']);
+                fputs($fp, implode($d, ';')."\r\n");
+            }
+            foreach ($export as $d) {
+                $pdf->Body($d,8);
             }
 
-            if($OrderItemsVAT7 > 0){
-
-                if(isset($exportSumme[$order->getPaymentMethods()->getDebitor()])) $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT7 * -1;
-                else $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT7 * -1;
-                $export[] = array(
-                    'Buchungstext'  => 'G '.$order->getOrderID().' '.$order->getLastname() ,
-                    'Belegnummer'   => $order->getOrderID(),
-                    'Buchungsbetrag'=> $OrderItemsVAT7 * -1 ,
-                    'MwSt'          =>  '7',
-                    'Sollkonto'     => $order->getPaymentMethods()->getDebitor(),
-                    'Habenkonto'    => 4301,
-                    'Belegdatum'    => date("d.m.y",$order->getLastUpdate()),
-                    'Währung'       => 'EUR',
-                    'Kostenstelle'  => '2000',
-                    'Re_Nr'         => $order->getInvoiceNumber());
-            }
-
-            $order->setExportDate(date('U'));
-            $em->persist($order);
+              /*  $output .=  $d['Belegnummer'].';'.
+                            $d['Buchungstext'].';'.
+                            $d['Buchungsbetrag'].';'.
+                            $d['MwSt'].';'.
+                            $d['Sollkonto'].';'.
+                            $d['Habenkonto'].';'.
+                            $d['Belegdatum'].';'.
+                            $d['Währung'].';'.
+                            $d['Kostenstelle'].';'.
+                            $d['Re_Nr'].';'."\r\n";
+              */
 
 
-        }
-        $dataname = 'export_'.date('ymd');
-        $pdf = new exportPDF($dataname,8);
-
-        ksort($export);
-        ksort($exportSumme);
-        //$pdf->exportHeader(8);
-
-        $fp = fopen('export/broot/'.$dataname.'.txt', 'w');
-        $output = ' ';
-
-
-        foreach ($export as $d) {
-            $d['Buchungstext'] =  utf8_decode($d['Buchungstext']);
-            fputs($fp, implode($d, ';')."\r\n");
-        }
-        foreach ($export as $d) {
-            $pdf->Body($d,8);
-        }
-
-          /*  $output .=  $d['Belegnummer'].';'.
-                        $d['Buchungstext'].';'.
-                        $d['Buchungsbetrag'].';'.
-                        $d['MwSt'].';'.
-                        $d['Sollkonto'].';'.
-                        $d['Habenkonto'].';'.
-                        $d['Belegdatum'].';'.
-                        $d['Währung'].';'.
-                        $d['Kostenstelle'].';'.
-                        $d['Re_Nr'].';'."\r\n";
-          */
-
-
-        $pdf->exportFooder($exportSumme,8);
+            $pdf->exportFooder($exportSumme,8);
 
 
 
-//        $response = new Response();
-//        $response->setStatusCode(200);
-//        $response->headers->set('Content-Type', 'application/txt');
-//        $response->headers->set('Content-Disposition',
-//                sprintf('attachment;filename="%s.txt"', $dataname ));
-//        $response->setContent($output);
+    //        $response = new Response();
+    //        $response->setStatusCode(200);
+    //        $response->headers->set('Content-Type', 'application/txt');
+    //        $response->headers->set('Content-Disposition',
+    //                sprintf('attachment;filename="%s.txt"', $dataname ));
+    //        $response->setContent($output);
 
-        //$response->send();
-//         return $response;
+            //$response->send();
+    //         return $response;
 
 
 
-        $pdf->Output("export/broot/".$dataname.".pdf",'F');
+            $pdf->Output("export/broot/".$dataname.".pdf",'F');
 
-        $em->flush();
-        unset($export[0]);
+            if(!$date) $em->flush();
+            unset($export[0]);
 
-        return $this->render('BSOrderBundle:Order:export.html.twig' ,array('urlPDF'=> "/export/broot/".$dataname.".pdf",
-        'export'=> $export,
-        'summe'=>$exportSumme));
+            return $this->render('BSOrderBundle:Order:export.html.twig' ,array('urlPDF'=> "/export/broot/".$dataname.".pdf",
+            'export'=> $export,
+            'summe'=>$exportSumme));
+        }else
+        return $this->redirect('accounting');
 
 
     }
@@ -377,12 +590,16 @@ class DefaultController extends Controller
         $orders = array();
         $orders = $oPlentySoapClient->doGetOrdersWithState( $state);
         // $time = $oPlentySoapClient->doGetServerTime();
-
-
+        $em = $this->getDoctrine()->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $qb->add('select', 'o.Picklist')
+            ->add('from', 'BSDataBundle:Orders o')
+            ->add('where',$qb->expr()->isNotNull('o.Picklist'))
+            ->groupBy('o.Picklist');
 
 
         return $this->render('BSOrderBundle:Order:orders.html.twig', array(
-            'orders'=>$orders , 'state'=> $state       ));
+            'orders'=>$orders , 'state'=> $state ,'pick' =>  $qb->getQuery()->getResult()     ));
     }
 
 
@@ -431,14 +648,16 @@ class DefaultController extends Controller
     {
 
 
+    if ($request->getMethod() == 'POST') {
+
         $em = $this->getDoctrine()->getEntityManager();
         $qb = $em->createQueryBuilder();
         $qb->add('select', $qb->expr()->max('o.Picklist'))
             ->add('from', 'BSDataBundle:Orders o');
 
-        $Packlistname = $qb->getQuery()->getSingleScalarResult();
-        if($Packlistname == 0 or $Packlistname == null  ) $Packlistname = date("Ym") * 1000 + 1;
-        else $Packlistname ++;
+        $PickListName = $qb->getQuery()->getSingleScalarResult();
+        if($PickListName == 0 or $PickListName == null  ) $PickListName = date("Ym") * 1000 + 1;
+        else $PickListName ++;
 
         //= "Packliste-".date("Ymd-Hi");
         $aOrders = array();
@@ -451,7 +670,7 @@ class DefaultController extends Controller
         }
 
 
-        $pdf = new OrderPDF($Packlistname);
+        $pdf = new OrderPDF($PickListName);
 
 
         $cellHight= 6;
@@ -466,7 +685,7 @@ class DefaultController extends Controller
             //Bestellungsdaten aus localer Datenbank holen
             $repository = $this->getDoctrine()->getRepository('BSDataBundle:Orders');
             $oOrder =  $repository->findOneBy(array('OrderID' => $rOrder));
-            $oOrder->setPicklist($Packlistname);
+            $oOrder->setPicklist($PickListName);
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($oOrder);
             $em->flush();
@@ -565,7 +784,7 @@ class DefaultController extends Controller
 
         //PICKLISTE
 
-        $pdf->PicklistHeader($aSortPicklistHeader,$Packlistname);
+        $pdf->PicklistHeader($aSortPicklistHeader,$PickListName);
 
         ksort($aSortPicklistItems);
 
@@ -586,14 +805,24 @@ class DefaultController extends Controller
 
 
 
-        $pdf->Output("print/".$Packlistname.".pdf",'F');
+        $pdf->Output("print/".$PickListName.".pdf",'F');
 
 
         return $this->render('BSOrderBundle:Order:print.html.twig', array(
-            'urlPDF'=> "/print/".$Packlistname.".pdf",
+            'urlPDF'=> "/print/".$PickListName.".pdf",
             "orders"=> $oRequest
         ));
+        }
+        else
+        {
+            $PickListName = $this->get('request')->query->get('picklist');
 
+            return $this->render('BSOrderBundle:Order:print.html.twig', array(
+                'urlPDF'=> "/print/".$PickListName.".pdf",
+                 "orders"=> array()
+            ));
+
+        }
 
     }
 

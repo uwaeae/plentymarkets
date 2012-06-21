@@ -1,6 +1,6 @@
 
 {% extends '::base.html.twig' %}
-{% block title %}Produkte{% endblock %}
+{% block title %}INTERN - Waren{% endblock %}
 
 
 {% block javascripts %}
@@ -8,13 +8,31 @@
 <script src="{{ asset('/js/product.js') }}" type="text/javascript"></script>
 {% endblock %}
 
-
-
 {% block body %}
 
-<h1>Artikel </h1>
+<h1>Waren </h1>
+    </div>
+</header>
+<nav class="ym-hlist">
+
+
+    <ul >
+        <li>
+            <a href="{{ path('BSData_product_new') }}">
+                Neus Produkt
+            </a>
+        </li>
+        <li><a href="{{ path('BSData_mainmenu') }}" >zurück</a></li>
+    </ul>
+
+</nav>
+
+
 
  <div class="search">
+
+
+
 
  <ul>
      <li>
@@ -91,12 +109,4 @@
 
 </div>
 
-<ul class="buttons">
-    <li>
-        <a class="button" href="{{ path('BSData_product_new') }}">
-            Neu
-        </a>
-    </li>
-    <li><a class="button" href="{{ path('BSData_mainmenu') }}" >zurück</a></li>
-</ul>
         {% endblock %}

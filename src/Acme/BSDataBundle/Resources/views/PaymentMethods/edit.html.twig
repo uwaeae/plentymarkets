@@ -12,10 +12,13 @@
 
 
 {% block body %}
-<form action="{{ path('BSData_paymentmethods_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+
 
 <h1>  {{ entity.name }} bearbeiten</h1>
+   </div>
+</header>
 
+<form action="{{ path('BSData_paymentmethods_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
 
     {{ form_errors(edit_form) }}
     <table>

@@ -1,6 +1,11 @@
 
 {% extends '::base.html.twig' %}
-{% block title %}Pflanzen{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+
+{% block title %} INTERN - Pflanzen{% endblock %}
 
 
 {% block javascripts %}
@@ -12,115 +17,120 @@
 
 
 {% block body %}
-<h1>Pflanzenliste</h1>
-<div class="search">
+
+            <h1>Pflanzen</h1></div>
+    </div>
+</header>
+<nav class="ym-hlist">
 
     <ul>
-        <li>
-            Suche
-        </li>
-        <li>
-            <label for="search_code">Code</label>
-            <input type="text" id="search_code" class="search_code" value="" size="10" >
-        </li>
-        <li>
-            <label for="search_name">Name</label>
-            <input type="text" id="search_name" class="search_name" value="" size="20" >
-        </li>
-        <li>
-            <label for="search_latein">Botanisch</label>
-            <input type="text" id="search_latein" class="search_latein" value="" size="20" >
-        </li>
 
-        <li>
-            <a class="button" href="{{ path('BSData_plant') }}">
-                RESET
-            </a>
+
+        <li><a  href="{{ path('BSData_mainmenu') }}">
+            zurück
+        </a>
         </li>
     </ul>
+</nav>
 
 
+<div class="ym-column">
+
+
+
+
+
+    <div class="ym-col1">
+
+
+        <div class="ym-cbox ">
+            <table class="bordertable">
+                <thead>
+                <tr>
+                    <th><label for="search_code">{{ pagination.sortable('Code', 'a.code')|raw }}</label> <br>
+                        <input type="text" id="search_code" class="search_code" value="" size="10" />
+                       </th>
+                    <th>
+                        <label for="search_name" >{{ pagination.sortable('Name', 'a.name')|raw }} </label><br>
+                        <input type="text" id="search_name" class="search_name" value="" size="20" >
+                    </th>
+
+                    <th><label for="search_latein">{{ pagination.sortable('Latein', 'a.latein')|raw }}</label><br>
+                        <input type="text" id="search_latein" class="search_latein" value="" size="20" >
+                    </th>
+                  <!--  <th>Winterhärte</th>
+                    <th>Standort</th>
+                    <th>Synonym</th>
+                    <th>Höhe</th>
+                    <th>Blütezeit</th>
+                    <th>Farbe</th>
+                    <th>Duft</th>
+                    <th>Licht</th>
+                    <th>Boden</th>
+                    <th>Habitus</th> -->
+                    <th>Preisgruppe</th>
+                    <th>Topfgröße</th>
+                    <th>Lieferbar</th>
+                    <th>Bemerkung</th>
+                    <th colspan="2">Aktionen</th>
+                </tr>
+               <tr>
+
+               </tr>
+
+                </thead>
+                <tbody class="results">
+                {% for entity in pagination %}
+                <tr onclick="$('div .plantshow').load('{{ path('BSData_plant_edit', { 'id': entity.id }) }}'); ">
+                    <td>{{ entity.code }}</td>
+                    <td>{{ entity.name }}</td>
+                    <td>{{ entity.latein }}</td>
+                   <!-- <td>{{ entity.hardy }}</td>
+                    <td>{{ entity.place }}</td>
+                    <td>{{ entity.synonym }}</td>
+                    <td>{{ entity.hfrom }} - {{ entity.hto }}</td>
+                    <td>{{ entity.bfrom }} - {{ entity.bto }}</td>
+                    <td>{{ entity.bcolor }}</td>
+                    <td>{{ entity.flavour }}</td>
+                    <td>{{ entity.light }}</td>
+                    <td>{{ entity.base }}</td>
+                    <td>{{ entity.habitus }}</td> -->
+                    <td>{{ entity.pricegroup }}</td>
+                    <td>{{ entity.potsize }}</td>
+                    <td>{{ entity.aviable }}</td>
+                    <td>{{ entity.comment }}</td>
+                    <td>
+                        <a class="ym-button" href="{{ path('BSData_plant_edit', { 'id': entity.id }) }}">Bearbeiten</a></td>
+                    <td>
+
+                        <a class="ym-button" href="{{ path('BSData_plant_edit', { 'id': entity.id }) }}">Etikett</a>
+
+                    </td>
+                </tr>
+
+                {% endfor %}
+                </tbody>
+
+                <tr>
+                    <td colspan="9" >
+
+                        {{ pagination.render()|raw }}
+
+                    </td>
+                </tr>
+
+
+
+
+            </table>
+
+
+            </div>
+        </div>
+    </div>
 </div>
 
 
-
-
-<div class="results">
-<table class="records_list">
-    <thead>
-    <tr>
-        <th>{{ pagination.sortable('Code', 'a.code')|raw }}</th>
-        <th>{{ pagination.sortable('Name', 'a.name')|raw }}</th>
-
-        <th>{{ pagination.sortable('Latein', 'a.latein')|raw }}</th>
-      <!--  <th>Winterhärte</th>
-        <th>Standort</th>
-        <th>Synonym</th>
-        <th>Höhe</th>
-        <th>Blütezeit</th>
-        <th>Farbe</th>
-        <th>Duft</th>
-        <th>Licht</th>
-        <th>Boden</th>
-        <th>Habitus</th> -->
-        <th>Preisgruppe</th>
-        <th>Topfgröße</th>
-        <th>Lieferbar</th>
-        <th>Bemerkung</th>
-        <th>Aktionen</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for entity in pagination %}
-    <tr onclick="$('div .plantshow').load('{{ path('BSData_plant_edit', { 'id': entity.id }) }}'); ">
-        <td>{{ entity.code }}</td>
-        <td>{{ entity.name }}</td>
-        <td>{{ entity.latein }}</td>
-       <!-- <td>{{ entity.hardy }}</td>
-        <td>{{ entity.place }}</td>
-        <td>{{ entity.synonym }}</td>
-        <td>{{ entity.hfrom }} - {{ entity.hto }}</td>
-        <td>{{ entity.bfrom }} - {{ entity.bto }}</td>
-        <td>{{ entity.bcolor }}</td>
-        <td>{{ entity.flavour }}</td>
-        <td>{{ entity.light }}</td>
-        <td>{{ entity.base }}</td>
-        <td>{{ entity.habitus }}</td> -->
-        <td>{{ entity.pricegroup }}</td>
-        <td>{{ entity.potsize }}</td>
-        <td>{{ entity.aviable }}</td>
-        <td>{{ entity.comment }}</td>
-        <td>
-            <ul>
-                <li>
-                    <a href="{{ path('BSData_plant_edit', { 'id': entity.id }) }}">Bearbeiten</a>
-                </li>
-            </ul>
-        </td>
-    </tr>
-
-    {% endfor %}
-    </tbody>
-</table>
-<div class="navigation">
-
-
-
-    {{ pagination.render()|raw }}
-
-    <ul class="buttons">
-        <li>
-            <a class="button" href="{{ path('BSData_plant_new') }}">
-                Neue Pflanze
-            </a>
-        </li>
-        <li><a class="button" href="{{ path('BSData_mainmenu') }}" >zurück</a></li>
-
-    </ul>
-
-</div>
-
-</div>
 
 <div class="plantshow"> </div>
 

@@ -1,5 +1,3 @@
-
-
 {% extends '::base.html.twig' %}
 {% block title %}Buchhaltung - Zahlungsmethoden{% endblock %}
 
@@ -10,51 +8,72 @@
 {% endblock %}
 
 
-
 {% block body %}
 
 <div class="list">
 
 
-<h1>Zahlungsarten</h1>
-
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Debitor</th>
-            <th>Bankaccount</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-    <tr class="row_editable" url="{{ path('BSData_paymentmethods_edit', { 'id': entity.id }) }}" >
-            <td>{{ entity.id }}</td>
-            <td>{{ entity.Name }}</td>
-            <td>{{ entity.Debitor }}</td>
-            <td>{{ entity.BankAccount }}</td>
-
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
-<ul class="buttons">
-    <li>
-        <a class="button" href="{{ path('BSData_paymentmethods_new') }}">
-            Syncroniseren mit PlentyMarkets
-        </a>
-    </li>
-    <li>
-        <a class="button" href="{{ path('BSData_mainmenu') }}">
-            zurück
-        </a>
-    </li>
-</ul>
+    <h1>Zahlungsarten</h1>
 </div>
-<div class="loading"><img class="loading" src="{{ asset('/images/ajax-loader.gif') }}" alt="Loading" /> </div>
+</header>
+<nav class="ym-hlist">
 
-<div class="edit"> </div>
+    <ul>
+        <li>
+            <a href="{{ path('BSData_paymentmethods_new') }}">
+                Syncroniseren mit PlentyMarkets
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('BSData_mainmenu') }}">
+                zurück
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<div class="ym-grid">
+
+</div>
+<div class="loading"><img class="loading" src="{{ asset('/images/ajax-loader.gif') }}" alt="Loading"/></div>
+
+    <div class="ym-gl ym-g50">
+
+        <div class="ym-gbox">
+            <table class="records_list">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Debitor</th>
+                    <th>Bankaccount</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for entity in entities %}
+                <tr class="row_editable" url="{{ path('BSData_paymentmethods_edit', { 'id': entity.id }) }}">
+                    <td>{{ entity.id }}</td>
+                    <td>{{ entity.Name }}</td>
+                    <td>{{ entity.Debitor }}</td>
+                    <td>{{ entity.BankAccount }}</td>
+
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="ym-gl ym-g50">
+
+        <div class="ym-gbox edit">
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+
+
 
 {% endblock %}

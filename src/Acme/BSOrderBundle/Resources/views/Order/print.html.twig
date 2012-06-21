@@ -1,34 +1,49 @@
 {# src/Acme/BSLable/Resources/views/Default/base.html.twig #}
 {% extends '::base.html.twig' %}
 
-{% block title %}Auftragsbearbeitung{% endblock %}
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('/css/orders.css') }}" type="text/css" rel="stylesheet" />
+
+
+
+{% endblock %}
+
+{% block title %}Auftragsbearbeitung - Ausgabe{% endblock %}
 
 
 {% block body %}
 
-<div id="PDF">
-    <object data="{{urlPDF}}" type="application/pdf" width="800" height="900"  > </object>
-</div>
+            <h1 id="title"> Auftragsbearbeitung - Ausgabe</h1>
+        </div>
+    </div>
+</header>
 
-
-
-<div id="menu2">
+<nav class="ym-hlist">
 
     <ul>
-        <li>   <form action="{{ path('BSOrder_set_state') }}" method="post" >
-            {% for order in orders %}
-                    <input type="hidden" name="ID{{order}}" value="{{order}}">
-            {% endfor %}
-                    <input type="submit" value="Status 6 setzen" />
-                </form>
 
-         </li>
 
-        <li><a href="{{ path('BSOrder_state') }}" >zurück</a></li>
-
+        <li><a  href="{{ path('BSData_mainmenu') }}">
+            zurück
+        </a>
+        </li>
     </ul>
+</nav>
 
+
+<div class="ym-grid">
+
+
+    <div class="ym-gl">
+
+        <div class="ym-gbox">
+         <object data="{{urlPDF}}" type="application/pdf" width="800" height="900px" > </object>
+    </div>
+
+
+
+    </div>
 </div>
-
 
 {% endblock %}

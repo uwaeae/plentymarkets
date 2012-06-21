@@ -22,7 +22,7 @@ class PlantController extends Controller
      * @Route("/", name="BSData_plant")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($page)
     {
         $em = $this->get('doctrine.orm.entity_manager');
         $dql = "SELECT a FROM BSDataBundle:Plant a";
@@ -31,7 +31,7 @@ class PlantController extends Controller
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $query,
-            $this->get('request')->query->get('page', 1),
+            $page,
             10
         );
         return array('pagination' => $pagination);

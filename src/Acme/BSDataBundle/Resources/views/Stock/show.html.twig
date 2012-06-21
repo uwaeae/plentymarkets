@@ -5,7 +5,20 @@
 {% block body %}
 
 <h1>Lager - {{ entity.name }}</h1>
+</div>
+</header>
+<nav class="ym-hlist">
 
+    <ul >
+        <li>
+            <a  href="{{ path('BSData_stock_new') }}">
+                Neur Lagerplatz
+            </a>
+        </li>
+        <li><a href="{{ path('BSData_mainmenu') }}" >zurück</a></li>
+    </ul>
+
+</nav>
 <table class="record_properties">
     <tbody>
         <tr>

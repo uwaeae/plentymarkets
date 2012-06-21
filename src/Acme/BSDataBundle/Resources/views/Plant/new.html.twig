@@ -1,16 +1,167 @@
-<h1>Plant creation</h1>
+{% extends '::base.html.twig' %}
+{% block stylesheets %}
+{{ parent() }}
+{% endblock %}
+
+
+{% block title %}INTERN - Pflanze - {{ entity.name}}{% endblock %}
+
+{% block body %}
+<h1>Neue Pflanze  {{ entity.name}}</h1></div>
+</div>
+</header>
+<nav class="ym-hlist">
+
+    <ul>
+
+        <li><a  href="{{ path('BSData_plant') }}">
+            zurück
+        </a>
+        </li>
+    </ul>
+</nav>
+
+
+<div class="ym-grid ym-form">
+
 
 <form action="{{ path('BSData_plant_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Create</button>
-    </p>
+    {{ form_errors(form) }}
+    <div class="ym-g50 ym-gl">
+        <div class="ym-gbox ym-fbox-text">
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name) }}
+        </div>
+    </div>
+
+    <div class="ym-g50 ym-gl">
+        <div class="ym-gbox ym-fbox-text">
+            {{ form_label(form.code) }}
+            {{ form_widget(form.code) }}
+        </div>
+    </div>
+
+    <div class="ym-g50 ym-gl">
+        <div class="ym-gbox ym-fbox-text">
+            {{ form_label(form.latein) }}
+            {{ form_widget(form.latein) }}
+        </div>
+    </div>
+    <div class="ym-g50 ym-gl">
+        <div class="ym-gbox ym-fbox-text">
+            {{ form_label(form.hardy) }}
+            {{ form_widget(form.hardy) }}
+        </div>
+    </div>
+    <div class="ym-g50 ym-gl">
+        <div class="ym-gbox ym-fbox-text">
+            {{ form_label(form.place) }}
+            {{ form_widget(form.place) }}
+        </div>
+    </div>
+    <div class="ym-g50 ym-gl">
+        <div class="ym-gbox ym-fbox-text">
+            {{ form_label(form.aviable ) }}
+            {{ form_widget(form.aviable) }}
+        </div>
+    </div>
+    <div class="ym-g50 ym-gl">
+        <div class="ym-gbox ym-fbox-text">
+            {{ form_label(form.synonym) }}
+            {{ form_widget(form.synonym) }}
+        </div>
+    </div>
+
+    <div class="ym-g50 ym-gl">
+        <div class="ym-gbox ym-fbox-text">
+            {{ form_label(form.h_from ) }}
+            {{ form_widget(form.h_from )}}
+            {{ form_widget(form.h_to) }}
+        </div>
+    </div>
+    <div class="ym-g50 ym-gl">
+        <div class="ym-gbox ym-fbox-text">
+            {{ form_label(form.b_from ) }}
+            {{ form_widget(form.b_from) }}
+            {{ form_widget(form.b_to )}}
+        </div>
+    </div>
+    <div class="ym-g50 ym-gl">
+        <div class="ym-gbox ym-fbox-text">
+            {{ form_label(form.b_color ) }}
+            {{ form_widget(form.b_color) }}
+        </div>
+    </div>
+    <div class="ym-g50 ym-gl">
+        <div class="ym-gbox ym-fbox-text">
+            {{ form_label(form.flavour ) }}
+            {{ form_widget(form.flavour) }}
+        </div>
+    </div>
+    <div class="ym-g50 ym-gl">
+        <div class="ym-gbox ym-fbox-text">
+            {{ form_label(form.light ) }}
+            {{ form_widget(form.light) }}
+
+        </div>
+    </div>
+    <div class="ym-g50 ym-gl">
+        <div class="ym-gbox ym-fbox-text">
+            {{ form_label(form.base ) }}
+            {{ form_widget(form.base )}}
+        </div>
+    </div>
+
+    <div class="ym-g50 ym-gl">
+        <div class="ym-gbox ym-fbox-text">
+            {{ form_label(form.habitus ) }}
+            {{ form_widget(form.habitus )}}
+        </div>
+    </div>
+    <div class="ym-g50 ym-gl">
+        <div class="ym-gbox ym-fbox-text">
+            {{ form_label(form.pricegroup ) }}
+            {{ form_widget(form.pricegroup) }}
+        </div>
+    </div>
+    <div class="ym-g50 ym-gl">
+        <div class="ym-gbox ym-fbox-text">
+            {{ form_label(form.potsize ) }}
+            {{ form_widget(form.potsize )}}
+
+        </div>
+    </div>
+    <div class="ym-g50 ym-gl">
+        <div class="ym-gbox ym-fbox-text">
+            {{ form_label(form.instructions) }}
+
+            {{ form_widget(form.instructions) }}
+
+        </div>
+    </div>
+    <div class="ym-g80 ym-gl">
+        <div class="ym-gbox ym-fbox-text">
+            {{ form_label(form.labeltext ) }}
+            {{ form_widget(form.labeltext) }}
+        </div>
+    </div>
+
+    <div class="ym-g80 ym-gl">
+        <div class="ym-gbox ym-fbox-text">
+            {{ form_label(form.comment ) }}
+            {{ form_widget(form.comment )}}
+
+        </div>
+    </div>
+
+    <div class="ym-g50 ym-gl">
+        <div class="ym-gbox">
+
+
+            <button type="submit">Erstellen</button>
+        </div>
+    </div>
 </form>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('BSData_plant') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+</div>
+{% endblock %}

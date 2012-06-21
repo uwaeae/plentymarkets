@@ -1,142 +1,191 @@
-<h1>Plant edit</h1>
-
-<form action="{{ path('BSData_plant_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-
-    {{ form_errors(edit_form) }}
-    <table>
-        <tr>
-            <th>
-                {{ form_label(edit_form.name) }}
-            </th>
-            <td>
-                {{ form_widget(edit_form.name) }}
-            </td>
-        </tr>
-        <tr>
-            <th>
-                {{ form_label(edit_form.code) }}
-            </th>
-            <td>
-                {{ form_widget(edit_form.code) }}
-            </td>
-        </tr>
-        <tr>
-            <th>
-                {{ form_label(edit_form.latein) }}
-            </th>
-            <td>
-                {{ form_widget(edit_form.latein) }}
-            </td>
-        </tr>
-
-        <tr>
-            <th>
-                {{ form_label(edit_form.hardy) }}
-            </th>
-            <td>
-                {{ form_widget(edit_form.hardy) }}
-            </td>
-        </tr>
-        <tr>
-            <th>
-                {{ form_label(edit_form.place) }}
-            </th>
-            <td>
-                {{ form_widget(edit_form.place) }}
-            </td>
-        </tr>
-        <tr>
-            <th>
-                {{ form_label(edit_form.synonym) }}
-            </th>
-            <td>
-                {{ form_widget(edit_form.synonym) }}
-            </td>
-        </tr>
-        <tr>
-            <th>
-                {{ form_label(edit_form.instructions) }}
-            </th>
-            <td>
-                {{ form_widget(edit_form.instructions) }}
-            </td>
-        </tr>
-        <tr>
-            <th>Höhe</th>
-            <td>{{ form_widget(edit_form.hfrom )}}</td>
-            <td>{{ form_widget(edit_form.hto) }}</td>
-        </tr>
-        <tr>
-            <th>H_to</th>
-
-        </tr>
-        <tr>
-            <th>B_from</th>
-            <td>{{ form_widget(edit_form.bfrom) }}</td>
-        </tr>
-        <tr>
-            <th>B_to</th>
-            <td>{{ form_widget(edit_form.bto )}}</td>
-        </tr>
-        <tr>
-            <th>B_color</th>
-            <td>{{ form_widget(edit_form.bcolor) }}</td>
-        </tr>
-        <tr>
-            <th>Flavour</th>
-            <td>{{ form_widget(edit_form.flavour) }}</td>
-        </tr>
-        <tr>
-            <th>Light</th>
-            <td>{{ form_widget(edit_form.light) }}</td>
-        </tr>
-        <tr>
-            <th>Base</th>
-            <td>{{ form_widget(edit_form.base )}}</td>
-        </tr>
-        <tr>
-            <th>Labeltext</th>
-            <td>{{ form_widget(edit_form.labeltext) }}</td>
-        </tr>
-        <tr>
-            <th>Habitus</th>
-            <td>{{ form_widget(edit_form.habitus )}}</td>
-        </tr>
-        <tr>
-            <th>Pricegroup</th>
-            <td>{{ form_widget(edit_form.pricegroup) }}</td>
-        </tr>
-        <tr>
-            <th>Potsize</th>
-            <td>{{ form_widget(edit_form.potsize )}}</td>
-        </tr>
-        <tr>
-            <th>Aviable</th>
-            <td>{{ form_widget(edit_form.aviable) }}</td>
-        </tr>
-        <tr>
-            <th>Comment</th>
-            <td>{{ form_widget(edit_form.comment )}}</td>
-        </tr>
+{% extends '::base.html.twig' %}
+{% block stylesheets %}
+{{ parent() }}
+{% endblock %}
 
 
-    </table>
+{% block title %}INTERN - Pflanze - {{ entity.name}}{% endblock %}
 
-    <p>
-        <button type="submit">Edit</button>
-    </p>
-</form>
+{% block body %}
+            <h1>Pflanze  {{ entity.name}}</h1></div>
+    </div>
+</header>
+<nav class="ym-hlist">
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('BSData_plant') }}">
-            Back to the list
+    <ul>
+        <li>
+            <a href="{{ path('BSData_plant_new') }}">
+                Neue Pflanze
+            </a>
+        </li>
+
+        <li><a  href="{{ path('BSData_plant') }}">
+            zurück
         </a>
-    </li>
-    <li>
-        <form action="{{ path('BSData_plant_delete', { 'id': entity.id }) }}" method="post">
+        </li>
+    </ul>
+</nav>
+
+
+<div class="ym-grid ym-form">
+
+
+    <form  action="{{ path('BSData_plant_update', { 'id': entity.id }) }}"
+          method="post" {{ form_enctype(edit_form) }}>
+
+        {{ form_errors(edit_form) }}
+        <div class="ym-g50 ym-gl">
+            <div class="ym-gbox ym-fbox-text">
+                {{ form_label(edit_form.name) }}
+                {{ form_widget(edit_form.name) }}
+            </div>
+        </div>
+
+        <div class="ym-g50 ym-gl">
+            <div class="ym-gbox ym-fbox-text">
+                {{ form_label(edit_form.code) }}
+                {{ form_widget(edit_form.code) }}
+            </div>
+        </div>
+
+        <div class="ym-g50 ym-gl">
+            <div class="ym-gbox ym-fbox-text">
+                {{ form_label(edit_form.latein) }}
+                {{ form_widget(edit_form.latein) }}
+            </div>
+        </div>
+        <div class="ym-g50 ym-gl">
+            <div class="ym-gbox ym-fbox-text">
+                {{ form_label(edit_form.hardy) }}
+                {{ form_widget(edit_form.hardy) }}
+            </div>
+        </div>
+        <div class="ym-g50 ym-gl">
+            <div class="ym-gbox ym-fbox-text">
+                {{ form_label(edit_form.place) }}
+                {{ form_widget(edit_form.place) }}
+            </div>
+        </div>
+        <div class="ym-g50 ym-gl">
+            <div class="ym-gbox ym-fbox-text">
+                {{ form_label(edit_form.aviable ) }}
+                {{ form_widget(edit_form.aviable) }}
+            </div>
+        </div>
+        <div class="ym-g50 ym-gl">
+            <div class="ym-gbox ym-fbox-text">
+                {{ form_label(edit_form.synonym) }}
+                {{ form_widget(edit_form.synonym) }}
+            </div>
+        </div>
+
+        <div class="ym-g50 ym-gl">
+            <div class="ym-gbox ym-fbox-text">
+                {{ form_label(edit_form.h_from ) }}
+                {{ form_widget(edit_form.h_from )}}
+                {{ form_widget(edit_form.h_to) }}
+            </div>
+        </div>
+        <div class="ym-g50 ym-gl">
+            <div class="ym-gbox ym-fbox-text">
+                {{ form_label(edit_form.b_from ) }}
+                {{ form_widget(edit_form.b_from) }}
+                {{ form_widget(edit_form.b_to )}}
+            </div>
+        </div>
+        <div class="ym-g50 ym-gl">
+            <div class="ym-gbox ym-fbox-text">
+                {{ form_label(edit_form.b_color ) }}
+                {{ form_widget(edit_form.b_color) }}
+            </div>
+        </div>
+        <div class="ym-g50 ym-gl">
+            <div class="ym-gbox ym-fbox-text">
+                {{ form_label(edit_form.flavour ) }}
+                {{ form_widget(edit_form.flavour) }}
+            </div>
+        </div>
+        <div class="ym-g50 ym-gl">
+            <div class="ym-gbox ym-fbox-text">
+                {{ form_label(edit_form.light ) }}
+                {{ form_widget(edit_form.light) }}
+
+            </div>
+        </div>
+        <div class="ym-g50 ym-gl">
+            <div class="ym-gbox ym-fbox-text">
+                {{ form_label(edit_form.base ) }}
+                {{ form_widget(edit_form.base )}}
+            </div>
+        </div>
+
+        <div class="ym-g50 ym-gl">
+            <div class="ym-gbox ym-fbox-text">
+                {{ form_label(edit_form.habitus ) }}
+                {{ form_widget(edit_form.habitus )}}
+            </div>
+        </div>
+        <div class="ym-g50 ym-gl">
+            <div class="ym-gbox ym-fbox-text">
+                {{ form_label(edit_form.pricegroup ) }}
+                {{ form_widget(edit_form.pricegroup) }}
+            </div>
+        </div>
+        <div class="ym-g50 ym-gl">
+            <div class="ym-gbox ym-fbox-text">
+                {{ form_label(edit_form.potsize ) }}
+                {{ form_widget(edit_form.potsize )}}
+
+            </div>
+        </div>
+        <div class="ym-g50 ym-gl">
+            <div class="ym-gbox ym-fbox-text">
+                {{ form_label(edit_form.instructions) }}
+
+                {{ form_widget(edit_form.instructions) }}
+
+            </div>
+        </div>
+        <div class="ym-g80 ym-gl">
+            <div class="ym-gbox ym-fbox-text">
+                {{ form_label(edit_form.labeltext ) }}
+                {{ form_widget(edit_form.labeltext) }}
+            </div>
+        </div>
+
+        <div class="ym-g80 ym-gl">
+            <div class="ym-gbox ym-fbox-text">
+                {{ form_label(edit_form.comment ) }}
+                {{ form_widget(edit_form.comment )}}
+
+            </div>
+        </div>
+
+        <div class="ym-g50 ym-gl">
+            <div class="ym-gbox">
+
+
+                <button type="submit">Edit</button>
+
+                </form>
+
+             </div>
+        </div>
+
+
+<div class="ym-g50 ym-gl">
+    <div class="ym-gbox">
+        <form  action="{{ path('BSData_plant_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+            <button  type="submit">Löschen</button>
         </form>
-    </li>
-</ul>
+
+
+    </div>
+</div>
+
+
+</div>
+
+
+{% endblock %}

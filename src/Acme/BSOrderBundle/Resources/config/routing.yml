@@ -39,8 +39,8 @@ BSOrder_print:
     defaults: { _controller: BSOrderBundle:Default:print }
 
 BSOrder_export:
-    pattern:  /orders/export
-    defaults: { _controller: BSOrderBundle:Default:export }
+    pattern:  /orders/export/{date}
+    defaults: { _controller: BSOrderBundle:Default:export, date: 1 }
 
 BSOrder_open:
     pattern:  /orders/open
@@ -50,4 +50,11 @@ BSOrder_accounting:
     pattern:  /orders/accounting/{page}
     defaults: { _controller: BSOrderBundle:Default:accounting,page: 1 }
 
+BSOrder_exported:
+    pattern:  /orders/exported/{date}/{page}
+    defaults: { _controller: BSOrderBundle:Default:exported,page: 1 }
+
+BSOrder_check:
+    pattern:  /orders/check
+    defaults: { _controller: BSOrderBundle:Default:check }
 

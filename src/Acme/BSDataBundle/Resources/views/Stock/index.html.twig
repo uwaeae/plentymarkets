@@ -6,45 +6,56 @@
 {% block body %}
 
 <h1>Lager</h1>
+</div>
+</header>
+<nav class="ym-hlist">
 
-<ul class="buttons ">
-    <li>
-        <a class="button" href="{{ path('BSData_stock_new') }}">
-            Neu
-        </a>
-    </li>
-    <li><a class="button" href="{{ path('BSData_mainmenu') }}" >zurück</a></li>
-</ul>
+    <ul >
+        <li>
+            <a  href="{{ path('BSData_stock_new') }}">
+                Neur Lagerplatz
+            </a>
+        </li>
+        <li><a href="{{ path('BSData_mainmenu') }}" >zurück</a></li>
+    </ul>
+
+</nav>
+
+<div class="ym-grid">
+    <div class="ym-gl ym-g80">
+        <table class="bordertable">
+            <thead>
+            <tr>
+                <th>Number</th>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+            <tr>
+                <td>{{ entity.number }}</td>
+                <td>{{ entity.Id }}</td>
+                <td>{{ entity.name }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('BSData_stock_show', { 'id': entity.id }) }}">Anzeigen</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('BSData_stock_edit', { 'id': entity.id }) }}">Bearbeiten</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
 
 
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Number</th>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td>{{ entity.number }}</td>
-            <td>{{ entity.Id }}</td>
-            <td>{{ entity.name }}</td>
-            <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('BSData_stock_show', { 'id': entity.id }) }}">Anzeigen</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('BSData_stock_edit', { 'id': entity.id }) }}">Bearbeiten</a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+</div>
 
         {% endblock %}
