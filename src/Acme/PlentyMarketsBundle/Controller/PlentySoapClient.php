@@ -548,7 +548,7 @@ class PlentySoapClient extends \SoapClient
         $order->setPaidTimestamp($AOorder->OrderHead->PaidTimestamp);
         $order->setOrderStatus($AOorder->OrderHead->OrderStatus);
         $order->setOrderType($AOorder->OrderHead->OrderType);
-        $opm = $em->getRepository('BSDataBundle:PaymentMethods')->find( $AOorder->OrderHead->MethodOfPaymentID);
+        $opm = $em->getRepository('BSDataBundle:PaymentMethods')->find($AOorder->OrderHead->MethodOfPaymentID);
         $order->setPaymentMethods($opm);
         $order->setInvoiceNumber($AOorder->OrderHead->InvoiceNumber);
 
@@ -865,6 +865,8 @@ class PlentySoapClient extends \SoapClient
                 $oPM = new PaymentMethods();
                 $oPM->setName($item->Name);
                 $oPM->setId($item->MethodOfPaymentID);
+                $oPM->setDebitor('50000');
+                $oPM->setBankAccount('1803');
                 $em->persist($oPM);
                 $em->flush();
             }
