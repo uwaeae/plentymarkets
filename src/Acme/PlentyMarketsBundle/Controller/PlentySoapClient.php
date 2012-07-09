@@ -629,21 +629,23 @@ class PlentySoapClient extends \SoapClient
             //$em->flush();
             }
         $aOrderItems = array();
-        foreach($AOorder->OrderItems->item as $item){
-            $orderitem = new OrdersItem();
-            $orderitem->setSKU($item->SKU);
-            $SKU = explode("-", $item->SKU);
-            $orderitem->setArticleCode($item->SKU);
-            $orderitem->setArticleID($SKU[0]);
-            $orderitem->setItemText($item->ItemText);
-            $orderitem->setOrderID($item->OrderID);
-            $orderitem->setPrice($item->Price);
-            $orderitem->setQuantity($item->Quantity);
-            $orderitem->setVAT($item->VAT);
-            $em->persist($orderitem);
+        if(isset($AOorder->OrderItems->item)){
+            foreach($AOorder->OrderItems->item as $item){
+                $orderitem = new OrdersItem();
+                $orderitem->setSKU($item->SKU);
+                $SKU = explode("-", $item->SKU);
+                $orderitem->setArticleCode($item->SKU);
+                $orderitem->setArticleID($SKU[0]);
+                $orderitem->setItemText($item->ItemText);
+                $orderitem->setOrderID($item->OrderID);
+                $orderitem->setPrice($item->Price);
+                $orderitem->setQuantity($item->Quantity);
+                $orderitem->setVAT($item->VAT);
+                $em->persist($orderitem);
 
-             $aOrderItems[]= $orderitem;
+                 $aOrderItems[]= $orderitem;
 
+            }
         }
         //$em->flush();
 

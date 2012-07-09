@@ -334,14 +334,14 @@ class DefaultController extends Controller
                                 'Währung'       => 'Währung',
                                 'Kostenstelle'  => 'Kostenstelle',
                                 'Re_Nr'         => 'Re_Nr'   );
-
+            $exportDate = date('U');
     // Rechnungen Exportieren
             foreach($orders as $order ){
 
 
                 $OrderItemsVAT7 = $this->getOrderItemSumVAT($order->getOrderID(),7);
                 $OrderItemsVAT19 = $this->getOrderItemSumVAT($order->getOrderID(),19);
-                $exportDate = date('U');
+
 
                 // Buchungssatz für 19% MwSt
                 if($OrderItemsVAT19 > 0){
@@ -416,7 +416,7 @@ class DefaultController extends Controller
                 //$qb->expr()->isNull('o.exportDate'),
                 //$qb->expr()->eq('o.OrderStatus','11')
                 //));
-            if($date){
+            if($date > 1){
                 $qb  ->add('where',$qb->expr()->andX(
                     $qb->expr()->eq('o.exportDate',$date),
                     $qb->expr()->eq('o.OrderStatus','11')
@@ -467,7 +467,7 @@ class DefaultController extends Controller
                 if($OrderItemsVAT7 > 0){
 
                     if(isset($exportSumme[$order->getPaymentMethods()->getDebitor()])) $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT7 * -1;
-                    else $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT7 * -1;
+                    else $exportSumme[$order->getPaymentMethods()->getDebitor()] = $OrderItemsVAT7 * -1;
                     $export[] = array(
                         'Buchungstext'  => 'G '.$order->getOrderID().' '.$order->getLastname() ,
                         'Belegnummer'   => $order->getOrderID(),
@@ -494,7 +494,7 @@ class DefaultController extends Controller
             ksort($exportSumme);
             $exportSummeGesamt = 0;
             foreach($exportSumme as $s){
-                $exportSummeGesamt =+ $s;
+                $exportSummeGesamt += $s;
             }
 
             //$pdf->exportHeader(8);

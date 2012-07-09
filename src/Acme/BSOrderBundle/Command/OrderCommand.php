@@ -39,6 +39,8 @@ protected function execute(InputInterface $input, OutputInterface $output)
         $back=  $input->getArgument('daysback');
         $output->writeln(' *** Aufträge ***');
         $this->syncOrders($oPlentySoapClient,7,$output,$back);
+        $output->writeln(' *** Stronierung ***');
+        $this->syncOrders($oPlentySoapClient,8,$output,$back);
         $output->writeln(' *** Gutschriften ***');
         $this->syncOrders($oPlentySoapClient,11,$output,$back);
         $output->writeln(' *** Artikel ***');
@@ -49,7 +51,8 @@ protected function execute(InputInterface $input, OutputInterface $output)
 
 private function syncOrders(PlentySoapClient $oPlentySoapClient,$state,$output, $back ){
 
-    $orders = $oPlentySoapClient->doGetOrdersWithState( 7 ,date('U',mktime(0, 0, 0, date("m")  , date("d") - $back , date("Y")))  );
+    $orders = $oPlentySoapClient->doGetOrdersWithState( $state ,date('U',mktime(0, 0, 0, date("m")  , date("d") - $back , date("Y")))  );
+
     $output->writeln(' Syncronisiert '.count($orders).' Datum '.date('d.m.y',mktime(0, 0, 0, date("m")  , date("d") - $back , date("Y")) ));
     foreach($orders as $order){
             $output->writeln($order['head']->getOrderId()

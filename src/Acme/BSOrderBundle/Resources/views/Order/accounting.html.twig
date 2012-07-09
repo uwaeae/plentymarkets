@@ -104,12 +104,12 @@
                       </td>
                         <td >
                             <h4>
-                            {% if order.getOrderStatus == 7 %}
-                                 Auftrag
-                            {% elseif order.getOrderStatus == 11 %}
-                               Gutschrift
-                            {% else %}
-
+                            {% if order.getOrderType == "order" %}
+                                Auftrag
+                            {% elseif order.getOrderType == "warranty" %}
+                                Gewährleistung
+                            {% elseif order.getOrderType == "credit_note"  %}
+                                Gutschrift
                             {% endif %}
                             </h4>
 
