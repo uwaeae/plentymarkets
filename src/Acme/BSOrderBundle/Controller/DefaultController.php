@@ -307,19 +307,19 @@ class DefaultController extends Controller
                 ->add('from', 'BSDataBundle:Orders o');
             if($date and $date != 1){
                 $qb  ->add('where',$qb->expr()->andX(
-                    $qb->expr()->like('o.OrderType','Order'),
+                   // $qb->expr()->neq('o.OrderType','?1'),
                     $qb->expr()->eq('o.exportDate',$date),
                     $qb->expr()->eq('o.OrderStatus','7')
                 ));
             }else
             {
                 $qb  ->add('where',$qb->expr()->andX(
-                    $qb->expr()->like('o.OrderType','Order'),
+                    //$qb->expr()->neq('o.OrderType','?1'),
                     $qb->expr()->isNull('o.exportDate'),
                     $qb->expr()->eq('o.OrderStatus','7')
                 ));
             }
-
+           // $qb ->setParameter(1, 'delivery');
 
 
             $orders = $qb->getQuery()->getResult();
@@ -343,8 +343,6 @@ class DefaultController extends Controller
                 $OrderItemsVAT19 = $this->getOrderItemSumVAT($order->getOrderID(),19);
                 $exportDate = date('U');
 
-
-
                 // Buchungssatz für 19% MwSt
                 if($OrderItemsVAT19 > 0){
 
@@ -366,13 +364,10 @@ class DefaultController extends Controller
                                         'Kostenstelle'  => '2000',
                                         'Re_Nr'         => $order->getInvoiceNumber());
 
-
-
-
                     }
                 else{
                     $OrderItemsVAT7 =  $OrderItemsVAT7  + $order->getShippingCosts();
-                }
+                    }
 
                 if($OrderItemsVAT7 > 0){
                     if(isset($exportSumme[$order->getPaymentMethods()->getDebitor()]))  $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT7;
@@ -391,7 +386,7 @@ class DefaultController extends Controller
                         'Re_Nr'         => $order->getInvoiceNumber());
                 }
                 // Buchungssatz für die Zahlung
-                if($order->getPaidTimestamp()){
+                if($order->getPaidTimestamp() AND $order->getPaymentMethods()->getID()!= 12 ){
                     if(isset($exportSumme[$order->getPaymentMethods()->getBankAccount()])) $exportSumme[$order->getPaymentMethods()->getBankAccount()] += $order->getTotalBrutto() + $order->getShippingCosts();
                     else $exportSumme[$order->getPaymentMethods()->getBankAccount()] = $order->getTotalBrutto() + $order->getShippingCosts();
                     $export[] = array(
@@ -491,12 +486,17 @@ class DefaultController extends Controller
 
 
             }
-            if($date) $dataname = 'export_'.date('ymd',$date);
-            else $dataname = 'export_'.date('y_m_d_his');
+            $dataname = 'export_'.date('ymd',$exportDate);
+
             $pdf = new exportPDF($dataname,8);
 
             ksort($export);
             ksort($exportSumme);
+            $exportSummeGesamt = 0;
+            foreach($exportSumme as $s){
+                $exportSummeGesamt =+ $s;
+            }
+
             //$pdf->exportHeader(8);
 
             $fp = fopen('export/broot/'.$dataname.'.txt', 'w');
@@ -542,12 +542,13 @@ class DefaultController extends Controller
 
             $pdf->Output("export/broot/".$dataname.".pdf",'F');
 
-            if(!$date) $em->flush();
+            if($date == 1) $em->flush();
             unset($export[0]);
 
             return $this->render('BSOrderBundle:Order:export.html.twig' ,array('urlPDF'=> "/export/broot/".$dataname.".pdf",
             'export'=> $export,
-            'summe'=>$exportSumme));
+            'summe'=>$exportSumme,
+            'summeGesamt'=> $exportSummeGesamt));
         }else
         return $this->redirect('accounting');
 
