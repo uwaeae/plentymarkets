@@ -7,10 +7,10 @@
     <orderEntry type="module-library">
       <library name="PHP">
         <CLASSES>
-          <root url="file:///Applications/MAMP/bin/php/php5.3.6/lib/php" />
+          <root url="file:///Applications/MAMP/bin/php/php5.3.14/lib/php" />
         </CLASSES>
         <SOURCES>
-          <root url="file:///Applications/MAMP/bin/php/php5.3.6/lib/php" />
+          <root url="file:///Applications/MAMP/bin/php/php5.3.14/lib/php" />
         </SOURCES>
       </library>
     </orderEntry>

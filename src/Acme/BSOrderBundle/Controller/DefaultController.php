@@ -338,55 +338,56 @@ class DefaultController extends Controller
     // Rechnungen Exportieren
             foreach($orders as $order ){
 
-
-                $OrderItemsVAT7 = $this->getOrderItemSumVAT($order->getOrderID(),7);
-                $OrderItemsVAT19 = $this->getOrderItemSumVAT($order->getOrderID(),19);
-
-
-                // Buchungssatz für 19% MwSt
-                if($OrderItemsVAT19 > 0){
-
-                    $OrderItemsVAT19 += $order->getShippingCosts();
-
-                    if(isset($exportSumme[$order->getPaymentMethods()->getDebitor()]))   $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT19;
-                    else  $exportSumme[$order->getPaymentMethods()->getDebitor()] = $OrderItemsVAT19;
+                if( $order->getPaymentMethods()->getID()!= 9 ){
+                    $OrderItemsVAT7 = $this->getOrderItemSumVAT($order->getOrderID(),7);
+                    $OrderItemsVAT19 = $this->getOrderItemSumVAT($order->getOrderID(),19);
 
 
-                    $export[] = array(
-                                        'Buchungstext'  => 'A '.$order->getOrderID().' '.$order->getLastname()  ,
-                                        'Belegnummer'   => $order->getOrderID(),
-                                        'Buchungsbetrag'=> $OrderItemsVAT19,
-                                        'MwSt'          =>  '19',
-                                        'Sollkonto'     => $order->getPaymentMethods()->getDebitor(),
-                                        'Habenkonto'    => 4401,
-                                        'Belegdatum'    => date("d.m.y",$order->getDoneTimestamp()),
-                                        'Währung'       => 'EUR',
-                                        'Kostenstelle'  => '2000',
-                                        'Re_Nr'         => $order->getInvoiceNumber());
+                    // Buchungssatz für 19% MwSt
+                    if($OrderItemsVAT19 > 0){
+
+                        $OrderItemsVAT19 += $order->getShippingCosts();
+
+                        if(isset($exportSumme[$order->getPaymentMethods()->getDebitor()]))   $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT19;
+                        else  $exportSumme[$order->getPaymentMethods()->getDebitor()] = $OrderItemsVAT19;
+
+
+                        $export[] = array(
+                            'Buchungstext'  => 'A '.$order->getOrderID().' '.$order->getLastname()  ,
+                            'Belegnummer'   => $order->getOrderID(),
+                            'Buchungsbetrag'=> $OrderItemsVAT19,
+                            'MwSt'          =>  '19',
+                            'Sollkonto'     => $order->getPaymentMethods()->getDebitor(),
+                            'Habenkonto'    => 4401,
+                            'Belegdatum'    => date("d.m.y",$order->getDoneTimestamp()),
+                            'Währung'       => 'EUR',
+                            'Kostenstelle'  => '2000',
+                            'Re_Nr'         => $order->getInvoiceNumber());
 
                     }
-                else{
-                    $OrderItemsVAT7 =  $OrderItemsVAT7  + $order->getShippingCosts();
+                    else{
+                        $OrderItemsVAT7 =  $OrderItemsVAT7  + $order->getShippingCosts();
                     }
 
-                if($OrderItemsVAT7 > 0){
-                    if(isset($exportSumme[$order->getPaymentMethods()->getDebitor()]))  $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT7;
-                    else $exportSumme[$order->getPaymentMethods()->getDebitor()] = $OrderItemsVAT7;
+                    if($OrderItemsVAT7 > 0){
+                        if(isset($exportSumme[$order->getPaymentMethods()->getDebitor()]))  $exportSumme[$order->getPaymentMethods()->getDebitor()] += $OrderItemsVAT7;
+                        else $exportSumme[$order->getPaymentMethods()->getDebitor()] = $OrderItemsVAT7;
 
-                    $export[] = array(
-                        'Buchungstext'  => 'A '.$order->getOrderID().' '.$order->getLastname() ,
-                        'Belegnummer'   => $order->getOrderID(),
-                        'Buchungsbetrag'=> $OrderItemsVAT7 ,
-                        'MwSt'          =>  '7',
-                        'Sollkonto'     => $order->getPaymentMethods()->getDebitor(),
-                        'Habenkonto'    => 4301,
-                        'Belegdatum'    => date("d.m.y",$order->getDoneTimestamp()),
-                        'Währung'       => 'EUR',
-                        'Kostenstelle'  => '2000',
-                        'Re_Nr'         => $order->getInvoiceNumber());
+                        $export[] = array(
+                            'Buchungstext'  => 'A '.$order->getOrderID().' '.$order->getLastname() ,
+                            'Belegnummer'   => $order->getOrderID(),
+                            'Buchungsbetrag'=> $OrderItemsVAT7 ,
+                            'MwSt'          =>  '7',
+                            'Sollkonto'     => $order->getPaymentMethods()->getDebitor(),
+                            'Habenkonto'    => 4301,
+                            'Belegdatum'    => date("d.m.y",$order->getDoneTimestamp()),
+                            'Währung'       => 'EUR',
+                            'Kostenstelle'  => '2000',
+                            'Re_Nr'         => $order->getInvoiceNumber());
+                    }
                 }
                 // Buchungssatz für die Zahlung
-                if($order->getPaidTimestamp() AND $order->getPaymentMethods()->getID()!= 12 ){
+                if($order->getPaidTimestamp() AND $order->getPaymentMethods()->getID()!= 12 AND $order->getPaymentMethods()->getID()!= 9 ){
                     if(isset($exportSumme[$order->getPaymentMethods()->getBankAccount()])) $exportSumme[$order->getPaymentMethods()->getBankAccount()] += $order->getTotalBrutto() + $order->getShippingCosts();
                     else $exportSumme[$order->getPaymentMethods()->getBankAccount()] = $order->getTotalBrutto() + $order->getShippingCosts();
                     $export[] = array(

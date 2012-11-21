@@ -42,7 +42,7 @@ class PlentySoapClient extends \SoapClient
 	 * 
 	 * Bitte tragen Sie hier Ihre korrekte WSDL-URL ein.
 	 */
-	private $WSDL_URL		=	'http://blumenschule-11117.plenty-test.de/plenty/api/soap/version103/?xml';
+	private $WSDL_URL		=	'http://shop2.blumenschule.de/plenty/api/soap/version106/?xml';
 	
 	/**
      * Die Benutzerdaten für den SOAP-Benutzer. Im Admin-Bereich unter 
@@ -441,7 +441,8 @@ class PlentySoapClient extends \SoapClient
         $options['OrderStatus'] =  doubleval($state);
         $options['MultishopID'] = 0;
         $options['OrderID'] = null;
-        $options['LastUpdate'] = $LastUpdate ;
+        $options['LastUpdateFrom'] = $LastUpdate ;
+        $options['LastUpdateTill'] = date('U');
         $options['GetOrderDeliveryAddress'] = true;
         $options['GetOrderCustomerAddress'] = true;
 
