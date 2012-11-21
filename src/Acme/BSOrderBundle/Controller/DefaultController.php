@@ -338,7 +338,7 @@ class DefaultController extends Controller
     // Rechnungen Exportieren
             foreach($orders as $order ){
 
-                if( $order->getPaymentMethods()->getID()!= 9 ){
+
                     $OrderItemsVAT7 = $this->getOrderItemSumVAT($order->getOrderID(),7);
                     $OrderItemsVAT19 = $this->getOrderItemSumVAT($order->getOrderID(),19);
 
@@ -385,7 +385,7 @@ class DefaultController extends Controller
                             'Kostenstelle'  => '2000',
                             'Re_Nr'         => $order->getInvoiceNumber());
                     }
-                }
+
                 // Buchungssatz für die Zahlung
                 if($order->getPaidTimestamp() AND $order->getPaymentMethods()->getID()!= 12 AND $order->getPaymentMethods()->getID()!= 9 ){
                     if(isset($exportSumme[$order->getPaymentMethods()->getBankAccount()])) $exportSumme[$order->getPaymentMethods()->getBankAccount()] += $order->getTotalBrutto() + $order->getShippingCosts();
