@@ -543,7 +543,7 @@ class DefaultController extends Controller
 
             $pdf->Output("export/broot/".$dataname.".pdf",'F');
 
-            //if($date == 1) $em->flush();
+            if($date == 1) $em->flush();
             unset($export[0]);
 
             return $this->render('BSOrderBundle:Order:export.html.twig' ,array('urlPDF'=> "/export/broot/".$dataname.".pdf",
