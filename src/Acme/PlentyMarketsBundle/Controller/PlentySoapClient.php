@@ -538,36 +538,38 @@ class PlentySoapClient extends \SoapClient
 
         $em = $this->doctrine->getEntityManager();
         // Order HEAD
+        try{
+            $order->setOrderID($AOorder->OrderHead->OrderID);
+            $order->setLastUpdate($AOorder->OrderHead->LastUpdate);
+            $order->setCustomerID($AOorder->OrderHead->CustomerID);
+            $order->setPackageNumber($AOorder->OrderHead->PackageNumber);
+            $order->setTotalBrutto($AOorder->OrderHead->TotalBrutto);
+            $order->setShippingCosts($AOorder->OrderHead->ShippingCosts);
+            $order->setDoneTimestamp($AOorder->OrderHead->DoneTimestamp);
+            $order->setPaidTimestamp($AOorder->OrderHead->PaidTimestamp);
+            $order->setOrderStatus($AOorder->OrderHead->OrderStatus);
+            $order->setOrderType($AOorder->OrderHead->OrderType);
+            $opm = $em->getRepository('BSDataBundle:PaymentMethods')->find($AOorder->OrderHead->MethodOfPaymentID);
+            $order->setPaymentMethods($opm);
+            $order->setInvoiceNumber($AOorder->OrderHead->InvoiceNumber);
 
-        $order->setOrderID($AOorder->OrderHead->OrderID);
-        $order->setLastUpdate($AOorder->OrderHead->LastUpdate);
-        $order->setCustomerID($AOorder->OrderHead->CustomerID);
-        $order->setPackageNumber($AOorder->OrderHead->PackageNumber);
-        $order->setTotalBrutto($AOorder->OrderHead->TotalBrutto);
-        $order->setShippingCosts($AOorder->OrderHead->ShippingCosts);
-        $order->setDoneTimestamp($AOorder->OrderHead->DoneTimestamp);
-        $order->setPaidTimestamp($AOorder->OrderHead->PaidTimestamp);
-        $order->setOrderStatus($AOorder->OrderHead->OrderStatus);
-        $order->setOrderType($AOorder->OrderHead->OrderType);
-        $opm = $em->getRepository('BSDataBundle:PaymentMethods')->find($AOorder->OrderHead->MethodOfPaymentID);
-        $order->setPaymentMethods($opm);
-        $order->setInvoiceNumber($AOorder->OrderHead->InvoiceNumber);
 
-        if(isset($AOorder->OrderDeliveryAddress->Street)){
-           // $order->setTitle($AOorder->OrderDeliveryAddress->Title);
-            $order->setFirstname($AOorder->OrderDeliveryAddress->FirstName);
-            $order->setLastname($AOorder->OrderDeliveryAddress->Surname);
-            $order->setAdditionalName($AOorder->OrderDeliveryAddress->AdditionalName);
-            $order->setCompany($AOorder->OrderDeliveryAddress->Company);
-            $order->setStreet($AOorder->OrderDeliveryAddress->Street);
-            $order->setHouseNumber($AOorder->OrderDeliveryAddress->HouseNumber);
-            $order->setCity($AOorder->OrderDeliveryAddress->City);
-            $order->setZIP($AOorder->OrderDeliveryAddress->ZIP);
-            $order->setCountryID($AOorder->OrderDeliveryAddress->CountryID);
-            $order->setTelephone($AOorder->OrderDeliveryAddress->Telephone);
-            $order->setEmail($AOorder->OrderDeliveryAddress->Email);
-        }
-        else {
+
+            if(isset($AOorder->OrderDeliveryAddress->Street)){
+               // $order->setTitle($AOorder->OrderDeliveryAddress->Title);
+                $order->setFirstname($AOorder->OrderDeliveryAddress->FirstName);
+                $order->setLastname($AOorder->OrderDeliveryAddress->Surname);
+                $order->setAdditionalName($AOorder->OrderDeliveryAddress->AdditionalName);
+                $order->setCompany($AOorder->OrderDeliveryAddress->Company);
+                $order->setStreet($AOorder->OrderDeliveryAddress->Street);
+                $order->setHouseNumber($AOorder->OrderDeliveryAddress->HouseNumber);
+                $order->setCity($AOorder->OrderDeliveryAddress->City);
+                $order->setZIP($AOorder->OrderDeliveryAddress->ZIP);
+                $order->setCountryID($AOorder->OrderDeliveryAddress->CountryID);
+                $order->setTelephone($AOorder->OrderDeliveryAddress->Telephone);
+                $order->setEmail($AOorder->OrderDeliveryAddress->Email);
+            }
+
             $order->setTitle($AOorder->OrderCustomerAddress->Title);
             $order->setFirstname($AOorder->OrderCustomerAddress->FirstName);
             $order->setLastname($AOorder->OrderCustomerAddress->Surname);
@@ -582,10 +584,13 @@ class PlentySoapClient extends \SoapClient
             $order->setEmail($AOorder->OrderCustomerAddress->Email);
 
 
+
+            $em->persist($order);
+            //$em->flush();
+            return $order;
+        }catch (\Exception $e){
+            throw  $this->createNotFoundException('Some failure in Order :'. $AOorder->OrderHead->OrderID);
         }
-        $em->persist($order);
-        //$em->flush();
-        return $order;
     }
 
     private function syncOrderInfoData($AOorder,$order){
