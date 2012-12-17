@@ -14,6 +14,8 @@ class PaymentMethodsType extends AbstractType
             ->add('Name',null,array('label'=>'Zahlungsart','read_only'=>true))
             ->add('Debitor',null,array('label'=>'Debitorkonto'))
             ->add('BankAccount',null,array('label'=>'Sachkonto'))
+            ->add('payment',null,array('label'=>'Zahlungs Buchung'))
+            ->add('invoice',null,array('label'=>'Rechungs Buchung'))
         ;
     }
 

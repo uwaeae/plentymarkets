@@ -43,6 +43,22 @@ class PaymentMethods
      */
     private $BankAccount;
 
+    /**
+     * @var boolean $payment
+     *
+     * @ORM\Column(name="payment", type="boolean" )
+     */
+    private $payment;
+
+    /**
+     * @var boolean $invoice
+     *
+     * @ORM\Column(name="invoice", type="boolean" )
+     */
+    private $invoice;
+
+
+
 
 
     /**
@@ -155,5 +171,45 @@ class PaymentMethods
     public function getBankAccount()
     {
         return $this->BankAccount;
+    }
+
+    /**
+     * Set payment
+     *
+     * @param boolean $payment
+     */
+    public function setPayment($payment)
+    {
+        $this->payment = $payment;
+    }
+
+    /**
+     * Get payment
+     *
+     * @return boolean 
+     */
+    public function getPayment()
+    {
+        return $this->payment;
+    }
+
+    /**
+     * Set invoice
+     *
+     * @param boolean $invoice
+     */
+    public function setInvoice($invoice)
+    {
+        $this->invoice = $invoice;
+    }
+
+    /**
+     * Get invoice
+     *
+     * @return boolean 
+     */
+    public function getInvoice()
+    {
+        return $this->invoice;
     }
 }

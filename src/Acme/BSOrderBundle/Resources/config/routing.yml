@@ -1,60 +1,60 @@
 
 BSOrder_menu:
     pattern:  /orders
-    defaults: { _controller: BSOrderBundle:Default:index }
+    defaults: { _controller: BSOrderBundle:Order:index }
 
 
 BSOrder_search:
     pattern:  /orders/search
-    defaults: { _controller: BSOrderBundle:Default:index }
+    defaults: { _controller: BSOrderBundle:Order:index }
 
 BSOrder_invoice:
     pattern:  /orders/invoice
-    defaults: { _controller: BSOrderBundle:Default:invoice }
+    defaults: { _controller: BSOrderBundle:Order:invoice }
 
 BSOrder_packet:
     pattern:  /orders/packets
-    defaults: { _controller: BSOrderBundle:Default:index }
+    defaults: { _controller: BSOrderBundle:Order:index }
 
 BSOrder_state_open:
     pattern:  /orders/state/open
-    defaults: { _controller: BSOrderBundle:Default:state, state: 4 }
+    defaults: { _controller: BSOrderBundle:Order:state, state: 4 }
 
 BSOrder_state:
     pattern:  /orders/state/{state}
-    defaults: { _controller: BSOrderBundle:Default:state, state:5.5 }
+    defaults: { _controller: BSOrderBundle:Order:state, state:5.5 }
 
 BSOrder_sync:
     pattern:  /orders/sync/{state}
-    defaults: { _controller: BSOrderBundle:Default:sync, state:7 }
+    defaults: { _controller: BSOrderBundle:Order:sync, state:7 }
 
 
 BSOrder_set_state:
     pattern:  /orders/setstate/{state}
-    defaults: { _controller: BSOrderBundle:Default:setstate, state:6 }
+    defaults: { _controller: BSOrderBundle:Order:setstate, state:6 }
 
 
 BSOrder_print:
     pattern:  /orders/print
-    defaults: { _controller: BSOrderBundle:Default:print }
+    defaults: { _controller: BSOrderBundle:Order:print }
 
 BSOrder_export:
     pattern:  /orders/export/{date}
-    defaults: { _controller: BSOrderBundle:Default:export, date: 1 }
+    defaults: { _controller: BSOrderBundle:Order:export, date: 1 }
 
 BSOrder_open:
     pattern:  /orders/open
-    defaults: { _controller: BSOrderBundle:Default:open }
+    defaults: { _controller: BSOrderBundle:Order:open }
 
 BSOrder_accounting:
     pattern:  /orders/accounting/{page}
-    defaults: { _controller: BSOrderBundle:Default:accounting,page: 1 }
+    defaults: { _controller: BSOrderBundle:Order:accounting,page: 1 }
 
 BSOrder_exported:
     pattern:  /orders/exported/{date}/{page}
-    defaults: { _controller: BSOrderBundle:Default:exported,page: 1 }
+    defaults: { _controller: BSOrderBundle:Order:exported,page: 1 }
 
 BSOrder_check:
     pattern:  /orders/check
-    defaults: { _controller: BSOrderBundle:Default:check }
+    defaults: { _controller: BSOrderBundle:Order:check }
 

@@ -101,7 +101,7 @@ class Orders
     /**
      * @var string $City
      *
-     * @ORM\Column(name="City", type="string", length=255)
+     * @ORM\Column(name="City", type="string", length=255,nullable=true)
      */
     private $City;
 
@@ -110,7 +110,7 @@ class Orders
     /**
      * @var string $Telephone
      *
-     * @ORM\Column(name="Telephone", type="string", length=255)
+     * @ORM\Column(name="Telephone", type="string", length=255,nullable=true)
      */
     private $Telephone;
 
@@ -184,6 +184,13 @@ class Orders
      * @ORM\Column(name="PaidTimestamp", type="string",length=255,nullable=true)
      */
     private $PaidTimestamp;
+
+    /**
+     * @var float $PaidStatus
+     *
+     * @ORM\Column(name="PaidStatus", type="string",length=255,nullable=true)
+     */
+    private $PaidStatus;
 
 
 
@@ -801,5 +808,25 @@ class Orders
     public function getPaidTimestamp()
     {
         return $this->PaidTimestamp;
+    }
+
+    /**
+     * Set PaidStatus
+     *
+     * @param string $paidStatus
+     */
+    public function setPaidStatus($paidStatus)
+    {
+        $this->PaidStatus = $paidStatus;
+    }
+
+    /**
+     * Get PaidStatus
+     *
+     * @return string 
+     */
+    public function getPaidStatus()
+    {
+        return $this->PaidStatus;
     }
 }
