@@ -54,7 +54,7 @@
         </div>
         <div class="ym-col1">
             <div class="ym-cbox">
-                <table class="records_list">
+                <table class="bordertable narrow">
                     <thead>
                     <tr>
 
@@ -70,7 +70,7 @@
                     </thead>
                     <tbody>
                     {% for entity in pagination %}
-                        <tr>
+                        <tr onclick="document.open({{ path('BSData_product_edit', { 'id': entity.id }) }});">
 
 
                             <td>{{ entity.articleno }}</td>
@@ -82,9 +82,7 @@
 
                             <td>
                                 <ul>
-                                    <li>
-                                        <a href="{{ path('BSData_product_show', { 'id': entity.id }) }}">show</a>
-                                    </li>
+
                                     <li>
                                         <a href="{{ path('BSData_product_edit', { 'id': entity.id }) }}">edit</a>
                                     </li>
