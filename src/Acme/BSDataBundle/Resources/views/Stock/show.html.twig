@@ -4,54 +4,108 @@
 
 {% block body %}
 
-<h1>Lager - {{ entity.name }}</h1>
-</div>
-</header>
-<nav class="ym-hlist">
+    <h1>Lager - {{ entity.name }}</h1>
+    </div>
+    </header>
+    <nav class="ym-hlist">
 
-    <ul >
-        <li>
-            <a  href="{{ path('BSData_stock_new') }}">
-                Neur Lagerplatz
-            </a>
-        </li>
-        <li><a href="{{ path('BSData_mainmenu') }}" >zurück</a></li>
-    </ul>
+        <ul>
 
-</nav>
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>Number</th>
-            <td>{{ entity.number }}</td>
-        </tr>
-        <tr>
-            <th>Name</th>
-            <td>{{ entity.name }}</td>
-        </tr>
-    </tbody>
-</table>
+            <li><a href="{{ path('BSData_stock') }}">zurück</a></li>
+        </ul>
 
-<ul class="record_actions buttons">
-    <li>
-        <a class="button" href="{{ path('BSData_stock') }}">
-            zurück
-        </a>
-    </li>
-    <li>
-        <a class="button" href="{{ path('BSData_stock_edit', { 'id': entity.id }) }}">
-            Bearbeiten
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('BSData_stock_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button class="button" type="submit">Löschen</button>
-        </form>
-    </li>
-</ul>
-        {% endblock %}
+    </nav>
+
+    <div class="ym-column">
+        <div class="ym-col3">
+            <div class="ym-cbox">
+                <table class="record_properties">
+                    <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ entity.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Number</th>
+                        <td>{{ entity.number }}</td>
+                    </tr>
+                    <tr>
+                        <th>Name</th>
+                        <td>{{ entity.name }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <ul class="record_actions buttons">
+
+                    <li>
+                        <a class="button" href="{{ path('BSData_stock_edit', { 'id': entity.id }) }}">
+                            Bearbeiten
+                        </a>
+                    </li>
+                    <li>
+                        <form action="{{ path('BSData_stock_delete', { 'id': entity.id }) }}" method="post">
+                            {{ form_widget(delete_form) }}
+                            <button class="button" type="submit">Löschen</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="ym-col1">
+            <div class="ym-cbox">
+                <table class="records_list">
+                    <thead>
+                    <tr>
+
+                        <th>{{ pagination.sortable('Code', 'a.article_no')|raw }}</th>
+                        <th>{{ pagination.sortable('Name', 'a.name')|raw }}</th>
+                        <th>{{ pagination.sortable('Botanish', 'a.name2')|raw }}</th>
+                        <th>Price</th>
+                        <th>Lager</th>
+
+
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for entity in pagination %}
+                        <tr>
+
+
+                            <td>{{ entity.articleno }}</td>
+                            <td>{{ entity.name }}</td>
+                            <td>{{ entity.name2 }}</td>
+                            <td>{{ entity.price }}</td>
+                            <td>{{ entity.stock }}</td>
+
+
+                            <td>
+                                <ul>
+                                    <li>
+                                        <a href="{{ path('BSData_product_show', { 'id': entity.id }) }}">show</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('BSData_product_edit', { 'id': entity.id }) }}">edit</a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    <tr>
+                        <td colspan="6">
+                            <div class="navigation">
+                                {{ pagination.render()|raw }}
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

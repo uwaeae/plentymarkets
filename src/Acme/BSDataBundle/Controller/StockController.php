@@ -37,7 +37,7 @@ class StockController extends Controller
      * @Route("/{id}/show", name="BSData_stock_show")
      * @Template()
      */
-    public function showAction($id)
+    public function showAction($id,$page = 1)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
@@ -49,9 +49,24 @@ class StockController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
+
+        $dql = "SELECT p FROM BSDataBundle:Product p WHERE p.stock =".$entity->getID();
+        $query = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $page,//$this->get('request')->query->get('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+
+
+
+
         return array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        );
+            'delete_form' => $deleteForm->createView(),
+            'pagination' => $pagination    );
     }
 
     /**
