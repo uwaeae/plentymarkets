@@ -43,8 +43,8 @@ protected function execute(InputInterface $input, OutputInterface $output)
         $this->syncOrders($oPlentySoapClient,8,$output,$back);
         $output->writeln(' *** Gutschriften ***');
         $this->syncOrders($oPlentySoapClient,11,$output,$back);
-      //  $output->writeln(' *** Artikel ***');
-      //  $oPlentySoapClient->doGetItemsBase(date('U',mktime(0, 0, 0, date("m")  , date("d") - $back , date("Y"))),$output );
+        $output->writeln(' *** Artikel ***');
+        $oPlentySoapClient->doGetItemsBase(date('U',mktime(0, 0, 0, date("m")  , date("d") - $back , date("Y"))),$output );
 
 
     }
