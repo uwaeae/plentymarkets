@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Acme\BSCheckoutBundle\Entity\checkoutItem
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Acme\BSCheckoutBundle\Entity\checkout_itemRepository")
+ * @ORM\Entity(repositoryClass="Acme\BSCheckoutBundle\Entity\checkoutItemRepository")
  */
 class checkoutItem
 {
@@ -27,14 +27,14 @@ class checkoutItem
      *
      * @ORM\Column(name="article_code", type="string", length=255)
      */
-    private $article_code;
+    private $articleCode;
 
     /**
      * @var integer $article_id
      *
      * @ORM\Column(name="article_id", type="integer")
      */
-    private $article_id;
+    private $articleId;
 
     /**
      * @var integer $quantity
@@ -84,7 +84,7 @@ class checkoutItem
      */
     public function setArticleCode($articleCode)
     {
-        $this->article_code = $articleCode;
+        $this->articleCode = $articleCode;
     }
 
     /**
@@ -94,7 +94,7 @@ class checkoutItem
      */
     public function getArticleCode()
     {
-        return $this->article_code;
+        return $this->articleCode;
     }
 
     /**
@@ -104,7 +104,7 @@ class checkoutItem
      */
     public function setArticleId($articleId)
     {
-        $this->article_id = $articleId;
+        $this->articleId = $articleId;
     }
 
     /**
@@ -114,7 +114,7 @@ class checkoutItem
      */
     public function getArticleId()
     {
-        return $this->article_id;
+        return $this->articleId;
     }
 
     /**

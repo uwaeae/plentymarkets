@@ -4,7 +4,7 @@
 {% block title %}Kasse{% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('/js/jquery.js') }}" type="text/javascript"></script>
+    {{ parent() }}
     <script src="{{ asset('/js/checkout.js') }}" type="text/javascript"></script>
 {% endblock %}
 
@@ -53,7 +53,6 @@
                     <input type="text" class="inputkeyboard">
 
 
-                    <a class="btn" href=" {{ path('BSCheckout_clear', { 'cashbox_id': 1 }) }}"> CLEAR</a>
 
                 </div>
             </div>
@@ -94,7 +93,35 @@
 
                     </div>
 
+                    <ul>
+                        <li>
+                            <form action="{{ path('BSCheckout_finish', { 'cashbox_id': 1,payment_id: 11 }) }}" method="post">
+                                <button>Bar</button>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{{ path('BSCheckout_finish', { 'cashbox_id': 1,payment_id: 12 }) }}" method="post">
+                                <button>EC</button>
+                            </form>
+                        </li>
+                        <li>
 
+                            <button class="order">Rechung</button>
+                            <div class="orderdialog">
+                                <form action="{{ path('BSCheckout_order', { 'cashbox_id': 1,payment_id: 12 }) }}" method="post">
+                                    {{ form_widget(form) }}
+                                    <button>EC</button>
+                                </form>
+
+                            </div>
+                        </li>
+
+                        <li>
+                            <form action="{{ path('BSCheckout_clear', { 'cashbox_id': 1 }) }}" method="post">
+                                <button>CLEAR</button>
+                            </form>
+                        </li>
+                    </ul>
 
 
 

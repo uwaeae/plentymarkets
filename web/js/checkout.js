@@ -1,4 +1,12 @@
 $(document).ready(function(){
+
+    $('.orderdialog').dialog({ autoOpen: false });
+    $( ".order" ).click(function() {
+        $( ".orderdialog" ).dialog( "open" );
+    });
+
+
+
    $('.inputkeyboard').keypress(function(event){
 
        if(event.keyCode == 9 || event.keyCode == 13 ){

@@ -4,6 +4,7 @@ namespace Acme\BSCheckoutBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,7 +20,22 @@ class CheckoutController extends Controller
 
         $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->getCurrentBasket($cashbox_id);
 
-        return $this->render('BSCheckoutBundle:Default:index.html.twig', array('basket' => $currentBasket));
+        $form = $this->createFormBuilder()
+            ->add('prefix', 'text',array('label'=>'Anrede'))
+            ->add('firstname', 'text',array('label'=>'Vorname'))
+            ->add('lastname','text',array('label'=>'Nachname'))
+            ->add('company', 'text',array('label'=>'Firma'))
+            ->add('street', 'text',array('label'=>'Strasse'))
+            ->add('city', 'text',array('label'=>'Stadt'))
+            ->add('country', 'text',array('label'=>'Land'))
+            ->add('email', 'text',array('label'=>'Email'))
+            ->getForm();
+
+
+
+
+
+        return $this->render('BSCheckoutBundle:Default:index.html.twig', array('basket' => $currentBasket,'orderForm' => $form->createView()));
     }
 
 
@@ -66,9 +82,55 @@ class CheckoutController extends Controller
 
     /**
      * @Route("/clear",name="BSCheckout_clear")
+     * @Method({ "POST"})
      * @Template()
      */
     public function clearAction($cashbox_id = 1)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->clearCurrentBasket($cashbox_id);
+
+
+
+        return $this->render('BSCheckoutBundle:Default:index.html.twig', array('basket' => $currentBasket));
+
+    }
+
+    /**
+     * @Route("/finish",name="BSCheckout_finish")
+     * @Method({ "POST"})
+     * @Template()
+     */
+    public function finishAction($cashbox_id = 1,$payment_id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $cb = $em->getRepository('BSCheckoutBundle:checkout')->clearCurrentBasket($cashbox_id);
+            $sum = 0;
+        foreach($cb->getCheckoutItems() as $product){
+
+            $sum += $product->getQuantity() *  $product->getPrice();
+
+        }
+
+        $cb = new \Acme\BSCheckoutBundle\Entity\checkout();
+        $cb->setPayment($payment_id);
+        $cb->setBuydate(new \DateTime());
+        $cb->setFinish(true);
+
+
+
+        return $this->render('BSCheckoutBundle:Default:index.html.twig', array('basket' => $currentBasket));
+
+    }
+
+    /**
+     * @Route("/order",name="BSCheckout_order")
+     * @Method({ "POST"})
+     * @Template()
+     */
+    public function orderAction($cashbox_id = 1)
     {
         $em = $this->getDoctrine()->getEntityManager();
 

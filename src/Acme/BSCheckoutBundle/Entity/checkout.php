@@ -52,6 +52,14 @@ class checkout
     private $payment;
 
     /**
+     * @var float $summary
+     *
+     * @ORM\Column(name="summary", type="float")
+
+     */
+    private $summary;
+
+    /**
      * @ORM\OneToMany(targetEntity="checkoutItem", mappedBy="checkout")
      */
     protected $checkoutItems;
@@ -179,5 +187,25 @@ class checkout
     public function addcheckoutItem(\Acme\BSCheckoutBundle\Entity\checkoutItem $checkoutItems)
     {
         $this->checkoutItems[] = $checkoutItems;
+    }
+
+    /**
+     * Set summary
+     *
+     * @param float $summary
+     */
+    public function setSummary($summary)
+    {
+        $this->summary = $summary;
+    }
+
+    /**
+     * Get summary
+     *
+     * @return float 
+     */
+    public function getSummary()
+    {
+        return $this->summary;
     }
 }
