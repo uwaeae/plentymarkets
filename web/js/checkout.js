@@ -13,7 +13,7 @@ $(document).ready(function(){
                    items.push('<tr id="' + key + '">' + val + '</li>');
                });
 
-
+               $('.co_items').html( items.join(''));
 
                getSummary();
            });
