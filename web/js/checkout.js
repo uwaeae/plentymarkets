@@ -8,17 +8,35 @@ $(document).ready(function(){
            $.getJSON('/app_dev.php/checkout/add/'+ code,function(data){
                 //$('.shopinglist').empty().html($(data).find('.shopinglist table'));
                $('.co_items').empty();
-               var items = [];
+
                $.each(data, function(key, val) {
-                   items.push('<tr id="' + key + '">' + val + '</li>');
+
+                   var items = [];
+
+                   items.push('<td>' + val['code'] + '</td>');
+                   items.push('<td>' + val['quantity'] + '</td>');
+                   items.push('<td>' + val['description'] + '</td>');
+                   items.push('<td>' + parseFloat(val['price']).toFixed(2) + ' &euro;</td>');
+                   items.push('<td>' + val['pa'] + '</td>');
+                   items.push('<td>' + parseFloat(val['sum']).toFixed(2) + ' &euro;</td>');
+
+                   $('<tr>',{
+                        'id': key,
+                       'data-sum':val['sum'],
+                       html: items.join('')
+
+                   }).appendTo('.co_items');
+
+                  });
+
                });
 
-               $('.co_items').html( items.join(''));
+
 
                getSummary();
-           });
-       }
-   });
+           }
+       });
+
    $('.co_payed').keypress(function(event){
 
 

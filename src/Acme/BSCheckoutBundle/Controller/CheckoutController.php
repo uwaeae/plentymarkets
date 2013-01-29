@@ -5,6 +5,7 @@ namespace Acme\BSCheckoutBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
 
 class CheckoutController extends Controller
 {
@@ -37,15 +38,21 @@ class CheckoutController extends Controller
        // return $this->render('BSCheckoutBundle:Default:index.html.twig', array('basket' => $currentBasket));
         $result = array();
         $index = 1;
-        foreach($currentBasket->getCheckoutItems() as $product)
+        foreach($currentBasket->getCheckoutItems() as $product){
+            $item['code'] = $product->getArticleCode();
+            $item['quantity'] = $product->getQuantity();
+            $item['description'] = $product->getDescription();
+
+            $item['price'] = $product->getPrice();
+            $item['pa'] = false;
+            $item['sum'] = $product->getQuantity() *  $product->getPrice();
+            $result[$index] = $item;
+            $index ++;
+        }
 
 
 
-                $item['code'] = $product->getArticleno();
-                $item['description'] = $product->getName();
-                $item['quantity'] = $product->getQuantity();
-                $item['price'] = $product->getPrice();
-                $item['pa'] = false;
+
 
 
 
