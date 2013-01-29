@@ -5,7 +5,7 @@ $(document).ready(function(){
            var code =  $(this).val()
            var input = $(this);
 
-           $.getJSON('/app_dev.php/checkout/add/'+ code,function(data){
+           $.getJSON('/checkout/add/'+ code,function(data){
                 //$('.shopinglist').empty().html($(data).find('.shopinglist table'));
                $('.co_items').empty();
 
