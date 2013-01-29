@@ -1,3 +1,12 @@
-AcmeBSLableBundle_homepage:
+BSLable_home:
     pattern:  /lable
-    defaults: { _controller: BSLableBundle:Default:index }
+    defaults: { _controller: BSLableBundle:Lable:index }
+
+
+BSLable_print:
+    pattern:  /lable/print
+    defaults: { _controller: BSLableBundle:Lable:print }
+
+BSLable_search:
+    pattern:  /lable/search
+    defaults: { _controller: BSLableBundle:Lable:search }

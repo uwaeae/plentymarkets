@@ -49,7 +49,7 @@ h1 {
 
 
 .ym-wrapper {
-    max-width: 80em;
+        max-width: 80em;
 
 }
 .ym-wbox { padding: 10px; }
@@ -57,17 +57,55 @@ h1 {
 .ym-column {
     display: block;
     overflow: hidden;
-    padding-right: 250px; /* column width */
+/*    padding-right: 250px; /* column width */
     width: auto;
 }
 .ym-col1 { /* content */
     position: relative;
-    float: right;
-    width: 100%;
+    float: left;
+    width: 80%;
 }
 .ym-col3 { /* sidebar */
     position: relative;
     float: right;
     width: 250px; /* column width */
     margin: 0 -250px 0 0;
+}
+
+.co_items{
+    margin: 0;
+}
+
+.shopinglist{
+    margin-top: 20px;
+    height: 400px;
+    border: 1px solid #000000;
+    overflow: auto;
+}
+
+
+.checkout-box{
+    float: left;
+    margin: 5px;
+    width: 50px;
+    height: 50px;
+    background-color: #00C800;
+    cursor: pointer;
+
+
+}
+
+.inputkeyboard{
+    font-size: 18px;
+}
+
+div.co_result{
+    width: 150px;
+    font-size: 1.5em;
+
+}
+div.co_result > div{
+    border: 1px solid #000000 ;
+    font-size: 2em;
+    height: 40px;
 }

@@ -43,6 +43,22 @@ class PaymentMethods
      */
     private $BankAccount;
 
+    /**
+     * @var boolean $payment
+     *
+     * @ORM\Column(name="payment", type="boolean" )
+     */
+    private $payment;
+
+    /**
+     * @var boolean $invoice
+     *
+     * @ORM\Column(name="invoice", type="boolean" )
+     */
+    private $invoice;
+
+
+
 
 
     /**

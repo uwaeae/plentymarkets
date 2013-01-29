@@ -73,6 +73,11 @@ BSData_product_update:
         defaults: { _controller: BSDataBundle:Product:update }
 
 
+BSData_product_by_code:
+        pattern:  /data/product/code/{code}
+        defaults: { _controller: BSDataBundle:Product:code }
+
+
 BSData_product_search_code:
         pattern:  /data/product/search/code/{search}/{page}
         defaults: { _controller: BSDataBundle:Product:searchCode,page: 1 }

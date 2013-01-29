@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
+use Symfony\Component\HttpFoundation\Response;
 use Acme\BSDataBundle\Entity\Product;
 use Acme\BSDataBundle\Form\ProductType;
 
@@ -69,9 +71,17 @@ class ProductController extends Controller
     }
 
 
-
     /**
      * Finds and displays a Products by Article_No.
+     *
+     */
+
+
+
+
+
+    /**
+     * Finds and displays a list of Products by matching Article_No.
      *
      * @Route("/{id}/show", name="product_show")
      * @Template()

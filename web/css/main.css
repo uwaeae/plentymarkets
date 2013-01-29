@@ -6,6 +6,15 @@
 }
 
 
+ body > header { min-width: 760px; }
+ .ym-wrapper {
+     max-width: 80em;
+ }
+ .ym-wbox { padding: 10px; }
+
+
+
+
 div#title{
 
     font-size: 30px;
@@ -330,3 +339,15 @@ div.results{
 .pagination a.prn:hover { border-color:#000;}
 .pagination p#total_count{color:#aaa; font-size:12px; padding-top:8px; padding-left:18px;}
 .pagination p#total_display{color:#aaa; font-size:12px; padding-top:10px;}
+
+
+
+.checkout-box{
+    float: left;
+    margin: 10px;
+    width: 20px;
+    height: 20px;
+    background-color: #00C800;
+
+
+}
