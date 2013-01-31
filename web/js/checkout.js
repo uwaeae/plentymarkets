@@ -1,6 +1,8 @@
 $(document).ready(function(){
 
-    $('.orderdialog').dialog({ autoOpen: false });
+    $('.orderdialog').dialog({
+        autoOpen: false,
+        minWidth: 400 });
     $( ".order" ).click(function() {
         $( ".orderdialog" ).dialog( "open" );
     });

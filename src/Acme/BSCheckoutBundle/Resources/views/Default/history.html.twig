@@ -1,0 +1,79 @@
+
+{% extends '::base.html.twig' %}
+{% block title %}INTERN - Waren{% endblock %}
+
+
+{% block javascripts %}
+    <script src="{{ asset('/js/jquery.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/js/product.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block body %}
+
+    <h1>Verkaufshistory </h1>
+    </div>
+    </header>
+    <nav class="ym-hlist">
+
+
+        <ul >
+            <li>
+                <a href="{{ path('BSCheckout_home') }}">
+                    Kasse
+                </a>
+            </li>
+            <li><a href="{{ path('BSData_mainmenu') }}" >Hauptmenü</a></li>
+        </ul>
+
+    </nav>
+
+
+
+
+    <div class="results">
+        <table class="bordertable narrow">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Datum/Uhrzeit</th>
+                <th>Zahlungsart</th>
+                <th>Summe</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for entity in pagination %}
+                <tr>
+
+
+                    <td>{{ entity.id }}</td>
+                    <td>{{ entity.buydate|date("m/d/Y") }}</td>
+                    <td>{{ entity.payment }}</td>
+                    <td>{{ entity.summary }}</td>
+
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('BSData_product_show', { 'id': entity.id }) }}">show</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('BSData_product_edit', { 'id': entity.id }) }}">edit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            <tr>
+                <td colspan="6">
+                    <div class="navigation">
+                        {{ pagination.render()|raw }}
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+{% endblock %}

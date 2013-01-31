@@ -49,8 +49,21 @@
                         </table>
 
                     </div>
+                    <label for="inputkeyboard">Eingabe:</label>
+                    <input type="text" id="inputkeyboard" class="inputkeyboard">
 
-                    <input type="text" class="inputkeyboard">
+                    <div>
+                    {% for key,item in StdArticle %}
+
+
+                        <div class="checkout-box" data-code="{{ key }}">
+                        {{ item }}
+                        </div>
+
+                    {% endfor %}
+                    </div>
+
+
 
 
 
@@ -60,24 +73,7 @@
             <div class="ym-col2">
                 <div class="ym-cbox">
 
-                    <div class="checkout-box">
-                    </div>
-                    <div class="checkout-box">
-                    </div>
-                    <div class="checkout-box">
-                    </div>
-                    <div class="checkout-box">
-                    </div>
-                    <div class="checkout-box">
-                    </div>
-                    <div class="checkout-box">
-                    </div>
-                    <div class="checkout-box">
-                    </div>
-                    <div class="checkout-box">
-                    </div>
-                    <div class="checkout-box">
-                    </div>
+
 
                     <div class="co_result">
                         Betrag
@@ -93,24 +89,24 @@
 
                     </div>
 
-                    <ul>
+                    <ul class="Payment_Buttons">
                         <li>
-                            <form action="{{ path('BSCheckout_finish', { 'cashbox_id': 1,payment_id: 11 }) }}" method="post">
-                                <button>Bar</button>
+                            <form action="{{ path('BSCheckout_finish', { 'cashbox_id': 1,'payment_id': 11 }) }}" method="post">
+                                <button class="ym-button" >Bar</button>
                             </form>
                         </li>
                         <li>
-                            <form action="{{ path('BSCheckout_finish', { 'cashbox_id': 1,payment_id: 12 }) }}" method="post">
-                                <button>EC</button>
+                            <form action="{{ path('BSCheckout_finish', { 'cashbox_id': 1,'payment_id': 12 }) }}" method="post">
+                                <button class="ym-button" >EC</button>
                             </form>
                         </li>
                         <li>
 
-                            <button class="order">Rechung</button>
-                            <div class="orderdialog">
-                                <form action="{{ path('BSCheckout_order', { 'cashbox_id': 1,payment_id: 12 }) }}" method="post">
+                            <button class="order ym-button">Rechung</button>
+                            <div class="orderdialog" title="Rechnung erstellen" >
+                                <form action="{{ path('BSCheckout_order', { 'cashbox_id': 1,}) }}" method="post">
                                     {{ form_widget(form) }}
-                                    <button>EC</button>
+                                    <button class="ym-button" >Erstellen</button>
                                 </form>
 
                             </div>
@@ -118,7 +114,7 @@
 
                         <li>
                             <form action="{{ path('BSCheckout_clear', { 'cashbox_id': 1 }) }}" method="post">
-                                <button>CLEAR</button>
+                                <button class="ym-button">CLEAR</button>
                             </form>
                         </li>
                     </ul>

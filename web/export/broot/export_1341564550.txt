@@ -1,0 +1,1 @@
+Buchungstext;Belegnummer;Buchungsbetrag;MwSt;Sollkonto;Habenkonto;Belegdatum;Währung;Kostenstelle;Re_Nr

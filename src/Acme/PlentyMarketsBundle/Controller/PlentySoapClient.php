@@ -328,6 +328,82 @@ class PlentySoapClient extends \SoapClient
             return("Es ist folgender Fehler aufgetreten : ");//.$oResponse->ErrorMessages->item[0]->Message;
         }
     }
+    /**
+     * Mit diesem Call können mehere Artikel aus dem Shop abgerufen werden
+     *
+     */
+    public function doGetItemsByOptions( array $input)
+
+    {
+        $oResponse	= null;
+        $page = 0;
+        $options['ItemNo'] = (isset($input['code'])? $input['code'].'%':null) ;
+       // $options['ItemNo'] = "%";
+        isset($input['id'])? $options['ItemID'] =  intval($input['id']):null  ;
+        $options['EAN1'] =(isset($input['EAN'])? $input['EAN']:null) ;
+
+        $options['CategoriePath'] = (isset($input['CategoriePath'])? $input['CategoriePath']:true) ;
+        $options['Laary'] = null ;
+        $options['LastInsertedFrom'] = null ;
+        $options['LastInsertedTill'] = null ;
+        $options['LastUpdateFrom'] = null ;
+        $options['LastUpdateTill'] = null ;
+        $options['Marking1ID'] = null ;
+        $options['Moebelprofi'] = null ;
+        $options['Restposten'] = null ;
+        $options['ShopShare'] = null ;
+        $options['Shopgate'] = null ;
+        $options['Shopperella'] = null ;
+        $options['SumoScout'] = null ;
+        $options['Tradoria'] = null ;
+        $options['Webshop'] = null ;
+        $options['WebAPI'] = null ;
+        $options['Yatego'] = null ;
+        $options['Zalando'] = null ;
+        $options['GetCategories'] = true ;
+
+        $options['LastUpdate'] = null ;
+        $options['LastInserted'] =null ;
+        $options['Marking1ID'] =null ;
+        $options['Marking2ID'] =null ;
+        $options['Webshop'] = null ;
+        $options['WebAPI'] =null;
+        $options['Gimahhot'] =null;
+        $options['GoogleProducts'] =null ;
+        $options['Hitmeister'] =null ;
+        $options['Shopgate'] =null ;
+        $options['Shopperella'] =null ;
+        $options['ShopShare'] =null;
+        $options['Tradoria'] = null ;
+        $options['Yatego'] = null ;
+        $options['Quelle'] = null;
+        $options['MainWarehouseID'] = null ;
+        $options['GetShortDescription'] = null ;
+        $options['GetLongDescription'] = null;
+        $options['GetTechnicalData'] = null ;
+        $options['Page'] = null;
+
+
+        try
+        {
+            $oResponse	=	$this->__soapCall('GetItemsBase',array( $options));
+        }
+        catch(\SoapFault $sf)
+        {
+            print_r("Es kam zu einem Fehler beim Call GetItemsBase<br>");
+            print_r($sf->getMessage());
+        }
+        if ( isset($oResponse->Success) and $oResponse->ItemsBase != null ){
+            // $output = array_merge($output, $oResponse->ItemsBase->item);
+            return $oResponse->ItemsBase->item;
+
+        }
+
+        return null;
+    }
+
+
+
 
 
     /**
@@ -339,6 +415,7 @@ class PlentySoapClient extends \SoapClient
     {
         $oResponse	= null;
         $page = 0;
+
         $options['LastUpdate'] = $lastUpdate ;
         $options['LastInserted'] =null ;
         $options['Marking1ID'] =null ;
@@ -372,7 +449,7 @@ class PlentySoapClient extends \SoapClient
         }
         if ( isset($oResponse->Success) and $oResponse->ItemsBase != null ){
            // $output = array_merge($output, $oResponse->ItemsBase->item);
-            $this->syncArticle( $oResponse->ItemsBase->item,$output);
+            $this->syncArticle( $oResponse->ItemsBase->item,null);
             if(isset($oResponse->Pages)) $page = $oResponse->Pages;
         }
 

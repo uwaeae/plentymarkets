@@ -8,6 +8,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 
+use Acme\PlentyMarketsBundle\Controller\PlentySoapClient;
+
+
 class CheckoutController extends Controller
 {
     /**
@@ -21,21 +24,40 @@ class CheckoutController extends Controller
         $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->getCurrentBasket($cashbox_id);
 
         $form = $this->createFormBuilder()
-            ->add('prefix', 'text',array('label'=>'Anrede'))
+            ->add('prefix', 'choice', array(
+            'choices'   => array('Herr' => 'Herr', 'Frau' => 'Frau', 'Firma' => 'Firma'),
+            'label'=>'Anrede'
+        ))
             ->add('firstname', 'text',array('label'=>'Vorname'))
             ->add('lastname','text',array('label'=>'Nachname'))
             ->add('company', 'text',array('label'=>'Firma'))
             ->add('street', 'text',array('label'=>'Strasse'))
             ->add('city', 'text',array('label'=>'Stadt'))
-            ->add('country', 'text',array('label'=>'Land'))
-            ->add('email', 'text',array('label'=>'Email'))
+            ->add('country', 'country',array('label'=>'Land',
+                'preferred_choices' => array('DE','AT','CH'),))
+            ->add('email', 'email',array('label'=>'Email'))
             ->getForm();
 
 
 
+        /**
+         * Es wird ein neuer Soap-Client angelegt.
+         */
+        $oPlentySoapClient	=	new PlentySoapClient($this,$this->getDoctrine() );
 
 
-        return $this->render('BSCheckoutBundle:Default:index.html.twig', array('basket' => $currentBasket,'orderForm' => $form->createView()));
+        $items = $oPlentySoapClient->doGetItemsByOptions(array('CategoriePath'=>"91",
+        ));
+        $STD_article = array();
+        foreach($items as $item){
+            $STD_article[$item->ItemNo] = $item->Texts->Name;
+
+        }
+
+
+
+
+        return $this->render('BSCheckoutBundle:Default:index.html.twig', array('basket' => $currentBasket,'form' => $form->createView(),'StdArticle'=> $STD_article));
     }
 
 
@@ -107,7 +129,7 @@ class CheckoutController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         $cb = $em->getRepository('BSCheckoutBundle:checkout')->clearCurrentBasket($cashbox_id);
-            $sum = 0;
+            $sum = 0.0;
         foreach($cb->getCheckoutItems() as $product){
 
             $sum += $product->getQuantity() *  $product->getPrice();
@@ -118,7 +140,9 @@ class CheckoutController extends Controller
         $cb->setPayment($payment_id);
         $cb->setBuydate(new \DateTime());
         $cb->setFinish(true);
-
+        $cb->setSummary($sum);
+        $em->persit($cb);
+        $em->flush();
 
 
         return $this->render('BSCheckoutBundle:Default:index.html.twig', array('basket' => $currentBasket));
