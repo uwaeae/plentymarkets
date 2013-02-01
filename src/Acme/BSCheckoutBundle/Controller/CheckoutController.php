@@ -62,21 +62,27 @@ class CheckoutController extends Controller
 
 
     /**
-     * @Route("/add/{code}",name="BSCheckout_add")
+     * @Route("/add",name="BSCheckout_add")
+
      * @Template()
      */
-    public function addAction($code , $cashbox_id = 1)
+    public function addAction( $cashbox_id = 1)
     {
+
+        $code = $this->getRequest()->request->get('code');
+        $price = floatval(str_replace(',','.',$this->getRequest()->request->get('price')));
+
         $em = $this->getDoctrine()->getEntityManager();
 
         $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->getCurrentBasket($cashbox_id);
-        $em->getRepository('BSCheckoutBundle:checkoutItem')->addItem($currentBasket,$code);
+        $em->getRepository('BSCheckoutBundle:checkoutItem')->addItem($currentBasket,$code,$price);
 
 
        // return $this->render('BSCheckoutBundle:Default:index.html.twig', array('basket' => $currentBasket));
         $result = array();
         $index = 1;
         foreach($currentBasket->getCheckoutItems() as $product){
+            $item['id'] =  $product->getId();
             $item['code'] = $product->getArticleCode();
             $item['quantity'] = $product->getQuantity();
             $item['description'] = $product->getDescription();
@@ -113,10 +119,8 @@ class CheckoutController extends Controller
 
         $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->clearCurrentBasket($cashbox_id);
 
-
-
-        return $this->render('BSCheckoutBundle:Default:index.html.twig', array('basket' => $currentBasket));
-
+       //  return $this->render('BSCheckoutBundle:Default:index.html.twig', array('basket' => $currentBasket));
+        return $this->redirect($this->generateUrl('BSCheckout_home'));
     }
 
     /**

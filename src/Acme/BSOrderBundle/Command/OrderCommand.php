@@ -37,12 +37,12 @@ protected function execute(InputInterface $input, OutputInterface $output)
 
        // $state =  $input->getArgument('state');
         $back=  $input->getArgument('daysback');
-        $output->writeln(' *** Aufträge ***');
-        $this->syncOrders($oPlentySoapClient,7,$output,$back);
-        $output->writeln(' *** Stronierung ***');
-        $this->syncOrders($oPlentySoapClient,8,$output,$back);
-        $output->writeln(' *** Gutschriften ***');
-        $this->syncOrders($oPlentySoapClient,11,$output,$back);
+        //$output->writeln(' *** Aufträge ***');
+        //$this->syncOrders($oPlentySoapClient,7,$output,$back);
+        //$output->writeln(' *** Stronierung ***');
+        //$this->syncOrders($oPlentySoapClient,8,$output,$back);
+        //$output->writeln(' *** Gutschriften ***');
+        //$this->syncOrders($oPlentySoapClient,11,$output,$back);
         $output->writeln(' *** Artikel ***');
         $oPlentySoapClient->doGetItemsBase(date('U',mktime(0, 0, 0, date("m")  , date("d") - $back , date("Y"))),$output );
 

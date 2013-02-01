@@ -85,6 +85,21 @@ h1 {
     overflow: auto;
 }
 
+.itemEdit{
+    margin-left: 10px;
+    display: inline;
+   opacity: 0;
+
+}
+tr:hover div.itemEdit{
+    opacity: 1;
+}
+.itemEdit img{
+    width: 16px;
+    height: 16px;
+}
+
+
 .checkout-box{
     background-color: #00C800;
     cursor: pointer;
@@ -113,6 +128,9 @@ div.co_result > div{
     font-size: 2em;
     height: 40px;
 }
+
+
+
 
 /* Rechungserstellung */
 

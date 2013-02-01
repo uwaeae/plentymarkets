@@ -420,7 +420,7 @@ class PlentySoapClient extends \SoapClient
         $options['LastInserted'] =null ;
         $options['Marking1ID'] =null ;
         $options['Marking2ID'] =null ;
-        $options['Webshop'] = 1 ;
+        $options['Webshop'] = null ;
         $options['WebAPI'] =null;
         $options['Gimahhot'] =null;
         $options['GoogleProducts'] =null ;

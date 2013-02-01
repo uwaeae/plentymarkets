@@ -9,41 +9,63 @@ $(document).ready(function(){
 
 
 
+    var buildtable = function buildTable(data){
+            //$('.shopinglist').empty().html($(data).find('.shopinglist table'));
+            $('.co_items').empty();
+
+            $.each(data, function(key, val) {
+
+                var items = [];
+
+                items.push('<td>' + val['code'] + '</td>');
+                items.push('<td>' + val['quantity'] + '' +
+                    '<div class="itemEdit">'+
+                    '<a href="#" class="itemMinus" data-id="'+ val['id'] +'">' +
+                    '<img src="/images/icons/arrow-down.png" alt="- Menge" /></a>'+
+                    '<a href="#" class="itemPlus" data-id="'+ val['id'] +'">'+
+                    ' <img src="/images/icons/arrow-up.png" alt="+ Menge" /></a></div></td>');
+                items.push('<td>' + val['description'] + '</td>');
+                items.push('<td>' + parseFloat(val['price']).toFixed(2) + ' &euro;</td>');
+                items.push('<td>' + val['pa'] + '</td>');
+                items.push('<td>' + parseFloat(val['sum']).toFixed(2) + ' &euro;' +
+                    '<div class="itemEdit">'+
+                    '<a href="#" class="itemMinus" data-id="'+ val['id'] +'">' +
+                    '<img src="/images/icons/remove2.png" alt="Löschen" /></a>'+
+                    '</div></td>');
+
+                $('<tr>',{
+                    'id': key,
+                    'data-sum':val['sum'],
+                    html: items.join('')
+
+                }).appendTo('.co_items');
+
+            });
+        getSummary();
+        $('.inputkeyboard').val('');
+        };
+
+
+    $('.input_buttons div').click(function(){
+        var code = $(this).data('code');
+
+
+        var price = $('.inputkeyboard').val();
+        if(price.length > 0)
+        $.post('/checkout/add',{ code: code,price: price},buildtable);
+
+
+    });
+
+
    $('.inputkeyboard').keypress(function(event){
 
        if(event.keyCode == 9 || event.keyCode == 13 ){
            var code =  $(this).val()
            var input = $(this);
 
-           $.getJSON('/checkout/add/'+ code,function(data){
-                //$('.shopinglist').empty().html($(data).find('.shopinglist table'));
-               $('.co_items').empty();
+           $.post('/checkout/add',{ code: code},buildtable);
 
-               $.each(data, function(key, val) {
-
-                   var items = [];
-
-                   items.push('<td>' + val['code'] + '</td>');
-                   items.push('<td>' + val['quantity'] + '</td>');
-                   items.push('<td>' + val['description'] + '</td>');
-                   items.push('<td>' + parseFloat(val['price']).toFixed(2) + ' &euro;</td>');
-                   items.push('<td>' + val['pa'] + '</td>');
-                   items.push('<td>' + parseFloat(val['sum']).toFixed(2) + ' &euro;</td>');
-
-                   $('<tr>',{
-                        'id': key,
-                       'data-sum':val['sum'],
-                       html: items.join('')
-
-                   }).appendTo('.co_items');
-
-                  });
-
-               });
-
-
-
-               getSummary();
            }
        });
 
@@ -71,6 +93,7 @@ $(document).ready(function(){
 
    getSummary();
 });
+
 
 
 function getSummary(){

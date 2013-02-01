@@ -14,7 +14,7 @@ class checkoutItemRepository extends EntityRepository
 {
 
 
-    public function addItem($basket,$code){
+    public function addItem($basket,$code,$price){
 
         $em = $this->getEntityManager();
 
@@ -31,7 +31,7 @@ class checkoutItemRepository extends EntityRepository
         }
 
 
-        if(!$item){
+        if(!$item || $price){
             $qb = $em->createQueryBuilder();
             $qb->add('select', 'p')
                 ->add('from', 'BSDataBundle:Product p')
@@ -51,7 +51,7 @@ class checkoutItemRepository extends EntityRepository
                 $co_item->setArticleId($product->getArticleId());
                 $co_item->setCheckout($basket);
                 $co_item->setDescription($product->getName().' '.$product->getName2());
-                $co_item->setPrice($product->getPrice());
+                $co_item->setPrice(is_null($price)? $product->getPrice() : $price);
                 $co_item->setQuantity(1);
                 $em->persist($co_item);
 
