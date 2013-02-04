@@ -23,6 +23,7 @@
                             <thead>
 
                             <tr>
+                                <th>ID</th>
                                 <th>Code</th>
                                 <th>Menge</th>
                                 <th>Bezeichung</th>
@@ -34,6 +35,7 @@
                             <tbody class="co_items">
                             {% for item in basket.checkoutItems %}
                                 <tr data-sum="{{ (item.quantity * item.price) }}">
+                                    <td>{{ loop.index }}</td>
                                     <td>{{ item.articleCode }}</td>
                                     <td>{{ item.quantity }}
                                         <div class="itemEdit">

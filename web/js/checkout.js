@@ -12,11 +12,11 @@ $(document).ready(function(){
     var buildtable = function buildTable(data){
             //$('.shopinglist').empty().html($(data).find('.shopinglist table'));
             $('.co_items').empty();
-
+            var index = 1;
             $.each(data, function(key, val) {
 
                 var items = [];
-
+                items.push('<td>' + index + '</td>');
                 items.push('<td>' + val['code'] + '</td>');
                 items.push('<td>' + val['quantity'] + '' +
                     '<div class="itemEdit">'+
@@ -39,10 +39,10 @@ $(document).ready(function(){
                     html: items.join('')
 
                 }).appendTo('.co_items');
-
+                index ++;
             });
         getSummary();
-        $('.inputkeyboard').val('');
+        $('.inputkeyboard').val('').focus();
         };
 
 
@@ -59,15 +59,26 @@ $(document).ready(function(){
 
 
    $('.inputkeyboard').keypress(function(event){
+        console.log(event.keyCode);
+
+       if(event.keyCode > 112 && event.keyCode < 120){
+           var items = $('.co_items tr td');
+           var code = items[event.keyCode - 112 ].data('code');
+           var price = $('.inputkeyboard').val();
+           if(price.length > 0)
+               $.post('/checkout/add',{ code: code,price: price},buildtable);
+           return false;
+       }
 
        if(event.keyCode == 9 || event.keyCode == 13 ){
            var code =  $(this).val()
            var input = $(this);
 
            $.post('/checkout/add',{ code: code},buildtable);
-
+            return false;
            }
-       });
+
+       }).focus();
 
    $('.co_payed').keypress(function(event){
 
