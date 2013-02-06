@@ -121,7 +121,7 @@ class PlentySoapClient extends \SoapClient
 		 */
       $yaml = new Parser();
 
-      $value = $yaml->parse(file_get_contents('../../../../app/config/plenty.yml'));
+      $value = $yaml->parse(file_get_contents(__DIR__ .'/../../../../app/config/plenty.yml'));
 
       $LoginData	=	array(
 								array(
