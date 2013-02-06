@@ -243,15 +243,17 @@ class CheckoutController extends Controller
             'sum'   => 0.0);
 
         foreach($currentBasket->getCheckoutitems() as $item){
-            $summary['sum'] += $item->getPrice();
+
+            $price = $item->getPrice()* $item->getQuantity();
+            $summary['sum'] += $price;
             if( $item->getVAT() == 7){
-                $mwst  =  round($item->getPrice() * 0.07,2);
+                $mwst  =  round($price * 0.07,2);
                 $summary['mwst7'] = $mwst;
             }elseif( $item->getVAT() == 19){
-                $mwst  = round($item->getPrice() * 0.19,2);
+                $mwst  = round($price * 0.19,2);
                 $summary['mwst19'] += $mwst;
             }
-            $summary['netto'] += $item->getPrice() - $mwst;
+            $summary['netto'] += $price- $mwst;
 
 
         }
