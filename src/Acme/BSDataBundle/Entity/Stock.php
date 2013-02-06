@@ -139,4 +139,14 @@ class Stock
     }
 
 
+
+    /**
+     * Add products
+     *
+     * @param Acme\BSDataBundle\Entity\Product $products
+     */
+    public function addProduct(\Acme\BSDataBundle\Entity\Product $products)
+    {
+        $this->products[] = $products;
+    }
 }

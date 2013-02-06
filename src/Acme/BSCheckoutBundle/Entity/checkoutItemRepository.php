@@ -51,7 +51,8 @@ class checkoutItemRepository extends EntityRepository
                 $co_item->setArticleId($product->getArticleId());
                 $co_item->setCheckout($basket);
                 $co_item->setDescription($product->getName().' '.$product->getName2());
-                $co_item->setPrice(is_null($price)? $product->getPrice() : $price);
+                $co_item->setPrice(is_null($price) || $price == 0 ? $product->getPrice6() : $price);
+                $co_item->setVAT($product->getVAT());
                 $co_item->setQuantity(1);
                 $em->persist($co_item);
 

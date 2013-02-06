@@ -79,6 +79,18 @@ class CheckoutController extends Controller
 
 
        // return $this->render('BSCheckoutBundle:Default:index.html.twig', array('basket' => $currentBasket));
+
+
+        return $this->createJSON($currentBasket);
+    }
+
+
+
+
+
+
+    private function createJSON($currentBasket){
+
         $result = array();
         $index = 1;
         foreach($currentBasket->getCheckoutItems() as $product){
@@ -94,17 +106,10 @@ class CheckoutController extends Controller
             $index ++;
         }
 
+        $response = new Response( json_encode($result));
+        $response->headers->set('Content-Type', 'application/json');
 
-
-
-
-
-
-                $response = new Response( json_encode($result));
-                $response->headers->set('Content-Type', 'application/json');
-
-                return $response;
-
+        return $response;
 
     }
 
@@ -170,6 +175,94 @@ class CheckoutController extends Controller
 
     }
 
+
+    /**
+     * @Route("/itemaction",name="BSCheckout_item")
+     * @Method({ "POST"})
+     * @Template()
+     */
+    public function itemAction($cashbox_id = 1)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $action = $this->getRequest()->request->get('action');
+        $id = $this->getRequest()->request->get('id');
+
+        $item = $em->getRepository('BSCheckoutBundle:checkoutItem')->find($id);
+        if($item){
+            switch($action){
+                case 'plus':
+                    $item->setQuantity($item->getQuantity()+ 1);
+                    $em->persist($item);
+                    break;
+                case 'minus':
+                    $quantity = $item->getQuantity() - 1;
+                    if($quantity == 0){
+                        $em->remove($item);
+                    }else{
+                        $item->setQuantity($quantity);
+                        $em->persist($item);
+                    }
+
+                    break;
+                case 'delete':
+                    $em->remove($item);
+                    break;
+
+
+
+            }
+            $em->flush();
+
+
+        }
+
+        $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->getCurrentBasket($cashbox_id);
+
+        return $this->createJSON($currentBasket);
+
+    }
+
+    /**
+     * @Route("/receipt",name="BSCheckout_receipt")
+
+     * @Template()
+     */
+    public function receiptAction( $cashbox_id = 1)
+    {
+
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->getCurrentBasket($cashbox_id);
+
+
+        $summary = array(
+            'netto' => 0.0,
+            'mwst19'=> 0.0,
+            'mwst7' => 0.0,
+            'sum'   => 0.0);
+
+        foreach($currentBasket->getCheckoutitems() as $item){
+            $summary['sum'] += $item->getPrice();
+            if( $item->getVAT() == 7){
+                $mwst  =  round($item->getPrice() * 0.07,2);
+                $summary['mwst7'] = $mwst;
+            }elseif( $item->getVAT() == 19){
+                $mwst  = round($item->getPrice() * 0.19,2);
+                $summary['mwst19'] += $mwst;
+            }
+            $summary['netto'] += $item->getPrice() - $mwst;
+
+
+        }
+
+
+
+
+
+        return $this->render('BSCheckoutBundle:Default:receipt.html.twig', array('basket' => $currentBasket, 'summary'=> $summary));
+
+    }
 
 
 

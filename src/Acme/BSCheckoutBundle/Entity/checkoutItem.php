@@ -51,11 +51,19 @@ class checkoutItem
     private $description;
 
     /**
-     * @var decimal $price
+     * @var float $price
      *
-     * @ORM\Column(name="price", type="decimal")
+     * @ORM\Column(name="price", type="float")
      */
     private $price;
+
+
+    /**
+     * @var integer $VAT
+     *
+     * @ORM\Column(name="vat", type="integer")
+     */
+    private $VAT;
 
 
     /**
@@ -195,5 +203,25 @@ class checkoutItem
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set VAT
+     *
+     * @param integer $vAT
+     */
+    public function setVAT($vAT)
+    {
+        $this->VAT = $vAT;
+    }
+
+    /**
+     * Get VAT
+     *
+     * @return integer
+     */
+    public function getVAT()
+    {
+        return $this->VAT;
     }
 }

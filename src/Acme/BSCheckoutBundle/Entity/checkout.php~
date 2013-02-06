@@ -188,4 +188,24 @@ class checkout
     {
         $this->checkoutItems[] = $checkoutItems;
     }
+
+    /**
+     * Set summary
+     *
+     * @param float $summary
+     */
+    public function setSummary($summary)
+    {
+        $this->summary = $summary;
+    }
+
+    /**
+     * Get summary
+     *
+     * @return float 
+     */
+    public function getSummary()
+    {
+        return $this->summary;
+    }
 }

@@ -16,7 +16,15 @@
     }
 }
 
+body{
+    font-family: arial,sans-serif;
+}
 
+a:focus,
+a:hover{
+    background-color: #ffffff;
+
+}
 
 
 
@@ -123,12 +131,18 @@ div.co_result{
     font-size: 1.5em;
 
 }
+.toPaydialog > div,
+.toPaydialog input,
 div.co_result > div{
+    display: block;
     border: 1px solid #000000 ;
     font-size: 2em;
     height: 40px;
 }
 
+.toPaydialog form{
+    display: inline;
+}
 
 
 
@@ -153,3 +167,4 @@ div.co_result > div{
     width: 300px;
     margin-bottom: 10px;
 }
+

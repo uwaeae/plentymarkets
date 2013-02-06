@@ -36,6 +36,14 @@ class Product
     private $article_no;
 
     /**
+     * @var sting $EAN
+     *
+     * @ORM\Column(name="EAN", type="string", length=10)
+     */
+    private $EAN;
+
+
+    /**
      * @var string $name
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -70,6 +78,23 @@ class Product
      * @ORM\Column(name="price", type="float")
      */
     private $price;
+
+
+    /**
+     * @var float $price6
+     *
+     * @ORM\Column(name="price6", type="float")
+     */
+    private $price6;
+
+    /**
+     * @var integer $VAT
+     *
+     * @ORM\Column(name="VAT", type="integer")
+     */
+    private $VAT;
+
+
 
     /**
      * @var text $description
@@ -222,6 +247,9 @@ class Product
         $this->setName($item->Texts->Name);
         $this->setName2($item->Texts->Name2);
         $this->setPrice($item->PriceSet->Price);
+        $this->setPrice6($item->PriceSet->Price6);
+        $this->setVAT($item->PriceSet->VAT);
+        $this->setEAN($item->EAN1);
         $this->setLastupdate( $item->LastUpdate);
        // $this->setShortDescription($item->Texts->ShortDescription);
         //$this->setStockground();

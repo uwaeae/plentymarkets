@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title></title>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <!-- mobile viewport optimisation -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- stylesheets -->
+
+    <style type="text/css">
+        table{
+            width: 400px;
+        }
+
+        .borderbottom{
+            border-bottom: 1px solid #000000;
+            width: 250px;
+        }
+
+
+
+    </style>
+</head>
+<body>
+
+<h1>Quittung</h1>
+
+<p>
+ <table>
+    <tr>
+        <td>
+            Name
+        </td>
+        <td class="borderbottom">
+
+        </td>
+    </tr>
+    <tr>
+        <td>Strasse</td>
+        <td class="borderbottom">
+
+        </td>
+    </tr>
+
+
+ </table>
+
+
+
+</p>
+
+
+<p>
+Die Blumenschule<br>
+Augsburgerstraße 62<br>
+86956 Schongau<br>
+    Telefon: 08861 / 7373<br>
+    Fax: 08861 / 1272<br>
+    EMail: info@blumenschule.de<br>
+</p>
+Datum {{ "now"|date("d.m.Y") }} Uhrzeit: Datum {{ "now"|date("H:i:s") }}
+
+<table>
+
+    <thead>
+
+    <tr>
+        <th>Pos</th>
+        <th>Code</th>
+        <th>Menge</th>
+        <th>Preis</th>
+        <th>Summe</th>
+    </tr>
+    </thead>
+    <tbody class="co_items">
+    {% for item in basket.checkoutItems %}
+        <tr data-sum="{{ (item.quantity * item.price) }}">
+            <td>{{ loop.index }}</td>
+            <td>{{ item.articleCode }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.price|number_format(2, '.', ',')  }} &euro;</td>
+            <td>{{ (item.quantity * item.price)|number_format(2, '.', ',')  }}  &euro;
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+    <table>
+        <tr>
+
+            <td> Summe Netto</td>
+            <td> {{ summary.netto |number_format(2, '.', ',')  }}  &euro;</td>
+        </tr>
+        <tr>
+            <td> MwSt 19%</td>
+            <td> {{ summary.mwst19|number_format(2, '.', ',')  }}  &euro;</td>
+        </tr>
+        <tr>
+            <td> MwSt 7%</td>
+            <td> {{ summary.mwst7|number_format(2, '.', ',')  }}  &euro;</td>
+        </tr>
+        <tr>
+            <td>Gesamt</td>
+            <td> {{ summary.sum |number_format(2, '.', ',')  }}  &euro;</td>
+        </tr>
+
+    </table>
+
+
+<p>
+    Bio-Kontrollnr.: D-BY-M-005-09699A<br>
+    DE-005 Öko-Kontrollstelle<br>
+    Pflanzen-Pass: DE-BY-111444<br>
+    USt-IdNr: DE131255548<br>
+</p>
+
+
+</body>
+</html>

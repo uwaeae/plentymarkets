@@ -36,6 +36,14 @@ class Product
     private $article_no;
 
     /**
+     * @var sting $EAN
+     *
+     * @ORM\Column(name="EAN", type="string", length=10)
+     */
+    private $EAN;
+
+
+    /**
      * @var string $name
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -70,6 +78,23 @@ class Product
      * @ORM\Column(name="price", type="float")
      */
     private $price;
+
+
+    /**
+     * @var float $price6
+     *
+     * @ORM\Column(name="price6", type="float")
+     */
+    private $price6;
+
+    /**
+     * @var integer $VAT
+     *
+     * @ORM\Column(name="VAT", type="integer")
+     */
+    private $VAT;
+
+
 
     /**
      * @var text $description
@@ -222,6 +247,11 @@ class Product
         $this->setName($item->Texts->Name);
         $this->setName2($item->Texts->Name2);
         $this->setPrice($item->PriceSet->Price);
+        $this->setPrice6($item->PriceSet->Price6);
+        if($item->VATInternalID == 0) $this->setVAT = 19;
+        elseif($item->VATInternalID == 1 )$this->setVAT = 7;
+        else $this->setVAT = 0;
+        $this->setEAN($item->EAN1);
         $this->setLastupdate( $item->LastUpdate);
        // $this->setShortDescription($item->Texts->ShortDescription);
         //$this->setStockground();
@@ -371,5 +401,65 @@ class Product
     public function getLastupdate()
     {
         return $this->lastupdate;
+    }
+
+    /**
+     * Set EAN
+     *
+     * @param string $eAN
+     */
+    public function setEAN($eAN)
+    {
+        $this->EAN = $eAN;
+    }
+
+    /**
+     * Get EAN
+     *
+     * @return string 
+     */
+    public function getEAN()
+    {
+        return $this->EAN;
+    }
+
+    /**
+     * Set price6
+     *
+     * @param float $price6
+     */
+    public function setPrice6($price6)
+    {
+        $this->price6 = $price6;
+    }
+
+    /**
+     * Get price6
+     *
+     * @return float 
+     */
+    public function getPrice6()
+    {
+        return $this->price6;
+    }
+
+    /**
+     * Set VAT
+     *
+     * @param integer $vAT
+     */
+    public function setVAT($vAT)
+    {
+        $this->VAT = $vAT;
+    }
+
+    /**
+     * Get VAT
+     *
+     * @return integer 
+     */
+    public function getVAT()
+    {
+        return $this->VAT;
     }
 }

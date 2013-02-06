@@ -1,4 +1,42 @@
+
+var buildtable = function buildTable(data){
+    //$('.shopinglist').empty().html($(data).find('.shopinglist table'));
+    $('.co_items').empty();
+    var index = 1;
+    $.each(data, function(key, val) {
+
+        var items = [];
+        items.push('<td>' + index + '</td>');
+        items.push('<td>' + val['code'] + '</td>');
+        items.push('<td>' + val['quantity'] + '' +
+            '<div class="itemEdit">'+
+            '<a href="#" data-action="minus" data-id="'+ val['id'] +'">' +
+            '<img src="/images/icons/arrow-down.png" alt="- Menge" /></a>'+
+            '<a href="#" data-action="plus" data-id="'+ val['id'] +'">'+
+            ' <img src="/images/icons/arrow-up.png" alt="+ Menge" /></a></div></td>');
+        items.push('<td>' + val['description'] + '</td>');
+        items.push('<td>' + parseFloat(val['price']).toFixed(2) + ' &euro;</td>');
+        items.push('<td>' + val['pa'] + '</td>');
+        items.push('<td>' + parseFloat(val['sum']).toFixed(2) + ' &euro;' +
+            '<div class="itemEdit">'+
+            '<a href="#" data-action="delete" data-id="'+ val['id'] +'">' +
+            '<img src="/images/icons/remove2.png" alt="Löschen" /></a>'+
+            '</div></td>');
+
+        $('<tr>',{
+            'id': key,
+            'data-sum':val['sum'],
+            html: items.join('')
+
+        }).appendTo('.co_items');
+        index ++;
+    });
+    getSummary();
+    $('.inputkeyboard').val('').focus();
+};
 $(document).ready(function(){
+    $(".btnPrint").printPage();
+    // Dialog Wiget initalisieren
 
     $('.orderdialog').dialog({
         autoOpen: false,
@@ -8,44 +46,18 @@ $(document).ready(function(){
     });
 
 
+    $('.toPaydialog').dialog({
+        autoOpen: false,
+        modal: true,
+        minWidth: 400 });
+    $( ".toPay" ).click(function() {
+        $( ".toPaydialog" ).dialog( "open" );
+    });
 
-    var buildtable = function buildTable(data){
-            //$('.shopinglist').empty().html($(data).find('.shopinglist table'));
-            $('.co_items').empty();
-            var index = 1;
-            $.each(data, function(key, val) {
-
-                var items = [];
-                items.push('<td>' + index + '</td>');
-                items.push('<td>' + val['code'] + '</td>');
-                items.push('<td>' + val['quantity'] + '' +
-                    '<div class="itemEdit">'+
-                    '<a href="#" class="itemMinus" data-id="'+ val['id'] +'">' +
-                    '<img src="/images/icons/arrow-down.png" alt="- Menge" /></a>'+
-                    '<a href="#" class="itemPlus" data-id="'+ val['id'] +'">'+
-                    ' <img src="/images/icons/arrow-up.png" alt="+ Menge" /></a></div></td>');
-                items.push('<td>' + val['description'] + '</td>');
-                items.push('<td>' + parseFloat(val['price']).toFixed(2) + ' &euro;</td>');
-                items.push('<td>' + val['pa'] + '</td>');
-                items.push('<td>' + parseFloat(val['sum']).toFixed(2) + ' &euro;' +
-                    '<div class="itemEdit">'+
-                    '<a href="#" class="itemMinus" data-id="'+ val['id'] +'">' +
-                    '<img src="/images/icons/remove2.png" alt="Löschen" /></a>'+
-                    '</div></td>');
-
-                $('<tr>',{
-                    'id': key,
-                    'data-sum':val['sum'],
-                    html: items.join('')
-
-                }).appendTo('.co_items');
-                index ++;
-            });
-        getSummary();
-        $('.inputkeyboard').val('').focus();
-        };
+    // Artikel Tabelle aus JSON daten Bauen
 
 
+    // Standart Artikel
     $('.input_buttons div').click(function(){
         var code = $(this).data('code');
 
@@ -57,7 +69,7 @@ $(document).ready(function(){
 
     });
 
-
+    // Eingabefeld Tasten aktionen
    $('.inputkeyboard').keypress(function(event){
         console.log(event.keyCode);
 
@@ -80,7 +92,8 @@ $(document).ready(function(){
 
        }).focus();
 
-   $('.co_payed').keypress(function(event){
+    // Abrechnung
+   $('input.co_payed').keypress(function(event){
 
 
      if(event.charCode > 47 && event.charCode < 58 || event.charCode == 46|| event.charCode == 44 || event.keyCode == 8 ){
@@ -102,8 +115,14 @@ $(document).ready(function(){
 
    });
 
+    // Artikel liste Bearbeiten
+
+
+
+
    getSummary();
 });
+
 
 
 
@@ -116,4 +135,7 @@ function getSummary(){
     });
 
     $('.co_toPay').html(sum.toFixed(2) + '&euro;');
+    $('.itemEdit a').click(function(){
+        $.post('/checkout/itemaction',{ id: $(this).data('id'),action:$(this).data('action')},buildtable);
+    });
 }

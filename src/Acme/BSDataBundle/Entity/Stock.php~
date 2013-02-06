@@ -39,8 +39,18 @@ class Stock
     private $name;
 
 
+    /**
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="Stock")
+     */
+
+    private $products;
 
 
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
 
 
     public function __toString()
@@ -118,4 +128,15 @@ class Stock
     {
         return $this->number;
     }
+    public function setProducts($products)
+    {
+        $this->products = $products;
+    }
+
+    public function getProducts()
+    {
+        return $this->products;
+    }
+
+
 }
