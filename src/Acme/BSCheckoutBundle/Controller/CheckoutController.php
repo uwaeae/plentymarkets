@@ -246,6 +246,7 @@ class CheckoutController extends Controller
 
             $price = $item->getPrice()* $item->getQuantity();
             $summary['sum'] += $price;
+            $mwst = 0;
             if( $item->getVAT() == 7){
                 $mwst  =  round($price * 0.07,2);
                 $summary['mwst7'] = $mwst;
@@ -253,7 +254,7 @@ class CheckoutController extends Controller
                 $mwst  = round($price * 0.19,2);
                 $summary['mwst19'] += $mwst;
             }
-            $summary['netto'] += $price- $mwst;
+            $summary['netto'] += $price - $mwst;
 
 
         }
