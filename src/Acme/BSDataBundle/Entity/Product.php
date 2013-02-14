@@ -90,7 +90,7 @@ class Product
     /**
      * @var integer $VAT
      *
-     * @ORM\Column(name="VAT", type="integer")
+     * @ORM\Column(name="VAT", type="integer",nullable= true)
      */
     private $VAT;
 
@@ -248,9 +248,9 @@ class Product
         $this->setName2($item->Texts->Name2);
         $this->setPrice($item->PriceSet->Price);
         $this->setPrice6($item->PriceSet->Price6);
-        if($item->VATInternalID == 0) $this->setVAT = 19;
-        elseif($item->VATInternalID == 1 )$this->setVAT = 7;
-        else $this->setVAT = 0;
+        if($item->VATInternalID == 0) $this->setVAT(19);
+        elseif($item->VATInternalID == 1 )$this->setVAT(7);
+        else $this->setVAT(0);
         $this->setEAN($item->EAN1);
         $this->setLastupdate( $item->LastUpdate);
        // $this->setShortDescription($item->Texts->ShortDescription);

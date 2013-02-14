@@ -501,12 +501,9 @@ class PlentySoapClient extends \SoapClient
 
             $em->persist($product);
             if($output) $output->writeln($product->getArticleId().' '.$product->getArticleNo());
+
         }
-
         $em->flush();
-
-
-
     }
 
 

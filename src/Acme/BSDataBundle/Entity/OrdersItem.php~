@@ -38,7 +38,7 @@ class OrdersItem
     /**
      * @var integer $VAT
      *
-     * @ORM\Column(name="VAT", type="integer")
+     * @ORM\Column(name="VAT", type="integer",nullable= true)
      */
     private $VAT;
 
