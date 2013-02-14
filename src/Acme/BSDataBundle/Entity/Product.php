@@ -83,7 +83,7 @@ class Product
     /**
      * @var float $price6
      *
-     * @ORM\Column(name="price6", type="float")
+     * @ORM\Column(name="price6", type="float",nullable= true)
      */
     private $price6;
 
