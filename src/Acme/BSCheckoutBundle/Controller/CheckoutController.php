@@ -130,14 +130,22 @@ class CheckoutController extends Controller
 
     /**
      * @Route("/finish",name="BSCheckout_finish")
-     * @Method({ "POST"})
+     * @Method({ "POST" })
      * @Template()
      */
-    public function finishAction($cashbox_id = 1,$payment_id)
+    public function finishAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $cb = $em->getRepository('BSCheckoutBundle:checkout')->clearCurrentBasket($cashbox_id);
+        $payment_id = $this->getRequest()->request->get('payment_id');
+        $cashbox_id = $this->getRequest()->request->get('cashbox_id');
+
+        if(!$cashbox_id && !$payment_id){
+            throw $this->createNotFoundException("Keine Parameter übergeben");
+
+        }
+
+        $cb = $em->getRepository('BSCheckoutBundle:checkout')->getCurrentBasket($cashbox_id);
             $sum = 0.0;
         foreach($cb->getCheckoutItems() as $product){
 
@@ -145,16 +153,16 @@ class CheckoutController extends Controller
 
         }
 
-        $cb = new \Acme\BSCheckoutBundle\Entity\checkout();
+
         $cb->setPayment($payment_id);
         $cb->setBuydate(new \DateTime());
         $cb->setFinish(true);
         $cb->setSummary($sum);
-        $em->persit($cb);
-        $em->flush();
+        $em->persist($cb);
+            $em->flush();
 
 
-        return $this->render('BSCheckoutBundle:Default:index.html.twig', array('basket' => $currentBasket));
+        return $this->redirect($this->generateUrl('BSCheckout_home'));
 
     }
 

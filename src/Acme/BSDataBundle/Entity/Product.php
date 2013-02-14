@@ -38,7 +38,7 @@ class Product
     /**
      * @var sting $EAN
      *
-     * @ORM\Column(name="EAN", type="string", length=10)
+     * @ORM\Column(name="EAN", type="string", length=10,nullable= true )
      */
     private $EAN;
 

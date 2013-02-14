@@ -107,10 +107,14 @@
                             <div class="co_return">
 
                             </div>
-                            <form action="{{ path('BSCheckout_finish', { 'cashbox_id': 1,'payment_id': 11 }) }}" method="post">
+                            <form action="{{ path('BSCheckout_finish') }}" method="post">
+                                <input type="hidden" name="cashbox_id" value="1">
+                                <input type="hidden" name="payment_id" value="11">
                                 <button class="ym-button" >Bar</button>
                             </form>
-                            <form action="{{ path('BSCheckout_finish', { 'cashbox_id': 1,'payment_id': 11 }) }}" method="post">
+                            <form action="{{ path('BSCheckout_finish') }}" method="post">
+                                <input type="hidden" name="cashbox_id" value="1">
+                                <input type="hidden" name="payment_id" value="11">
                                 <button class="ym-button" >EC</button>
                             </form>
                             <button class="ym-button receipt btnPrint"  href='{{ path('BSCheckout_receipt') }}' >Quittung</button>

@@ -31,6 +31,7 @@ class checkoutRepository extends EntityRepository
             $result->setBuydate(new \DateTime());
             $result->setCashbox($cashbox_id);
             $result->setFinish(false);
+            $result->setSummary(0);
             $result->setPayment(0);
             $this->getEntityManager()->persist($result);
             $this->getEntityManager()->flush();
