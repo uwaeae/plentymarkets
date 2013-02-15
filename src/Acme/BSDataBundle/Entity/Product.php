@@ -2,13 +2,14 @@
 
 namespace Acme\BSDataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Acme\BSDataBundle\Entity\Product
  *
  * @ORM\Table()
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Acme\BSDataBundle\Entity\ProductRepository")
  */
 class Product
 {
@@ -112,7 +113,35 @@ class Product
 
     private $quantity;
 
+    /**
+     * @var integer $PriceID
+     *
+     * @ORM\Column(name="PriceID", type="integer",nullable= false)
+     */
 
+    private $PriceID;
+
+    /**
+     * @var integer $AttributeVaueSetID
+     *
+     * @ORM\Column(name="AttributeVaueSetID", type="integer",nullable= false)
+     */
+
+    private $AttributeVaueSetID;
+
+
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="bundle")
+     */
+    protected $bundleitems;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Product", inversedBy="bundleitems")
+    * @ORM\JoinColumn(name="bundle_id", referencedColumnName="id")
+    **/
+    protected $bundle;
 
 
     /**
@@ -121,6 +150,11 @@ class Product
      */
     protected $stock;
 
+
+    public function __construct()
+    {
+        $this->bundleItems = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -237,38 +271,7 @@ class Product
         return $this->article_id;
     }
 
-    public function PMSoapProduct($item)
-    {
-        $this->setArticleId($item->ItemID);
-        $this->setArticleNo( $item->ItemNo );
-       // $this->setBotanical($item->FreeTextFields->Free2);
-       // $this->setDescription($item->Texts->LongDescription);
-        $this->setLabelText($item->FreeTextFields->Free3);
-        $this->setName($item->Texts->Name);
-        $this->setName2($item->Texts->Name2);
-        $this->setPrice($item->PriceSet->Price);
-        $this->setPrice6($item->PriceSet->Price6);
-        if($item->VATInternalID == 0) $this->setVAT(19);
-        elseif($item->VATInternalID == 1 )$this->setVAT(7);
-        else $this->setVAT(0);
-        $this->setEAN($item->EAN1);
-        $this->setLastupdate( $item->LastUpdate);
-       // $this->setShortDescription($item->Texts->ShortDescription);
-        //$this->setStockground();
 
-    }
-
-    public function newPMSoapOrderProduct(OrdersItem $item)
-    {
-        $this->setArticleId($item->getArticleID());
-        $this->setArticleNo($item->getArticleID());
-        //$this->setBotanical($item->FreeTextFields->Free2);
-        //$this->setDescription( $item->getItemText());
-
-        $this->setName($item->getItemText());
-        $this->setPrice($item->getPrice());
-      //  $this->setShortDescription($item->getItemText());
-    }
 
     public function  __toString(){
 
@@ -298,30 +301,7 @@ class Product
     {
         return $this->stock;
     }
-    public function __construct()
-    {
-        $this->plants = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-    /**
-     * Add plants
-     *
-     * @param Acme\BSDataBundle\Entity\Plant $plants
-     */
-    public function addPlant(\Acme\BSDataBundle\Entity\Plant $plants)
-    {
-        $this->plants[] = $plants;
-    }
 
-    /**
-     * Get plants
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getPlants()
-    {
-        return $this->plants;
-    }
 
     /**
      * Set name2
@@ -461,5 +441,97 @@ class Product
     public function getVAT()
     {
         return $this->VAT;
+    }
+
+    /**
+     * Add bundleitems
+     *
+     * @param Acme\BSDataBundle\Entity\Product $bundleitems
+     */
+    public function addProduct(\Acme\BSDataBundle\Entity\Product $bundleitems)
+    {
+        $this->bundleitems[] = $bundleitems;
+    }
+
+    /**
+     * Clear bundleitems
+     *
+     */
+
+
+    public function clearBundleitems()
+    {
+        $this->bundleItems = new ArrayCollection();
+    }
+
+
+    /**
+     * Get bundleitems
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getBundleitems()
+    {
+        return $this->bundleitems;
+    }
+
+    /**
+     * Set bundle
+     *
+     * @param Acme\BSDataBundle\Entity\Product $bundle
+     */
+    public function setBundle(\Acme\BSDataBundle\Entity\Product $bundle)
+    {
+        $this->bundle = $bundle;
+    }
+
+    /**
+     * Get bundle
+     *
+     * @return Acme\BSDataBundle\Entity\Product 
+     */
+    public function getBundle()
+    {
+        return $this->bundle;
+    }
+
+    /**
+     * Set PriceID
+     *
+     * @param integer $priceID
+     */
+    public function setPriceID($priceID)
+    {
+        $this->PriceID = $priceID;
+    }
+
+    /**
+     * Get PriceID
+     *
+     * @return integer 
+     */
+    public function getPriceID()
+    {
+        return $this->PriceID;
+    }
+
+    /**
+     * Set AttributeVaueSetID
+     *
+     * @param integer $attributeVaueSetID
+     */
+    public function setAttributeVaueSetID($attributeVaueSetID)
+    {
+        $this->AttributeVaueSetID = $attributeVaueSetID;
+    }
+
+    /**
+     * Get AttributeVaueSetID
+     *
+     * @return integer 
+     */
+    public function getAttributeVaueSetID()
+    {
+        return $this->AttributeVaueSetID;
     }
 }

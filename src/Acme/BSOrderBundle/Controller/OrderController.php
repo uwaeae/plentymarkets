@@ -719,8 +719,20 @@ class OrderController extends Controller
             //Bestellprositonen zusammen stellen und nach Lagerort Sortieren
             foreach($aOrderItem as $item){
 
-                $product = $this->getItem( $item);
-                if($product){
+                $p = $this->getItem( $item);
+                $items = $p->getBundleitems();
+                if(count($items) > 0){
+                    $productList = $items;
+                }else{
+                    $productList = array($p);
+                }
+
+
+
+
+
+
+                foreach($productList as $product){
                     if(strlen($product->getLabelText()) > 10) $aCareList[$product->getArticleNo()] =  $product;
                     if($product->getStock()){
                         $PLIstock = "[".$product->getStock()->getNumber()."] ".$product->getStock()->getName() ;
@@ -863,6 +875,9 @@ class OrderController extends Controller
         return $product;
 
     }
+
+
+
 
 
 }

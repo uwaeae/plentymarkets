@@ -422,7 +422,8 @@ class PlentySoapClient extends \SoapClient
     {
         $oResponse	= null;
         $page = 0;
-       // $options['ItemNo'] = "VerHar19%";
+        // um die Suche einzuschränken
+        $options['ItemNo'] = "srt%";
         $options['LastUpdate'] = $lastUpdate ;
         $options['LastInserted'] =null ;
         $options['Marking1ID'] =null ;
@@ -455,7 +456,7 @@ class PlentySoapClient extends \SoapClient
             print_r($sf->getMessage());
         }
         if ( isset($oResponse->Success) and $oResponse->ItemsBase != null ){
-           // $output = array_merge($output, $oResponse->ItemsBase->item);
+            // $output = array_merge($output, $oResponse->ItemsBase->item);
             $this->syncArticle( $oResponse->ItemsBase->item,null);
             if(isset($oResponse->Pages)) $page = $oResponse->Pages;
         }
@@ -497,7 +498,48 @@ class PlentySoapClient extends \SoapClient
                 $product = new Product();
             }
 
-            $product->PMSoapProduct($item );
+           // $product->PMSoapProduct($item );
+            $product->setArticleId($item->ItemID);
+            $product->setArticleNo( $item->ItemNo );
+            // $product->setBotanical($item->FreeTextFields->Free2);
+            // $product->setDescription($item->Texts->LongDescription);
+            $product->setLabelText($item->FreeTextFields->Free3);
+            $product->setName($item->Texts->Name);
+            $product->setName2($item->Texts->Name2);
+            $product->setPriceID($item->PriceSet->PriceID);
+            $product->setPrice($item->PriceSet->Price);
+            $product->setPrice6($item->PriceSet->Price6);
+            if($item->VATInternalID == 0) $product->setVAT(19);
+            elseif($item->VATInternalID == 1 )$product->setVAT(7);
+            else $product->setVAT(0);
+
+            if(is_null($item->AttributeValueSets)) $product->setAttributeVaueSetID(0);
+            else{
+                $sets = $item->AttributeValueSets;
+                $product->setAttributeVaueSetID($sets[0]->AttributeValueSetID );
+            }
+            $product->setEAN($item->EAN1);
+            $product->setLastupdate( $item->LastUpdate);
+            // $product->setShortDescription($item->Texts->ShortDescription);
+            //$product->setStockground();
+            $SKU = $product->getArticleId()."-".$product->getPriceID()."-0";
+            $bundleItems = $this->doGetItemBundles(array('BundleSKU'=>$SKU));
+            if(count($bundleItems) > 0){
+                $product->clearBundleitems();
+                foreach($bundleItems as $bi){
+
+                    $id = explode("-",  $bi->SKU);
+                    $p = $repository->findOneBy(array('article_id' => $id[0]));
+                    if($p) {
+                        $product->addProduct($p);
+                        $p->setBundle($product);
+                        $em->persist($p);
+                    }
+
+                }
+
+            }
+
 
             $em->persist($product);
             if($output) $output->writeln($product->getArticleId().' '.$product->getArticleNo());
@@ -507,6 +549,68 @@ class PlentySoapClient extends \SoapClient
     }
 
 
+    /**
+     * Mit diesem Call können mehere Artikel aus dem Shop abgerufen werden
+     *
+     */
+    public function doGetItemBundles( $option = array())
+
+    {
+        $oResponse	= null;
+        $page = 0;
+
+
+        $options['ItemSKU'] =null ; //
+        $options['BundleSKU'] =null ; //>String</BundleSKU>
+        $options['Gimahhot'] =null ; //>Integer</Gimahhot>
+        $options['GoogleProducts'] =null ; //>Integer</GoogleProducts>
+        $options['Hitmeister'] =null ; //>Integer</Hitmeister>
+        $options['Laary'] =null ; //>Integer</Laary>
+        $options['Lang'] =null ; //>String</Lang>
+        $options['LastInserted'] =null ; //>Integer</LastInserted>
+        $options['LastUpdate'] =null ; //>Integer</LastUpdate>
+        $options['MainWarehouseID'] =null ; //>Integer</MainWarehouseID>
+        $options['Marking1ID'] =null ; //>Integer</Marking1ID>
+        $options['Marking2ID'] =null ; //>Integer</Marking2ID>
+        $options['Moebelprofi'] =null ; //>Integer</Moebelprofi>
+        $options['Page'] = $page ; //>Integer</Page>
+        $options['ProducerID'] =null ; //>Integer</ProducerID>
+        $options['Restposten'] =null ; //>Integer</Restposten>
+        $options['ShopShare'] =null ; //>Integer</ShopShare>
+        $options['Shopgate'] =null ; //>Integer</Shopgate>
+        $options['Shopperella'] =null ; //>Integer</Shopperella>
+        $options['StockAvailable'] =null ; //>Integer</StockAvailable>
+        $options['SumoScout'] =null ; //>Integer</SumoScout>
+        $options['Tradoria'] =null ; //>Integer</Tradoria>
+        $options['WebAPI'] =null ; //>Integer</WebAPI>
+        $options['Webshop'] =null ; //>Integer</Webshop>
+        $options['Yatego'] =null ; //>Integer</Yatego>
+        $options['Zalando'] =null ; //>Integer</Zalando>
+        $options = array_merge($options,$option);
+
+        try
+        {
+            $oResponse	=	$this->__soapCall('GetItemBundles',array( $options));
+        }
+        catch(\SoapFault $sf)
+        {
+            print_r("Es kam zu einem Fehler beim Call GetAuthentificationToken<br>");
+            print_r($sf->getMessage());
+        }
+         $output = array();
+        if ( isset($oResponse->Success) &&  $oResponse->Success != false ){
+
+
+            if(isset($oResponse->ItemBundles->item[0]->Items)){
+                $output =  $oResponse->ItemBundles->item[0]->Items->item;
+            }
+
+            if(isset($oResponse->Pages)) $page = $oResponse->Pages;
+        }
+
+
+        return $output;
+    }
 
 
 
@@ -721,9 +825,11 @@ class PlentySoapClient extends \SoapClient
             foreach($AOorder->OrderItems->item as $item){
                 $orderitem = new OrdersItem();
                 $orderitem->setSKU($item->SKU);
-                $SKU = explode("-", $item->SKU);
-                $orderitem->setArticleCode($item->SKU);
-                $orderitem->setArticleID($SKU[0]);
+
+
+                //$SKU = explode("-", $item->SKU);
+                $orderitem->setArticleCode($item->ItemNo);
+                $orderitem->setArticleID($item->ItemID);
                 $orderitem->setItemText($item->ItemText);
                 $orderitem->setOrderID($item->OrderID);
                 $orderitem->setPrice($item->Price);
