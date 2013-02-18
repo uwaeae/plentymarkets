@@ -727,11 +727,6 @@ class OrderController extends Controller
                     $productList = array($p);
                 }
 
-
-
-
-
-
                 foreach($productList as $product){
                     if(strlen($product->getLabelText()) > 10) $aCareList[$product->getArticleNo()] =  $product;
                     if($product->getStock()){
