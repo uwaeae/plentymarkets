@@ -144,14 +144,14 @@ class OrderPDF extends \FPDF
         $this->Cell(10,$cellHight,$item->getQuantity(),'',0,'C');
         $this->SetFont('Arial','',12);
         if($Product){
-           // $this->Cell(20,$cellHight,($Product->getStock()?$Product->getStock():''),'B',0,'L'); // TODO: florian Lagerort finden
+            //$this->Cell(20,$cellHight,($Product->getStockground()?$Product->getStockground():''),'B',0,'L'); // TODO: florian Lagerort finden
             $this->Cell(25,$cellHight,utf8_decode($Product->getArticleNo()),'',0,'L');
         } else{
             //$this->Cell(20,$cellHight,'','B',0,'L'); // TODO: florian Lagerort finden
             $this->Cell(25,$cellHight,'','',0,'L');
         }
         $this->SetFont('Arial','',12);
-        $this->Cell(130,$cellHight,substr(utf8_decode($Product->getName2()." ".$Product->getName()),0,63),'',0,'L');
+        $this->Cell(130,$cellHight,substr(utf8_decode($Product->getName2()." ".$item->getItemText()),0,63),'',0,'L');
         //$this->Cell(20,$cellHight,(isset($oItem->LastUpdate)?$oItem->LastUpdate:''),'B',0,'L');
         $this->SetFont('Arial','',12);
         $this->Cell(20,$cellHight,sprintf("%01.2f " , $item->getPrice()).EURO,'',1,'L');
@@ -216,7 +216,7 @@ class OrderPDF extends \FPDF
             $this->Cell(25,$cellHight,'','',0,'L');
         }
         $this->Cell(80,$cellHight,substr(utf8_decode($item['product']->getName2()),0,65),'T',0,'L');
-        $this->Cell(80,$cellHight,substr(utf8_decode($item['product']->getName()),0,35),'T',0,'L');
+        $this->Cell(80,$cellHight,substr(utf8_decode($item['item']->getItemText()),0,35),'T',0,'L');
         $this->Cell(20,$cellHight,sprintf("%01.2f " , $item['item']->getPrice()).EURO,'T',0,'L');
         $STROrder = '';
 

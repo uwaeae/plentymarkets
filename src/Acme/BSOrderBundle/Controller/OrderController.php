@@ -716,18 +716,25 @@ class OrderController extends Controller
             $aCareList = array();
 
             $oOrderQuantity = 0;
+
             //Bestellprositonen zusammen stellen und nach Lagerort Sortieren
             foreach($aOrderItem as $item){
-
-                $p = $this->getItem( $item);
+                $isBundle = false;
+                $p = $this->getItem($item);
                 $items = $p->getBundleitems();
                 if(count($items) > 0){
                     $productList = $items;
+                    $isBundle = true;
                 }else{
                     $productList = array($p);
                 }
 
                 foreach($productList as $product){
+                    if($isBundle){
+                        $item->setItemText("B ".$product->getName());
+                        $item->setPrice(0);
+                    }
+
                     if(strlen($product->getLabelText()) > 10) $aCareList[$product->getArticleNo()] =  $product;
                     if($product->getStock()){
                         $PLIstock = "[".$product->getStock()->getNumber()."] ".$product->getStock()->getName() ;
