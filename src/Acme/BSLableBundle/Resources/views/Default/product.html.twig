@@ -1,0 +1,50 @@
+<table class="bordertable narrow">
+    <thead>
+    <tr>
+
+        <th>{{ pagination.sortable('Code', 'a.article_no')|raw }}</th>
+        <th>{{ pagination.sortable('Name', 'a.name')|raw }}</th>
+        <th>{{ pagination.sortable('Botanish', 'a.name2')|raw }}</th>
+
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for entity in pagination %}
+        <tr>
+
+
+            <td>{{ entity.articleno }}</td>
+            <td>{{ entity.name }}</td>
+            <td>{{ entity.name2 }}</td>
+
+            <td>
+                <ul>
+                    <li>
+
+
+                        <form action="{{ path('BSLable_print') }}" method="post" >
+                            <input type="hidden" value="{{ entity.id }}" name="id" >
+                            <label for="quantity" class="" > Menge</label>
+                            <input type="text" value="1" name="quantity" id="quantity">
+                            <p>
+                                <button type="submit">Print</button>
+                            </p>
+                        </form>
+                    </li>
+                    <li>
+                        <a href="{{ path('BSData_product_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    <tr>
+        <td colspan="6">
+            <div class="navigation">
+                {{ pagination.render()|raw }}
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>

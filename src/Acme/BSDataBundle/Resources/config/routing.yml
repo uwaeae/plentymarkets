@@ -88,6 +88,11 @@ BSData_product_search_latein:
         pattern:  /data/product/search/latein/{search}/{page}
         defaults: { _controller: BSDataBundle:Product:searchLatein,page: 1 }
 
+BSData_product_print:
+        pattern:  /data/product/print/{id}/{quantity}
+        defaults: { _controller: BSDataBundle:Product:print }
+
+
 
 BSData_product:
     pattern:  /data/product/{page}
@@ -169,6 +174,7 @@ BSData_plant_search_latein:
 BSData_plant:
     pattern:  /data/plant/{page}
     defaults: { _controller: BSDataBundle:Plant:index,page: 1 }
+
 
 
 

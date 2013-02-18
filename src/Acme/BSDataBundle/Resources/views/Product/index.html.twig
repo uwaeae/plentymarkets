@@ -55,7 +55,7 @@
  </div>
 
 
-<div class="results">
+<div >
 <table class="bordertable narrow">
     <thead>
         <tr>
@@ -71,7 +71,7 @@
             <th>Actions</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="results">
     {% for entity in pagination %}
         <tr>
 
@@ -79,7 +79,7 @@
             <td>{{ entity.articleno }}</td>
             <td>{{ entity.name }}</td>
             <td>{{ entity.name2 }}</td>
-            <td>{{ entity.price }}</td>
+            <td>{{ entity.price|number_format(2, '.', ',') }} &euro;</td>
             <td>{{ entity.stock }}</td>
 
 
@@ -92,6 +92,11 @@
                     <li>
                         <a href="{{ path('BSData_product_edit', { 'id': entity.id }) }}">edit</a>
                     </li>
+                    <li>
+                        <a href="{{ path('BSData_product_print', { 'id': entity.id ,'quantity' :1}) }}">print</a>
+                    </li>
+
+
                 </ul>
             </td>
         </tr>

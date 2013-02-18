@@ -16,11 +16,14 @@ class DefaultController extends Controller
     {
         return $this->render('BSDataBundle:Default:index.html.twig');
     }
-
     public function dataAction()
     {
         return $this->render('BSDataBundle:Default:data.html.twig');
     }
+
+
+
+
 
 
 }

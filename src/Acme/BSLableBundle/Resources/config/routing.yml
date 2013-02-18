@@ -1,12 +1,20 @@
-BSLable_home:
-    pattern:  /lable
-    defaults: { _controller: BSLableBundle:Lable:index }
 
+BSLable_products:
+    pattern:  /products/{page}
+    defaults: { _controller: BSLableBundle:Lable:products, page: 1 }
 
 BSLable_print:
-    pattern:  /lable/print
+    pattern:  /print
     defaults: { _controller: BSLableBundle:Lable:print }
 
 BSLable_search:
-    pattern:  /lable/search
+    pattern:  /search
     defaults: { _controller: BSLableBundle:Lable:search }
+
+BSLable_autofill:
+    pattern:  /autofill/{search}
+    defaults: { _controller: BSLableBundle:Lable:autofill }
+
+BSLable_home:
+    pattern:  /{page}
+    defaults: { _controller: BSLableBundle:Lable:index,page: 1 }

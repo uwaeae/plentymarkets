@@ -326,4 +326,23 @@ class ProductController extends Controller
             ->getForm()
         ;
     }
+
+    public function printAction($id,$quantity){
+
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('BSDataBundle:Product')->find($id);
+        $pdf = new \Acme\BSOrderBundle\Controller\LablePDF($entity->getArticleNo());
+
+        $pdf->lable($entity->getArticleNo(),$entity->getName(),$entity->getName2(),$entity->getLabelText());
+        $pdf->Output("print/".$entity->getArticleNo().".pdf",'F');
+
+
+         return $this->render('BSDataBundle:Product:print.html.twig', array(
+            'urlPDF'=> "/print/".$entity->getArticleNo().".pdf",
+        ));
+
+
+    }
+
 }
