@@ -16,6 +16,7 @@ $loader->registerNamespaces(array(
     'Metadata'         => __DIR__.'/../vendor/metadata/src',
     'Knp\\Component'      => __DIR__.'/../vendor/knp-components/src',
     'Knp\\Bundle'         => __DIR__.'/../vendor/bundles',
+    'Io' => __DIR__.'/../vendor/bundles',
 ));
 $loader->registerPrefixes(array(
     'Twig_Extensions_' => __DIR__.'/../vendor/twig-extensions/lib',
@@ -42,6 +43,7 @@ AnnotationRegistry::registerFile(__DIR__.'/../vendor/doctrine/lib/Doctrine/ORM/M
 
 // Swiftmailer needs a special autoloader to allow
 // the lazy loading of the init file (which is expensive)
+require_once __DIR__.'/../vendor/tcpdf/tcpdf.php';
 require_once __DIR__.'/../vendor/swiftmailer/lib/classes/Swift.php';
 Swift::registerAutoload(__DIR__.'/../vendor/swiftmailer/lib/swift_init.php');
 

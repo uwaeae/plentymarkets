@@ -6,5 +6,5 @@ app/logs/*
 app/config/parameters.ini
 app/config/plenty.yml
 build/
-vendor
+
 composer.phar

@@ -726,6 +726,7 @@ class OrderController extends Controller
                     $productList = $items;
                     $isBundle = true;
                 }else{
+                    $isBundle = false;
                     $productList = array($p);
                 }
 

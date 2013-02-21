@@ -332,16 +332,58 @@ class ProductController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('BSDataBundle:Product')->find($id);
-        $pdf = new \Acme\BSOrderBundle\Controller\LablePDF($entity->getArticleNo());
+        $pdf =  $this->get('io_tcpdf');
+        $pdf->init(array(
+            'Creator' => 'Blumenschule Schongau',
+            'Author' => 'Florian Engler',
+            'Title' => $entity->getArticleNo(),
+            'Subject' => $entity->getName(),
+        ));
 
-        $pdf->lable($entity->getArticleNo(),$entity->getName(),$entity->getName2(),$entity->getLabelText());
-        $pdf->Output("print/".$entity->getArticleNo().".pdf",'F');
+        $this->buildLable($pdf,$entity);
 
+        $pdf->Output("print/".$entity->getArticleNo().".pdf", 'F');
 
          return $this->render('BSDataBundle:Product:print.html.twig', array(
             'urlPDF'=> "/print/".$entity->getArticleNo().".pdf",
         ));
 
+
+    }
+
+    private function buildLable($pdf,$entity){
+
+        $pdf->AddPage('L',array(95,25));
+        //Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=0, $link='', $stretch=0, $ignore_min_height=false, $calign='T', $valign='M')
+
+        $pdf->SetFont('helvetica', 'B', 12);
+        $pdf->Cell(30, 2, $entity->getName(),0,1);
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->Cell(15, 2, $entity->getName2(),0,1);
+
+        $style = array(
+            'position' => '',
+            'align' => 'L',
+            'stretch' => false,
+            'fitwidth' => false,
+            'cellfitalign' => '',
+            'border' => false,
+            'hpadding' => '0',
+            'vpadding' => '0',
+            'fgcolor' => array(0,0,0),
+            'bgcolor' => false, //array(255,255,255),
+            'text' => true,
+            'font' => 'helvetica',
+            'fontsize' => 8,
+            'stretchtext' => 0
+        );
+        //( 	code,	 	type,		x = '', 	y = '',	w = '',	h = '',xres = '',style = '',align = '')
+
+        $pdf->write1DBarcode( $entity->getArticleNo(), 'C128', '', '', 30, 15, 0.4, $style, 'T');
+        $pdf->SetFont('helvetica', '', 8);
+        // MultiCell($w, $h, $txt, $border=0, $align='J', $fill=0, $ln=1, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0)
+        $pdf->MultiCell(58, 30, ' '.$entity->getLabelText());
+        return $pdf;
 
     }
 
