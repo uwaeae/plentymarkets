@@ -732,7 +732,9 @@ class OrderController extends Controller
 
                 foreach($productList as $product){
                     if($isBundle){
+                        $item = new \Acme\BSDataBundle\Entity\OrdersItem();
                         $item->setItemText("B ".$product->getName());
+                        $item->setQuantity(1);
                         $item->setPrice(0);
                     }
 

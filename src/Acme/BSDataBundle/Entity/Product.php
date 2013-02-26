@@ -131,7 +131,7 @@ class Product
 
 
 
-
+    // todo Many to Many mit Anzahl der im Packt enthaltenen Produkte
     /**
      * @ORM\OneToMany(targetEntity="Product", mappedBy="bundle")
      */
