@@ -1,0 +1,32 @@
+{
+	"name": "gergelypolonkai/tcpdfbundle",
+	"type": "symfony-bundle",
+	"description": "Provides TCPDF integration for Symfony",
+	"keywords": [ "tcpdf", "pdf" ],
+	"license": "LGPL",
+	"authors": [
+		{
+			"name": "Alessio",
+			"email": "alessio@gayalab.it"
+		},
+		{
+			"name": "Gergely Polonkai",
+			"email": "gergely@polonkai.eu"
+		}
+	],
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/w00d5t0ck"
+		}
+	],
+	"require": {
+		"php": ">=5.3.0",
+		"symfony/framework-bundle": "2.1.*",
+		"tcpdf/tcpdf": ">=5.9.162"
+	},
+	"autoload": {
+		"psr-0": { "Io\\TcpdfBundle": "" }
+	},
+	"target-dir": "Io/TcpdfBundle"
+}
