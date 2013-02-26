@@ -339,8 +339,12 @@ class ProductController extends Controller
             'Title' => $entity->getArticleNo(),
             'Subject' => $entity->getName(),
         ));
+        $pdf->setPrintHeader(false);
+        $pdf->setPrintFooter(false);
+        $pdf->setCellPaddings(1, 1, 1, 1);
+        $pdf->setCellMargins(1, 1, 1, 1);
 
-        $this->buildLable($pdf,$entity);
+        $pdf = $this->buildLable($pdf,$entity);
 
         $pdf->Output("print/".$entity->getArticleNo().".pdf", 'F');
 
@@ -356,11 +360,14 @@ class ProductController extends Controller
         $pdf->AddPage('L',array(95,25));
         //Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=0, $link='', $stretch=0, $ignore_min_height=false, $calign='T', $valign='M')
 
-        $pdf->SetFont('helvetica', 'B', 12);
-        $pdf->Cell(30, 2, $entity->getName(),0,1);
-        $pdf->SetFont('helvetica', '', 10);
-        $pdf->Cell(15, 2, $entity->getName2(),0,1);
-
+        $pdf->SetFont('helvetica', 'B', 10);
+        //$pdf->Write(1,$entity->getName(),'',false,'L',1);
+        //$pdf->Cell(2, 6, $entity->getName(),1,1);
+        $pdf->Text(0, 0, $entity->getName(),false,false,true,0,1);
+        $pdf->SetFont('helvetica', 'B', 8);
+        //$pdf->Cell(2, 6, $entity->getName2(),1,1);
+        //$pdf->Write(1,$entity->getName(),'',false,'L',1);
+        $pdf->Text(32, 5, $entity->getName2(),false,false,true,0,1);
         $style = array(
             'position' => '',
             'align' => 'L',
@@ -378,13 +385,50 @@ class ProductController extends Controller
             'stretchtext' => 0
         );
         //( 	code,	 	type,		x = '', 	y = '',	w = '',	h = '',xres = '',style = '',align = '')
-
-        $pdf->write1DBarcode( $entity->getArticleNo(), 'C128', '', '', 30, 15, 0.4, $style, 'T');
         $pdf->SetFont('helvetica', '', 8);
+
+        $pdf->write1DBarcode( $entity->getArticleNo(), 'C128', 0, 8, 30, 15, 0.4, $style, 'T');
+
+        $strings = $this->split_words($entity->getLabelText());
+        $line = 0;
+        foreach($strings as $s){
+            $pdf->Text(32,8 +$line, $s,false,false,true,0,1);
+            $line += 3;
+        }
+
+
+
+        //$pdf->Cell(15, 2,  $strings[0],0,1);
         // MultiCell($w, $h, $txt, $border=0, $align='J', $fill=0, $ln=1, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0)
-        $pdf->MultiCell(58, 30, ' '.$entity->getLabelText());
+        //$pdf->MultiCell(58, 30, ,0,'L',0,1,'','');
+
         return $pdf;
 
     }
+
+    function split_words($string, $max = 55)
+    {
+        $words = preg_split('/\s/', $string);
+        $lines = array();
+        $line = '';
+
+        foreach ($words as $k => $word) {
+            $length = strlen($line . ' ' . $word);
+            if ($length <= $max) {
+                $line .= ' ' . $word;
+            } else if ($length > $max) {
+                if (!empty($line)) $lines[] = trim($line);
+                $line = $word;
+            } else {
+                $lines[] = trim($line) . ' ' . $word;
+                $line = '';
+            }
+        }
+        $lines[] = ($line = trim($line)) ? $line : $word;
+
+        return $lines;
+    }
+
+
 
 }
