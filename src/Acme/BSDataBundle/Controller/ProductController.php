@@ -333,12 +333,13 @@ class ProductController extends Controller
 
         $entity = $em->getRepository('BSDataBundle:Product')->find($id);
         $pdf =  $this->get('io_tcpdf');
-        $pdf->init(array(
+        /*$pdf->init(array(
             'Creator' => 'Blumenschule Schongau',
             'Author' => 'Florian Engler',
             'Title' => $entity->getArticleNo(),
             'Subject' => $entity->getName(),
-        ));
+        ));*/
+        $pdf->SetAutoPageBreak(false, 0);
         $pdf->setPrintHeader(false);
         $pdf->setPrintFooter(false);
         $pdf->setCellPaddings(1, 1, 1, 1);
