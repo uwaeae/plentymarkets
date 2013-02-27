@@ -698,17 +698,18 @@ class PlentySoapClient extends \SoapClient
                 $OrderInfo = $this->syncOrderInfoData($PMOrder, $OrderHead);
                 $OrderItem = $this->syncOrderItemsData($PMOrder);
             }
-            else if ( $BSOrder->getLastUpdate() != $PMOrder->OrderHead->LastUpdate ){
+            else // if ( $BSOrder->getLastUpdate() != $PMOrder->OrderHead->LastUpdate )
+            {
                 $OrderHead = $this->syncOrderData($PMOrder, $BSOrder);
                 $OrderInfo = $this->syncOrderInfoData($PMOrder, $OrderHead);
                 $OrderItem = $this->syncOrderItemsData($PMOrder);
             }
-            else{
+            /* else{
                 $OrderHead = $BSOrder;
                 $OrderItem = $OrderItemRepro->findBy(array('OrderID' => $OrderHead->getOrderID()));
                 $OrderInfo = $OrderInfoRepro->findBy(array('OrderID' => $OrderHead->getOrderID()));
 
-            }
+            }*/
 
             $em->flush();
 

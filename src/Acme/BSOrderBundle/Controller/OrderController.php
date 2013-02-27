@@ -723,10 +723,10 @@ class OrderController extends Controller
                 $p = $this->getItem($item);
                 $items = $p->getBundleitems();
 
-                if(count($items) > 0 ){
+                if(count($items) > 0 && !stripos($item->getItemText(), '[BUNDLE]') ){
                     $productList = $items;
                     $isBundle = true;
-                }elseif(!stripos($item->getItemText(), '[BUNDLE]')){
+                }elseif( stripos($item->getItemText(), '[BUNDLE]')){
                     $isBundle = false;
                     $productList = array();
                 }else{
