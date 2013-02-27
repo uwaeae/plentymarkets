@@ -26,13 +26,16 @@ use Acme\BSDataBundle\Entity\Orders;
 use Acme\BSDataBundle\Entity\OrdersItem;
 use Acme\BSDataBundle\Entity\OrdersInfo;
 use Acme\BSDataBundle\Entity\PaymentMethods;
+//use Acme\PlentyMarketsBundle\Controller\Soap\PlentySoapObject_AddItemsBaseItemBase;
 
 use Symfony\Component\Yaml\Parser;
 
 
 class PlentySoapClient extends \SoapClient
 {
-	
+
+
+
 	/**
 	 * URL zur WSDL-Datei. 
 	 * Die URL zur WSDL-Datei entnehmen Sie bitte aus Ihrem Admin-Bereich unter: 
@@ -44,7 +47,7 @@ class PlentySoapClient extends \SoapClient
 	 * 
 	 * Bitte tragen Sie hier Ihre korrekte WSDL-URL ein.
 	 */
-	private $WSDL_URL		=	'http://shop2.blumenschule.de/plenty/api/soap/version106/?xml';
+	private $WSDL_URL		=	'';
 	
 	/**
      * Die Benutzerdaten für den SOAP-Benutzer. Im Admin-Bereich unter 
@@ -75,8 +78,11 @@ class PlentySoapClient extends \SoapClient
 	 */
 	public function __construct($controller,$doctrine)
 	{
+    $yaml = new Parser();
+    $value = $yaml->parse(file_get_contents(__DIR__ .'/../../../../app/config/plenty.yml'));
+    $this->WSDL_URL = $value['SOAP_WSDL'];
 
-		parent::__construct($this->WSDL_URL, $this->getSoapClientOptions());
+    parent::__construct($this->WSDL_URL, $this->getSoapClientOptions());
     $this->controller = $controller;
     $this->doctrine = $doctrine;
     $this->doAuthenticication();
@@ -1073,5 +1079,85 @@ class PlentySoapClient extends \SoapClient
         }
         return $Output;
     }
+
+
+    public function doAddItemsBase($itemNo,$price,$name,$name2,$description,$option = array()){
+
+
+      /*  $options['ItemID'] = null;
+        $options['ItemNo'] = $itemNo;
+
+        $options['EAN1'] = null;
+
+       // $Availability = (object) array('foo' => 'bar', 'property' => 'value');
+        $Availability =
+
+        $options['Availability'] = (object) array(
+            'Webshop' => TRUE,
+            'WebAPI' => TRUE);
+
+        $options['Categoriey'] = (object) array(
+            'ItemCategoryPath' => 'BSINTERN');
+        $options['PriceSet'] = (object) array(
+            'Price' => $price,
+            'Price6' => $price);
+
+        $options['FreeTextFields'] = (object) array(
+            'Free1' => '',
+            'Free2' => '',
+            'Free3' => $description,
+            'Free4' => '',
+           );
+        $options['Texts'] = (object) array(
+            'Name' => $name,
+            'Name2' => $name2,
+            'LongDescription' => $description,
+            'ShortDescription' => $description,
+            'MetaDescription' => $description,
+           );
+
+
+        $options = $option + $options;
+        */
+
+        $AddItemBase = new PlentySoapObject_AddItemsBaseItemBase();
+
+        $AddItemBase->ItemNo = $itemNo;
+        $AddItemBase->PriceSet->Price = $price;
+        $AddItemBase->PriceSet->Price6 = $price;
+        $AddItemBase->Texts->Name = $name;
+        $AddItemBase->Texts->Name2 = $name2;
+        $AddItemBase->Texts->LongDescription = $description;
+        $AddItemBase->Texts->ShortDescription = $description;
+        $AddItemBase->Texts->MetaDescription = $description;
+        $AddItemBase->Categories->item->ItemCategoryPath = "BSINTERN";
+        $AddItemBase->Availability->Webshop = False;
+        $AddItemBase->Availability->WebAPI = True;
+
+        try
+        {
+            $oResponse	=	$this->__soapCall('AddItemsBase',array($AddItemBase));
+        }
+        catch(SoapFault $sf)
+        {
+            print_r("Es kam zu einem Fehler beim Call AddItemsBase<br>");
+            print_r($sf->getMessage());
+        }
+
+        if(isset($oResponse->Success)){
+            if(  $oResponse->Success == TRUE)
+            {
+                return $oResponse;
+            }
+            else
+            {
+                return($oResponse->ErrorMessages);
+            }
+        }
+        else return($oResponse->Message);
+
+    }
+
+
 
 }

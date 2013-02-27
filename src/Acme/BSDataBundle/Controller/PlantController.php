@@ -296,4 +296,31 @@ class PlantController extends Controller
             ->getForm()
         ;
     }
+
+
+    /**
+     * Displays a form to edit an existing Plant entity.
+     *
+     * @Route("/{id}/edit", name="BSData_plant_edit")
+     * @Template()
+     */
+    public function crateProductAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('BSDataBundle:Plant')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Plant entity.');
+        }
+        $soap = new \Acme\PlentyMarketsBundle\Controller\PlentySoapClient($this,$this->getDoctrine());
+
+        $return = $soap->doAddItemsBase($entity->getCode(),0,$entity->getName(),$entity->getLatein(),$entity->getLabeltext());
+
+        return $this->redirect($this->generateUrl('BSData_plant'));
+
+    }
+
+
+
 }

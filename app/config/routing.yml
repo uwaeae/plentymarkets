@@ -14,7 +14,9 @@ login_check:
 logout:
     pattern:   /logout
 
-
+BSLableBundle:
+    resource: "@BSLableBundle/Resources/config/routing.yml"
+    prefix:   /lable
 
 
 BSDataBundle:
@@ -35,9 +37,6 @@ _welcome:
 
 
 
-BSLableBundle:
-    resource: "@BSLableBundle/Resources/config/routing.yml"
-    prefix:   /
 
 
 

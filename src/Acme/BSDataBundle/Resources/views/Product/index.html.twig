@@ -86,14 +86,14 @@
 
             <td>
                 <ul>
+
                     <li>
-                        <a href="{{ path('BSData_product_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('BSData_product_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('BSData_product_print', { 'id': entity.id ,'quantity' :1}) }}">print</a>
+                        <form action="{{ path('BSData_product_print') }}" method="get">
+                            <input type="hidden" name="id" value="{{ entity.id  }}">
+                            <input type="text" name="quantity" value="1">
+                            <button>Etikett</button>
+                        </form>
+
                     </li>
 
 

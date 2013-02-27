@@ -26,20 +26,7 @@ class LableController extends Controller
         return $this->render('BSLableBundle:Default:base.html.twig', array('search_form' => $search_form->createView(),'page' => $page));
     }
 
-    public function productsAction($page,$search= null){
 
-        $em = $this->getDoctrine()->getEntityManager();
-        $dql = "SELECT a FROM BSDataBundle:Product a";
-        $query = $em->createQuery($dql);
-
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $query,
-            $page,//$this->get('request')->query->get('page', 1)/*page number*/,
-            10/*limit per page*/
-        );
-        return $this->render('BSLableBundle:Default:product.html.twig', array('pagination' => $pagination));
-    }
 
     public function searchAction($search)
     {

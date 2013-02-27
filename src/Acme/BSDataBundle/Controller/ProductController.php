@@ -327,7 +327,9 @@ class ProductController extends Controller
         ;
     }
 
-    public function printAction($id,$quantity){
+    public function printAction(){
+        $id = $this->getRequest()->get('id');
+        $quantity = $this->getRequest()->get('quantity');
 
         $em = $this->getDoctrine()->getEntityManager();
 
@@ -344,8 +346,10 @@ class ProductController extends Controller
         $pdf->setPrintFooter(false);
         $pdf->setCellPaddings(1, 1, 1, 1);
         $pdf->setCellMargins(1, 1, 1, 1);
+        for($i = 0;$i < $quantity;$i ++){
+            $pdf = $this->buildLable($pdf,$entity);
+        }
 
-        $pdf = $this->buildLable($pdf,$entity);
 
         $pdf->Output("print/".$entity->getArticleNo().".pdf", 'F');
 
