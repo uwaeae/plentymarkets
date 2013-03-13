@@ -750,11 +750,28 @@ class OrderController extends Controller
                     }
 
                     $PLIartID=  $product->getArticleNo();
-                    $aSortOrderItems[$PLIstock][$PLIartID] = array('product'=>$product,'item'=>$item );
+                    // Artikel für die Packliste zusammenführen
+                    if(!isset($aSortOrderItems[$PLIstock][$PLIartID])){
+                        $aSortOrderItems[$PLIstock][$PLIartID] = array('product'=>$product,'item'=>$item );
+                        $oOrderQuantity +=  $item->getQuantity();
+                    }else{
+                       $aSOItem = $aSortOrderItems[$PLIstock][$PLIartID]['item'];
+                       $oOrderQuantity +=  $item->getQuantity();
+                       $item->setQuantity($aSOItem->getQuantity() + $item->getQuantity());
+                       $aSortOrderItems[$PLIstock][$PLIartID] = array('product'=>$product,'item'=>$item );
+
+                    }
+
 
                     if(isset($aSortPicklistItems[ $PLIstock][$PLIartID])){
                         $PLIorder = $aSortPicklistItems[ $PLIstock][$PLIartID]['orders'];
-                        $PLIorder[] = array('OrderID'=>$rOrder,'Name'=> utf8_decode($oOrder->getLastname()),'Quantity'=>$item->getQuantity());
+                        if(isset($PLIorder[$rOrder])){
+                            $PLIorderTemp =  $PLIorder[$rOrder];
+                            $PLIorder[$rOrder] = array('OrderID'=>$rOrder,'Name'=> utf8_decode($oOrder->getLastname()),'Quantity'=>$item->getQuantity() + $PLIorderTemp['Quantity']);
+                        }
+                        else{
+                            $PLIorder[$rOrder] = array('OrderID'=>$rOrder,'Name'=> utf8_decode($oOrder->getLastname()),'Quantity'=>$item->getQuantity());
+                        }
                         $PLIarray = array(  'item'=>$item,
                             'product'=>$product,
                             'orders'=> $PLIorder,
@@ -763,7 +780,7 @@ class OrderController extends Controller
 
                     }else{
                         $PLIorder = array();
-                        $PLIorder[] = array('OrderID'=>$rOrder,'Name'=> utf8_decode($oOrder->getLastname()),'Quantity'=>$item->getQuantity());
+                        $PLIorder[$rOrder] = array('OrderID'=>$rOrder,'Name'=> utf8_decode($oOrder->getLastname()),'Quantity'=>$item->getQuantity());
                         $PLIarray = array(  'item'=>$item,
                             'product'=>$product,
                             'orders'=> $PLIorder,
@@ -777,12 +794,12 @@ class OrderController extends Controller
 
 
 
-                    $oOrderQuantity +=  $item->getQuantity();
+
                     }
                 }
             $row = 0;
 
-            // PACKLISTE
+            // PACKLISTE erstellen
             ksort($aSortOrderItems);
             foreach($aSortOrderItems as $key => $sitem){
                     $pdf->ItemsHeader($key,$cellHight);
