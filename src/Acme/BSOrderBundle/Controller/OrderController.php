@@ -748,7 +748,7 @@ class OrderController extends Controller
                     }else{
                         $PLIstock = "[0] Kein Lager";
                     }
-
+                    $ItemQuantity = $item->getQuantity();
                     $PLIartID=  $product->getArticleNo();
                     // Artikel für die Packliste zusammenführen
                     if(!isset($aSortOrderItems[$PLIstock][$PLIartID])){
@@ -767,7 +767,7 @@ class OrderController extends Controller
                         $PLIorder = $aSortPicklistItems[ $PLIstock][$PLIartID]['orders'];
                         if(isset($PLIorder[$rOrder])){
                             $PLIorderTemp =  $PLIorder[$rOrder];
-                            $PLIorder[$rOrder] = array('OrderID'=>$rOrder,'Name'=> utf8_decode($oOrder->getLastname()),'Quantity'=>$item->getQuantity() + $PLIorderTemp['Quantity']);
+                            $PLIorder[$rOrder] = array('OrderID'=>$rOrder,'Name'=> utf8_decode($oOrder->getLastname()),'Quantity'=>$item->getQuantity());
                         }
                         else{
                             $PLIorder[$rOrder] = array('OrderID'=>$rOrder,'Name'=> utf8_decode($oOrder->getLastname()),'Quantity'=>$item->getQuantity());
@@ -775,7 +775,7 @@ class OrderController extends Controller
                         $PLIarray = array(  'item'=>$item,
                             'product'=>$product,
                             'orders'=> $PLIorder,
-                            'quantity'=>( $aSortPicklistItems[ $PLIstock][$PLIartID]['quantity'] + $item->getQuantity())
+                            'quantity'=>( $aSortPicklistItems[ $PLIstock][$PLIartID]['quantity'] + $ItemQuantity)
                             );
 
                     }else{
