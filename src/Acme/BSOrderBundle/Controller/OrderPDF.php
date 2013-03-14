@@ -69,12 +69,16 @@ class OrderPDF extends \FPDF
 
     function CareListHeader(Orders $Order){
         $this->CarePage = 1;
-        $this->SetFont('Arial','',12);
-        $this->SetTextColor(80,80,80);
-        $this->Text(140,10,'Bestellung');
-        $this->Text(165,10,$Order->getOrderID());
-        $this->Text(140,15,'Seite');
-        $this->Text(165,15,$this->CarePage);
+        $this->SetFont('Arial','B',18);
+        $this->SetTextColor(0,0,0);
+        //$this->Text(140,10,'Bestellung');
+
+        $this->Text(140,10,$Order->getOrderID());
+        $this->Text(165,10,utf8_decode($Order->getLastname()));
+        $this->SetFont('Arial','',14);
+        $this->SetTextColor(0,0,0);
+        $this->Text(140,20,'Seite');
+        $this->Text(165,20,$this->CarePage);
         $this->Image('images/bslogo.jpg',50,10,85,25,'JPEG');
         $this->ln(20);
         $this->SetFont('Arial','B',24);
@@ -86,15 +90,17 @@ class OrderPDF extends \FPDF
     }
 
     function CareListBody(Product $Product,Orders $Order){
-        if($this->getY() > 240){
+        if($this->getY() > 200){
             $this->addPage();
              $this->CarePage++;
-            $this->SetFont('Arial','',12);
-            $this->SetTextColor(80,80,80);
-            $this->Text(140,10,'Bestellung');
-            $this->Text(165,10,$Order->getOrderID());
-            $this->Text(140,15,'Seite');
-            $this->Text(165,15,$this->CarePage);
+            $this->SetFont('Arial','B',18);
+            $this->SetTextColor(0,0,0);
+            $this->Text(140,10,$Order->getOrderID());
+            $this->Text(165,10,utf8_decode($Order->getLastname()));
+            $this->SetFont('Arial','',14);
+            $this->SetTextColor(0,0,0);
+            $this->Text(140,20,'Seite');
+            $this->Text(165,20,$this->CarePage);
             $this->Image('images/bslogo.jpg',50,10,85,25,'JPEG');
             $this->ln(20);
             $this->SetFont('Arial','B',24);

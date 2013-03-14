@@ -729,6 +729,9 @@ class OrderController extends Controller
                 }elseif( stripos($item->getItemText(), '[BUNDLE]') === 0){
                     $isBundle = false;
                     $productList = array();
+                }elseif(stripos($item->getItemText(), '[-]') === 0){
+                    $isBundle = true;
+                    $productList = array($p);
                 }else{
                     $isBundle = false;
                     $productList = array($p);
@@ -737,7 +740,7 @@ class OrderController extends Controller
                 foreach($productList as $product){
                     if($isBundle){
                         $item = new \Acme\BSDataBundle\Entity\OrdersItem();
-                        $item->setItemText("B ".$product->getName());
+                        $item->setItemText(" [B] ".$product->getName());
                         $item->setQuantity(1);
                         $item->setPrice(0);
                     }
@@ -762,7 +765,7 @@ class OrderController extends Controller
 
                     }
 
-
+                    // Artikel für die Pickliste zusammenführen
                     if(isset($aSortPicklistItems[ $PLIstock][$PLIartID])){
                         $PLIorder = $aSortPicklistItems[ $PLIstock][$PLIartID]['orders'];
                         if(isset($PLIorder[$rOrder])){
@@ -819,7 +822,7 @@ class OrderController extends Controller
 
             // Fooder
             $pdf->OrderFooder($oOrder,$oOrderQuantity );
-
+            // Pflegeanleitung
             if(count($aCareList)> 0){
                     ksort($aCareList);
                     $pdf->AddPage();
