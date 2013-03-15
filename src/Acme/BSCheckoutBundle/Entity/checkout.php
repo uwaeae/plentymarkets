@@ -23,10 +23,10 @@ class checkout
     private $id;
 
     /**
-     * @var integer $cashbox
-     *
-     * @ORM\Column(name="cashbox", type="integer")
+     * @ORM\ManyToOne(targetEntity="cashbox", inversedBy="checkout")
+     * @ORM\JoinColumn(name="cashbox_id", referencedColumnName="id")
      */
+
     private $cashbox;
 
     /**
@@ -79,25 +79,7 @@ class checkout
         return $this->id;
     }
 
-    /**
-     * Set cashbox
-     *
-     * @param integer $cashbox
-     */
-    public function setCashbox($cashbox)
-    {
-        $this->cashbox = $cashbox;
-    }
-
-    /**
-     * Get cashbox
-     *
-     * @return integer 
-     */
-    public function getCashbox()
-    {
-        return $this->cashbox;
-    }
+    
 
     /**
      * Set buydate
@@ -207,5 +189,27 @@ class checkout
     public function getSummary()
     {
         return $this->summary;
+    }
+
+
+
+    /**
+     * Set cashbox
+     *
+     * @param Acme\BSCheckoutBundle\Entity\cashbox $cashbox
+     */
+    public function setCashbox(\Acme\BSCheckoutBundle\Entity\cashbox $cashbox)
+    {
+        $this->cashbox = $cashbox;
+    }
+
+    /**
+     * Get cashbox
+     *
+     * @return Acme\BSCheckoutBundle\Entity\cashbox 
+     */
+    public function getCashbox()
+    {
+        return $this->cashbox;
     }
 }

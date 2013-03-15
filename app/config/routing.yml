@@ -1,7 +1,9 @@
 BSCheckoutBundle:
     resource: "@BSCheckoutBundle/Controller/"
     type:     annotation
-    prefix:   /checkout
+    prefix:   /
+
+
 
 
 login:

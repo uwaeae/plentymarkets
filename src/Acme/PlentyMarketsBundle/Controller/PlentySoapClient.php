@@ -1084,7 +1084,7 @@ class PlentySoapClient extends \SoapClient
     public function doAddItemsBase($itemNo,$price,$name,$name2,$description,$option = array()){
 
 
-      /*  $options['ItemID'] = null;
+        $options['ItemID'] = null;
         $options['ItemNo'] = $itemNo;
 
         $options['EAN1'] = null;
@@ -1096,8 +1096,9 @@ class PlentySoapClient extends \SoapClient
             'Webshop' => TRUE,
             'WebAPI' => TRUE);
 
-        $options['Categoriey'] = (object) array(
-            'ItemCategoryPath' => 'BSINTERN');
+        $options['Categories'] = array('item' => (object) array(
+            'ItemCategoryPath' => 'BSINTERN')
+        );
         $options['PriceSet'] = (object) array(
             'Price' => $price,
             'Price6' => $price);
@@ -1118,9 +1119,9 @@ class PlentySoapClient extends \SoapClient
 
 
         $options = $option + $options;
-        */
 
-        $AddItemBase = new PlentySoapObject_AddItemsBaseItemBase();
+
+       /* $AddItemBase = new PlentySoapObject_AddItemsBaseItemBase();
 
         $AddItemBase->ItemNo = $itemNo;
         $AddItemBase->PriceSet->Price = $price;
@@ -1133,10 +1134,11 @@ class PlentySoapClient extends \SoapClient
         $AddItemBase->Categories->item->ItemCategoryPath = "BSINTERN";
         $AddItemBase->Availability->Webshop = False;
         $AddItemBase->Availability->WebAPI = True;
+       */
 
         try
         {
-            $oResponse	=	$this->__soapCall('AddItemsBase',array($AddItemBase));
+            $oResponse	=	$this->__soapCall('AddItemsBase',$options);
         }
         catch(SoapFault $sf)
         {

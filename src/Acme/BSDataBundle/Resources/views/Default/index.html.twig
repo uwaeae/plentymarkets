@@ -54,8 +54,9 @@
         <div class="ym-gbox menu">
             <h2>Kasse </h2>
             <ul>
-                <li><a href="{{ path('BSCheckout_home' )}}" >Kasse</a></li>
-                <li><a href="{{ path('BSCheckout_home' )}}" >Kassenabschluss</a></li>
+                <li><a href="{{ path('BSCheckout_home', { 'cashbox_id': 1 } )}}" >Kasse Laden</a></li>
+
+                <li><a href="{{ path('BSCheckout_payoff' )}}" >Kassenabschluss</a></li>
 
 
             </ul>

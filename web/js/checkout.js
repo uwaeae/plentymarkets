@@ -60,11 +60,11 @@ $(document).ready(function(){
     // Standart Artikel
     $('.input_buttons div').click(function(){
         var code = $(this).data('code');
-
-
-        var price = $('.inputkeyboard').val();
+        var input =  $('.inputkeyboard');
+        var id =  input.data('cashbox');
+        var price = input.val();
         if(price.length > 0)
-        $.post('/checkout/add',{ code: code,price: price},buildtable);
+        $.post('/checkout/'+id+'/add',{ code: code,price: price},buildtable);
 
 
     });
@@ -72,13 +72,13 @@ $(document).ready(function(){
     // Eingabefeld Tasten aktionen
    $('.inputkeyboard').keypress(function(event){
         console.log(event.keyCode);
-
+        var id = $(this).data('cashbox');
        if(event.keyCode > 112 && event.keyCode < 120){
            var items = $('.co_items tr td');
            var code = items[event.keyCode - 112 ].data('code');
            var price = $('.inputkeyboard').val();
            if(price.length > 0)
-               $.post('/checkout/add',{ code: code,price: price},buildtable);
+               $.post('/checkout/'+id+'/add',{ code: code,price: price},buildtable);
            return false;
        }
 
@@ -86,7 +86,7 @@ $(document).ready(function(){
            var code =  $(this).val()
            var input = $(this);
 
-           $.post('/checkout/add',{ code: code},buildtable);
+           $.post('/checkout/'+id+'/add',{ code: code},buildtable);
             return false;
            }
 

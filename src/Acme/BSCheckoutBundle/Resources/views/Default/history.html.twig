@@ -18,7 +18,7 @@
 
         <ul >
             <li>
-                <a href="{{ path('BSCheckout_home') }}">
+                <a href="{{ path('BSCheckout_home',{'cashbox_id' : cashbox_id}) }}">
                     Kasse
                 </a>
             </li>
@@ -42,7 +42,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for entity in pagination %}
+            {% for entity in Baskets %}
                 <tr>
 
 
@@ -54,23 +54,15 @@
                     <td>
                         <ul>
                             <li>
-                                <a href="{{ path('BSData_product_show', { 'id': entity.id }) }}">show</a>
+                                <a href="{{ path('BSCheckout_receipt', { 'cashbox_id': cashbox_id,'id':entity.id}) }}">Bon</a>
                             </li>
-                            <li>
-                                <a href="{{ path('BSData_product_edit', { 'id': entity.id }) }}">edit</a>
-                            </li>
+
                         </ul>
                     </td>
                 </tr>
             {% endfor %}
 
-            <tr>
-                <td colspan="6">
-                    <div class="navigation">
-                        {{ pagination.render()|raw }}
-                    </div>
-                </td>
-            </tr>
+
             </tbody>
         </table>
 

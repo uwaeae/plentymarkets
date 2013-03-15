@@ -9,12 +9,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 
 use Acme\PlentyMarketsBundle\Controller\PlentySoapClient;
-
+/**
+ * cashbox controller.
+ *
+ * @Route("/cashbox")
+ */
 
 class CheckoutController extends Controller
 {
     /**
-     * @Route("/",name="BSCheckout_home")
+     * @Route("/{cashbox_id}/checkout",name="BSCheckout_home")
      * @Template()
      */
     public function indexAction($cashbox_id = 1)
@@ -22,7 +26,8 @@ class CheckoutController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->getCurrentBasket($cashbox_id);
-
+        $cashbox = $em->getRepository('BSCheckoutBundle:cashbox')->find($cashbox_id);
+        $quickbuttons = $em->getRepository('BSCheckoutBundle:quickbutton')->getQuickbuttons($cashbox_id);
         $form = $this->createFormBuilder()
             ->add('prefix', 'choice', array(
             'choices'   => array('Herr' => 'Herr', 'Frau' => 'Frau', 'Firma' => 'Firma'),
@@ -34,7 +39,7 @@ class CheckoutController extends Controller
             ->add('street', 'text',array('label'=>'Strasse'))
             ->add('city', 'text',array('label'=>'Stadt'))
             ->add('country', 'country',array('label'=>'Land',
-                'preferred_choices' => array('DE','AT','CH'),))
+            'preferred_choices' => array('DE','AT','CH'),))
             ->add('email', 'email',array('label'=>'Email'))
             ->getForm();
 
@@ -43,7 +48,8 @@ class CheckoutController extends Controller
         /**
          * Es wird ein neuer Soap-Client angelegt.
          */
-        $oPlentySoapClient	=	new PlentySoapClient($this,$this->getDoctrine() );
+       /*
+         $oPlentySoapClient	=	new PlentySoapClient($this,$this->getDoctrine() );
 
 
         $items = $oPlentySoapClient->doGetItemsByOptions(array('CategoriePath'=>"91",
@@ -53,20 +59,43 @@ class CheckoutController extends Controller
             $STD_article[$item->ItemNo] = $item->Texts->Name;
 
         }
+       */
 
 
 
-
-        return $this->render('BSCheckoutBundle:Default:index.html.twig', array('basket' => $currentBasket,'form' => $form->createView(),'StdArticle'=> $STD_article));
+        return $this->render('BSCheckoutBundle:Default:index.html.twig', array(
+                'basket' => $currentBasket,
+                'cashbox' => $cashbox,
+                'quickbuttons' => $quickbuttons,
+                'form' => $form->createView(),
+            //    'StdArticle'=> $STD_article
+            )
+        );
     }
 
 
     /**
-     * @Route("/add",name="BSCheckout_add")
+     * @Route("/{cashbox_id}/checkout/history/{date}",name="BSCheckout_history")
 
      * @Template()
      */
-    public function addAction( $cashbox_id = 1)
+    public function historyAction($cashbox_id,$date)
+    {
+        if($date == null ) $date  = date("d-m-Y");
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $Baskets = $em->getRepository('BSCheckoutBundle:checkout')->getHistory($cashbox_id,$date);
+        return $this->render('BSCheckoutBundle:Default:history.html.twig', array('Baskets' => $Baskets,'cashbox_id'=>$cashbox_id));
+    }
+
+
+
+    /**
+     * @Route("/{cashbox_id}/checkout/add",name="BSCheckout_add")
+
+     * @Template()
+     */
+    public function addAction($cashbox_id)
     {
 
         $code = $this->getRequest()->request->get('code');
@@ -114,33 +143,33 @@ class CheckoutController extends Controller
     }
 
     /**
-     * @Route("/clear",name="BSCheckout_clear")
+     * @Route("/{cashbox_id}//checkout/clear",name="BSCheckout_clear")
      * @Method({ "POST"})
      * @Template()
      */
-    public function clearAction($cashbox_id = 1)
+    public function clearAction($cashbox_id)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
         $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->clearCurrentBasket($cashbox_id);
 
        //  return $this->render('BSCheckoutBundle:Default:index.html.twig', array('basket' => $currentBasket));
-        return $this->redirect($this->generateUrl('BSCheckout_home'));
+        return $this->redirect($this->generateUrl('BSCheckout_home',array('cashbox_id'=>$cashbox_id)));
     }
 
     /**
-     * @Route("/finish",name="BSCheckout_finish")
+     * @Route("/{cashbox_id}//checkout/finish",name="BSCheckout_finish")
      * @Method({ "POST" })
      * @Template()
      */
-    public function finishAction()
+    public function finishAction($cashbox_id)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
         $payment_id = $this->getRequest()->request->get('payment_id');
-        $cashbox_id = $this->getRequest()->request->get('cashbox_id');
+        //$cashbox_id = $this->getRequest()->request->get('cashbox_id');
 
-        if(!$cashbox_id && !$payment_id){
+        if(!$cashbox_id || !$payment_id){
             throw $this->createNotFoundException("Keine Parameter übergeben");
 
         }
@@ -162,16 +191,16 @@ class CheckoutController extends Controller
             $em->flush();
 
 
-        return $this->redirect($this->generateUrl('BSCheckout_home'));
+        return $this->redirect($this->generateUrl('BSCheckout_home',array('cashbox_id'=>$cashbox_id)));
 
     }
 
     /**
-     * @Route("/order",name="BSCheckout_order")
+     * @Route("/{cashbox_id}//checkout/order",name="BSCheckout_order")
      * @Method({ "POST"})
      * @Template()
      */
-    public function orderAction($cashbox_id = 1)
+    public function orderAction($cashbox_id )
     {
         $em = $this->getDoctrine()->getEntityManager();
 
@@ -179,17 +208,17 @@ class CheckoutController extends Controller
 
 
 
-        return $this->render('BSCheckoutBundle:Default:index.html.twig', array('basket' => $currentBasket));
+        return $this->redirect($this->generateUrl('BSCheckout_home',array('cashbox_id'=>$cashbox_id)));
 
     }
 
 
     /**
-     * @Route("/itemaction",name="BSCheckout_item")
+     * @Route("/{cashbox_id}//checkout/itemaction",name="BSCheckout_item")
      * @Method({ "POST"})
      * @Template()
      */
-    public function itemAction($cashbox_id = 1)
+    public function itemAction($cashbox_id)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
@@ -232,11 +261,11 @@ class CheckoutController extends Controller
     }
 
     /**
-     * @Route("/receipt",name="BSCheckout_receipt")
+     * @Route("/{cashbox_id}//checkout/receipt",name="BSCheckout_receipt")
 
      * @Template()
      */
-    public function receiptAction( $cashbox_id = 1)
+    public function receiptAction( $cashbox_id )
     {
 
         $em = $this->getDoctrine()->getEntityManager();
@@ -267,12 +296,20 @@ class CheckoutController extends Controller
 
         }
 
-
-
-
-
         return $this->render('BSCheckoutBundle:Default:receipt.html.twig', array('basket' => $currentBasket, 'summary'=> $summary));
 
+    }
+
+    /**
+     * @Route("/checkout/payoff",name="BSCheckout_payoff")
+     * @Method({ "GET"})
+     * @Template()
+     */
+    public function payoffAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        return $this->render('BSCheckoutBundle:Default:payoff.html.twig');
     }
 
 

@@ -15,10 +15,13 @@ class checkoutRepository extends EntityRepository
 
     public function getCurrentBasket($cashbox_id){
 
+        //
         $em = $this->getEntityManager();
+        $cashbox = $em->getRepository('BSCheckoutBundle:cashbox')->find($cashbox_id);
         $qb = $this->createQueryBuilder('b');
+        $qb->join('b.cashbox','c');
         $qb->where('b.finish <> true');
-        $qb->andWhere('b.cashbox ='.$cashbox_id);
+        $qb->andWhere($qb->expr()->eq('c.id',$cashbox_id));
         try{
             $result = $qb->getQuery()->setMaxResults(1)->getSingleResult();
         } catch (\Doctrine\Orm\NoResultException $e) {
@@ -29,7 +32,7 @@ class checkoutRepository extends EntityRepository
         if(!$result){
             $result = new Checkout();
             $result->setBuydate(new \DateTime());
-            $result->setCashbox($cashbox_id);
+            $result->setCashbox($cashbox);
             $result->setFinish(false);
             $result->setSummary(0);
             $result->setPayment(0);
@@ -60,4 +63,25 @@ class checkoutRepository extends EntityRepository
         return $cb;
     }
 
+
+    public function getHistory($cashbox_id,$date){
+        $d = strtotime($date);
+        $d_beginn = date('YmdHis', mktime(0, 0, 0, date('m',$d), date('d',$d), date('Y',$d)));
+        $d_end = date('YmdHis', mktime(0, 0, 0, date('m',$d), date('d',$d)+1, date('Y',$d)));
+
+        $qb = $this->createQueryBuilder('b');
+        $qb->where('b.finish = true');
+        $qb->andWhere('b.cashbox ='.$cashbox_id);
+        $qb->andWhere('b.buydate BETWEEN '.$d_beginn.' AND '.$d_end);
+
+        try{
+            $result = $qb->getQuery()->getResult();
+        } catch (\Doctrine\Orm\NoResultException $e) {
+            $result = null;
+        }
+
+        return $result;
+
+
+    }
 }
