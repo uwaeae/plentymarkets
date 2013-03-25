@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Entity/quickbutton.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Entity/quickbuttonRepository.php" />
     </list>
     <ignored path="blumenschule.local.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -41,6 +42,7 @@
     <file path="/PMDeliveryAdress.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363963543317" ignored="false" />
     <file path="/RequestAddOrdersItems.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363967862335" ignored="false" />
     <file path="/parameters.ini" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1364196270121" ignored="false" />
+    <file path="$PROJECT_DIR$/.idea/workspace.xml" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1364218742032" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -424,6 +426,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="BSOrderBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blumenschule.local" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blumenschule.local" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Acme" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BSCheckoutBundle" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>

@@ -1,0 +1,5 @@
+
+<form action="{{ path('cashbox_quickbutton_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    {{ form_widget(edit_form) }}
+    <button class="ym-button" type="submit">Speichern</button>
+</form>

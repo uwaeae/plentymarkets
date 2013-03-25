@@ -1,0 +1,29 @@
+<h1>cashbox list</h1>
+
+<table class="records_list">
+
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+
+            <td>{{ entity.name }}</td>
+
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('BSCheckout_home', { 'cashbox_id': entity.id }) }}">Kasse Öffenen</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('checkout_cashbox_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>

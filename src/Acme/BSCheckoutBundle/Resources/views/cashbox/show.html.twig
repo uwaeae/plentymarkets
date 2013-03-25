@@ -1,0 +1,65 @@
+
+{% extends '::base2.html.twig' %}
+
+{% block title %}Kasse{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('/js/jquery.printPage.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/js/cashbox.js') }}" type="text/javascript"></script>
+
+{% endblock %}
+
+{% block body %}
+<h1>Kasse {{ entity.name }}</h1>
+    </div>
+    </header>
+<div class="ym-wrapper">
+
+    <div class="ym-column">
+        <div class="ym-col1">
+
+            <div class="ym-cbox">
+
+                <table class="record_properties">
+                    <tbody>
+                    {% for key,config in quickbuttons  %}
+                        <tr>
+                            <td>{{ config.pos}}</td>
+                            <td>{{ config.name}}</td>
+                            <td>{{ config.code }}</td>
+                            <td>{{ config.price }}</td>
+                            <td>{{ config.quickkey }}</td>
+                            <td>   <a  class="ym-button edit_quickbutton" href="{{ path('cashbox_quickbutton_edit', { 'id': config.id }) }}">edit</a></td>
+                            <td> <form action="{{ path('cashbox_quickbutton_delete', { 'id': config.id }) }}" method="post">
+
+                            <button  class="ym-button" type="submit">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <div class="ym-col2">
+
+            <div class="ym-cbox edit_area" >
+
+                <form action="{{ path('cashbox_quickbutton_create') }}" method="post">
+                {{ form_widget(quickbutton_form) }}
+                <button class="ym-button" type="submit">Add Button</button>
+                </form>
+            </div>
+            <div class="ym-cbox">
+                <a href="{{ path('BSCheckout_home', { 'cashbox_id': entity.id   }) }}" class="ym-button">zurück</a>
+            </div>
+        </div>
+</div>
+
+
+{% endblock %}
