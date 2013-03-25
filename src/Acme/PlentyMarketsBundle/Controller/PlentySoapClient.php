@@ -18,6 +18,10 @@
  */
 
 namespace Acme\PlentyMarketsBundle\Controller;
+
+
+use Acme\PlentyMarketsBundle\Controller\PMSOAP\PlentyFactory;
+use Acme\PlentyMarketsBundle\Controller\PMSOAP\PlentySoapRequest_AddOrders;
 use \DateTime;
 use \SoapFault;
 use Acme\PlentyMarketsBundle\Entity\Token;
@@ -305,6 +309,124 @@ class PlentySoapClient extends \SoapClient
             return("Es ist ein Fehler aufgetreten  ");//.$oResponse->ErrorMessages->item[0]->Message;
         }
     }
+
+
+    /**
+     * Mit dem Call GetCustomers werden die Kuncen abgerufen.
+     * http://man.plentymarkets.eu/soap-api/call-index/getcustomers/
+     *
+     */
+    public function doGetCustomers($options)
+
+    {
+        $oResponse = null;
+
+
+        $request = new RequestGetCustomers();
+
+        $request->SearchString = $options['searchstring'];
+
+        try
+        {
+            $oResponse	=	$this->__soapCall('GetCustomers',array($request));
+        }
+        catch(\SoapFault $sf)
+        {
+            echo("Es kam zu einem Fehler beim Call GetAuthentificationToken<br>");
+            echo($sf->getMessage());
+        }
+
+        //echo var_dump($oResponse);
+
+
+        if( isset($oResponse->Success) && $oResponse->Success == true)
+        {
+            return $oResponse->Customers->item;
+        }
+        else
+        {
+            return("Es ist ein Fehler aufgetreten  ");//.$oResponse->ErrorMessages->item[0]->Message;
+        }
+    }
+
+      /**
+     * Mit dem Call AddOrders werden die Kuncen abgerufen.
+     * http://man.plentymarkets.eu/soap-api/call-index/AddOrders/
+     *
+     */
+    public function doAddOrders(RequestAddOrders $order)
+
+    {
+        $oResponse = null;
+
+        //$order =  new PlentySoapRequest_AddOrders();
+
+        //$factory = new PlentyFactory();
+        //$request = $factory->get('PlentySoapRequest_AddOrders');
+
+        try
+        {
+            $oResponse	=	$this->__soapCall('AddOrders',array($order));
+        }
+        catch(\SoapFault $sf)
+        {
+            echo("Es kam zu einem Fehler beim Call GetAuthentificationToken<br>");
+            echo($sf->getMessage());
+        }
+
+        //echo var_dump($oResponse);
+
+
+        if( isset($oResponse->Success) && $oResponse->Success == true)
+        {
+            return $oResponse->SuccessMessages->item[0];
+        }
+        else
+        {
+            return("Es ist ein Fehler aufgetreten  ");//.$oResponse->ErrorMessages->item[0]->Message;
+        }
+    }
+
+
+    /**
+     * Mit dem Call AddOrders werden die Kuncen abgerufen.
+     * http://man.plentymarkets.eu/soap-api/call-index/AddOrders/
+     *
+     */
+    public function doAddOrdersItems(RequestAddOrdersItems $order)
+
+    {
+        $oResponse = null;
+
+        //$order =  new PlentySoapRequest_AddOrders();
+
+        //$factory = new PlentyFactory();
+        //$request = $factory->get('PlentySoapRequest_AddOrders');
+
+        try
+        {
+            $oResponse	=	$this->__soapCall('AddOrderItems',array($order));
+        }
+        catch(\SoapFault $sf)
+        {
+            echo("Es kam zu einem Fehler beim Call GetAuthentificationToken<br>");
+            echo($sf->getMessage());
+        }
+
+        //echo var_dump($oResponse);
+
+
+        if( isset($oResponse->Success) && $oResponse->Success == true)
+        {
+            return $oResponse;
+        }
+        else
+        {
+            return("Es ist ein Fehler aufgetreten  ");//.$oResponse->ErrorMessages->item[0]->Message;
+        }
+    }
+
+
 
 
 
@@ -916,43 +1038,10 @@ class PlentySoapClient extends \SoapClient
     }
 
 
-    /**
-     * Funktion um ein Customer Object mittels SOAP abzufragen
-     * @param array $option
-     * @return mixed
-     */
-    public function doGetCustomer( array $option )
-    {
 
-
-        $options['CustomerID'] = null;
-        $options['CustomerNumber'] = null;
-        $options['ExternalCustomerID'] = null;
-        $options = $option + $options;
-
-        try
-        {
-            $oResponse	=	$this->__soapCall('GetCustomer',array( $options));
-        }
-        catch(SoapFault $sf)
-        {
-            print_r("Es kam zu einem Fehler beim Call GetAuthentificationToken<br>");
-            print_r($sf->getMessage());
-        }
-
-
-        if( $oResponse->Success == true)
-        {
-            return($oResponse->ResponseObject);
-        }
-        else
-        {
-            return($oResponse->ErrorMessages);
-        }
-    }
 
     /**
-     * Funktion um ein Customer Object mittels SOAP abzufragen
+     * Funktion um ein Lieferschein Object mittels SOAP abzufragen
      * @param array $option
      * @return mixed
      */

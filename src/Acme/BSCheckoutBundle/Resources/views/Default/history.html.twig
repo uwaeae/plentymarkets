@@ -1,4 +1,3 @@
-
 {% extends '::base.html.twig' %}
 {% block title %}INTERN - Waren{% endblock %}
 
@@ -16,56 +15,70 @@
     <nav class="ym-hlist">
 
 
-        <ul >
+        <ul>
             <li>
                 <a href="{{ path('BSCheckout_home',{'cashbox_id' : cashbox_id}) }}">
                     Kasse
                 </a>
             </li>
-            <li><a href="{{ path('BSData_mainmenu') }}" >Hauptmenü</a></li>
+            <li><a href="{{ path('BSData_mainmenu') }}">Hauptmenü</a></li>
         </ul>
 
     </nav>
 
+    <div class="ym-wrapper">
+
+    <div class="ym-column">
+        <div class="ym-col1">
 
 
-
-    <div class="results">
-        <table class="bordertable narrow">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Datum/Uhrzeit</th>
-                <th>Zahlungsart</th>
-                <th>Summe</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for entity in Baskets %}
-                <tr>
-
-
-                    <td>{{ entity.id }}</td>
-                    <td>{{ entity.buydate|date("m/d/Y") }}</td>
-                    <td>{{ entity.payment }}</td>
-                    <td>{{ entity.summary }}</td>
-
-                    <td>
-                        <ul>
-                            <li>
-                                <a href="{{ path('BSCheckout_receipt', { 'cashbox_id': cashbox_id,'id':entity.id}) }}">Bon</a>
-                            </li>
-
-                        </ul>
-                    </td>
-                </tr>
-            {% endfor %}
+            <div class="results ym-cbox">
+                <table class="bordertable narrow">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Datum/Uhrzeit</th>
+                        <th>Zahlungsart</th>
+                        <th>Summe</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for entity in Baskets %}
+                        <tr>
 
 
-            </tbody>
-        </table>
+                            <td>{{ entity.id }}</td>
+                            <td>{{ entity.buydate|date("d.m.Y H:i:s ") }}</td>
+                            <td>{{ entity.payment }}</td>
+                            <td>{{ entity.summary|number_format(2, '.', ',')  }} &euro;</td>
 
+                            <td>
+                                <ul>
+                                    <li>
+                                        <a href="{{ path('BSCheckout_receipt', { 'cashbox_id': cashbox_id,'id':entity.id}) }}" target="_blank">Bon</a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <div class="ym-col2">
+            <div class="ym-cbox">
+                <form action="{{ path('BSCashbox_close', { 'id': cashbox_id,}) }}" method="post">
+                    <button class="ym-button" >Kassen Abschluss</button>
+                </form>
+
+            </div>
+        </div>
     </div>
+    </div>
+
 
 {% endblock %}

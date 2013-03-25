@@ -8,6 +8,10 @@ BSData_menu:
      defaults: { _controller: BSDataBundle:Default:data }
 
 
+BSData_customer_serach:
+     pattern:  /customer/search/{string}
+     defaults: { _controller: BSDataBundle:Default:customerSearch }
+
 
 
 BSData_paymentmethods_show:

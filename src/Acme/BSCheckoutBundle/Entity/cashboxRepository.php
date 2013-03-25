@@ -23,4 +23,8 @@ class cashboxRepository extends EntityRepository
     {
         return "cashboxRepository";
     }
+
+
+
+
 }

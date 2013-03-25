@@ -24,10 +24,7 @@ BSLableBundle:
 BSDataBundle:
     resource: "@BSDataBundle/Resources/config/routing.yml"
     prefix:   /
-PlentyMarketsBundle:
-    resource: "@PlentyMarketsBundle/Controller/"
-    type:     annotation
-    prefix:   /
+
 
 BSOrderBundle:
     resource: "@BSOrderBundle/Resources/config/routing.yml"

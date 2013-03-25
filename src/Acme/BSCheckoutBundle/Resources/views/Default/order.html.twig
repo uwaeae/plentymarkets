@@ -1,0 +1,48 @@
+{% extends '::base.html.twig' %}
+{% block title %}Rechung{% endblock %}
+
+
+{% block javascripts %}
+    <script src="{{ asset('/js/jquery.js') }}" type="text/javascript"></script>
+
+{% endblock %}
+
+{% block body %}
+
+    <h1>Rechung </h1>
+    </div>
+    </header>
+    <nav class="ym-hlist">
+
+
+        <ul>
+            <li>
+                <a href="{{ path('BSCheckout_home',{'cashbox_id' : cashbox_id}) }}">
+                    zurück
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+    <div class="ym-wrapper">
+
+        <div class="ym-column">
+            <div class="ym-col1">
+
+
+                <div class="results ym-cbox">
+
+                </div>
+            </div>
+            <div class="ym-col2">
+                <div class="ym-cbox">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

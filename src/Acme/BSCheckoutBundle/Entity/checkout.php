@@ -44,6 +44,15 @@ class checkout
     private $finish;
 
     /**
+     * @var boolean $closed
+     *
+     * @ORM\Column(name="closed", type="boolean")
+     */
+    private $closed;
+
+
+
+    /**
      * @var integer $payment
      *
      * @ORM\Column(name="payment", type="integer")
@@ -211,5 +220,27 @@ class checkout
     public function getCashbox()
     {
         return $this->cashbox;
+    }
+
+
+
+    /**
+     * Set closed
+     *
+     * @param boolean $closed
+     */
+    public function setClosed($closed)
+    {
+        $this->closed = $closed;
+    }
+
+    /**
+     * Get closed
+     *
+     * @return boolean 
+     */
+    public function getClosed()
+    {
+        return $this->closed;
     }
 }

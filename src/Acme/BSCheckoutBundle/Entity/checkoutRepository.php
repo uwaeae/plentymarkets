@@ -34,6 +34,7 @@ class checkoutRepository extends EntityRepository
             $result->setBuydate(new \DateTime());
             $result->setCashbox($cashbox);
             $result->setFinish(false);
+            $result->setClosed(false);
             $result->setSummary(0);
             $result->setPayment(0);
             $this->getEntityManager()->persist($result);
@@ -64,7 +65,7 @@ class checkoutRepository extends EntityRepository
     }
 
 
-    public function getHistory($cashbox_id,$date){
+    public function getHistory($cashbox_id,$date,$closed = false){
         $d = strtotime($date);
         $d_beginn = date('YmdHis', mktime(0, 0, 0, date('m',$d), date('d',$d), date('Y',$d)));
         $d_end = date('YmdHis', mktime(0, 0, 0, date('m',$d), date('d',$d)+1, date('Y',$d)));
@@ -73,6 +74,7 @@ class checkoutRepository extends EntityRepository
         $qb->where('b.finish = true');
         $qb->andWhere('b.cashbox ='.$cashbox_id);
         $qb->andWhere('b.buydate BETWEEN '.$d_beginn.' AND '.$d_end);
+        $qb->andWhere($qb->expr()->eq('b.closed', ($closed === true? 1 : 0)));
 
         try{
             $result = $qb->getQuery()->getResult();
@@ -83,5 +85,15 @@ class checkoutRepository extends EntityRepository
         return $result;
 
 
+    }
+
+    /**
+     * Returns the class name of the object managed by the repository
+     *
+     * @return string
+     */
+    function getClassName()
+    {
+       return 'checkoutRepository';
     }
 }

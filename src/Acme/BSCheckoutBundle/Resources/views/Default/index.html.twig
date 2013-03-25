@@ -30,7 +30,7 @@
                                 <th>Menge</th>
                                 <th>Bezeichung</th>
                                 <th>Preis</th>
-                                <th>PA</th>
+                               <!-- <th>PA</th> -->
                                 <th>Summe</th>
                             </tr>
                             </thead>
@@ -49,7 +49,7 @@
                                     </td>
                                     <td>{{ item.description }}</td>
                                     <td>{{ item.price|number_format(2, '.', ',')  }} &euro;</td>
-                                    <td> </td>
+                                    <!-- <td></td> -->
                                     <td>{{ (item.quantity * item.price)|number_format(2, '.', ',')  }}  &euro;
                                         <div class="itemEdit">
                                             <a href="#" data-action="delete" data-id="{{ item.id }}"><img src="{{ asset('images/icons/remove2.png') }}" alt="Löschen" /></a>
@@ -117,7 +117,7 @@
                                 <input type="hidden" name="payment_id" value="11">
                                 <button class="ym-button" >EC</button>
                             </form>
-                            <button class="ym-button receipt btnPrint"  href='{{ path('BSCheckout_receipt', { 'cashbox_id': cashbox.id,}) }}' >Quittung</button>
+                            <button class="ym-button receipt btnPrint"  href='{{ path('BSCheckout_receipt', { 'cashbox_id': cashbox.id,'id': basket.id,}) }}' >Quittung</button>
                             <button class="ym-button pflege" >Pflegeanleitung</button>
 
                         </div>

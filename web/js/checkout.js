@@ -16,7 +16,7 @@ var buildtable = function buildTable(data){
             ' <img src="/images/icons/arrow-up.png" alt="+ Menge" /></a></div></td>');
         items.push('<td>' + val['description'] + '</td>');
         items.push('<td>' + parseFloat(val['price']).toFixed(2) + ' &euro;</td>');
-        items.push('<td>' + val['pa'] + '</td>');
+       // items.push('<td>' + val['pa'] + '</td>');
         items.push('<td>' + parseFloat(val['sum']).toFixed(2) + ' &euro;' +
             '<div class="itemEdit">'+
             '<a href="#" data-action="delete" data-id="'+ val['id'] +'">' +
@@ -64,7 +64,7 @@ $(document).ready(function(){
         var id =  input.data('cashbox');
         var price = input.val();
         if(price.length > 0)
-        $.post('/checkout/'+id+'/add',{ code: code,price: price},buildtable);
+        $.post('/cashbox/'+id+'/checkout/add',{ code: code,price: price},buildtable);
 
 
     });
@@ -78,7 +78,7 @@ $(document).ready(function(){
            var code = items[event.keyCode - 112 ].data('code');
            var price = $('.inputkeyboard').val();
            if(price.length > 0)
-               $.post('/checkout/'+id+'/add',{ code: code,price: price},buildtable);
+               $.post('/cashbox/'+id+'/checkout/add',{ code: code,price: price},buildtable);
            return false;
        }
 
@@ -86,7 +86,7 @@ $(document).ready(function(){
            var code =  $(this).val()
            var input = $(this);
 
-           $.post('/checkout/'+id+'/add',{ code: code},buildtable);
+           $.post('/cashbox/'+id+'/checkout/add',{ code: code},buildtable);
             return false;
            }
 
@@ -118,6 +118,45 @@ $(document).ready(function(){
     // Artikel liste Bearbeiten
 
 
+    $( "#form_lastname" ).autocomplete({
+        source: function( request, response ) {
+            $.ajax({
+                url: "/customer/search/"+request.term,
+                dataType: "json",
+
+                success: function( data ) {
+                    response( $.map( data, function( item ) {
+                        return {
+                            label: item.FirstName + ' ' + item.Surname+', '+item.Street +' '+item.HouseNo +', '+item.ZIP +' '+item.City,
+                            value: item.Surname,
+                            data: item
+                        }
+                    }));
+                }
+            });
+        },
+        minLength: 2,
+        select: function( event, ui ) {
+            console.log(ui);
+            var data = ui.item.data;
+            $('#form_customerno ').val(data.CustomerID);
+            $('#form_lastname ').val(data.Surname);
+            $('#form_firstname ').val(data.FirstName);
+            $('#form_street ').val(data.Street);
+            $('#form_HouseNo ').val(data.HouseNo);
+            $('#form_company ').val(data.Surname);
+            $('#form_zip ').val(data.ZIP);
+            $('#form_city ').val(data.City);
+            $('#form_country ').val(data.Country);
+            $('#form_email ').val(data.Email);
+
+            return false;
+        }
+
+    });
+
+
+
 
 
    getSummary();
@@ -136,6 +175,7 @@ function getSummary(){
 
     $('.co_toPay').html(sum.toFixed(2) + '&euro;');
     $('.itemEdit a').click(function(){
-        $.post('/checkout/itemaction',{ id: $(this).data('id'),action:$(this).data('action')},buildtable);
+        ;
+        $.post('/cashbox/'+$('.inputkeyboard').data('cashbox')+'/checkout/itemaction',{ id: $(this).data('id'),action:$(this).data('action')},buildtable);
     });
 }

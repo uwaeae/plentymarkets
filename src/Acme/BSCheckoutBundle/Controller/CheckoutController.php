@@ -2,6 +2,13 @@
 
 namespace Acme\BSCheckoutBundle\Controller;
 
+use Acme\BSCheckoutBundle\Entity\checkoutItem;
+use Acme\PlentyMarketsBundle\Controller\PMDeliveryAddress;
+use Acme\PlentyMarketsBundle\Controller\PMOrderHead;
+use Acme\PlentyMarketsBundle\Controller\PMOrderItem;
+use Acme\PlentyMarketsBundle\Controller\RequestAddOrders;
+use Acme\PlentyMarketsBundle\Controller\RequestAddOrdersItems;
+use Acme\PlentyMarketsBundle\PlentyMarketsBundle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -28,21 +35,6 @@ class CheckoutController extends Controller
         $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->getCurrentBasket($cashbox_id);
         $cashbox = $em->getRepository('BSCheckoutBundle:cashbox')->find($cashbox_id);
         $quickbuttons = $em->getRepository('BSCheckoutBundle:quickbutton')->getQuickbuttons($cashbox_id);
-        $form = $this->createFormBuilder()
-            ->add('prefix', 'choice', array(
-            'choices'   => array('Herr' => 'Herr', 'Frau' => 'Frau', 'Firma' => 'Firma'),
-            'label'=>'Anrede'
-        ))
-            ->add('firstname', 'text',array('label'=>'Vorname'))
-            ->add('lastname','text',array('label'=>'Nachname'))
-            ->add('company', 'text',array('label'=>'Firma'))
-            ->add('street', 'text',array('label'=>'Strasse'))
-            ->add('city', 'text',array('label'=>'Stadt'))
-            ->add('country', 'country',array('label'=>'Land',
-            'preferred_choices' => array('DE','AT','CH'),))
-            ->add('email', 'email',array('label'=>'Email'))
-            ->getForm();
-
 
 
         /**
@@ -67,7 +59,7 @@ class CheckoutController extends Controller
                 'basket' => $currentBasket,
                 'cashbox' => $cashbox,
                 'quickbuttons' => $quickbuttons,
-                'form' => $form->createView(),
+                'form' => $this->buildOrderForm()->createView(),
             //    'StdArticle'=> $STD_article
             )
         );
@@ -110,7 +102,7 @@ class CheckoutController extends Controller
        // return $this->render('BSCheckoutBundle:Default:index.html.twig', array('basket' => $currentBasket));
 
 
-        return $this->createJSON($currentBasket);
+        return $this->createCurrentBasketJSON($currentBasket);
     }
 
 
@@ -118,7 +110,7 @@ class CheckoutController extends Controller
 
 
 
-    private function createJSON($currentBasket){
+    private function createCurrentBasketJSON($currentBasket){
 
         $result = array();
         $index = 1;
@@ -143,7 +135,7 @@ class CheckoutController extends Controller
     }
 
     /**
-     * @Route("/{cashbox_id}//checkout/clear",name="BSCheckout_clear")
+     * @Route("/{cashbox_id}/checkout/clear",name="BSCheckout_clear")
      * @Method({ "POST"})
      * @Template()
      */
@@ -158,7 +150,7 @@ class CheckoutController extends Controller
     }
 
     /**
-     * @Route("/{cashbox_id}//checkout/finish",name="BSCheckout_finish")
+     * @Route("/{cashbox_id}/checkout/finish",name="BSCheckout_finish")
      * @Method({ "POST" })
      * @Template()
      */
@@ -195,8 +187,11 @@ class CheckoutController extends Controller
 
     }
 
+
+
+
     /**
-     * @Route("/{cashbox_id}//checkout/order",name="BSCheckout_order")
+     * @Route("/{cashbox_id}/checkout/order",name="BSCheckout_order")
      * @Method({ "POST"})
      * @Template()
      */
@@ -204,17 +199,90 @@ class CheckoutController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->clearCurrentBasket($cashbox_id);
+        $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->getCurrentBasket($cashbox_id);
+
+        $oPlentySoapClient	=	new PlentySoapClient($this,$this->getDoctrine());
+
+        $request = $this->getRequest();
+
+        $form = $request->request->get('form');
+
+        $OrderHead = new PMOrderHead();
+        $OrderHead->OrderStatus = 12;
+        $OrderHead->PaymentStatus = 1;
+        $OrderHead->ExternalOrderID = ' ';
+        $OrderHead->OrderID = null;
+        $OrderHead->SalesAgentID = 13;
+        if(!empty($form['customerno'])){
+            $OrderHead->CustomerID = $form['customerno'];
+        }
+        //else todo Create New Customer
 
 
+        $OrderDeliveryAddress = new PMDeliveryAddress();
+        $OrderDeliveryAddress->CustomerID = $form['customerno'];
+        $OrderDeliveryAddress->FirstName = $form['firstname'];
+        $OrderDeliveryAddress->Surname = $form['lastname'];
+        $OrderDeliveryAddress->Street = $form['street'];
+        $OrderDeliveryAddress->HouseNumber = $form['HouseNo'];
+        $OrderDeliveryAddress->City = $form['city'];
+        $OrderDeliveryAddress->ZIP = $form['zip'];
+        $OrderDeliveryAddress->CountryISO2 = $form['country'];
+        $OrderDeliveryAddress->Email = $form['email'];
 
-        return $this->redirect($this->generateUrl('BSCheckout_home',array('cashbox_id'=>$cashbox_id)));
+
+        $OrderItems = array();
+        foreach($currentBasket->getCheckoutItems() as $item){
+
+            $OrderItem = new PMOrderItem();
+            $OrderItem->ItemID = $item->getArticleId();
+            //$OrderItem->ItemNo =  $item->getArticleCode();
+            $OrderItem->Price = $item->getPrice();
+            $OrderItem->Quantity = $item->getQuantity();
+
+
+            $OrderItems[] = $OrderItem;
+        }
+
+
+        $pm_orders = new RequestAddOrders();
+        $pm_orders->Orders[]['OrderHead'] = $OrderHead;
+        $pm_orders->Orders[]['OrderDeliveryAddress'] = $OrderDeliveryAddress;
+        $pm_orders->Orders[]['OrderItems'] = $OrderItems;
+
+
+        //$pmorder->Orders->item->OrderItems->item = array();
+        $response = $oPlentySoapClient->doAddOrders($pm_orders);
+
+
+        $message  = explode(";",$response->Message);
+        $OrderID = $message[1];
+        $RequestAddOrderItems = new RequestAddOrdersItems();
+        foreach($currentBasket->getCheckoutItems() as $item){
+            //$item = new checkoutItem();
+            $OrderItem = new PMOrderItem();
+            $OrderItem->OrderID = $OrderID;
+            $OrderItem->ItemID = $item->getArticleId();
+            $OrderItem->ItemNo =  $item->getArticleCode();
+            $OrderItem->Price = $item->getPrice();
+            $OrderItem->Quantity = $item->getQuantity();
+            $RequestAddOrderItems->OrderItems[] = $OrderItem;
+        }
+        $response = $oPlentySoapClient->doAddOrdersItems($RequestAddOrderItems);
+
+        // TESTEN
+        return $this->render('BSCheckoutBundle:Default:order.html.twig', array(
+                'response' => $response,
+                'cashbox_id' => $cashbox_id
+            )
+        );
 
     }
 
 
+
     /**
-     * @Route("/{cashbox_id}//checkout/itemaction",name="BSCheckout_item")
+     * @Route("/{cashbox_id}/checkout/itemaction",name="BSCheckout_item")
      * @Method({ "POST"})
      * @Template()
      */
@@ -261,16 +329,17 @@ class CheckoutController extends Controller
     }
 
     /**
-     * @Route("/{cashbox_id}//checkout/receipt",name="BSCheckout_receipt")
+     * @Route("/{cashbox_id}/checkout/receipt/{id}",name="BSCheckout_receipt")
 
      * @Template()
      */
-    public function receiptAction( $cashbox_id )
+    public function receiptAction( $cashbox_id,$id )
     {
 
         $em = $this->getDoctrine()->getEntityManager();
 
-        $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->getCurrentBasket($cashbox_id);
+        //$currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->getCurrentBasket($cashbox_id);
+        $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->find($id);
 
 
         $summary = array(
@@ -311,6 +380,31 @@ class CheckoutController extends Controller
 
         return $this->render('BSCheckoutBundle:Default:payoff.html.twig');
     }
+
+
+    private function buildOrderForm(){
+        return  $this->createFormBuilder()
+            ->add('prefix', 'choice', array(
+                'choices'   => array('Herr' => 'Herr', 'Frau' => 'Frau', 'Firma' => 'Firma'),
+                'label'=>'Anrede'
+            ))
+            ->add('customerno', 'hidden',array('required'=>false))
+
+            ->add('lastname','text',array('label'=>'Nachname'))
+            ->add('firstname', 'text',array('label'=>'Vorname','required'=>false))
+            ->add('company', 'text',array('label'=>'Firma','required'=>false))
+            ->add('street', 'text',array('label'=>'Strasse','required'=>false))
+            ->add('HouseNo', 'text',array('label'=>'Hausnummer','required'=>false))
+            ->add('city', 'text',array('label'=>'Stadt','required'=>false))
+            ->add('zip', 'text',array('label'=>'PLZ','required'=>false))
+            ->add('country', 'country',array('label'=>'Land',
+                'preferred_choices' => array('DE','AT','CH'),))
+            ->add('email', 'email',array('label'=>'Email','required'=>false))
+            ->getForm();
+
+
+    }
+
 
 
 

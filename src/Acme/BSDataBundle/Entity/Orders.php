@@ -159,7 +159,7 @@ class Orders
     /**
      * @var float $TotalBrutto
      *
-     * @ORM\Column(name="TotalBrutto", type="float")
+     * @ORM\Column(name="TotalBrutto", type="float",nullable=true)
      */
     private $TotalBrutto;
 
