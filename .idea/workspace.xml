@@ -2,18 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/createDummy.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/PlentySoapClient.php" afterPath="$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/PlentySoapClient.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Acme/BSDataBundle/Controller/ProductController.php" afterPath="$PROJECT_DIR$/src/Acme/BSDataBundle/Controller/ProductController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/index.html.twig" afterPath="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/index.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/print.html.twig" afterPath="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/print.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/js/product.js" afterPath="$PROJECT_DIR$/web/js/product.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/config/routing.yml" afterPath="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/config/routing.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="blumenschule.local.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1364284589561" ignored="false" />
+    <file path="/Dummy.txt" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1364311883961" ignored="false" />
     <file path="/Quickbutton.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363344488241" ignored="false" />
     <file path="/QuickbuttonRepository.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363344502898" ignored="false" />
     <file path="/a.dummy" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363963548644" ignored="false" />
@@ -82,10 +76,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ProductController.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ProductController.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Controller/ProductController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="452" column="10" selection-start="12808" selection-end="12808" vertical-scroll-proportion="-26.583334">
+            <state line="507" column="59" selection-start="14768" selection-end="14768" vertical-scroll-proportion="0.72317076">
               <folding />
             </state>
           </provider>
@@ -121,19 +115,10 @@
       <file leaf-file-name="index.html.twig" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/index.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="105" column="92" selection-start="2721" selection-end="2721" vertical-scroll-proportion="-11.041667">
+            <state line="105" column="92" selection-start="2721" selection-end="2721" vertical-scroll-proportion="-10.416667">
               <folding>
                 <element signature="e#2702#2722#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="product.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/web/js/product.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="20" selection-start="824" selection-end="824" vertical-scroll-proportion="0.15715949">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -142,7 +127,9 @@
         <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/config/routing.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state line="110" column="14" selection-start="3129" selection-end="3143" vertical-scroll-proportion="-5.4545455">
-              <folding />
+              <folding>
+                <marker date="1364289374000" expanded="true" signature="2996:3128" placeholder="BSData_product_dummy:" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -188,9 +175,9 @@
         <option value="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/print.html.twig" />
         <option value="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/config/routing.yml" />
         <option value="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/createDummy.html.twig" />
-        <option value="$PROJECT_DIR$/src/Acme/BSDataBundle/Controller/ProductController.php" />
         <option value="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/index.html.twig" />
         <option value="$PROJECT_DIR$/web/js/product.js" />
+        <option value="$PROJECT_DIR$/src/Acme/BSDataBundle/Controller/ProductController.php" />
       </list>
     </option>
   </component>
@@ -318,54 +305,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Acme" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blumenschule.local" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blumenschule.local" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Acme" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BSCheckoutBundle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blumenschule.local" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blumenschule.local" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Acme" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BSCheckoutBundle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Entity" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -691,7 +630,11 @@
       <created>1364218232321</created>
       <updated>1364218232321</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Kasse Quickbuttons Editierbar">
+      <created>1364311893468</created>
+      <updated>1364311893468</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -719,17 +662,18 @@
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32870865" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942432" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28308025" sideWeight="0.5802198" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2523719" sideWeight="0.6703418" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Framework" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29032257" sideWeight="0.6164835" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3835165" sideWeight="0.98132896" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36163175" sideWeight="0.5601318" order="10" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35005337" sideWeight="0.8665568" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296582" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942432" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28308025" sideWeight="0.5802198" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29032257" sideWeight="0.6164835" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35005337" sideWeight="0.8665568" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296582" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913473" sideWeight="0.67022413" order="3" side_tool="false" content_ui="tabs" />
@@ -737,7 +681,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32870865" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -916,7 +859,9 @@
     <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/config/routing.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="110" column="14" selection-start="3129" selection-end="3143" vertical-scroll-proportion="-5.4545455">
-          <folding />
+          <folding>
+            <marker date="1364289374000" expanded="true" signature="2996:3128" placeholder="BSData_product_dummy:" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -948,25 +893,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Controller/ProductController.php">
+    <entry file="file://$PROJECT_DIR$/web/js/product.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="452" column="10" selection-start="12808" selection-end="12808" vertical-scroll-proportion="-26.583334">
+        <state line="28" column="20" selection-start="824" selection-end="824" vertical-scroll-proportion="0.15715949">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="105" column="92" selection-start="2721" selection-end="2721" vertical-scroll-proportion="-11.041667">
+        <state line="105" column="92" selection-start="2721" selection-end="2721" vertical-scroll-proportion="-10.416667">
           <folding>
             <element signature="e#2702#2722#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/js/product.js">
+    <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Controller/ProductController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="20" selection-start="824" selection-end="824" vertical-scroll-proportion="0.15715949">
+        <state line="507" column="59" selection-start="14768" selection-end="14768" vertical-scroll-proportion="0.72317076">
           <folding />
         </state>
       </provider>

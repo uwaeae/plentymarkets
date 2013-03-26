@@ -505,7 +505,7 @@ class ProductController extends Controller
         //( 	code,	 	type,		x = '', 	y = '',	w = '',	h = '',xres = '',style = '',align = '')
         $pdf->SetFont('helvetica', '', 7);
 
-        $pdf->write1DBarcode( $entity->getArticleNo(), 'C128', 1, 8, 30, 15, 0.4, $style, 'T');
+        $pdf->write1DBarcode( $entity->getArticleNo(), 'C93', 1, 8, 30, 15, 0.4, $style, 'T');
 
         $strings = $this->split_words($entity->getLabelText());
         $line = 0;
