@@ -478,7 +478,7 @@ class ProductController extends Controller
         $pdf->AddPage('L',array($width,$height));
         //Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=0, $link='', $stretch=0, $ignore_min_height=false, $calign='T', $valign='M')
 
-        $pdf->SetFont('helvetica', 'B', 10);
+        $pdf->SetFont('helvetica', 'B', 11);
         //$pdf->Write(1,$entity->getName(),'',false,'L',1);
         //$pdf->Cell(2, 6, $entity->getName(),1,1);
         $pdf->Text(0, 0, $entity->getName(),false,false,true,0,1);
@@ -503,9 +503,9 @@ class ProductController extends Controller
             'stretchtext' => 0
         );
         //( 	code,	 	type,		x = '', 	y = '',	w = '',	h = '',xres = '',style = '',align = '')
-        $pdf->SetFont('helvetica', '', 8);
+        $pdf->SetFont('helvetica', '', 7);
 
-        $pdf->write1DBarcode( $entity->getArticleNo(), 'C128', 0, 8, 30, 15, 0.4, $style, 'T');
+        $pdf->write1DBarcode( $entity->getArticleNo(), 'C128', 1, 8, 30, 15, 0.4, $style, 'T');
 
         $strings = $this->split_words($entity->getLabelText());
         $line = 0;
