@@ -327,9 +327,50 @@ class ProductController extends Controller
         ;
     }
 
+    public function createDummyAction(){
+        $form = $this->buildDummyForm();
+
+        return array(
+            'form'   => $form->createView(),
+
+        );
+
+    }
+
+
+    public function printDummyAction(){
+        $form = $this->buildDummyForm();
+
+        $request = $this->getRequest();
+
+        $form->bindRequest($request);
+
+        $data = $form->getData();
+
+
+
+
+        return $this->render('BSDataBundle:Product:print.html.twig', array(
+            'urlPDF'=> "/print/".$form_name.".pdf",
+        ));
+
+    }
+    private function buildDummyForm(){
+        return $this->createFormBuilder()
+            ->add('code','hidden',array('data'=>''))
+            ->add('titel','text',array('lable'=>'Titel'))
+            ->add('titel2','text',array('lable'=>'Botanisch'))
+            ->add('desciption','text',array('lable'=>'Text'))
+            ->getForm();
+    }
+
+
+
     public function printAction(){
         $id = $this->getRequest()->get('id');
         $quantity = $this->getRequest()->get('quantity');
+        $width = $this->getRequest()->get('width');
+        $height = $this->getRequest()->get('height');
 
         $em = $this->getDoctrine()->getEntityManager();
 
@@ -347,7 +388,7 @@ class ProductController extends Controller
         $pdf->setCellPaddings(1, 1, 1, 1);
         $pdf->setCellMargins(1, 1, 1, 1);
         for($i = 0;$i < $quantity;$i ++){
-            $pdf = $this->buildLable($pdf,$entity);
+            $pdf = $this->buildLable($pdf,$entity,$width,$height);
         }
 
 
@@ -360,9 +401,81 @@ class ProductController extends Controller
 
     }
 
-    private function buildLable($pdf,$entity){
+    public function printA6Action(){
+        $id = $this->getRequest()->get('id');
 
-        $pdf->AddPage('L',array(95,25));
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('BSDataBundle:Product')->find($id);
+        $pdf =  $this->get('io_tcpdf');
+        /*$pdf->init(array(
+            'Creator' => 'Blumenschule Schongau',
+            'Author' => 'Florian Engler',
+            'Title' => $entity->getArticleNo(),
+            'Subject' => $entity->getName(),
+        ));*/
+        $pdf->SetAutoPageBreak(false, 0);
+        $pdf->setPrintHeader(false);
+        $pdf->setPrintFooter(false);
+        $pdf->setCellPaddings(1, 1, 1, 1);
+        $pdf->setCellMargins(1, 1, 1, 1);
+
+        $pdf->AddPage('L',array(105,148));
+        //Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=0, $link='', $stretch=0, $ignore_min_height=false, $calign='T', $valign='M')
+
+        $pdf->SetFont('helvetica', 'B', 10);
+        //$pdf->Write(1,$entity->getName(),'',false,'L',1);
+        //$pdf->Cell(2, 6, $entity->getName(),1,1);
+        $pdf->Text(0, 0, $entity->getName(),false,false,true,0,1);
+        $pdf->SetFont('helvetica', 'B', 8);
+        //$pdf->Cell(2, 6, $entity->getName2(),1,1);
+        //$pdf->Write(1,$entity->getName(),'',false,'L',1);
+        $pdf->Text(32, 5, $entity->getName2(),false,false,true,0,1);
+        $style = array(
+            'position' => '',
+            'align' => 'L',
+            'stretch' => false,
+            'fitwidth' => false,
+            'cellfitalign' => '',
+            'border' => false,
+            'hpadding' => '0',
+            'vpadding' => '0',
+            'fgcolor' => array(0,0,0),
+            'bgcolor' => false, //array(255,255,255),
+            'text' => true,
+            'font' => 'helvetica',
+            'fontsize' => 8,
+            'stretchtext' => 0
+        );
+        //( 	code,	 	type,		x = '', 	y = '',	w = '',	h = '',xres = '',style = '',align = '')
+        $pdf->SetFont('helvetica', '', 8);
+
+        //$pdf->write1DBarcode( $entity->getArticleNo(), 'C128', 0, 8, 30, 15, 0.4, $style, 'T');
+
+        $strings = $this->split_words($entity->getLabelText());
+        $line = 0;
+        foreach($strings as $s){
+            $pdf->Text(32,8 +$line, $s,false,false,true,0,1);
+            $line += 3;
+        }
+
+
+
+
+
+        $pdf->Output("print/".$entity->getArticleNo()."_A6.pdf", 'F');
+
+        return $this->render('BSDataBundle:Product:print.html.twig', array(
+            'urlPDF'=> "/print/".$entity->getArticleNo()."_A6.pdf",
+        ));
+
+
+    }
+
+
+    private function buildLable($pdf,$entity,$width = 95,$height= 25){
+
+        $pdf->AddPage('L',array($width,$height));
         //Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=0, $link='', $stretch=0, $ignore_min_height=false, $calign='T', $valign='M')
 
         $pdf->SetFont('helvetica', 'B', 10);

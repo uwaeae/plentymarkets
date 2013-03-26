@@ -904,7 +904,7 @@ class PlentySoapClient extends \SoapClient
             //$em->flush();
             return $order;
         }catch (\Exception $e){
-            throw  $this->createNotFoundException('Some failure in Order :'. $AOorder->OrderHead->OrderID);
+            throw  new \Exception('Some failure in Order :'. $AOorder->OrderHead->OrderID);
         }
     }
 

@@ -2,12 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Entity/quickbutton.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Entity/quickbuttonRepository.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/createDummy.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/PlentySoapClient.php" afterPath="$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/PlentySoapClient.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Acme/BSDataBundle/Controller/ProductController.php" afterPath="$PROJECT_DIR$/src/Acme/BSDataBundle/Controller/ProductController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/index.html.twig" afterPath="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/index.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/print.html.twig" afterPath="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/print.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/js/product.js" afterPath="$PROJECT_DIR$/web/js/product.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/config/routing.yml" afterPath="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/config/routing.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="blumenschule.local.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1364218127077" ignored="false" />
+    <file path="/Dummy.txt" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1364284589561" ignored="false" />
     <file path="/Quickbutton.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363344488241" ignored="false" />
     <file path="/QuickbuttonRepository.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363344502898" ignored="false" />
     <file path="/a.dummy" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363963548644" ignored="false" />
@@ -22,7 +28,7 @@
     <file path="/edit.html.twig" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363348397123" ignored="false" />
     <file path="/cashbox.js" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363348146406" ignored="false" />
     <file path="/CheckoutController.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363972405938" ignored="false" />
-    <file path="/index.html.twig" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363622574476" ignored="false" />
+    <file path="/index.html.twig" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1364298480056" ignored="false" />
     <file path="/cashboxRepository.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363349477304" ignored="false" />
     <file path="/quickbuttonRepository.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363349657425" ignored="false" />
     <file path="/checkout.js" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363966963114" ignored="false" />
@@ -30,11 +36,11 @@
     <file path="/history.html.twig" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363792039649" ignored="false" />
     <file path="/checkoutRepository.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363791994242" ignored="false" />
     <file path="/PlentySoapRequest_GetCustomers.class.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363795899777" ignored="false" />
-    <file path="/PlentySoapClient.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363972172939" ignored="false" />
+    <file path="/PlentySoapClient.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1364283090521" ignored="false" />
     <file path="/ArrayOfPlentysoapobject_activeaction.class.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363795330370" ignored="false" />
     <file path="/order.html.twig" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363965939198" ignored="false" />
     <file path="/DefaultController.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363799786098" ignored="false" />
-    <file path="/routing.yml" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363799905322" ignored="false" />
+    <file path="/routing.yml" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1364289355993" ignored="false" />
     <file path="/RequestGetCustomers.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363803721445" ignored="false" />
     <file path="/PlentyFactory.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363805266581" ignored="false" />
     <file path="/PlentySoapRequest_AddOrders.class.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363805206354" ignored="false" />
@@ -42,7 +48,8 @@
     <file path="/PMDeliveryAdress.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363963543317" ignored="false" />
     <file path="/RequestAddOrdersItems.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363967862335" ignored="false" />
     <file path="/parameters.ini" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1364196270121" ignored="false" />
-    <file path="$PROJECT_DIR$/.idea/workspace.xml" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1364218742032" ignored="false" />
+    <file path="/ProductController.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1364289972565" ignored="false" />
+    <file path="/product.js" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1364287069757" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,87 +73,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="cashboxController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Controller/cashboxController.php">
+      <file leaf-file-name="OrderController.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Acme/BSOrderBundle/Controller/OrderController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="334" column="18" selection-start="9218" selection-end="9218" vertical-scroll-proportion="-14.5">
-              <folding>
-                <element signature="e#52#94#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="OrderCommand.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Acme/BSOrderBundle/Command/OrderCommand.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="6.4583335">
+            <state line="621" column="50" selection-start="23078" selection-end="23078" vertical-scroll-proportion="17.5">
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AppKernel.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/AppKernel.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="config.yml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/config/config.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="parameters.ini" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/config/parameters.ini">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="17" selection-start="266" selection-end="266" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Orders.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Entity/Orders.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="158" column="7" selection-start="3103" selection-end="3103" vertical-scroll-proportion="0.28811523">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="cashboxRepository.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Entity/cashboxRepository.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="0" selection-start="458" selection-end="458" vertical-scroll-proportion="-15.625">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="checkoutRepository.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Entity/checkoutRepository.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="74" column="49" selection-start="2246" selection-end="2246" vertical-scroll-proportion="-17.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CheckoutController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Controller/CheckoutController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="165" column="0" selection-start="5317" selection-end="5317" vertical-scroll-proportion="121.75">
-              <folding>
-                <element signature="e#52#98#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -154,7 +85,63 @@
       <file leaf-file-name="ProductController.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Controller/ProductController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="374" column="68" selection-start="9902" selection-end="10532" vertical-scroll-proportion="-11.375">
+            <state line="452" column="10" selection-start="12808" selection-end="12808" vertical-scroll-proportion="-26.583334">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="print.html.twig" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/print.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="30" column="88" selection-start="0" selection-end="745" vertical-scroll-proportion="-18.75">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="createDummy.html.twig" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/createDummy.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="36" column="23" selection-start="863" selection-end="863" vertical-scroll-proportion="-15.25">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="new.html.twig" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/new.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="26" column="7" selection-start="302" selection-end="491" vertical-scroll-proportion="-10.875">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html.twig" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/index.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="105" column="92" selection-start="2721" selection-end="2721" vertical-scroll-proportion="-11.041667">
+              <folding>
+                <element signature="e#2702#2722#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="product.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/js/product.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="28" column="20" selection-start="824" selection-end="824" vertical-scroll-proportion="0.15715949">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="routing.yml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/config/routing.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="110" column="14" selection-start="3129" selection-end="3143" vertical-scroll-proportion="-5.4545455">
               <folding />
             </state>
           </provider>
@@ -188,22 +175,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/PMSOAP/RequestAddOrders.php" />
-        <option value="$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/PMSOAP/PlentySoapRequest_AddOrders.class.php" />
-        <option value="$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/PMSOAP/PlentyFactory.php" />
-        <option value="$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/PMOrderHead.php" />
-        <option value="$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/PMDeliveryAdress.php" />
-        <option value="$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/PMOrderItem.php" />
         <option value="$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/RequestAddOrders.php" />
         <option value="$PROJECT_DIR$/web/js/checkout.js" />
         <option value="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Resources/views/Default/order.html.twig" />
         <option value="$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/RequestAddOrdersItems.php" />
-        <option value="$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/PlentySoapClient.php" />
         <option value="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Controller/CheckoutController.php" />
         <option value="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Entity/cashboxRepository.php" />
         <option value="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Controller/cashboxController.php" />
         <option value="$PROJECT_DIR$/app/config/parameters.ini" />
         <option value="$PROJECT_DIR$/src/Acme/BSDataBundle/Entity/Orders.php" />
+        <option value="$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/PlentySoapClient.php" />
+        <option value="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/print.html.twig" />
+        <option value="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/config/routing.yml" />
+        <option value="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/createDummy.html.twig" />
+        <option value="$PROJECT_DIR$/src/Acme/BSDataBundle/Controller/ProductController.php" />
+        <option value="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/index.html.twig" />
+        <option value="$PROJECT_DIR$/web/js/product.js" />
       </list>
     </option>
   </component>
@@ -211,6 +198,7 @@
   <component name="PhpServers">
     <option name="servers">
       <server host="blumenschule.local/app_dev.php" name="blumenschule.local" />
+      <server host="192.168.1.101/app_dev.php" name="BlumenschuleIntern" />
     </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" interpreter_name="Mamp PHP">
@@ -351,81 +339,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="PlentyMarketsBundle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blumenschule.local" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blumenschule.local" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Acme" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PlentyMarketsBundle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Entity" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blumenschule.local" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blumenschule.local" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Acme" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PlentyMarketsBundle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blumenschule.local" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blumenschule.local" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Acme" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BSOrderBundle" />
+              <option name="myItemId" value="BSCheckoutBundle" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -450,6 +364,10 @@
               <option name="myItemId" value="BSCheckoutBundle" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Entity" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -468,7 +386,7 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
-    <property name="options.lastSelected" value="reference.settings.ide.settings.web.browsers" />
+    <property name="options.lastSelected" value="Configurable.PHP.Debug" />
     <property name="recentsLimit" value="5" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../php_soap_client" />
@@ -478,9 +396,9 @@
     <property name="restartRequiresConfirmation" value="true" />
     <property name="FullScreen" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
-    <property name="options.searchVisible" value="true" />
-    <property name="dynamic.classpath" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="dynamic.classpath" value="false" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="PublishConfig">
     <servers>
@@ -562,7 +480,7 @@
       <recent name="$PROJECT_DIR$/src/Acme/BSLableBundle/Controller" />
     </key>
   </component>
-  <component name="RunManager" selected="PHP Web Application.Checkout">
+  <component name="RunManager" selected="PHP Web Application.Product">
     <configuration default="false" name="Default" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console" temporary="true">
       <option name="VM_PARAMETERS" value="" />
       <option name="USER_CFG_CLASS" />
@@ -582,14 +500,14 @@
     <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
       <method />
     </configuration>
-    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
-      <method />
-    </configuration>
     <configuration default="true" type="JavascriptDebugSession" factoryName="Local" singleton="true">
       <JSDebuggerConfigurationSettings>
         <option name="engineId" value="embedded" />
         <option name="fileUrl" />
       </JSDebuggerConfigurationSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
       <method />
     </configuration>
     <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
@@ -626,7 +544,7 @@
       <ConfigurationWrapper RunnerId="PhpWebAppDebugRunner" />
       <method />
     </configuration>
-    <configuration default="false" name="Checkout" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" browser="FIREFOX" server_name="blumenschule.local" start_url="/cashbox/1/checkout">
+    <configuration default="false" name="Checkout" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" browser="FIREFOX" server_name="BlumenschuleIntern" start_url="/cashbox/1/checkout">
       <RunnerSettings RunnerId="PhpRunner" />
       <RunnerSettings RunnerId="PhpWebAppDebugRunner" />
       <ConfigurationWrapper RunnerId="PhpRunner" />
@@ -640,7 +558,7 @@
       <ConfigurationWrapper RunnerId="PhpWebAppDebugRunner" />
       <method />
     </configuration>
-    <configuration default="false" name="STATE" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" browser="FIREFOX" server_name="blumenschule.local" start_url="/orders/state/12">
+    <configuration default="false" name="STATE" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" browser="FIREFOX" server_name="BlumenschuleIntern" start_url="/orders/state/12">
       <RunnerSettings RunnerId="PhpRunner" />
       <RunnerSettings RunnerId="PhpWebAppDebugRunner" />
       <ConfigurationWrapper RunnerId="PhpRunner" />
@@ -798,28 +716,28 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="53" y="22" width="1627" height="1028" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32870865" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942432" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28308025" sideWeight="0.5802198" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2523719" sideWeight="0.6703418" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Framework" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3846154" sideWeight="0.98132896" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36163175" sideWeight="0.5601318" order="10" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29032257" sideWeight="0.6164835" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3835165" sideWeight="0.98132896" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296582" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942432" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28308025" sideWeight="0.5802198" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2865275" sideWeight="0.61538464" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36163175" sideWeight="0.5601318" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35005337" sideWeight="0.8665568" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296582" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913473" sideWeight="0.67022413" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296582" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913473" sideWeight="0.67022413" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32870865" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -905,11 +823,6 @@
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/PlentySoapClient.php</url>
-          <line>875</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Entity/checkoutItem.php</url>
           <line>57</line>
           <option name="timeStamp" value="9" />
@@ -920,11 +833,6 @@
           <option name="timeStamp" value="44" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/src/Acme/BSDataBundle/Controller/ProductController.php</url>
-          <line>331</line>
-          <option name="timeStamp" value="76" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/src/Acme/BSDataBundle/Controller/PlantController.php</url>
           <line>319</line>
           <option name="timeStamp" value="77" />
@@ -933,11 +841,6 @@
           <url>file://$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/PlentySoapClient.php</url>
           <line>1237</line>
           <option name="timeStamp" value="78" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Entity/checkoutRepository.php</url>
-          <line>72</line>
-          <option name="timeStamp" value="82" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Controller/CheckoutController.php</url>
@@ -954,123 +857,116 @@
           <line>381</line>
           <option name="timeStamp" value="110" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/src/Acme/BSOrderBundle/Controller/OrderController.php</url>
+          <line>612</line>
+          <option name="timeStamp" value="112" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="111" />
+      <option name="time" value="113" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/PMSOAP/PlentySoapRequest_AddOrders.class.php">
+    <entry file="file://$PROJECT_DIR$/app/config/config.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="0" selection-start="136" selection-end="136" vertical-scroll-proportion="0.22727273">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/config/parameters.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="17" selection-start="266" selection-end="266" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Entity/Orders.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="158" column="7" selection-start="3103" selection-end="3103" vertical-scroll-proportion="-10.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Acme/BSOrderBundle/Command/OrderCommand.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="19.583334" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/AppKernel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="25" selection-start="204" selection-end="204" vertical-scroll-proportion="0.2366864" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/PlentySoapClient.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="907" column="9" selection-start="29681" selection-end="29681" vertical-scroll-proportion="-0.1923077">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/PMSOAP/PlentySoapObject_DeliveryAddress.class.php">
+    <entry file="file://$PROJECT_DIR$/src/Acme/BSOrderBundle/Controller/OrderController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="22" selection-start="683" selection-end="683" vertical-scroll-proportion="0.12587413">
+        <state line="621" column="50" selection-start="23078" selection-end="23078" vertical-scroll-proportion="17.5">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Resources/views/Default/order.html.twig">
+    <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/print.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="0" selection-start="642" selection-end="642" vertical-scroll-proportion="0.6118881">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Resources/views/Default/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="144" column="0" selection-start="5918" selection-end="5918" vertical-scroll-proportion="0.4852071">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Entity/checkout.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="167" column="36" selection-start="2937" selection-end="2953" vertical-scroll-proportion="0.0">
+        <state line="30" column="88" selection-start="0" selection-end="745" vertical-scroll-proportion="-18.75">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/config/routing.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="110" column="14" selection-start="3129" selection-end="3143" vertical-scroll-proportion="-5.4545455">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Entity/cashboxRepository.php">
+    <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/edit.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="0" selection-start="458" selection-end="458" vertical-scroll-proportion="-15.625">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-2.8271606">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Controller/ProductController.php">
+    <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/new.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="374" column="68" selection-start="9902" selection-end="10532" vertical-scroll-proportion="-11.375">
+        <state line="26" column="7" selection-start="302" selection-end="491" vertical-scroll-proportion="-10.875">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/createDummy.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="23" selection-start="863" selection-end="863" vertical-scroll-proportion="-15.25">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Entity/checkoutRepository.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="49" selection-start="2246" selection-end="2246" vertical-scroll-proportion="-17.0">
+        <state line="19" column="85" selection-start="457" selection-end="457" vertical-scroll-proportion="0.34131736">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Controller/CheckoutController.php">
+    <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Controller/ProductController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="165" column="0" selection-start="5317" selection-end="5317" vertical-scroll-proportion="121.75">
+        <state line="452" column="10" selection-start="12808" selection-end="12808" vertical-scroll-proportion="-26.583334">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/index.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="105" column="92" selection-start="2721" selection-end="2721" vertical-scroll-proportion="-11.041667">
           <folding>
-            <element signature="e#52#98#0" expanded="true" />
+            <element signature="e#2702#2722#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Controller/cashboxController.php">
+    <entry file="file://$PROJECT_DIR$/web/js/product.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="334" column="18" selection-start="9218" selection-end="9218" vertical-scroll-proportion="-14.5">
-          <folding>
-            <element signature="e#52#94#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Acme/BSOrderBundle/Command/OrderCommand.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="6.4583335">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/AppKernel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/config.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/parameters.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="17" selection-start="266" selection-end="266" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Entity/Orders.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="158" column="7" selection-start="3103" selection-end="3103" vertical-scroll-proportion="0.28811523">
+        <state line="28" column="20" selection-start="824" selection-end="824" vertical-scroll-proportion="0.15715949">
           <folding />
         </state>
       </provider>

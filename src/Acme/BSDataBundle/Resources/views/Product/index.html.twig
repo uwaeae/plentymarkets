@@ -52,6 +52,16 @@
      </li>
  </ul>
 
+  <ul>
+      <li>
+          Etiketten Größe
+          <label for="Lable_width">Breite</label>
+          <input type="text" id="Lable_width" name="Lable_width" value="95">mm
+          <label for="Lable_height">/Höhe</label>
+          <input type="text" id="Lable_height" name="Lable_height" value="25">mm
+      </li>
+  </ul>
+
  </div>
 
 
@@ -89,13 +99,25 @@
 
                     <li>
                         <form action="{{ path('BSData_product_print') }}" method="get">
+
                             <input type="hidden" name="id" value="{{ entity.id  }}">
-                            <input type="text" name="quantity" value="1">
+                            <input type="hidden" class="width" name="width" value="{{ entity.id  }}">
+                            <input type="hidden" class="height" name="height" value="{{ entity.id  }}">
+                            <input type="text" name="quantity" value="1" style="width: 20px;">
                             <button>Etikett</button>
                         </form>
 
                     </li>
+                   <!--
+                    <li>
+                        <form action="{{ path('BSData_product_printA6') }}" method="get">
 
+                            <input type="hidden" name="id" value="{{ entity.id  }}">
+                            <button>A6</button>
+                        </form>
+
+                    </li>
+                    -->
 
                 </ul>
             </td>

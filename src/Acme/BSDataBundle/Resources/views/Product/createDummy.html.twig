@@ -17,7 +17,7 @@
 
         <ul>
 
-            <li><a href="{{ path('BSData_mainmenu') }}">zurück</a></li>
+            <li><a href="{{ path('BSData_product') }}">zurück</a></li>
         </ul>
 
     </nav>
@@ -28,7 +28,13 @@
         <div class="ym-gl">
 
             <div class="ym-gbox">
-                <object data="{{ urlPDF }}" type="application/pdf" width="800" height="600px"></object>
+
+                <form action="{{ path('BSData_product_create') }}" method="post" {{ form_enctype(form) }}>
+                    {{ form_widget(form) }}
+                    <p>
+                        <button type="submit">Create</button>
+                    </p>
+                </form>
 
             </div>
 
