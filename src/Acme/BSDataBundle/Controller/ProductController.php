@@ -473,7 +473,7 @@ class ProductController extends Controller
     }
 
 
-    private function buildLable($pdf,$entity,$width = 95,$height= 25){
+    private function buildLable($pdf,Product $entity,$width = 95,$height= 25){
 
         $pdf->AddPage('L',array($width,$height));
         //Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=0, $link='', $stretch=0, $ignore_min_height=false, $calign='T', $valign='M')
@@ -483,9 +483,10 @@ class ProductController extends Controller
         //$pdf->Cell(2, 6, $entity->getName(),1,1);
         $pdf->Text(0, 0, $entity->getName(),false,false,true,0,1);
         $pdf->SetFont('helvetica', 'B', 8);
+        $pdf->Text(32, 5, $entity->getName(),false,false,true,0,1);
         //$pdf->Cell(2, 6, $entity->getName2(),1,1);
         //$pdf->Write(1,$entity->getName(),'',false,'L',1);
-        $pdf->Text(32, 5, $entity->getName2(),false,false,true,0,1);
+
         $style = array(
             'position' => '',
             'align' => 'L',
@@ -497,20 +498,20 @@ class ProductController extends Controller
             'vpadding' => '0',
             'fgcolor' => array(0,0,0),
             'bgcolor' => false, //array(255,255,255),
-            'text' => true,
+            'text' => false,
             'font' => 'helvetica',
             'fontsize' => 8,
             'stretchtext' => 0
         );
         //( 	code,	 	type,		x = '', 	y = '',	w = '',	h = '',xres = '',style = '',align = '')
+
+        $pdf->write1DBarcode( $entity->getArticleId(), 'EAN8', 1, 8, 30, 10, 0.5, $style, 'T');
+        $pdf->Text(2, 17, $entity->getArticleNo(),false,false,true,0,1);
         $pdf->SetFont('helvetica', '', 7);
-
-        $pdf->write1DBarcode( $entity->getArticleNo(), 'C93', 1, 8, 30, 15, 0.4, $style, 'T');
-
         $strings = $this->split_words($entity->getLabelText());
         $line = 0;
         foreach($strings as $s){
-            $pdf->Text(32,8 +$line, $s,false,false,true,0,1);
+            $pdf->Text(32,9 +$line, $s,false,false,true,0,1);
             $line += 3;
         }
 
