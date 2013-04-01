@@ -82,13 +82,24 @@ $(document).ready(function(){
            return false;
        }
 
-       if(event.keyCode == 9 || event.keyCode == 13 ){
+
+       if(event.keyCode == 9 ){
            var code =  $(this).val()
            var input = $(this);
-
            $.post('/cashbox/'+id+'/checkout/add',{ code: code},buildtable);
-            return false;
+           return false;
            }
+       if( event.keyCode == 13 ){
+
+           var button = $('.input_buttons div:first');
+           var price = $('.inputkeyboard').val();
+
+
+           $.post('/cashbox/'+id+'/checkout/add',{ code: button.data('code'),price: price},buildtable);
+
+           return false;
+       }
+
 
        }).focus();
 
