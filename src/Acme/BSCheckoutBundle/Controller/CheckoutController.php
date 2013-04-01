@@ -91,12 +91,18 @@ class CheckoutController extends Controller
     {
 
         $code = $this->getRequest()->request->get('code');
-        $price = floatval(str_replace(',','.',$this->getRequest()->request->get('price')));
+        $price = $this->getRequest()->request->get('price');
+
+        $price = floatval(str_replace(',','.',$price));
 
         $em = $this->getDoctrine()->getEntityManager();
 
         $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->getCurrentBasket($cashbox_id);
-        $em->getRepository('BSCheckoutBundle:checkoutItem')->addItem($currentBasket,$code,$price);
+
+        if(is_float($price) && $price > 0 ){
+            $em->getRepository('BSCheckoutBundle:checkoutItem')->addItem($currentBasket,$code,$price);
+        }
+
 
 
        // return $this->render('BSCheckoutBundle:Default:index.html.twig', array('basket' => $currentBasket));

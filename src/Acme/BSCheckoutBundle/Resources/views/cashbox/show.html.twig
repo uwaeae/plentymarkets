@@ -43,6 +43,12 @@
                     </tbody>
                 </table>
             </div>
+            <div class="ym-cbox">
+                <form action="{{ path('cashbox_bontext_save', { 'id': entity.id   }) }}" method="post">
+                    {{ form_widget(bontext) }}
+                    <button class="ym-button" type="submit">Speichern</button>
+                </form>
+            </div>
         </div>
 
 

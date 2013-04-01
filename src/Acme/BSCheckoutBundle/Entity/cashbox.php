@@ -28,11 +28,21 @@ class cashbox
      */
     private $name;
 
+
+    /**
+     * @var string $bonafter
+     *
+     * @ORM\Column(name="bonafter", type="string", length=255)
+     */
+    private $bonafter;
+
     /**
      * @var array $config
      *
      * @ORM\Column(name="config", type="array")
      */
+
+
     private $config;
 
     /**
@@ -148,5 +158,25 @@ class cashbox
     public function getQuickbuttons()
     {
         return $this->quickbuttons;
+    }
+
+    /**
+     * Set bonafter
+     *
+     * @param string $bonafter
+     */
+    public function setBonafter($bonafter)
+    {
+        $this->bonafter = $bonafter;
+    }
+
+    /**
+     * Get bonafter
+     *
+     * @return string 
+     */
+    public function getBonafter()
+    {
+        return $this->bonafter;
     }
 }

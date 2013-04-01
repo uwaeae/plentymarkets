@@ -88,14 +88,47 @@ class cashboxController extends Controller
         $quickbutton_form   = $this->createForm(new quickbuttonType(), $quickbutton);
         $quickbuttons = $em->getRepository('BSCheckoutBundle:quickbutton')->getQuickbuttons($entity->getID());
 
-
+        $bon_after_text = $this->createFormBuilder()
+            ->add('bontext','textarea',array('label'=>'Bon Text','data'=>$entity->getBonafter()))->getForm();
 
         return array(
             'entity'      => $entity,
             'quickbuttons' => $quickbuttons,
-            'quickbutton_form' => $quickbutton_form->createView()
+            'quickbutton_form' => $quickbutton_form->createView(),
+            'bontext' => $bon_after_text->createView(),
         );
     }
+    /**
+     * Finds and displays a cashbox entity.
+     *
+     * @Route("/{id}/bon_text/save", name="cashbox_bontext_save")
+
+     */
+    public function bontext_saveAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('BSCheckoutBundle:cashbox')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find cashbox entity.');
+        }
+        $request = $this->getRequest();
+        $form = $request->request->get('form');
+
+
+
+         $entity->setBonafter($form['bontext']);
+
+        $em->persist($entity);
+        $em->flush();
+
+
+        return $this->redirect($this->generateUrl('checkout_cashbox_show',array('id'=>$id)));
+    }
+
+
+
     /**
      * Finds and displays a cashbox entity.
      *
