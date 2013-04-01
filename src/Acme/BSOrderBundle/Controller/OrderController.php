@@ -662,6 +662,7 @@ class OrderController extends Controller
 
     if ($request->getMethod() == 'POST') {
 
+
         $em = $this->getDoctrine()->getEntityManager();
         $qb = $em->createQueryBuilder();
         $qb->add('select', $qb->expr()->max('o.Picklist'))
@@ -820,6 +821,8 @@ class OrderController extends Controller
                     }
                 }
 
+
+
             // Fooder
             $pdf->OrderFooder($oOrder,$oOrderQuantity );
             // Pflegeanleitung
@@ -859,6 +862,22 @@ class OrderController extends Controller
 
 
         $pdf->Output("print/".$PickListName.".pdf",'F');
+
+
+        $message = \Swift_Message::newInstance();
+        $message
+            ->setSubject('Sammelpack '.$PickListName)
+            ->setFrom('support@blumenschule.de')
+            ->setTo('florian.engler@gmx.de')
+            ->setBody(
+                $this->renderView(
+                    'BSOrderBundle:Order:email.html.twig',
+                    array()
+                )
+            )->attach(\Swift_Attachment::fromPath("print/".$PickListName.".pdf"))
+        ;
+        $this->get('mailer')->send($message);
+
 
 
         return $this->render('BSOrderBundle:Order:print.html.twig', array(
