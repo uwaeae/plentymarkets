@@ -952,21 +952,26 @@ class PlentySoapClient extends \SoapClient
         $aOrderItems = array();
         if(isset($AOorder->OrderItems->item)){
             foreach($AOorder->OrderItems->item as $item){
-                $orderitem = new OrdersItem();
-                $orderitem->setSKU($item->SKU);
+
+                if(!is_null($item->ItemNo)){
+                    $orderitem = new OrdersItem();
+                    $orderitem->setSKU($item->SKU);
 
 
-                //$SKU = explode("-", $item->SKU);
-                $orderitem->setArticleCode($item->ItemNo);
-                $orderitem->setArticleID($item->ItemID);
-                $orderitem->setItemText($item->ItemText);
-                $orderitem->setOrderID($item->OrderID);
-                $orderitem->setPrice($item->Price);
-                $orderitem->setQuantity($item->Quantity);
-                $orderitem->setVAT($item->VAT);
-                $em->persist($orderitem);
+                    //$SKU = explode("-", $item->SKU);
+                    $orderitem->setArticleCode($item->ItemNo);
+                    $orderitem->setArticleID($item->ItemID);
+                    $orderitem->setItemText($item->ItemText);
+                    $orderitem->setOrderID($item->OrderID);
+                    $orderitem->setPrice($item->Price);
+                    $orderitem->setQuantity($item->Quantity);
+                    $orderitem->setVAT($item->VAT);
+                    $em->persist($orderitem);
+                    $aOrderItems[]= $orderitem;
 
-                 $aOrderItems[]= $orderitem;
+                }
+
+
 
             }
         }
