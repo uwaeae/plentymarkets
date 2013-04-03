@@ -847,7 +847,7 @@ class PlentySoapClient extends \SoapClient
                 $message
                     ->setSubject('Error on SyncOrders on  '.$PMOrder->OrderHead->OrderID )
                     ->setFrom('support@blumenschule.de')
-                    ->setTo('florian.engler@gmx.de')
+                    ->setTo(array('florian.engler@gmx.de','info@blumenschule.de'))
                     ->setBody(" ".serialize($PMOrder))
                         //$this->renderView('BSOrderBundle:Order:email.html.twig',array())
                     //->attach(\Swift_Attachment::fromPath("print/".$PickListName.".pdf"))
