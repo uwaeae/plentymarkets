@@ -817,7 +817,7 @@ class PlentySoapClient extends \SoapClient
         foreach($aoOrders  as $PMOrder){
 
 
-
+            try{
             $BSOrder =  $OrderRepro->findOneBy(array('OrderID' => $PMOrder->OrderHead->OrderID));
 
             //$aOrder[] =  $this->syncOrderData($AOorder,$oOrder);
@@ -826,7 +826,7 @@ class PlentySoapClient extends \SoapClient
                 $OrderInfo = $this->syncOrderInfoData($PMOrder, $OrderHead);
                 $OrderItem = $this->syncOrderItemsData($PMOrder);
             }
-            else // if ( $BSOrder->getLastUpdate() != $PMOrder->OrderHead->LastUpdate )
+            else//if ( $BSOrder->getLastUpdate() != $PMOrder->OrderHead->LastUpdate )
             {
                 $OrderHead = $this->syncOrderData($PMOrder, $BSOrder);
                 $OrderInfo = $this->syncOrderInfoData($PMOrder, $OrderHead);
@@ -839,9 +839,30 @@ class PlentySoapClient extends \SoapClient
 
             }*/
 
-            $em->flush();
+                $em->flush();
 
-            $orders[] = array('head'=> $OrderHead,'infos'=> $OrderInfo, 'items'=>$OrderItem );
+                $orders[] = array('head'=> $OrderHead,'infos'=> $OrderInfo, 'items'=>$OrderItem );
+            }catch (\Exception $e){
+                $message = \Swift_Message::newInstance();
+                $message
+                    ->setSubject('Error on SyncOrders on  '.$PMOrder->OrderHead->OrderID )
+                    ->setFrom('support@blumenschule.de')
+                    ->setTo('florian.engler@gmx.de')
+                    ->setBody(" ".serialize($PMOrder))
+                        //$this->renderView('BSOrderBundle:Order:email.html.twig',array())
+                    //->attach(\Swift_Attachment::fromPath("print/".$PickListName.".pdf"))
+                ;
+                $this->controller->get('mailer')->send($message);
+
+                return array();
+
+            }
+
+
+
+
+
+
 
         }
 
@@ -913,7 +934,18 @@ class PlentySoapClient extends \SoapClient
 
         $em = $this->doctrine->getEntityManager();
         $aOrderInfos = array();
-        if($AOorder->OrderHead->OrderInfos != null){
+
+        if(isset($AOorder->OrderHead->OrderInfos) ){
+
+            $aOrderInfos = $em->getRepository('BSDataBundle:OrdersInfo')->findBy(array('OrderID' => $AOorder->OrderHead->OrderID));
+
+            if($aOrderInfos){
+                foreach( $aOrderInfos as $item){
+                    $em->remove($item);
+
+                }
+                //$em->flush();
+            }
 
             foreach($AOorder->OrderHead->OrderInfos->item as $aoOorderInfo){
                 $oOrdersInfo = new OrdersInfo();

@@ -116,7 +116,7 @@ class Product
     /**
      * @var integer $PriceID
      *
-     * @ORM\Column(name="PriceID", type="integer",nullable= false)
+     * @ORM\Column(name="PriceID", type="integer",nullable= true)
      */
 
     private $PriceID;

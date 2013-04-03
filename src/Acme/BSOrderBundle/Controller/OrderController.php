@@ -864,7 +864,7 @@ class OrderController extends Controller
         $pdf->Output("print/".$PickListName.".pdf",'F');
 
 
-        $message = \Swift_Message::newInstance();
+   /*     $message = \Swift_Message::newInstance();
         $message
             ->setSubject('Sammelpack '.$PickListName)
             ->setFrom('support@blumenschule.de')
@@ -877,7 +877,7 @@ class OrderController extends Controller
             )->attach(\Swift_Attachment::fromPath("print/".$PickListName.".pdf"))
         ;
         $this->get('mailer')->send($message);
-
+*/
 
 
         return $this->render('BSOrderBundle:Order:print.html.twig', array(
@@ -911,10 +911,10 @@ class OrderController extends Controller
             $product = new Product();
             $PMItem = $oPlentySoapClient->doGetItemBase(array('ItemID'=>$ArtileID[0]));
             if(isset($PMItem->ItemID)) {
-                $product->PMSoapProduct($PMItem );
+                $product =  $repository->PMSoapProduct($product,$PMItem );
             }
             else{
-                $product->newPMSoapOrderProduct($OrderItem);
+                $product = $repository->newPMSoapOrderProduct($product,$OrderItem);
             }
             $em->persist($product);
             $em->flush();
