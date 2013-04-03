@@ -125,7 +125,7 @@ class CheckoutController extends Controller
             $item['code'] = $product->getArticleCode();
             $item['quantity'] = $product->getQuantity();
             $item['description'] = $product->getDescription();
-
+            $item['VAT'] = $product->getVAT();
             $item['price'] = $product->getPrice();
             $item['pa'] = false;
             $item['sum'] = $product->getQuantity() *  $product->getPrice();
@@ -297,25 +297,17 @@ class CheckoutController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         $action = $this->getRequest()->request->get('action');
+        $quantity = $this->getRequest()->request->get('quantity');
         $id = $this->getRequest()->request->get('id');
 
         $item = $em->getRepository('BSCheckoutBundle:checkoutItem')->find($id);
         if($item){
             switch($action){
-                case 'plus':
-                    $item->setQuantity($item->getQuantity()+ 1);
+                case 'quantity':
+                    $item->setQuantity($quantity);
                     $em->persist($item);
                     break;
-                case 'minus':
-                    $quantity = $item->getQuantity() - 1;
-                    if($quantity == 0){
-                        $em->remove($item);
-                    }else{
-                        $item->setQuantity($quantity);
-                        $em->persist($item);
-                    }
 
-                    break;
                 case 'delete':
                     $em->remove($item);
                     break;
@@ -330,7 +322,7 @@ class CheckoutController extends Controller
 
         $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->getCurrentBasket($cashbox_id);
 
-        return $this->createJSON($currentBasket);
+        return $this->createCurrentBasketJSON($currentBasket);
 
     }
 

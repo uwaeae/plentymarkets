@@ -1,4 +1,35 @@
 
+function getSummary(){
+
+    var sum = 0;
+    $('.shopinglist table tbody tr').each(function(){
+        sum += $(this).data("sum");
+        //console.log($(this).data("sum"));
+    });
+
+    $('.iteminput').keypress(function(event){
+
+        if( event.keyCode == 13 ){
+
+            $.post('/cashbox/'+$('.inputkeyboard').data('cashbox')+
+                '/checkout/itemaction',{id: $(this).data('id'), quantity: $(this).val(),action: 'quantity'},buildtable);
+
+            return false;
+        }
+    });
+
+    $('.co_toPay').html(sum.toFixed(2) + '&euro;');
+    $('.itemEdit a').click(function(){
+
+        $.post('/cashbox/'+$('.inputkeyboard').data('cashbox')+'/checkout/itemaction',{ id: $(this).data('id'),action:$(this).data('action')},buildtable);
+
+
+    });
+
+
+}
+var itemFocus = '.iteminput:last';
+
 var buildtable = function buildTable(data){
     //$('.shopinglist').empty().html($(data).find('.shopinglist table'));
     $('.co_items').empty();
@@ -8,14 +39,20 @@ var buildtable = function buildTable(data){
         var items = [];
         items.push('<td>' + index + '</td>');
         items.push('<td>' + val['code'] + '</td>');
-        items.push('<td>' + val['quantity'] + '' +
-            '<div class="itemEdit">'+
+        items.push('<td><input class="iteminput" value="' + val['quantity'] + '" data-id="'+ val['id'] +'"></td>'
+            /*'<div class="itemEdit">'+
             '<a href="#" data-action="minus" data-id="'+ val['id'] +'">' +
             '<img src="/images/icons/arrow-down.png" alt="- Menge" /></a>'+
             '<a href="#" data-action="plus" data-id="'+ val['id'] +'">'+
-            ' <img src="/images/icons/arrow-up.png" alt="+ Menge" /></a></div></td>');
+            ' <img src="/images/icons/arrow-up.png" alt="+ Menge" /></a>'*/
+        );
         items.push('<td>' + val['description'] + '</td>');
-        items.push('<td>' + parseFloat(val['price']).toFixed(2) + ' &euro;</td>');
+        items.push('<td>' + val['VAT'] + '</td>');
+        items.push('<td><div class="ItemPricShow">' + parseFloat(val['price']).toFixed(2)+' &euro;</div>'+
+            '<div class="ItemPricEdit">' +
+            '<input class="itemprice" value="'+ parseFloat(val['price']).toFixed(2) +'" data-id="{{ item.id }}">' +
+            '</div></td>'
+            );
        // items.push('<td>' + val['pa'] + '</td>');
         items.push('<td>' + parseFloat(val['sum']).toFixed(2) + ' &euro;' +
             '<div class="itemEdit">'+
@@ -32,8 +69,11 @@ var buildtable = function buildTable(data){
         index ++;
     });
     getSummary();
-    $('.inputkeyboard').val('').focus();
+    $('.inputkeyboard').val('');
+    $(itemFocus).val('').focus();
+    itemFocus = '.inputkeyboard';
 };
+
 $(document).ready(function(){
     $(".btnPrint").printPage();
     // Dialog Wiget initalisieren
@@ -68,6 +108,9 @@ $(document).ready(function(){
 
 
     });
+
+
+
 
     // Eingabefeld Tasten aktionen
    $('.inputkeyboard').keypress(function(event){
@@ -175,18 +218,3 @@ $(document).ready(function(){
 
 
 
-
-function getSummary(){
-
-    var sum = 0;
-    $('.shopinglist table tbody tr').each(function(){
-        sum += $(this).data("sum");
-        //console.log($(this).data("sum"));
-    });
-
-    $('.co_toPay').html(sum.toFixed(2) + '&euro;');
-    $('.itemEdit a').click(function(){
-        ;
-        $.post('/cashbox/'+$('.inputkeyboard').data('cashbox')+'/checkout/itemaction',{ id: $(this).data('id'),action:$(this).data('action')},buildtable);
-    });
-}
