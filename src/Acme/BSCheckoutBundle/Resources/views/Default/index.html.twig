@@ -25,8 +25,7 @@
                             <thead>
 
                             <tr>
-                                <th>ID</th>
-                                <th>Code</th>
+                                <th> Pos</th>
                                 <th>Menge</th>
                                 <th>Bezeichung</th>
                                 <th>MwSt</th>
@@ -39,7 +38,7 @@
                             {% for item in basket.checkoutItems %}
                                 <tr data-sum="{{ (item.quantity * item.price) }}">
                                     <td>{{ loop.index }}</td>
-                                    <td>{{ item.articleCode }}</td>
+
                                     <td><input class="iteminput" value="{{ item.quantity }}" data-id="{{ item.id }}"></td>
                                         <!--<div class="itemEdit">
                                            <a href="#" data-action="minus" data-id="{{ item.id }}"><img src="{{ asset('images/icons/arrow-down.png') }}" alt="- Menge" /></a>
@@ -49,9 +48,9 @@
 
 
                                     <td>{{ item.description }}</td>
-                                    <td>{{ item.VAT }}</td>
-                                    <td><div class="ItemPricShow">{{ item.price|number_format(2, '.', ',')  }} &euro;</div>
-                                        <div class="ItemPricEdit"><input class="itemprice" value="{{ item.price|number_format(2, '.', ',')  }}" data-id="{{ item.id }}"></div>
+                                    <td>{{ item.VAT }}%</td>
+                                    <td>
+                                        <input class="itemprice" value="{{ item.price|number_format(2, '.', ',')  }}" data-id="{{ item.id }}">
                                     </td>
                                     <!-- <td></td> -->
                                     <td>{{ (item.quantity * item.price)|number_format(2, '.', ',')  }}  &euro;
@@ -141,7 +140,7 @@
             </div>
 
             <div class="ym-col2">
-                <div class="ym-cbox">
+                <div class="ym-cbox ">
 
 
 
@@ -156,7 +155,7 @@
                             {% for key,item in quickbuttons %}
 
 
-                                <div class="checkout-box" data-code="{{ item.code }}">
+                                <div class="checkout-box" data-code="{{ item.code }}" data-keyboard="{{ item.quickkey}}">
                                     {{ item.name }}
                                 </div>
 

@@ -38,7 +38,7 @@ var buildtable = function buildTable(data){
 
         var items = [];
         items.push('<td>' + index + '</td>');
-        items.push('<td>' + val['code'] + '</td>');
+       // items.push('<td>' + val['code'] + '</td>');
         items.push('<td><input class="iteminput" value="' + val['quantity'] + '" data-id="'+ val['id'] +'"></td>'
             /*'<div class="itemEdit">'+
             '<a href="#" data-action="minus" data-id="'+ val['id'] +'">' +
@@ -47,11 +47,10 @@ var buildtable = function buildTable(data){
             ' <img src="/images/icons/arrow-up.png" alt="+ Menge" /></a>'*/
         );
         items.push('<td>' + val['description'] + '</td>');
-        items.push('<td>' + val['VAT'] + '</td>');
-        items.push('<td><div class="ItemPricShow">' + parseFloat(val['price']).toFixed(2)+' &euro;</div>'+
-            '<div class="ItemPricEdit">' +
+        items.push('<td>' + val['VAT'] + '%</td>');
+        items.push('<td>'+
             '<input class="itemprice" value="'+ parseFloat(val['price']).toFixed(2) +'" data-id="{{ item.id }}">' +
-            '</div></td>'
+            '</td>'
             );
        // items.push('<td>' + val['pa'] + '</td>');
         items.push('<td>' + parseFloat(val['sum']).toFixed(2) + ' &euro;' +
@@ -117,8 +116,10 @@ $(document).ready(function(){
         console.log(event.keyCode);
         var id = $(this).data('cashbox');
        if(event.keyCode > 112 && event.keyCode < 120){
-           var items = $('.co_items tr td');
-           var code = items[event.keyCode - 112 ].data('code');
+           //var items = $('.co_items tr td');
+          // [value="Hot Fuzz"]
+
+           var code = $('.checkout-box[data-keyboard='+event.keyCode +']').data('code');
            var price = $('.inputkeyboard').val();
            if(price.length > 0)
                $.post('/cashbox/'+id+'/checkout/add',{ code: code,price: price},buildtable);

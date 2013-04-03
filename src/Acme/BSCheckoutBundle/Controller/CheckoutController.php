@@ -336,7 +336,7 @@ class CheckoutController extends Controller
 
         $em = $this->getDoctrine()->getEntityManager();
 
-        //$currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->getCurrentBasket($cashbox_id);
+        $cashbox = $em->getRepository('BSCheckoutBundle:cashbox')->find($cashbox_id);
         $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->find($id);
 
 
@@ -363,7 +363,7 @@ class CheckoutController extends Controller
 
         }
 
-        return $this->render('BSCheckoutBundle:Default:receipt.html.twig', array('basket' => $currentBasket, 'summary'=> $summary));
+        return $this->render('BSCheckoutBundle:Default:receipt.html.twig', array('basket' => $currentBasket, 'summary'=> $summary,'info'=> $cashbox->getBonafter()));
 
     }
 

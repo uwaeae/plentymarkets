@@ -61,6 +61,14 @@ Telefon: 08861 / 7373<br>
 Fax: 08861 / 1272<br>
 EMail: info@blumenschule.de<br>
 </p>
+<p>
+    Bio-Kontrollnr.: D-BY-M-005-09699A<br>
+    DE-005 Öko-Kontrollstelle<br>
+    Pflanzen-Pass: DE-BY-111444<br>
+    USt-IdNr: DE131255548<br>
+</p>
+
+
 Datum {{ "now"|date("d.m.Y") }} Uhrzeit: Datum {{ "now"|date("H:i:s") }}
 
 <table>
@@ -69,8 +77,8 @@ Datum {{ "now"|date("d.m.Y") }} Uhrzeit: Datum {{ "now"|date("H:i:s") }}
 
     <tr>
         <th>Pos</th>
-        <th>Code</th>
         <th>Menge</th>
+        <th>Beschreibung</th>
         <th>Preis</th>
         <th>Summe</th>
     </tr>
@@ -79,8 +87,8 @@ Datum {{ "now"|date("d.m.Y") }} Uhrzeit: Datum {{ "now"|date("H:i:s") }}
     {% for item in basket.checkoutItems %}
         <tr data-sum="{{ (item.quantity * item.price) }}">
             <td>{{ loop.index }}</td>
-            <td>{{ item.articleCode }}</td>
             <td>{{ item.quantity }}</td>
+            <td>{{ item.description }}</td>
             <td>{{ item.price|number_format(2, '.', ',')  }} &euro;</td>
             <td>{{ (item.quantity * item.price)|number_format(2, '.', ',')  }}  &euro;
             </td>
@@ -108,13 +116,8 @@ Datum {{ "now"|date("d.m.Y") }} Uhrzeit: Datum {{ "now"|date("H:i:s") }}
         </tr>
 
     </table>
-
-
 <p>
-    Bio-Kontrollnr.: D-BY-M-005-09699A<br>
-    DE-005 Öko-Kontrollstelle<br>
-    Pflanzen-Pass: DE-BY-111444<br>
-    USt-IdNr: DE131255548<br>
+{{ info|raw }}
 </p>
 
 

@@ -89,7 +89,7 @@ class cashboxController extends Controller
         $quickbuttons = $em->getRepository('BSCheckoutBundle:quickbutton')->getQuickbuttons($entity->getID());
 
         $bon_after_text = $this->createFormBuilder()
-            ->add('bontext','textarea',array('label'=>'Bon Text','data'=>$entity->getBonafter()))->getForm();
+            ->add('bontext','textarea',array('label'=>'Bon Text','data'=>$entity->getBonafter(),'attr' => array('class' => 'ckeditor')))->getForm();
 
         return array(
             'entity'      => $entity,

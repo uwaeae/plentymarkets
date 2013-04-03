@@ -62,6 +62,10 @@ h1 {
 }
 .ym-wbox { padding: 10px; }
 
+.ym-cbox{
+    margin-bottom: 20px;
+}
+
 .ym-column {
     display: block;
     overflow: hidden;
@@ -181,6 +185,7 @@ div.co_result > div{
     width: 25px;
 }
 
-.ItemPricEdit{
-    display: none;
+.itemprice{
+    width: 65px;
 }
+
