@@ -483,7 +483,7 @@ class ProductController extends Controller
         //$pdf->Cell(2, 6, $entity->getName(),1,1);
         $pdf->Text(0, 0, $entity->getName(),false,false,true,0,1);
         $pdf->SetFont('helvetica', 'B', 8);
-        $pdf->Text(32, 5, $entity->getName(),false,false,true,0,1);
+        $pdf->Text(32, 5, $entity->getName2(),false,false,true,0,1);
         //$pdf->Cell(2, 6, $entity->getName2(),1,1);
         //$pdf->Write(1,$entity->getName(),'',false,'L',1);
 
