@@ -51,6 +51,13 @@ class checkout
     private $closed;
 
 
+    /**
+     * @var string $bontext
+     *
+     * @ORM\Column(name="bontext", type="string", length=255,nullable = true)
+
+     */
+    private $bontext;
 
     /**
      * @var integer $payment
@@ -242,5 +249,25 @@ class checkout
     public function getClosed()
     {
         return $this->closed;
+    }
+
+    /**
+     * Set bontext
+     *
+     * @param string $bontext
+     */
+    public function setBontext($bontext)
+    {
+        $this->bontext = $bontext;
+    }
+
+    /**
+     * Get bontext
+     *
+     * @return string 
+     */
+    public function getBontext()
+    {
+        return $this->bontext;
     }
 }

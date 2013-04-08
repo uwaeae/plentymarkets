@@ -17,6 +17,17 @@ function getSummary(){
             return false;
         }
     });
+    $('.itemprice').keypress(function(event){
+
+        if( event.keyCode == 13 ){
+            itemFocus = '.inputkeyboard';
+            $.post('/cashbox/'+$('.inputkeyboard').data('cashbox')+
+                '/checkout/itemaction',{id: $(this).data('id'), price: $(this).val(),action: 'price'},buildtable);
+
+            return false;
+        }
+    });
+
 
     $('.co_toPay').html(sum.toFixed(2) + '&euro;');
     $('.itemEdit a').click(function(){
@@ -28,7 +39,7 @@ function getSummary(){
 
 
 }
-var itemFocus = '.iteminput:last';
+var itemFocus = '.itemprice:last';
 
 var buildtable = function buildTable(data){
     //$('.shopinglist').empty().html($(data).find('.shopinglist table'));
@@ -49,7 +60,7 @@ var buildtable = function buildTable(data){
         items.push('<td>' + val['description'] + '</td>');
         items.push('<td>' + val['VAT'] + '%</td>');
         items.push('<td>'+
-            '<input class="itemprice" value="'+ parseFloat(val['price']).toFixed(2) +'" data-id="{{ item.id }}">' +
+            '<input class="itemprice" value="'+ parseFloat(val['price']).toFixed(2) +'" data-id="'+ val['id'] +'">' +
             '</td>'
             );
        // items.push('<td>' + val['pa'] + '</td>');
@@ -70,11 +81,11 @@ var buildtable = function buildTable(data){
     getSummary();
     $('.inputkeyboard').val('');
     $(itemFocus).val('').focus();
-    itemFocus = '.inputkeyboard';
+
 };
 
 $(document).ready(function(){
-    $(".btnPrint").printPage();
+   // $(".btnPrint").printPage();
     // Dialog Wiget initalisieren
 
     $('.orderdialog').dialog({
@@ -88,7 +99,8 @@ $(document).ready(function(){
     $('.toPaydialog').dialog({
         autoOpen: false,
         modal: true,
-        minWidth: 400 });
+        minWidth: 600,
+        minHeight:600});
     $( ".toPay" ).click(function() {
         $( ".toPaydialog" ).dialog( "open" );
     });
@@ -116,30 +128,32 @@ $(document).ready(function(){
         console.log(event.keyCode);
         var id = $(this).data('cashbox');
        if(event.keyCode > 112 && event.keyCode < 120){
-           //var items = $('.co_items tr td');
-          // [value="Hot Fuzz"]
+
+           // Funtkionstasten
 
            var code = $('.checkout-box[data-keyboard='+event.keyCode +']').data('code');
-           var price = $('.inputkeyboard').val();
+           var quantity = $('.inputkeyboard').val();
            if(price.length > 0)
-               $.post('/cashbox/'+id+'/checkout/add',{ code: code,price: price},buildtable);
+               itemFocus = '.itemprice:last';
+               $.post('/cashbox/'+id+'/checkout/add',{ code: code,quantity: quantity},buildtable);
            return false;
        }
 
 
        if(event.keyCode == 9 ){
+           // Bei TAB
            var code =  $(this).val()
            var input = $(this);
+           itemFocus = '.inputkeyboard';
            $.post('/cashbox/'+id+'/checkout/add',{ code: code},buildtable);
            return false;
            }
        if( event.keyCode == 13 ){
-
+            // Bei ENTER
            var button = $('.input_buttons div:first');
-           var price = $('.inputkeyboard').val();
-
-
-           $.post('/cashbox/'+id+'/checkout/add',{ code: button.data('code'),price: price},buildtable);
+           var quantity = $('.inputkeyboard').val();
+           itemFocus = '.itemprice:last';
+           $.post('/cashbox/'+id+'/checkout/add',{ code: button.data('code'),quantity: quantity},buildtable);
 
            return false;
        }
@@ -161,6 +175,7 @@ $(document).ready(function(){
 
          var getback =   parseFloat($(this).val().replace(',','.')) - parseFloat($('.co_toPay').html());
          $(".co_return").html(getback.toFixed(2) + ' &euro;')
+         $(".return_focus").focus();
          return true;
      }
 
@@ -216,6 +231,3 @@ $(document).ready(function(){
 
    getSummary();
 });
-
-
-

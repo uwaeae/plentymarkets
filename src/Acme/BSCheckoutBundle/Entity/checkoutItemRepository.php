@@ -14,10 +14,10 @@ class checkoutItemRepository extends EntityRepository
 {
 
 
-    public function addItem($basket,$code,$price){
+    public function addItem($basket,$code,$price = null,$quantity = 1){
 
         $em = $this->getEntityManager();
-
+        /*
         $qb = $this->createQueryBuilder('i');
         $qb->where('i.checkout = ?1');
         $qb->setParameter(1,$basket);
@@ -31,7 +31,8 @@ class checkoutItemRepository extends EntityRepository
         }
 
 
-        if(!$item || $price){
+        if(!$item){
+            */
             $qb = $em->createQueryBuilder();
             $qb->add('select', 'p')
                 ->add('from', 'BSDataBundle:Product p')
@@ -53,18 +54,28 @@ class checkoutItemRepository extends EntityRepository
                 $co_item->setDescription($product->getName().' '.$product->getName2());
                 $co_item->setPrice(is_null($price) || $price == 0 ? $product->getPrice6() : $price);
                 $co_item->setVAT($product->getVAT());
-                $co_item->setQuantity(1);
+                $co_item->setQuantity($quantity);
                 $em->persist($co_item);
 
             }
 
-        }else{
-            $item->setQuantity($item->getQuantity() + 1 );
-            $em->persist($item);
-        }
+        //}else{
+        //    $item->setQuantity($item->getQuantity() + 1 );
+        //    $em->persist($item);
+        //}
 
         $em->flush();
 
 
+    }
+
+    /**
+     * Returns the class name of the object managed by the repository
+     *
+     * @return string
+     */
+    function getClassName()
+    {
+        // TODO: Implement getClassName() method.
     }
 }

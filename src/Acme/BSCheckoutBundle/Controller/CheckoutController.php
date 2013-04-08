@@ -92,6 +92,7 @@ class CheckoutController extends Controller
 
         $code = $this->getRequest()->request->get('code');
         $price = $this->getRequest()->request->get('price');
+        $quantity = $this->getRequest()->request->get('quantity');
 
         $price = floatval(str_replace(',','.',$price));
 
@@ -99,8 +100,11 @@ class CheckoutController extends Controller
 
         $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->getCurrentBasket($cashbox_id);
 
+
         if(is_float($price) && $price > 0 ){
             $em->getRepository('BSCheckoutBundle:checkoutItem')->addItem($currentBasket,$code,$price);
+        }else{
+            $em->getRepository('BSCheckoutBundle:checkoutItem')->addItem($currentBasket,$code,null,$quantity);
         }
 
 
@@ -298,6 +302,8 @@ class CheckoutController extends Controller
 
         $action = $this->getRequest()->request->get('action');
         $quantity = $this->getRequest()->request->get('quantity');
+        $price = $this->getRequest()->request->get('price');
+        $price = floatval(str_replace(',','.',$price));
         $id = $this->getRequest()->request->get('id');
 
         $item = $em->getRepository('BSCheckoutBundle:checkoutItem')->find($id);
@@ -307,6 +313,13 @@ class CheckoutController extends Controller
                     $item->setQuantity($quantity);
                     $em->persist($item);
                     break;
+
+                case 'price':
+                    $item->setPrice($price);
+                    $em->persist($item);
+                    break;
+
+
 
                 case 'delete':
                     $em->remove($item);
@@ -333,12 +346,15 @@ class CheckoutController extends Controller
      */
     public function receiptAction( $cashbox_id,$id )
     {
-
+        $bontext = $this->getRequest()->request->get('bontext');
         $em = $this->getDoctrine()->getEntityManager();
 
         $cashbox = $em->getRepository('BSCheckoutBundle:cashbox')->find($cashbox_id);
         $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->find($id);
 
+        $currentBasket->setBontext($bontext);
+        $em->persist($currentBasket);
+        $em->flush();
 
         $summary = array(
             'netto' => 0.0,

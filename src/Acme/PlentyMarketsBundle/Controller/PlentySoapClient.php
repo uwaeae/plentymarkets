@@ -617,7 +617,7 @@ class PlentySoapClient extends \SoapClient
 
         $em = $this->doctrine->getEntityManager();
         $repository = $this->doctrine->getRepository('BSDataBundle:Product');
-
+        $products = array();
 
         foreach($Items as $item){
             // $id = explode("-",  $item->SKU);
@@ -670,10 +670,12 @@ class PlentySoapClient extends \SoapClient
 
 
             $em->persist($product);
+            $products[] = $product;
             if($output) $output->writeln($product->getArticleId().' '.$product->getArticleNo());
 
         }
         $em->flush();
+        return $products;
     }
 
 
@@ -1117,43 +1119,73 @@ class PlentySoapClient extends \SoapClient
 
 
 
-    public function doGetItemBase( array $option )
+    public function doGetItemsBaseByOptions( array $option )
     {
 
 
-        $options['ItemID'] = null;
-        $options['ItemNo'] = null;
-        $options['ExternalItemID'] = null;
-        $options['EAN1'] = null;
-        $options['GetShortDescription'] = TRUE;
-        $options['GetLongDescription'] = FALSE;
-        $options['GetTechnicalData'] = FALSE;
-        $options['GetItemSuppliers'] = FALSE;
-        $options['GetItemProperties'] = FALSE;
-        $options['GetItemOthers'] = TRUE;
+        $oResponse	= null;
+        $page = 0;
+        // um die Suche einzuschränken
+        //$options['ItemNo'] = "srt%";
+        $options['LastUpdate'] = null ;
+        $options['LastInserted'] =null ;
+        $options['Marking1ID'] =null ;
+        $options['Marking2ID'] =null ;
+        $options['Webshop'] = null ;
+        $options['WebAPI'] =null;
+        $options['Gimahhot'] =null;
+        $options['GoogleProducts'] =null ;
+        $options['Hitmeister'] =null ;
+        $options['Shopgate'] =null ;
+        $options['Shopperella'] =null ;
+        $options['ShopShare'] =null;
+        $options['Tradoria'] = null ;
+        $options['Yatego'] = null ;
+        $options['Quelle'] = null;
+        $options['MainWarehouseID'] = null ;
+        $options['GetShortDescription'] = null ;
+        $options['GetLongDescription'] = null;
+        $options['GetTechnicalData'] = null ;
+        $options['Page'] = null;
         $options = $option + $options;
+
 
         try
         {
-            $oResponse	=	$this->__soapCall('GetItemBase',array( $options));
+            $oResponse	=	$this->__soapCall('GetItemsBase',array( $options));
         }
-        catch(SoapFault $sf)
+        catch(\SoapFault $sf)
         {
             print_r("Es kam zu einem Fehler beim Call GetAuthentificationToken<br>");
             print_r($sf->getMessage());
         }
+        if ( isset($oResponse->Success) and $oResponse->ItemsBase != null ){
+            // $output = array_merge($output, $oResponse->ItemsBase->item);
+            $Products = $this->syncArticle( $oResponse->ItemsBase->item);
+            if(isset($oResponse->Pages)) $page = $oResponse->Pages;
+        }
 
-        if(isset($oResponse->Success)){
-            if(  $oResponse->Success == TRUE)
-                {
-                    return($oResponse->ItemBase);
-                }
-                else
-                {
-                    return($oResponse->ErrorMessages);
-                }
+        for($i = 1; $i < $page; $i++)
+        {
+
+            $options['Page'] = $i  ;
+            try
+            {
+                $oResponse	=	$this->__soapCall('GetItemsBase',array( $options));
             }
-        else return($oResponse->Message);
+            catch(\SoapFault $sf)
+            {
+                print_r("Es kam zu einem Fehler beim Call GetAuthentificationToken<br>");
+                print_r($sf->getMessage());
+            }
+            if ( isset($oResponse->Success) and $oResponse->ItemsBase != null ){
+                //$output = array_merge($output, $oResponse->ItemsBase->item);
+                $Products += $this->syncArticle( $oResponse->ItemsBase->item);
+            }
+
+        }
+
+        return $Products;
     }
 
     public function doGetItemsStock( $SKU )

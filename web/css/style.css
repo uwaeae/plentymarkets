@@ -96,6 +96,9 @@ h1 {
     border: 1px solid #000000;
     overflow: auto;
 }
+.shopinglist table{
+    margin: 0;
+}
 
 .itemEdit{
     margin-left: 10px;
@@ -110,7 +113,15 @@ tr:hover div.itemEdit{
     width: 16px;
     height: 16px;
 }
+.header_checkout{
+    height: 100px;
+    display: inline;
+    width: auto;
+}
 
+.header_checkout h1{
+    display: inline;
+}
 
 .checkout-box{
     background-color: #00C800;
@@ -135,13 +146,23 @@ div.co_result{
     font-size: 1.5em;
 
 }
-.toPaydialog > div,
-.toPaydialog input,
-div.co_result > div{
+
+
+div.co_toPay,
+input.co_payed,
+div.co_return{
     display: block;
     border: 1px solid #000000 ;
     font-size: 2em;
     height: 40px;
+}
+
+div.co_receipt{
+    margin-top: 10px;
+
+}
+div.co_receipt textarea{
+    width: 350px;
 }
 
 .toPaydialog form{

@@ -10,68 +10,80 @@
     <!-- stylesheets -->
 
     <style type="text/css">
-        table{
-            width: 400px;
+        h1{
+            margin: 0;
+        }
+        p{
+            max-width: 400px;
         }
 
+        table{
+            width: 400px;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        table.items th{
+            border-bottom: 2px solid #000000;
+        }
+        table.items th:first-child,
+        table.items td:first-child{
+            border-left: none;
+
+        }
+        table.items th,
+        table.items td{
+            border-left: 1px solid black;
+
+        }
+        table.items tr:last-child{
+            border-bottom: 2px solid black;
+
+        }
+
+        table td{
+            text-align: right;
+        }
         .borderbottom{
             border-bottom: 1px solid #000000;
             width: 250px;
         }
 
 
+        img.logo{
+            width: 400px;
+        }
+
+
+
+
+
 
     </style>
 </head>
 <body>
-
+<img  class="logo" alt="Blumenschule Logo" src="/images/logo_blumenschule.png">
 <h1>Quittung</h1>
 
+
+{% if basket.bontext %}
+
 <p>
- <table>
-    <tr>
-        <td>
-            Name
-        </td>
-        <td class="borderbottom">
-
-        </td>
-    </tr>
-    <tr>
-        <td>Strasse</td>
-        <td class="borderbottom">
-
-        </td>
-    </tr>
-
-
- </table>
-
-
-
+<strong>Kunde:</strong>
+{{basket.bontext|raw  }}
 </p>
-
+{% endif %}
 
 <p>
-Die Blumenschule<br>
-Sabine Friesch<br>
+Die Blumenschule - Sabine Friesch<br>
 Augsburgerstraße 62<br>
 86956 Schongau<br>
-Telefon: 08861 / 7373<br>
-Fax: 08861 / 1272<br>
+Telefon: 08861 / 7373 Fax: 08861 / 1272<br>
 EMail: info@blumenschule.de<br>
 </p>
-<p>
-    Bio-Kontrollnr.: D-BY-M-005-09699A<br>
-    DE-005 Öko-Kontrollstelle<br>
-    Pflanzen-Pass: DE-BY-111444<br>
-    USt-IdNr: DE131255548<br>
-</p>
-
 
 Datum {{ "now"|date("d.m.Y") }} Uhrzeit: Datum {{ "now"|date("H:i:s") }}
 
-<table>
+<table class="items">
 
     <thead>
 
@@ -95,23 +107,24 @@ Datum {{ "now"|date("d.m.Y") }} Uhrzeit: Datum {{ "now"|date("H:i:s") }}
         </tr>
     {% endfor %}
     </tbody>
-</table>
-    <table>
-        <tr>
 
-            <td> Summe Netto</td>
+</table>
+<table>
+    <tr>
+
+            <th> Summe Netto</th>
             <td> {{ summary.netto |number_format(2, '.', ',')  }}  &euro;</td>
         </tr>
         <tr>
-            <td> MwSt 19%</td>
+            <th> MwSt 19%</th>
             <td> {{ summary.mwst19|number_format(2, '.', ',')  }}  &euro;</td>
         </tr>
         <tr>
-            <td> MwSt 7%</td>
+            <th> MwSt 7%</th>
             <td> {{ summary.mwst7|number_format(2, '.', ',')  }}  &euro;</td>
         </tr>
         <tr>
-            <td>Gesamt</td>
+            <th>Gesamt</th>
             <td> {{ summary.sum |number_format(2, '.', ',')  }}  &euro;</td>
         </tr>
 
@@ -119,7 +132,12 @@ Datum {{ "now"|date("d.m.Y") }} Uhrzeit: Datum {{ "now"|date("H:i:s") }}
 <p>
 {{ info|raw }}
 </p>
-
+<p>
+    Bio-Kontrollnr.: D-BY-M-005-09699A<br>
+    DE-005 Öko-Kontrollstelle<br>
+    Pflanzen-Pass: DE-BY-111444<br>
+    USt-IdNr: DE131255548<br>
+</p>
 
 </body>
 </html>

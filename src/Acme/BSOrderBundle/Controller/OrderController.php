@@ -908,16 +908,18 @@ class OrderController extends Controller
         $repository = $this->getDoctrine()->getRepository('BSDataBundle:Product');
         $product = $repository->findOneBy(array('article_id' => $ArtileID));
         if(!$product) {
-            $product = new Product();
-            $PMItem = $oPlentySoapClient->doGetItemBase(array('ItemID'=>$ArtileID[0]));
-            if(isset($PMItem->ItemID)) {
+            //$product = new Product();
+            $request = $oPlentySoapClient->doGetItemsBaseByOptions(array('ItemID'=>$ArtileID[0]));
+            $product = $request[0];
+           /* if(isset($PMItem->ItemID)) {
                 $product =  $repository->PMSoapProduct($product,$PMItem );
             }
             else{
                 $product = $repository->newPMSoapOrderProduct($product,$OrderItem);
             }
             $em->persist($product);
-            $em->flush();
+            $em->flush();*/
+
         }
 
         return $product;

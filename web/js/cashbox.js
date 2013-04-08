@@ -19,3 +19,7 @@ $(document).ready(function(){
 
 });
 
+config.toolbar_Basic =
+    [
+        ['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink','-','About']
+    ];
