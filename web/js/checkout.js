@@ -113,9 +113,9 @@ $(document).ready(function(){
         var code = $(this).data('code');
         var input =  $('.inputkeyboard');
         var id =  input.data('cashbox');
-        var price = input.val();
-        if(price.length > 0)
-        $.post('/cashbox/'+id+'/checkout/add',{ code: code,price: price},buildtable);
+        var quantity = $('.inputkeyboard').val();
+        if(quantity.length > 0)
+            $.post('/cashbox/'+id+'/checkout/add',{ code: code,quantity: quantity},buildtable);
 
 
     });
