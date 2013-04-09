@@ -85,7 +85,7 @@ var buildtable = function buildTable(data){
 };
 
 $(document).ready(function(){
-   // $(".btnPrint").printPage();
+    $(".btnPrint").printPage();
     // Dialog Wiget initalisieren
 
     $('.orderdialog').dialog({
