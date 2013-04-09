@@ -39,8 +39,31 @@
 
         <div class="ym-column">
             <div class="ym-col1">
+                <div >
+                <img  width="220px"  alt="Blumenschule Logo" src="/images/logo_blumenschule.png">
+
+
+
+                <ul class="Payment_Buttons" >
+                        <li>
+                            <form action="{{ path('BSCheckout_clear', { 'cashbox_id': cashbox.id }) }}" method="post">
+                                <button class="ym-button">CLEAR</button>
+                            </form>
+                        </li>
+                        <li>
+                            <a href="{{ path('BSCheckout_history', { 'cashbox_id': cashbox.id , 'date': "now"  }) }}" class="ym-button">History</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('checkout_cashbox_show', { 'id': cashbox.id  }) }}" class="ym-button">Konfiguration</a>
+                        </li>
+
+                    </ul>
+
+                </div>
 
                 <div class="ym-cbox">
+
+
                     <div class="shopinglist">
                         <table >
                             <thead>
@@ -158,17 +181,6 @@
                             <button class="ym-button pflege" >Pflegeanleitung</button>
                         </li>
 
-                        <li>
-                            <form action="{{ path('BSCheckout_clear', { 'cashbox_id': cashbox.id }) }}" method="post">
-                                <button class="ym-button">CLEAR</button>
-                            </form>
-                        </li>
-                        <li>
-                            <a href="{{ path('BSCheckout_history', { 'cashbox_id': cashbox.id , 'date': "now"  }) }}" class="ym-button">History</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('checkout_cashbox_show', { 'id': cashbox.id  }) }}" class="ym-button">Konfiguration</a>
-                        </li>
 
                     </ul>
 
@@ -179,7 +191,6 @@
             <div class="ym-col2">
                 <div class="ym-cbox ">
 
-                    <img  width="220px"  alt="Blumenschule Logo" src="/images/logo_blumenschule.png">
 
 
 

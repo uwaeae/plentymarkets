@@ -173,6 +173,10 @@ div.co_receipt textarea{
 
 /* Rechungserstellung */
 
+.Payment_Buttons {
+    display: inline-block;
+}
+
 .Payment_Buttons li{
     list-style: none;
     float: left;
