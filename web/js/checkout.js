@@ -114,8 +114,10 @@ $(document).ready(function(){
         var input =  $('.inputkeyboard');
         var id =  input.data('cashbox');
         var quantity = $('.inputkeyboard').val();
-        if(quantity.length > 0)
+        if(quantity.length > 0){
+            itemFocus = '.itemprice:last';
             $.post('/cashbox/'+id+'/checkout/add',{ code: code,quantity: quantity},buildtable);
+        }
 
 
     });

@@ -10,15 +10,17 @@
     <!-- stylesheets -->
 
     <style type="text/css">
+        @page { size:21.0cm 14.85cm; margin:2cm 1cm 2cm 1cm; }
+
         h1{
             margin: 0;
         }
         p{
-            max-width: 400px;
+            max-width: 650px;
         }
 
         table{
-            width: 400px;
+            width: 650px;
             margin-top: 20px;
             border-collapse: collapse;
         }
@@ -43,6 +45,11 @@
         table td{
             text-align: right;
         }
+        table.summe {
+            padding-left: 50%;
+            display: block;
+        }
+
         .borderbottom{
             border-bottom: 1px solid #000000;
             width: 250px;
@@ -50,11 +57,21 @@
 
 
         img.logo{
-            width: 400px;
+            margin: 0 25% ;
+            width: 50%;
         }
 
+        div.fooder{
+            position:absolute;
+            bottom:0px;
+        }
 
-
+        div.fooder table td{
+            text-align: center;
+        }
+        div.boninfo{
+            width: 100%;
+        }
 
 
 
@@ -109,7 +126,7 @@ Datum {{ "now"|date("d.m.Y") }} Uhrzeit: Datum {{ "now"|date("H:i:s") }}
     </tbody>
 
 </table>
-<table>
+<table class="summe">
     <tr>
 
             <th> Summe Netto</th>
@@ -129,15 +146,30 @@ Datum {{ "now"|date("d.m.Y") }} Uhrzeit: Datum {{ "now"|date("H:i:s") }}
         </tr>
 
     </table>
-<p>
+
+<div class="boninfo">
 {{ info|raw }}
-</p>
-<p>
-    Bio-Kontrollnr.: D-BY-M-005-09699A<br>
-    DE-005 Öko-Kontrollstelle<br>
-    Pflanzen-Pass: DE-BY-111444<br>
-    USt-IdNr: DE131255548<br>
-</p>
+</div>
+<div class="fooder">
+    <table>
+    <tr>
+        <td> Bio-Kontrollnr.: D-BY-M-005-09699A<br> </td>
+        <td>
+            DE-005 Öko-Kontrollstelle
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Pflanzen-Pass: DE-BY-111444
+        </td>
+        <td>
+            USt-IdNr: DE131255548
+        </td>
+    </tr>
+
+    </table>
+
+</div>
 
 </body>
 </html>
