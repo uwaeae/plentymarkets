@@ -161,15 +161,15 @@ div.co_receipt{
     margin-top: 10px;
 
 }
-div.co_receipt textarea{
-    width: 350px;
-}
+
 
 .toPaydialog form{
     display: inline;
 }
 
-
+#cke_bontext{
+    height: 300px;
+}
 
 /* Rechungserstellung */
 

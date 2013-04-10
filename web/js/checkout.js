@@ -85,8 +85,32 @@ var buildtable = function buildTable(data){
 };
 
 $(document).ready(function(){
-    $(".btnPrint").printPage();
+    //$(".btnPrint").printPage();
     // Dialog Wiget initalisieren
+
+
+
+   $('.bontext').submit(function(event){
+        event.preventDefault();
+
+        var text = $(this).find('textarea').val();
+       text.replace(/\r\n|\r|\n/g,"<br />");
+       console.log(text);
+        $.post($(this).attr( 'action' ),{bontext:text},function(data) {
+         // console.log(data);
+         // $('#printPage').empty().append(data);
+            w=window.open();
+            w.document.write(data);
+            w.print();
+            w.close();
+        });
+
+
+
+    });
+
+
+
 
     $('.orderdialog').dialog({
         autoOpen: false,
@@ -100,7 +124,7 @@ $(document).ready(function(){
         autoOpen: false,
         modal: true,
         minWidth: 600,
-        minHeight:600});
+        minHeight:400});
     $( ".toPay" ).click(function() {
         $( ".toPaydialog" ).dialog( "open" );
     });

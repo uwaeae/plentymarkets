@@ -340,13 +340,35 @@ class CheckoutController extends Controller
     }
 
     /**
-     * @Route("/{cashbox_id}/checkout/receipt/{id}",name="BSCheckout_receipt")
+     * @Route("/{cashbox_id}/checkout/{id}/bontext",name="BSCheckout_bontext")
+
+     * @Template()
+     */
+    public function bontextAction( $cashbox_id,$id )
+    {
+        $bontext = $this->getRequest()->request->get('bontext');
+        $em = $this->getDoctrine()->getEntityManager();
+
+        //$cashbox = $em->getRepository('BSCheckoutBundle:cashbox')->find($cashbox_id);
+        $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->find($id);
+
+        $currentBasket->setBontext($bontext);
+        $em->persist($currentBasket);
+        $em->flush();
+        return $this->redirect($this->generateUrl('BSCheckout_home',array('cashbox_id'=>$cashbox_id)));
+    }
+
+    /**
+     * @Route("/{cashbox_id}/checkout/{id}/receipt",name="BSCheckout_receipt")
 
      * @Template()
      */
     public function receiptAction( $cashbox_id,$id )
     {
         $bontext = $this->getRequest()->request->get('bontext');
+
+        $bontext = nl2br($bontext);
+
         $em = $this->getDoctrine()->getEntityManager();
 
         $cashbox = $em->getRepository('BSCheckoutBundle:cashbox')->find($cashbox_id);

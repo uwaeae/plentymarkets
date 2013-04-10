@@ -114,7 +114,7 @@
                     </div>
 
 
-
+                    <div id="printPage" name="printPage"  style="position:absolute;top:-9999px;left:-9999px;border:0px;overflow:none; z-index:-1"></div>
                     <div class="toPaydialog" title="Bezahlen">
                         Betrag
                         <div class="co_toPay">
@@ -139,13 +139,16 @@
                             </form>
                         </div>
 
-                        <div class="co_receipt">
-                            <form action="{{ path('BSCheckout_receipt', { 'cashbox_id': cashbox.id,'id': basket.id,}) }}" method="post">
+
+                        <div class="co_receipt" >
+
+                            <form class="bontext" action="{{ path('BSCheckout_receipt', { 'cashbox_id': cashbox.id,'id': basket.id,}) }}" method="post">
+                                <button class="ym-button receipt btnPrint">Quittung</button>
                                 <input type="hidden" name="cashbox_id" value="{{ cashbox.id}}">
                                 <label for="bontext">Adresse</label>
-                                <textarea class="ckeditor"  name="bontext" id="bontext" >{{ basket.bontext }}</textarea>
-                                <button class="ym-button receipt btnPrint">Quittung</button>
+                                <textarea   name="bontext" id="bontext" >{{ basket.bontext }}</textarea>
                             </form>
+
 
                         </div>
 
