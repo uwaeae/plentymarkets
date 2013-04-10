@@ -53,9 +53,6 @@ class cashboxController extends Controller
         $checkouts = $em->getRepository('BSCheckoutBundle:checkout')->getHistory($cashbox->getID(),'now');
 
 
-        
-
-
         return array('checkouts' => $checkouts);
 
 
@@ -352,7 +349,7 @@ class cashboxController extends Controller
      */
     public function printAction($id,$date = 'now'){
 
-
+        $pdfname = 'cashbox_'.$id.'_'.date('U');
 
         $em = $this->getDoctrine()->getEntityManager();
         $Baskets = $em->getRepository('BSCheckoutBundle:checkout')->getHistory($id,$date);
@@ -366,9 +363,14 @@ class cashboxController extends Controller
 
             foreach($basket->getCheckoutItems() as $item){
                 //$item = new checkoutItem();
-
-                if(isset( $article[$item->getArticleCode()])){
+                if(isset( $summary[99][$item->getVAT()]) ){
+                    $summary[99][$item->getVAT()] +=$item->getPrice() + $item->getQuantity() ;
+                }else{
+                    $summary[99][$item->getVAT()] = $item->getPrice() + $item->getQuantity() ;
+                }
+                if(isset( $summary[$payment][$item->getVAT()])){
                     $summary[$payment][$item->getVAT()] +=$item->getPrice() + $item->getQuantity() ;
+
                 }else{
                     $summary[$payment][$item->getVAT()] = $item->getPrice() + $item->getQuantity() ;
                 }
@@ -380,8 +382,6 @@ class cashboxController extends Controller
                 }
 
             }
-            // TODO Florian Kassenbericht Fertig machen
-
 
         }
 
@@ -400,12 +400,50 @@ class cashboxController extends Controller
         $pdf->setPrintFooter(false);
         $pdf->setCellPaddings(1, 1, 1, 1);
         $pdf->setCellMargins(1, 1, 1, 1);
-        $pdf->AddPage('L');
+        $pdf->AddPage('');
         //Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=0, $link='', $stretch=0, $ignore_min_height=false, $calign='T', $valign='M')
 
-        $pdf->SetFont('helvetica', 'B', 10);
-        //$pdf->Write(1,$entity->getName(),'',false,'L',1);
-        //$pdf->Cell(2, 6, $entity->getName(),1,1);
+        $pdf->SetFont('helvetica', 'B', 14);
+        $pdf->Cell(60,20,'Kassenabschluss '.date("m.d.y"),0,1);
+
+
+        $pdf->SetFont('helvetica', 'B', 12);
+        $pdf->Cell(40,15 , "Umsatz nach Zahlungsart",0,1);
+
+
+        $paymentMethods = array(
+            0 => 'Bar',
+            1 => 'EC',
+            11 => 'Bar',
+            99 => 'Gesamt'
+        );
+        ksort($summary);
+        $pdf->SetLineWidth(0.3);
+        foreach($summary as $key => $p){
+            $pdf->SetFont('helvetica', 'B', 12);
+            $pdf->cell(40,6,$paymentMethods[$key],0,1);
+            $pdf->SetFont('helvetica', '', 10);
+            $pdf->cell(20,3,'Mwst Satz','', 0, 'L');
+            $pdf->cell(30,3,'Netto','', 0, 'L');
+            $pdf->cell(30,3,'Steuer','', 0, 'L');
+            $pdf->cell(30,3,'Brutto','', 0, 'L');
+            $pdf->Ln();
+
+            $pdf->SetFont('helvetica', '', 10);
+            foreach($p as $VAT=>$sum){
+                $pdf->cell(20,4,$VAT."%",'',0);
+                $pdf->cell(30,4, number_format($sum * (100 - $VAT)/100 , 2, ',', ' ')." €",'',0);
+                $pdf->cell(30,4, number_format($sum * ($VAT/100), 2, ',', ' ')." €",'',0);
+                $pdf->cell(30,4, number_format($sum, 2, ',', ' ')." €",'',0);
+                $pdf->Ln();
+            }
+            $pdf->ln(5);
+
+
+        }
+
+
+
         //$pdf->Text(0, 0, $entity->getName(),false,false,true,0,1);
         //$pdf->SetFont('helvetica', 'B', 8);
         //$pdf->Cell(2, 6, $entity->getName2(),1,1);
@@ -414,10 +452,11 @@ class cashboxController extends Controller
 
 
 
-        $pdf->Output("print/".$entity->getArticleNo().".pdf", 'F');
+        $pdf->Output("print/".$pdfname.".pdf", 'F');
 
-        return $this->render('BSDataBundle:Product:print.html.twig', array(
-            'urlPDF'=> "/print/".$entity->getArticleNo().".pdf",
+        return $this->render('BSCheckoutBundle:cashbox:print.html.twig', array(
+            'urlPDF'=> "/print/".$pdfname.".pdf",
+             'cashbox_id' => $id,
         ));
 
 

@@ -167,11 +167,11 @@ class CheckoutController extends Controller
     public function finishAction($cashbox_id)
     {
         $em = $this->getDoctrine()->getEntityManager();
-
+        $payment_id = 0;
         $payment_id = $this->getRequest()->request->get('payment_id');
         //$cashbox_id = $this->getRequest()->request->get('cashbox_id');
 
-        if(!$cashbox_id || !$payment_id){
+        if(!$cashbox_id){
             throw $this->createNotFoundException("Keine Parameter übergeben");
 
         }
@@ -184,13 +184,15 @@ class CheckoutController extends Controller
 
         }
 
-
-        $cb->setPayment($payment_id);
-        $cb->setBuydate(new \DateTime());
-        $cb->setFinish(true);
-        $cb->setSummary($sum);
-        $em->persist($cb);
+        if($sum > 0){
+            $cb->setPayment($payment_id);
+            $cb->setBuydate(new \DateTime());
+            $cb->setFinish(true);
+            $cb->setSummary($sum);
+            $em->persist($cb);
             $em->flush();
+        }
+
 
 
         return $this->redirect($this->generateUrl('BSCheckout_home',array('cashbox_id'=>$cashbox_id)));

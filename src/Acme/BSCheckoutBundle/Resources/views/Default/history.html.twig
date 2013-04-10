@@ -1,7 +1,5 @@
 {% extends '::base.html.twig' %}
 {% block title %}INTERN - Waren{% endblock %}
-
-
 {% block javascripts %}
     <script src="{{ asset('/js/jquery.js') }}" type="text/javascript"></script>
     <script src="{{ asset('/js/product.js') }}" type="text/javascript"></script>
@@ -30,8 +28,6 @@
 
     <div class="ym-column">
         <div class="ym-col1">
-
-
             <div class="results ym-cbox">
                 <table class="bordertable narrow">
                     <thead>
@@ -71,9 +67,13 @@
         </div>
         <div class="ym-col2">
             <div class="ym-cbox">
-                <form action="{{ path('BSCashbox_close', { 'id': cashbox_id,}) }}" method="post">
+                <!--<form action="{{ path('BSCashbox_close', { 'id': cashbox_id,}) }}" method="post">
                     <button class="ym-button" >Kassen Abschluss</button>
                 </form>
+                -->
+                <a href="{{ path('checkout_cashbox_print',{'id' : cashbox_id}) }}">
+                    Kassen Bericht
+                </a>
 
             </div>
         </div>
