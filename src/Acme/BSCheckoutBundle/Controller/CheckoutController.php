@@ -2,6 +2,7 @@
 
 namespace Acme\BSCheckoutBundle\Controller;
 
+use Acme\BSCheckoutBundle\Entity\checkout;
 use Acme\BSCheckoutBundle\Entity\checkoutItem;
 use Acme\PlentyMarketsBundle\Controller\PMDeliveryAddress;
 use Acme\PlentyMarketsBundle\Controller\PMOrderHead;
@@ -77,8 +78,14 @@ class CheckoutController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         $Baskets = $em->getRepository('BSCheckoutBundle:checkout')->getHistory($cashbox_id,$date);
-        return $this->render('BSCheckoutBundle:Default:history.html.twig', array('Baskets' => $Baskets,'cashbox_id'=>$cashbox_id));
+        return $this->render('BSCheckoutBundle:Default:history.html.twig', array(
+            'Baskets' => $Baskets,
+            'cashbox_id'=>$cashbox_id,
+            'date' => $date
+        ));
     }
+
+
 
 
 
@@ -212,7 +219,7 @@ class CheckoutController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->getCurrentBasket($cashbox_id);
-
+        $currentBasket = new checkout();
         $oPlentySoapClient	=	new PlentySoapClient($this,$this->getDoctrine());
 
         $request = $this->getRequest();
@@ -225,6 +232,8 @@ class CheckoutController extends Controller
         $OrderHead->ExternalOrderID = ' ';
         $OrderHead->OrderID = null;
         $OrderHead->SalesAgentID = 13;
+        $OrderHead->TotalBrutto = $currentBasket->getSummary();
+
         if(!empty($form['customerno'])){
             $OrderHead->CustomerID = $form['customerno'];
         }
@@ -251,7 +260,7 @@ class CheckoutController extends Controller
             //$OrderItem->ItemNo =  $item->getArticleCode();
             $OrderItem->Price = $item->getPrice();
             $OrderItem->Quantity = $item->getQuantity();
-
+            $OrderItem->OrderID = null;
 
             $OrderItems[] = $OrderItem;
         }
@@ -267,7 +276,7 @@ class CheckoutController extends Controller
         $response = $oPlentySoapClient->doAddOrders($pm_orders);
 
 
-        $message  = explode(";",$response->Message);
+       /* $message  = explode(";",$response->Message);
         $OrderID = $message[1];
         $RequestAddOrderItems = new RequestAddOrdersItems();
         foreach($currentBasket->getCheckoutItems() as $item){
@@ -281,6 +290,7 @@ class CheckoutController extends Controller
             $RequestAddOrderItems->OrderItems[] = $OrderItem;
         }
         $response = $oPlentySoapClient->doAddOrdersItems($RequestAddOrderItems);
+        */
 
         // TESTEN
         return $this->render('BSCheckoutBundle:Default:order.html.twig', array(

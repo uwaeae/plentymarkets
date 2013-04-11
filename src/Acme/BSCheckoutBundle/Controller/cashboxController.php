@@ -343,11 +343,11 @@ class cashboxController extends Controller
     }
 
     /**
-     * @Route("/{id}/print", name="checkout_cashbox_print")
+     * @Route("/{id}/print/{date}", name="checkout_cashbox_print")
      * @Method({ "GET"})
      * @Template()
      */
-    public function printAction($id,$date = 'now'){
+    public function printAction($id,$date){
 
         $pdfname = 'cashbox_'.$id.'_'.date('U');
 

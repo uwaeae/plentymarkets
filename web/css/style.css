@@ -57,7 +57,7 @@ h1 {
 
 
 .ym-wrapper {
-        max-width: 80em;
+        max-width: auto;
 
 }
 .ym-wbox { padding: 10px; }
@@ -77,11 +77,13 @@ h1 {
     float: left;
     width: 80%;
 }
+
+
 .ym-col3 { /* sidebar */
     position: relative;
     float: right;
-    width: 250px; /* column width */
-    margin: 0 -250px 0 0;
+    width: 20%;
+    margin: 0;
 }
 
 /* Kassen Layout */

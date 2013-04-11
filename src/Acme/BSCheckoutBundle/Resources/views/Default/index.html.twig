@@ -45,6 +45,11 @@
 
 
                 <ul class="Payment_Buttons" >
+
+                            <li><a  class="ym-button" href="{{ path('BSData_mainmenu') }}">Hauptmenü</a></li>
+
+
+
                         <li>
                             <form action="{{ path('BSCheckout_clear', { 'cashbox_id': cashbox.id }) }}" method="post">
                                 <button class="ym-button">CLEAR</button>

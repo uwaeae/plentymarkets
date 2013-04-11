@@ -1318,6 +1318,45 @@ class PlentySoapClient extends \SoapClient
 
     }
 
+    public function doGetOrdersInvoiceDocumentURLs($option = array()){
+
+
+        $options['OrderIDs'] = array();
+        $options['GetDocumentAsBinaryData'] = false();
+
+
+
+
+        $options = $option + $options;
+
+
+        try
+        {
+            $oResponse	=	$this->__soapCall('GetOrdersInvoiceDocumentURLs',$options);
+        }
+        catch(SoapFault $sf)
+        {
+            print_r("Es kam zu einem Fehler beim Call AddItemsBase<br>");
+            print_r($sf->getMessage());
+        }
+
+        if(isset($oResponse->Success)){
+            if(  $oResponse->Success == TRUE)
+            {
+                return $oResponse;
+            }
+            else
+            {
+                return($oResponse->ErrorMessages);
+            }
+        }
+        else return($oResponse->Message);
+
+    }
+
+
+
+
 
 
 }
