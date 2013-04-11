@@ -19,9 +19,22 @@
 body{
     font-family: arial,sans-serif;
 }
+a.bsbutton {
+    background-color: #00C800;
+    color: #000000;
+    display: block;
+    font-family: Verdana,Tahoma,Arial,sans-serif;
+    font-size: 10px;
+    font-weight: normal;
+    height: 20px;
+    line-height: 170%;
+    padding: 0 0 0 8px;
+    text-align: left;
+    text-decoration: none;
+}
 
-a:focus,
-a:hover{
+a.bsbutton:focus,
+a.bsbutton:hover{
     background-color: #ffffff;
 
 }
@@ -213,5 +226,20 @@ div.co_receipt{
 
 .itemprice{
     width: 65px;
+}
+
+.article{
+    width: 50%;
+}
+.article td,
+.article th{
+    padding: 0;
+    margin: 0;
+}
+.article thead tr{
+    background-color: #808080;
+}
+.article thead tr:hover {
+    background-color: #808080;
 }
 

@@ -1,11 +1,25 @@
 {% extends '::base.html.twig' %}
 {% block title %}Verkaufshistory{% endblock %}
 {% block javascripts %}
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+
     <script src="{{ asset('/js/jquery.js') }}" type="text/javascript"></script>
     <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
     <script src="{{ asset('/js/checkouthistory.js') }}" type="text/javascript"></script>
 {% endblock %}
+ {% block stylesheets %}
+
+     <link rel="stylesheet" href="/css/yaml/core/base.min.css" type="text/css"/>
+     <link rel="stylesheet" href="/css/yaml/screen/typography.css" type="text/css"/>
+     <link rel="stylesheet" href="/css/yaml/navigation/hlist.css" type="text/css"/>
+
+     <link rel="stylesheet" href="/css/yaml/forms/gray-theme.css" type="text/css"/>
+     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+     <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+
+ {% endblock %}
+
+
+
 
 {% block body %}
 
@@ -55,6 +69,7 @@
                         <th>Datum/Uhrzeit</th>
                         <th>Zahlungsart</th>
                         <th>Summe</th>
+                        <th>Artikel</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -69,9 +84,51 @@
                             <td>
                                 <ul>
                                     <li>
-                                        <a href="{{ path('BSCheckout_receipt', { 'cashbox_id': cashbox_id,'id':entity.id}) }}" target="_blank">Bon</a>
+                                        <a class="bsbutton bon" href="{{ path('BSCheckout_receipt', { 'cashbox_id': cashbox_id,'id':entity.id}) }}" target="_blank">Bon</a>
                                     </li>
                                 </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <div class="article">
+                                    <a class="article_button bsbutton" href="#">Artikle anzeigen</a>
+                                    <table class="article_items">
+
+                                        <thead>
+                                        <tr>
+                                            <td>ID</td>
+                                            <td>Menge</td>
+                                            <td>Beschreibung</td>
+                                            <td>MwSt</td>
+                                            <td>Einzelpreis</td>
+                                            <td>Summe</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="co_items">
+                                        {% for item in entity.checkoutItems %}
+                                            <tr data-sum="{{ (item.quantity * item.price) }}">
+                                                <td>{{ loop.index }}</td>
+                                                <td>{{ item.quantity }}</td>
+                                                <td>{{ item.description }}</td>
+                                                <td>{{ item.VAT }}%</td>
+                                                <td>
+                                                    {{ item.price|number_format(2, '.', ',')  }}"
+                                                </td>
+                                                <!-- <td></td> -->
+                                                <td>
+                                                    {{ (item.quantity * item.price)|number_format(2, '.', ',')  }}  &euro;
+                                                </td>
+
+                                            </tr>
+
+
+                                        {% endfor %}
+                                        </tbody>
+
+
+                                    </table>
+                                </div>
                             </td>
                         </tr>
                     {% endfor %}
