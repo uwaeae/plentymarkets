@@ -404,7 +404,9 @@ class cashboxController extends Controller
         //Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=0, $link='', $stretch=0, $ignore_min_height=false, $calign='T', $valign='M')
 
         $pdf->SetFont('helvetica', 'B', 14);
-        $pdf->Cell(60,20,'Kassenabschluss '.date("m.d.y"),0,1);
+        $d = strtotime($date);
+
+        $pdf->Cell(60,20,'Kassenabschluss '.date("d.m.Y", mktime(0, 0, 0, date('m',$d), date('d',$d), date('Y',$d))),0,1);
 
 
         $pdf->SetFont('helvetica', 'B', 12);
@@ -428,15 +430,22 @@ class cashboxController extends Controller
             $pdf->cell(30,3,'Steuer','', 0, 'L');
             $pdf->cell(30,3,'Brutto','', 0, 'L');
             $pdf->Ln();
-
+            $gesamt = 0;
             $pdf->SetFont('helvetica', '', 10);
             foreach($p as $VAT=>$sum){
                 $pdf->cell(20,4,$VAT."%",'',0);
                 $pdf->cell(30,4, number_format($sum * (100 - $VAT)/100 , 2, ',', ' ')." €",'',0);
                 $pdf->cell(30,4, number_format($sum * ($VAT/100), 2, ',', ' ')." €",'',0);
                 $pdf->cell(30,4, number_format($sum, 2, ',', ' ')." €",'',0);
+                $gesamt += $sum;
                 $pdf->Ln();
             }
+            $pdf->SetFont('helvetica', 'B', 10);
+            $pdf->cell(50,4," ",'',0);
+            $pdf->cell(30,4,"Gesamt ",'',0);
+            $pdf->cell(30,4, number_format($gesamt, 2, ',', ' ')." €",'',0);
+
+
             $pdf->ln(5);
 
 

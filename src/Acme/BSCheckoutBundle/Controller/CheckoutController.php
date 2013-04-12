@@ -257,6 +257,7 @@ class CheckoutController extends Controller
 
             $OrderItem = new PMOrderItem();
             $OrderItem->ItemID = $item->getArticleId();
+            $OrderItem->SKU = $item->getArticleId();
             //$OrderItem->ItemNo =  $item->getArticleCode();
             $OrderItem->Price = $item->getPrice();
             $OrderItem->Quantity = $item->getQuantity();
@@ -276,7 +277,7 @@ class CheckoutController extends Controller
         $response = $oPlentySoapClient->doAddOrders($pm_orders);
 
 
-       /* $message  = explode(";",$response->Message);
+        $message  = explode(";",$response->Message);
         $OrderID = $message[1];
         $RequestAddOrderItems = new RequestAddOrdersItems();
         foreach($currentBasket->getCheckoutItems() as $item){
@@ -290,7 +291,7 @@ class CheckoutController extends Controller
             $RequestAddOrderItems->OrderItems[] = $OrderItem;
         }
         $response = $oPlentySoapClient->doAddOrdersItems($RequestAddOrderItems);
-        */
+
 
         // TESTEN
         return $this->render('BSCheckoutBundle:Default:order.html.twig', array(
