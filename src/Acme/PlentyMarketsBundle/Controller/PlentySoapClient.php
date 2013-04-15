@@ -552,7 +552,7 @@ class PlentySoapClient extends \SoapClient
         $oResponse	= null;
         $page = 0;
         // um die Suche einzuschränken
-        $options['ItemNo'] = "srt%";
+        //$options['ItemNo'] = "srt%";
         $options['LastUpdate'] = $lastUpdate ;
         $options['LastInserted'] =null ;
         $options['Marking1ID'] =null ;
