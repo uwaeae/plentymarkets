@@ -72,6 +72,13 @@ class Product
      */
     private $lastupdate;
 
+    /**
+    * @var string $SKU
+    *
+    * @ORM\Column(name="SKU", type="string", length=255,nullable= true)
+    */
+    private $SKU;
+
 
     /**
      * @var float $price
@@ -129,20 +136,11 @@ class Product
 
     private $AttributeVaueSetID;
 
-
-
-    // todo Many to Many mit Anzahl der im Packt enthaltenen Produkte
     /**
-     * @ORM\OneToMany(targetEntity="Product", mappedBy="bundle")
+     * @ORM\OneToMany(targetEntity="ProductBundle", mappedBy="Product")
      */
-    protected $bundleitems;
 
-    /**
-    * @ORM\ManyToOne(targetEntity="Product", inversedBy="bundleitems")
-    * @ORM\JoinColumn(name="bundle_id", referencedColumnName="id")
-    **/
-    protected $bundle;
-
+    private $ProductBundles;
 
     /**
      * @ORM\ManyToOne(targetEntity="Stock", inversedBy="products")
@@ -153,7 +151,8 @@ class Product
 
     public function __construct()
     {
-        $this->bundleItems = new ArrayCollection();
+        $this->ProductBundles = new ArrayCollection();#
+
     }
 
     /**
@@ -278,8 +277,6 @@ class Product
         return $this->getName();
 
     }
-
-
 
 
     /**
@@ -444,58 +441,6 @@ class Product
     }
 
     /**
-     * Add bundleitems
-     *
-     * @param Acme\BSDataBundle\Entity\Product $bundleitems
-     */
-    public function addProduct(\Acme\BSDataBundle\Entity\Product $bundleitems)
-    {
-        $this->bundleitems[] = $bundleitems;
-    }
-
-    /**
-     * Clear bundleitems
-     *
-     */
-
-
-    public function clearBundleitems()
-    {
-        $this->bundleItems = new ArrayCollection();
-    }
-
-
-    /**
-     * Get bundleitems
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getBundleitems()
-    {
-        return $this->bundleitems;
-    }
-
-    /**
-     * Set bundle
-     *
-     * @param Acme\BSDataBundle\Entity\Product $bundle
-     */
-    public function setBundle(\Acme\BSDataBundle\Entity\Product $bundle)
-    {
-        $this->bundle = $bundle;
-    }
-
-    /**
-     * Get bundle
-     *
-     * @return Acme\BSDataBundle\Entity\Product 
-     */
-    public function getBundle()
-    {
-        return $this->bundle;
-    }
-
-    /**
      * Set PriceID
      *
      * @param integer $priceID
@@ -533,5 +478,49 @@ class Product
     public function getAttributeVaueSetID()
     {
         return $this->AttributeVaueSetID;
+    }
+
+    /**
+     * Set SKU
+     *
+     * @param string $sKU
+     */
+    public function setSKU($sKU)
+    {
+        $this->SKU = $sKU;
+    }
+
+    /**
+     * Get SKU
+     *
+     * @return string 
+     */
+    public function getSKU()
+    {
+        return $this->SKU;
+    }
+
+    /**
+     * Add ProductBundles
+     *
+     * @param Acme\BSDataBundle\Entity\ProductBundle $productBundles
+     */
+    public function addProductBundle(\Acme\BSDataBundle\Entity\ProductBundle $productBundles)
+    {
+        $this->ProductBundles[] = $productBundles;
+    }
+
+    public function setProductBundle($bundle){
+        $this->ProductBundles = $bundle;
+    }
+
+    /**
+     * Get ProductBundles
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getProductBundles()
+    {
+        return $this->ProductBundles;
     }
 }

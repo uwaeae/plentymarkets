@@ -691,7 +691,7 @@ class OrderController extends Controller
         $aSortPicklistHeader = array();
 
         foreach($oRequest as $rOrder){
-
+            $bundleID = 0;
             $pdf->AddPage();
            // $pdf->AliasNbPages();
 
@@ -717,12 +717,13 @@ class OrderController extends Controller
             $aCareList = array();
 
             $oOrderQuantity = 0;
+            $ReproBundle =  $this->getDoctrine()->getRepository('BSDataBundle:ProductBundle');
 
             //Bestellprositonen zusammen stellen und nach Lagerort Sortieren
             foreach($aOrderItem as $item){
                 $isBundle = false;
                 $p = $this->getItem($item);
-                $items = $p->getBundleitems();
+                $items = $ReproBundle->getBundle($p);
 
                 if(count($items) > 0 && stripos($item->getItemText(), '[BUNDLE]') === false ){
                     $productList = $items;
@@ -741,7 +742,7 @@ class OrderController extends Controller
                 foreach($productList as $product){
                     if($isBundle){
                         $item = new \Acme\BSDataBundle\Entity\OrdersItem();
-                        $item->setItemText(" [B] ".$product->getName());
+                        $item->setItemText('[B]'.$product->getName());
                         $item->setQuantity(1);
                         $item->setPrice(0);
                     }
@@ -864,7 +865,7 @@ class OrderController extends Controller
         $pdf->Output("print/".$PickListName.".pdf",'F');
 
 
-   /*     $message = \Swift_Message::newInstance();
+        $message = \Swift_Message::newInstance();
         $message
             ->setSubject('Sammelpack '.$PickListName)
             ->setFrom('support@blumenschule.de')
@@ -877,7 +878,7 @@ class OrderController extends Controller
             )->attach(\Swift_Attachment::fromPath("print/".$PickListName.".pdf"))
         ;
         $this->get('mailer')->send($message);
-*/
+
 
 
         return $this->render('BSOrderBundle:Order:print.html.twig', array(
@@ -906,7 +907,7 @@ class OrderController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $ArtileID = explode("-",  $OrderItem->getSKU());
         $repository = $this->getDoctrine()->getRepository('BSDataBundle:Product');
-        $product = $repository->findOneBy(array('article_id' => $ArtileID));
+        $product = $repository->findOneBy(array('article_id' => $ArtileID[0]));
         if(!$product) {
             //$product = new Product();
             $request = $oPlentySoapClient->doGetItemsBaseByOptions(array('ItemID'=>$ArtileID[0]));

@@ -20,6 +20,7 @@
 namespace Acme\PlentyMarketsBundle\Controller;
 
 
+use Acme\BSDataBundle\Entity\ProductBundle;
 use Acme\PlentyMarketsBundle\Controller\PMSOAP\PlentyFactory;
 use Acme\PlentyMarketsBundle\Controller\PMSOAP\PlentySoapRequest_AddOrders;
 use \DateTime;
@@ -551,7 +552,7 @@ class PlentySoapClient extends \SoapClient
         $oResponse	= null;
         $page = 0;
         // um die Suche einzuschränken
-        //$options['ItemNo'] = "srt%";
+        $options['ItemNo'] = "srt%";
         $options['LastUpdate'] = $lastUpdate ;
         $options['LastInserted'] =null ;
         $options['Marking1ID'] =null ;
@@ -616,12 +617,14 @@ class PlentySoapClient extends \SoapClient
 
 
         $em = $this->doctrine->getEntityManager();
-        $repository = $this->doctrine->getRepository('BSDataBundle:Product');
+        $ReproProduct = $this->doctrine->getRepository('BSDataBundle:Product');
+        $ReproBundle = $this->doctrine->getRepository('BSDataBundle:ProductBundle');
+
         $products = array();
 
         foreach($Items as $item){
             // $id = explode("-",  $item->SKU);
-            $product = $repository->findOneBy(array('article_id' => $item->ItemID));
+            $product = $ReproProduct->findOneBy(array('article_id' => $item->ItemID));
             if(!$product) {
                 $product = new Product();
             }
@@ -637,6 +640,9 @@ class PlentySoapClient extends \SoapClient
             $product->setPriceID($item->PriceSet->PriceID);
             $product->setPrice($item->PriceSet->Price);
             $product->setPrice6($item->PriceSet->Price6);
+           // $product->setSKU($item->SKU);
+
+
             if($item->VATInternalID == 0) $product->setVAT(19);
             elseif($item->VATInternalID == 1 )$product->setVAT(7);
             else $product->setVAT(0);
@@ -653,28 +659,62 @@ class PlentySoapClient extends \SoapClient
             $SKU = $product->getArticleId()."-".$product->getPriceID()."-0";
             $bundleItems = $this->doGetItemBundles(array('BundleSKU'=>$SKU));
             if(count($bundleItems) > 0){
-                $product->clearBundleitems();
-                foreach($bundleItems as $bi){
+                $ReproBundle->clearBundle($product);
+                $PItems =  $product->getProductBundles();
 
+                // nicht vorhandene Artikl Löschen
+                foreach($PItems as $PItem){
+                    $delete = true;
+                    foreach($bundleItems as $bi){
+                        $id = explode("-",  $bi->SKU);
+                        if($PItem->getArticleID() == $id[0]){
+                            $delete = false;
+                            break;
+                        }
+                    }
+                    if($delete) $em->remove($PItem);
+                }
+
+
+
+               // Artikel hinzufügen oder Syncronisieren
+
+                foreach($bundleItems as $bi){
                     $id = explode("-",  $bi->SKU);
-                    $p = $repository->findOneBy(array('article_id' => $id[0]));
-                    if($p) {
-                        $product->addProduct($p);
-                        $p->setBundle($product);
-                        $em->persist($p);
+                    $p = $ReproProduct->findOneBy(array('article_id' => $id[0]));
+                    $sync = true;
+                    foreach($PItems as $PItem){
+                          if($PItem->getProduct()->getID() == $product->getID()){
+                                 $sync = false;
+                                 if($PItem->getQuantity() != $bi->Quantity){
+                                     $PItem->setQuantity($bi->Quantity);
+                                     $em->persist($PItem);
+                                 }
+                                 break;
+                          }
+                    }
+                    if($sync) {
+                        $bundle = new ProductBundle();
+                        $bundle->setProduct($product);
+                        $bundle->setQuantity($bi->Quantity);
+                        $bundle->setArticleID($p->getArticleID());
+                        $bundle->setArticleCode($p->getArticleNo());
+                        $em->persist($bundle);
                     }
 
                 }
 
+
+                $em->flush();
             }
 
-
             $em->persist($product);
+            $em->flush();
             $products[] = $product;
             if($output) $output->writeln($product->getArticleId().' '.$product->getArticleNo());
 
         }
-        $em->flush();
+
         return $products;
     }
 

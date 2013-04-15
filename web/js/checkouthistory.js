@@ -26,11 +26,12 @@ function init(){
     $('.article_items').hide();
 
     $('.article_button').click(function(){
-        $('article_button').show();
+        $('.article_button').show();
         $(this).hide();
         $('.article_items').slideUp();
-
-        $(this).parent().find('.article_items').slideToggle()
+        $('.selected').removeClass('selected');
+        $(this).parents("tr").addClass('selected');
+        $(this).parents("tr").find('.article_items').slideToggle()
 
     });
     $('.bon').click(function(){

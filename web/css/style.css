@@ -231,15 +231,18 @@ div.co_receipt{
 .article{
     width: 50%;
 }
-.article td,
-.article th{
-    padding: 0;
-    margin: 0;
+ul.checkout_nav{
+    display: inline-block;
 }
-.article thead tr{
-    background-color: #808080;
+.checkout_nav li{
+    list-style: none;
+    float: left;
 }
-.article thead tr:hover {
-    background-color: #808080;
+.checkout_nav li div{
+    background-color: greenyellow;
+    width: 20px;
+    height: 20px;
+    border: 10px solid greenyellow;
+    font-size: 20pt;
 }
 
