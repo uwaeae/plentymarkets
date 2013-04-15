@@ -625,6 +625,7 @@ class PlentySoapClient extends \SoapClient
         foreach($Items as $item){
             // $id = explode("-",  $item->SKU);
             $product = $ReproProduct->findOneBy(array('article_id' => $item->ItemID));
+            if($output) $output->writeln('ID: '.$item->ItemID);
             if(!$product) {
                 $product = new Product();
             }
@@ -683,6 +684,7 @@ class PlentySoapClient extends \SoapClient
                     $id = explode("-",  $bi->SKU);
                     $p = $ReproProduct->findOneBy(array('article_id' => $id[0]));
                     $sync = true;
+                    if($output) $output->writeln('Bundle: '.$id[0]);
                     foreach($PItems as $PItem){
                           if($PItem->getProduct()->getID() == $product->getID()){
                                  $sync = false;
@@ -711,7 +713,7 @@ class PlentySoapClient extends \SoapClient
             $em->persist($product);
             $em->flush();
             $products[] = $product;
-            if($output) $output->writeln($product->getArticleId().' '.$product->getArticleNo());
+           // if($output) $output->writeln($product->getArticleId().' '.$product->getArticleNo());
 
         }
 
