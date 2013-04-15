@@ -623,7 +623,9 @@ class PlentySoapClient extends \SoapClient
         $products = array();
 
         foreach($Items as $item){
-            // $id = explode("-",  $item->SKU);
+            try{
+
+           // $id = explode("-",  $item->SKU);
             $product = $ReproProduct->findOneBy(array('article_id' => $item->ItemID));
             if($output) $output->writeln('ID: '.$item->ItemID);
             if(!$product) {
@@ -713,6 +715,14 @@ class PlentySoapClient extends \SoapClient
             $em->persist($product);
             $em->flush();
             $products[] = $product;
+
+            }catch (\Exception $e){
+                if($output) {
+                    $output->writeln('Fehler beim Anlegen von '.$item->ItemID);
+                    $output->writeln($e);
+                }
+
+            }
            // if($output) $output->writeln($product->getArticleId().' '.$product->getArticleNo());
 
         }
