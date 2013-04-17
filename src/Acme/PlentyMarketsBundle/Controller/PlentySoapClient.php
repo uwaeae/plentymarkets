@@ -627,7 +627,7 @@ class PlentySoapClient extends \SoapClient
 
            // $id = explode("-",  $item->SKU);
             $product = $ReproProduct->findOneBy(array('article_id' => $item->ItemID));
-            if($output) $output->writeln('ID: '.$item->ItemID);
+            //if($output) $output->writeln('ID: '.$item->ItemID);
             if(!$product) {
                 $product = new Product();
             }
@@ -719,7 +719,7 @@ class PlentySoapClient extends \SoapClient
             }catch (\Exception $e){
                 if($output) {
                     $output->writeln('Fehler beim Anlegen von '.$item->ItemID);
-                    $output->writeln($e);
+                    //$output->writeln($e);
                 }
 
             }

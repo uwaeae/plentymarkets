@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityRepository;
 class checkoutRepository extends EntityRepository
 {
 
-    public function getCurrentBasket($cashbox_id){
+    public function getCurrentBaskets($cashbox_id){
 
         //
         $em = $this->getEntityManager();
@@ -23,31 +23,58 @@ class checkoutRepository extends EntityRepository
         $qb->where('b.finish <> true');
         $qb->andWhere($qb->expr()->eq('c.id',$cashbox_id));
         try{
-            $result = $qb->getQuery()->setMaxResults(1)->getSingleResult();
+            $result = $qb->getQuery()->getResult();
         } catch (\Doctrine\Orm\NoResultException $e) {
             $result = null;
         }
 
 
-        if(!$result){
-            $result = new Checkout();
-            $result->setBuydate(new \DateTime());
-            $result->setCashbox($cashbox);
-            $result->setFinish(false);
-            $result->setClosed(false);
-            $result->setSummary(0);
-            $result->setPayment(0);
-            $this->getEntityManager()->persist($result);
+        if(count($result) == 0 ){
+
+            $c = new Checkout();
+            //$c->setBuydate(new \DateTime());
+            $c->setCashbox($cashbox);
+            $c->setFinish(false);
+            $c->setClosed(false);
+            $c->setSummary(0);
+            $c->setPayment(0);
+            $this->getEntityManager()->persist($c);
             $this->getEntityManager()->flush();
+            $result = array($c);
+        }
+        return $result;
+    }
+    public function getLastBasket($cashbox,$checkout){
+
+        $qb = $this->createQueryBuilder('b');
+        $qb->join('b.cashbox','c')
+            ->where('b.finish = true')
+            ->andWhere($qb->expr()->eq('c.id',$cashbox->getID()))
+            ->andWhere($qb->expr()->neq('b.id',$checkout->getID()));
+        if($checkout->getBuydate() == null){
+            $qb->andWhere("b.buydate between '". date('Y-m-d 00:00:00')."' and '". date('Y-m-d H:i:s')."'");
+        }else{
+            $qb->andWhere("b.buydate between '". $checkout->getBuydate()->format('Y-m-d 00:00:00')."' and '". $checkout->getBuydate()->format('Y-m-d H:i:s')."'");
+        }
+
+
+            $qb->orderBy('b.buydate','DESC');
+        try{
+            $result = $qb->getQuery()->setMaxResults(1)->getSingleResult();
+        } catch (\Doctrine\Orm\NoResultException $e) {
+            $result = null;
         }
         return $result;
     }
 
-    public function clearCurrentBasket($cashbox_id){
+
+
+
+    public function clearBasket($cashbox_id,$checkout){
 
         $em = $this->getEntityManager();
         $qb = $this->createQueryBuilder('b');
-        $qb->where('b.finish <> true');
+        $qb->where('b.id ='.$checkout);
         $qb->andWhere('b.cashbox ='.$cashbox_id);
         try{
             $cb = $qb->getQuery()->setMaxResults(1)->getSingleResult();

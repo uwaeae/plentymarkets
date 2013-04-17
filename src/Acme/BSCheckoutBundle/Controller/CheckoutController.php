@@ -33,31 +33,27 @@ class CheckoutController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->getCurrentBasket($cashbox_id);
+        $currentBaskets = $em->getRepository('BSCheckoutBundle:checkout')->getCurrentBaskets($cashbox_id);
         $cashbox = $em->getRepository('BSCheckoutBundle:cashbox')->find($cashbox_id);
         $quickbuttons = $em->getRepository('BSCheckoutBundle:quickbutton')->getQuickbuttons($cashbox_id);
 
+         $checkout = $this->getRequest()->query->get('checkout');
+        $basket = null;
+        if($checkout){
 
-        /**
-         * Es wird ein neuer Soap-Client angelegt.
-         */
-       /*
-         $oPlentySoapClient	=	new PlentySoapClient($this,$this->getDoctrine() );
+             $basket = $em->getRepository('BSCheckoutBundle:checkout')->find($checkout);
+         }
 
+         if(!$basket){
+             $basket = $currentBaskets[0];
+         }
 
-        $items = $oPlentySoapClient->doGetItemsByOptions(array('CategoriePath'=>"91",
-        ));
-        $STD_article = array();
-        foreach($items as $item){
-            $STD_article[$item->ItemNo] = $item->Texts->Name;
-
-        }
-       */
-
-
+        $last = $em->getRepository('BSCheckoutBundle:checkout')->getLastBasket($cashbox,$basket);
 
         return $this->render('BSCheckoutBundle:Default:index.html.twig', array(
-                'basket' => $currentBasket,
+                'basket' => $basket,
+                'last'=> $last,
+                'baskets' => $currentBaskets,
                 'cashbox' => $cashbox,
                 'quickbuttons' => $quickbuttons,
                 'form' => $this->buildOrderForm()->createView(),
@@ -65,6 +61,29 @@ class CheckoutController extends Controller
             )
         );
     }
+
+    /**
+     * @Route("/{cashbox_id}/checkout/new",name="BSCheckout_new")
+     * @Template()
+     */
+    public function newAction($cashbox_id = 1)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $cashbox = $em->getRepository('BSCheckoutBundle:cashbox')->find($cashbox_id);
+        $basket = new Checkout();
+       // $basket->setBuydate(new \DateTime());
+        $basket->setCashbox($cashbox);
+        $basket->setFinish(false);
+        $basket->setClosed(false);
+        $basket->setSummary(0);
+        $basket->setPayment(0);
+        $em->persist($basket);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('BSCheckout_home',array('cashbox_id'=>$cashbox_id,'checkout'=>$basket->getID())));
+    }
+
+
 
 
     /**
@@ -90,11 +109,11 @@ class CheckoutController extends Controller
 
 
     /**
-     * @Route("/{cashbox_id}/checkout/add",name="BSCheckout_add")
+     * @Route("/{cashbox_id}/checkout/{checkout}/add",name="BSCheckout_add")
 
      * @Template()
      */
-    public function addAction($cashbox_id)
+    public function addAction($cashbox_id,$checkout)
     {
 
         $code = $this->getRequest()->request->get('code');
@@ -105,7 +124,9 @@ class CheckoutController extends Controller
 
         $em = $this->getDoctrine()->getEntityManager();
 
-        $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->getCurrentBasket($cashbox_id);
+       // $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->getCurrentBasket($cashbox_id);
+        $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->find($checkout);
+
 
 
         if(is_float($price) && $price > 0 ){
@@ -152,26 +173,28 @@ class CheckoutController extends Controller
     }
 
     /**
-     * @Route("/{cashbox_id}/checkout/clear",name="BSCheckout_clear")
+     * @Route("/{cashbox_id}/checkout/{checkout}/clear",name="BSCheckout_clear")
      * @Method({ "POST"})
      * @Template()
      */
-    public function clearAction($cashbox_id)
+    public function clearAction($cashbox_id,$checkout)
     {
         $em = $this->getDoctrine()->getEntityManager();
+        $checkout = $em->getRepository('BSCheckoutBundle:checkout')->clearBasket($cashbox_id,$checkout);
+        //$checkout = $em->getRepository('BSCheckoutBundle:checkout')->find($checkout);
 
-        $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->clearCurrentBasket($cashbox_id);
-
+        $em->remove($checkout);
+        $em->flush();
        //  return $this->render('BSCheckoutBundle:Default:index.html.twig', array('basket' => $currentBasket));
         return $this->redirect($this->generateUrl('BSCheckout_home',array('cashbox_id'=>$cashbox_id)));
     }
 
     /**
-     * @Route("/{cashbox_id}/checkout/finish",name="BSCheckout_finish")
+     * @Route("/{cashbox_id}/checkout/{checkout}/finish",name="BSCheckout_finish")
      * @Method({ "POST" })
      * @Template()
      */
-    public function finishAction($cashbox_id)
+    public function finishAction($cashbox_id,$checkout)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $payment_id = 0;
@@ -183,7 +206,7 @@ class CheckoutController extends Controller
 
         }
 
-        $cb = $em->getRepository('BSCheckoutBundle:checkout')->getCurrentBasket($cashbox_id);
+        $cb = $em->getRepository('BSCheckoutBundle:checkout')->find($checkout);
             $sum = 0.0;
         foreach($cb->getCheckoutItems() as $product){
 
@@ -210,15 +233,16 @@ class CheckoutController extends Controller
 
 
     /**
-     * @Route("/{cashbox_id}/checkout/order",name="BSCheckout_order")
+     * @Route("/{cashbox_id}/checkout/{checkout}/order",name="BSCheckout_order")
      * @Method({ "POST"})
      * @Template()
      */
-    public function orderAction($cashbox_id )
+    public function orderAction($cashbox_id ,$checkout)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->getCurrentBasket($cashbox_id);
+        //$currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->getCurrentBasket($cashbox_id);
+        $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->find($checkout);
         $currentBasket = new checkout();
         $oPlentySoapClient	=	new PlentySoapClient($this,$this->getDoctrine());
 
@@ -305,11 +329,11 @@ class CheckoutController extends Controller
 
 
     /**
-     * @Route("/{cashbox_id}/checkout/itemaction",name="BSCheckout_item")
+     * @Route("/{cashbox_id}/checkout/{checkout}/itemaction",name="BSCheckout_item")
      * @Method({ "POST"})
      * @Template()
      */
-    public function itemAction($cashbox_id)
+    public function itemAction($cashbox_id,$checkout)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
@@ -346,7 +370,7 @@ class CheckoutController extends Controller
 
         }
 
-        $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->getCurrentBasket($cashbox_id);
+        $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->find($checkout);
 
         return $this->createCurrentBasketJSON($currentBasket);
 

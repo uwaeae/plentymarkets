@@ -9,12 +9,13 @@
  {% block stylesheets %}
 
      <link rel="stylesheet" href="/css/yaml/core/base.min.css" type="text/css"/>
-     <link rel="stylesheet" href="/css/yaml/screen/typography.css" type="text/css"/>
+
      <link rel="stylesheet" href="/css/yaml/navigation/hlist.css" type="text/css"/>
 
      <link rel="stylesheet" href="/css/yaml/forms/gray-theme.css" type="text/css"/>
      <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
      <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+     <link rel="stylesheet" href="/css/history.css" type="text/css"/>
 
  {% endblock %}
 
@@ -42,35 +43,39 @@
 
     <div class="ym-wrapper">
 
-    <div class="ym-column">
-        <div class="ym-col3">
-            <div class="ym-cbox">
+
+            <div class="ym-cbox ">
                 <!--<form action="{{ path('BSCashbox_close', { 'id': cashbox_id,}) }}" method="post">
                     <button class="ym-button" >Kassen Abschluss</button>
                 </form>
                 -->
-                <div>
 
-                    Date: <div id="datepicker" data-url="{{ path('BSCheckout_history', { 'cashbox_id': cashbox_id , 'date': "now"  }) }}"></div>
-                    <a  id="report" class="ym-button" href="{{ path('checkout_cashbox_print',{'id' : cashbox_id, 'date': "now"  }) }}">
-                        Kassen Bericht
-                    </a>
-                </div>
+                <ul class="actions">
+                    <li>
+                        Date: <div id="datepicker" data-url="{{ path('BSCheckout_history', { 'cashbox_id': cashbox_id , 'date': "now"  }) }}"></div>
+                    </li>
+                    <li>
+                        <a  id="report" class="ym-button" href="{{ path('checkout_cashbox_print',{'id' : cashbox_id, 'date': "now"  }) }}">
+                            Kassen Bericht
+                        </a>
+                    </li>
+                </ul>
+
+
+
             </div>
-        </div>
 
 
-        <div class="ym-col1">
             <div id="result" class="results ym-cbox">
-                <table class="bordertable">
+                <table >
                     <thead>
                     <tr>
                         <th>ID</th>
                         <th>Datum/Uhrzeit</th>
                         <th>Zahlungsart</th>
                         <th>Summe</th>
-                        <th>Artikel</th>
                         <th>Actions</th>
+                        <th>Artikel</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -86,14 +91,17 @@
                                     <li>
                                         <a class="bsbutton bon" href="{{ path('BSCheckout_receipt', { 'cashbox_id': cashbox_id,'id':entity.id}) }}" target="_blank">Bon</a>
                                     </li>
+                                    <li>
+                                        <a class="article_button bsbutton" href="#">Artikle anzeigen</a>
+                                    </li>
+
                                 </ul>
                             </td>
-                        </tr>
-                        <tr>
-                            <td colspan="5">
-                                <div class="article">
-                                    <a class="article_button bsbutton" href="#">Artikle anzeigen</a>
-                                    <table class="article_items">
+
+                            <td>
+
+                                <div class="article_items">
+                                    <table class="">
 
                                         <thead>
                                         <tr>
@@ -137,8 +145,6 @@
                     </tbody>
                 </table>
 
-            </div>
-        </div>
 
     </div>
     </div>

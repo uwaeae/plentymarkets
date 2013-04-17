@@ -32,7 +32,7 @@ class checkout
     /**
      * @var datetime $buydate
      *
-     * @ORM\Column(name="buydate", type="datetime")
+     * @ORM\Column(name="buydate", type="datetime",nullable = true)
      */
     private $buydate;
 

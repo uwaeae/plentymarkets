@@ -8,21 +8,25 @@ function getSummary(){
     });
 
     $('.iteminput').keypress(function(event){
-
+        if(event.keyCode > 112 && event.keyCode < 120) event.preventDefault();
         if( event.keyCode == 13 ){
 
             $.post('/cashbox/'+$('.inputkeyboard').data('cashbox')+
-                '/checkout/itemaction',{id: $(this).data('id'), quantity: $(this).val(),action: 'quantity'},buildtable);
+                '/checkout/'+$('.inputkeyboard').data('checkout')+
+                '/itemaction',
+                {id: $(this).data('id'), quantity: $(this).val(),action: 'quantity'},buildtable);
 
             return false;
         }
     });
     $('.itemprice').keypress(function(event){
-
+        if(event.keyCode > 112 && event.keyCode < 120) event.preventDefault();
         if( event.keyCode == 13 ){
             itemFocus = '.inputkeyboard';
             $.post('/cashbox/'+$('.inputkeyboard').data('cashbox')+
-                '/checkout/itemaction',{id: $(this).data('id'), price: $(this).val(),action: 'price'},buildtable);
+                '/checkout/'+$('.inputkeyboard').data('checkout')+
+                '/itemaction',
+                {id: $(this).data('id'), price: $(this).val(),action: 'price'},buildtable);
 
             return false;
         }
@@ -32,7 +36,8 @@ function getSummary(){
     $('.co_toPay').html(sum.toFixed(2) + '&euro;');
     $('.itemEdit a').click(function(){
 
-        $.post('/cashbox/'+$('.inputkeyboard').data('cashbox')+'/checkout/itemaction',{ id: $(this).data('id'),action:$(this).data('action')},buildtable);
+        $.post('/cashbox/'+$('.inputkeyboard').data('cashbox')+'/checkout/'+$('.inputkeyboard').data('checkout')+'/itemaction',
+            { id: $(this).data('id'),action:$(this).data('action')},buildtable);
 
 
     });
@@ -90,6 +95,8 @@ $(document).ready(function(){
 
 
 
+
+
    $('.bontext').submit(function(event){
         event.preventDefault();
 
@@ -101,7 +108,7 @@ $(document).ready(function(){
          // $('#printPage').empty().append(data);
             w=window.open();
             w.document.write(data);
-            w.print();
+            w.print(false);
             w.close();
         });
 
@@ -137,33 +144,62 @@ $(document).ready(function(){
         var code = $(this).data('code');
         var input =  $('.inputkeyboard');
         var id =  input.data('cashbox');
+        var checkout =  input.data('checkout');
         var quantity = $('.inputkeyboard').val();
         if(quantity.length > 0){
             itemFocus = '.itemprice:last';
-            $.post('/cashbox/'+id+'/checkout/add',{ code: code,quantity: quantity},buildtable);
+            $.post('/cashbox/'+id+'/checkout/'+checkout+'/add',{ code: code,quantity: quantity},buildtable);
         }
 
 
     });
 
 
-
-
-    // Eingabefeld Tasten aktionen
-   $('.inputkeyboard').keypress(function(event){
-        console.log(event.keyCode);
-        var id = $(this).data('cashbox');
+   $(document).keypress(function(event){
+       //console.log(event.keyCode);
+       var id = $('#inputkeyboard').data('cashbox');
+       var id_checkout = $('#inputkeyboard').data('checkout');
        if(event.keyCode > 112 && event.keyCode < 120){
-
+           event.preventDefault();
            // Funtkionstasten
 
            var code = $('.checkout-box[data-keyboard='+event.keyCode +']').data('code');
+           $('.checkout-box[data-keyboard='+event.keyCode +']').animate({
+               backgroundColor: '#ddC8dd'}, 100).animate({
+                   backgroundColor: '#00c800'}, 800);
+           ;
            var quantity = $('.inputkeyboard').val();
-           if(price.length > 0)
+           if(quantity.length > 0){
                itemFocus = '.itemprice:last';
-               $.post('/cashbox/'+id+'/checkout/add',{ code: code,quantity: quantity},buildtable);
+               $.post('/cashbox/'+id+'/checkout/'+id_checkout+'/add',{ code: code,quantity: quantity},buildtable);
+           }
+
            return false;
        }
+   });
+
+       // Eingabefeld Tasten aktionen
+   $('#inputkeyboard').keypress(function(event){
+       console.log(event.keyCode);
+       var id = $(this).data('cashbox');
+       var id_checkout = $('#inputkeyboard').data('checkout');
+      /* if(event.keyCode > 112 && event.keyCode < 120){
+           event.preventDefault();
+           // Funtkionstasten
+
+           var code = $('.checkout-box[data-keyboard='+event.keyCode +']').data('code');
+           $('.checkout-box[data-keyboard='+event.keyCode +']').animate({
+                backgroundColor: '#ddC8dd'}, 100).animate({
+                backgroundColor: '#00c800'}, 800);
+               ;
+           var quantity = $('.inputkeyboard').val();
+           if(quantity.length > 0){
+               itemFocus = '.itemprice:last';
+               $.post('/cashbox/'+id+'/checkout/add',{ code: code,quantity: quantity},buildtable);
+           }
+
+           return false;
+       }*/
 
 
        if(event.keyCode == 9 ){
@@ -171,7 +207,7 @@ $(document).ready(function(){
            var code =  $(this).val()
            var input = $(this);
            itemFocus = '.inputkeyboard';
-           $.post('/cashbox/'+id+'/checkout/add',{ code: code},buildtable);
+           $.post('/cashbox/'+id+'/checkout/'+id_checkout+'/add',{ code: code},buildtable);
            return false;
            }
        if( event.keyCode == 13 ){
@@ -179,7 +215,7 @@ $(document).ready(function(){
            var button = $('.input_buttons div:first');
            var quantity = $('.inputkeyboard').val();
            itemFocus = '.itemprice:last';
-           $.post('/cashbox/'+id+'/checkout/add',{ code: button.data('code'),quantity: quantity},buildtable);
+           $.post('/cashbox/'+id+'/checkout/'+id_checkout+'/add',{ code: button.data('code'),quantity: quantity},buildtable);
 
            return false;
        }
@@ -201,7 +237,7 @@ $(document).ready(function(){
 
          var getback =   parseFloat($(this).val().replace(',','.')) - parseFloat($('.co_toPay').html());
          $(".co_return").html(getback.toFixed(2) + ' &euro;')
-         $(".return_focus").focus();
+         //$(".return_focus").focus();
          return true;
      }
 

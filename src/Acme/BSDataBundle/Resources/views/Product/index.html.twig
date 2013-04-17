@@ -90,12 +90,23 @@
             <td>{{ entity.name }}</td>
             <td>{{ entity.name2 }}</td>
             <td>{{ entity.price|number_format(2, '.', ',') }} &euro;</td>
-            <td>{{ entity.stock }}</td>
+            <td>{% if entity.stock is empty %}
+                    Kein Lager
+                {% else %}
+                {{ entity.stock }}
+                {% endif %}
+            </td>
 
 
 
             <td>
                 <ul>
+                    <li>
+                        <a  class="button" href="{{ path('BSData_product_edit', { 'id': entity.id }) }}">
+                            Edit
+                        </a>
+                    </li>
+
 
                     <li>
                         <form action="{{ path('BSData_product_print') }}" method="get">
@@ -103,8 +114,8 @@
                             <input type="hidden" name="id" value="{{ entity.id  }}">
                             <input type="hidden" class="width" name="width" value="{{ entity.id  }}">
                             <input type="hidden" class="height" name="height" value="{{ entity.id  }}">
-                            <input type="text" name="quantity" value="1" style="width: 20px;">
-                            <button>Etikett</button>
+                            <input type="hidden" name="quantity" value="1" style="width: 20px;">
+                            <button class="button">Etikett</button>
                         </form>
 
                     </li>

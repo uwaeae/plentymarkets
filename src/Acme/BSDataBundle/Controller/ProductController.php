@@ -18,6 +18,8 @@ use Acme\BSDataBundle\Form\ProductType;
  */
 class ProductController extends Controller
 {
+
+    private  $limit = 50;
     /**
      * Lists all Product entities.
      *
@@ -38,7 +40,7 @@ class ProductController extends Controller
         $pagination = $paginator->paginate(
             $query,
             $page,//$this->get('request')->query->get('page', 1)/*page number*/,
-            10/*limit per page*/
+            $this->limit/*limit per page*/
         );
 
         // parameters to template
@@ -102,7 +104,7 @@ class ProductController extends Controller
         $pagination = $paginator->paginate(
             $qb->getQuery(),
             $page,//$this->get('request')->query->get('page', 1)/*page number*/,
-            10/*limit per page*/
+            $this->limit/*limit per page*/
         );
     return $this->render('BSDataBundle:Product:index.html.twig', array(
             'pagination'=>$pagination  ));
@@ -124,17 +126,12 @@ class ProductController extends Controller
             $qb->expr()->like('p.name', '?1')
         )->setParameter('1', '%'.$search.'%' );
 
-
-
-
-
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $qb->getQuery(),
             $page,//$this->get('request')->query->get('page', 1)/*page number*/,
-            10/*limit per page*/
+            $this->limit/*limit per page*/
         );
-
 
         return $this->render('BSDataBundle:Product:index.html.twig', array(
             'pagination'=>$pagination  ));
@@ -169,7 +166,7 @@ class ProductController extends Controller
         $pagination = $paginator->paginate(
             $qb->getQuery(),
             $page,//$this->get('request')->query->get('page', 1)/*page number*/,
-            10/*limit per page*/
+            $this->limit/*limit per page*/
         );
 
 

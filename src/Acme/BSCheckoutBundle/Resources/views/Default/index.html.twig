@@ -1,8 +1,7 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>KASSE</title>
     {% block javascripts %}
         <script src="{{ asset('/js/jquery-1.9.0.js') }}"></script>
@@ -27,11 +26,9 @@
 
 
 
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}"/>
 </head>
 <body>
-
-
 
 
 {% block body %}
@@ -39,30 +36,45 @@
 
         <div class="ym-column">
             <div class="ym-col1">
-                <div >
-                <img  width="220px"  alt="Blumenschule Logo" src="/images/logo_blumenschule.png">
+                <div>
+                    <img width="220px" alt="Blumenschule Logo" src="/images/logo_blumenschule.png">
 
 
 
-                <ul class="Payment_Buttons" >
+                    <ul class="checkout_nav">
 
-                            <li><a  class="ym-button" href="{{ path('BSData_mainmenu') }}">Hauptmenü</a></li>
+                        {% if last %}
+                            <li><a href="{{ path('BSCheckout_home', { 'cashbox_id': cashbox.id,'checkout': last.id }) }}"><</a></li>
+                        {% else %}
+                            <li><a href="#"><</a></li>
+                        {% endif %}
+                        <li><a href="{{ path('BSCheckout_new', { 'cashbox_id': cashbox.id}) }}">+</a></li>
+                        {% for b in baskets %}
+                            <li><a {% if b.id == basket.id %}class="checkout_nav_active" {% endif %}href="{{ path('BSCheckout_home', { 'cashbox_id': cashbox.id,'checkout':b.id}) }}">{{ loop.index }}</a></li>
+                        {% endfor %}
 
-
-
+                     </ul>
+                    <ul class="Payment_Buttons">
                         <li>
-                            <form action="{{ path('BSCheckout_clear', { 'cashbox_id': cashbox.id }) }}" method="post">
-                                <button class="ym-button">CLEAR</button>
-                            </form>
+                            <button class="toPay ym-button">Bezahlen</button>
                         </li>
                         <li>
-                            <a href="{{ path('BSCheckout_history', { 'cashbox_id': cashbox.id , 'date': "now"  }) }}" class="ym-button">History</a>
+
+                            <button class="order ym-button">Rechung</button>
+                            <div class="orderdialog" title="Rechnung erstellen">
+                                <form action="{{ path('BSCheckout_order', { 'cashbox_id': cashbox.id,'checkout': basket.id,}) }}"
+                                      method="post">
+                                    {{ form_widget(form) }}
+                                    <button class="ym-button">Erstellen</button>
+                                </form>
+
+                            </div>
                         </li>
                         <li>
-                            <a href="{{ path('checkout_cashbox_show', { 'id': cashbox.id  }) }}" class="ym-button">Konfiguration</a>
+                            <button class="ym-button" onclick="location.reload();">RELOAD</button>
                         </li>
-
                     </ul>
+
 
                 </div>
 
@@ -70,7 +82,7 @@
 
 
                     <div class="shopinglist">
-                        <table >
+                        <table>
                             <thead>
 
                             <tr>
@@ -79,7 +91,7 @@
                                 <th>Bezeichung</th>
                                 <th>MwSt</th>
                                 <th>Preis</th>
-                               <!-- <th>PA</th> -->
+                                <!-- <th>PA</th> -->
                                 <th>Summe</th>
                             </tr>
                             </thead>
@@ -88,23 +100,26 @@
                                 <tr data-sum="{{ (item.quantity * item.price) }}">
                                     <td>{{ loop.index }}</td>
 
-                                    <td><input class="iteminput" value="{{ item.quantity }}" data-id="{{ item.id }}"></td>
-                                        <!--<div class="itemEdit">
+                                    <td><input class="iteminput" value="{{ item.quantity }}" data-id="{{ item.id }}">
+                                    </td>
+                                    <!--<div class="itemEdit">
                                            <a href="#" data-action="minus" data-id="{{ item.id }}"><img src="{{ asset('images/icons/arrow-down.png') }}" alt="- Menge" /></a>
                                            <a href="#" data-action="plus" data-id="{{ item.id }}"><img src="{{ asset('images/icons/arrow-up.png') }}" alt="+ Menge" /></a>
                                         </div>-->
 
 
-
                                     <td>{{ item.description }}</td>
                                     <td>{{ item.VAT }}%</td>
                                     <td>
-                                        <input class="itemprice" value="{{ item.price|number_format(2, '.', ',')  }}" data-id="{{ item.id }}" >
+                                        <input class="itemprice" value="{{ item.price|number_format(2, '.', ',') }}"
+                                               data-id="{{ item.id }}">
                                     </td>
                                     <!-- <td></td> -->
-                                    <td>{{ (item.quantity * item.price)|number_format(2, '.', ',')  }}  &euro;
+                                    <td>{{ (item.quantity * item.price)|number_format(2, '.', ',') }}  &euro;
                                         <div class="itemEdit">
-                                            <a href="#" data-action="delete" data-id="{{ item.id }}"><img src="{{ asset('images/icons/remove2.png') }}" alt="Löschen" /></a>
+                                            <a href="#" data-action="delete" data-id="{{ item.id }}"><img
+                                                        src="{{ asset('images/icons/remove2.png') }}"
+                                                        alt="Löschen"/></a>
 
                                         </div>
                                     </td>
@@ -114,48 +129,61 @@
 
                             {% endfor %}
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <input type="text" id="inputkeyboard" class="inputkeyboard" data-cashbox="{{ cashbox.id }}" data-checkout="{{ basket.id }}">
+                                    </td>
+                                    <td colspan="4"></td>
+                                </tr>
+                            </tfoot>
                         </table>
 
                     </div>
 
 
-                    <div id="printPage" name="printPage"  style="position:absolute;top:-9999px;left:-9999px;border:0px;overflow:none; z-index:-1"></div>
+                    <iframe id="printPage" name="printPage"
+                         style="position:absolute;top:-9999px;left:-9999px;border:0px;overflow:none; z-index:-1">
+
+                         </iframe>
                     <div class="toPaydialog" title="Bezahlen">
                         Betrag
                         <div class="co_toPay">
 
                         </div>
                         Bezahlt
-                        <input type="text" class="co_payed" >
+                        <input type="text" class="co_payed">
                         Rückgeld
                         <div class="co_return">
 
                         </div>
-                        <div>
-                            <form action="{{ path('BSCheckout_finish', { 'cashbox_id': cashbox.id,}) }}" method="post">
-                                <input type="hidden" name="cashbox_id" value="{{ cashbox.id}}">
-                                <input type="hidden" name="payment_id" value="0">
-                                <button class="ym-button return_focus" >Bar</button>
-                            </form>
-                            <form action="{{ path('BSCheckout_finish', { 'cashbox_id': cashbox.id,}) }}" method="post">
-                                <input type="hidden" name="cashbox_id" value="{{ cashbox.id}}">
-                                <input type="hidden" name="payment_id" value="1">
-                                <button class="ym-button" >EC</button>
-                            </form>
-                        </div>
+                        <div class="co_receipt">
 
-
-                        <div class="co_receipt" >
-
-                            <form class="bontext" action="{{ path('BSCheckout_receipt', { 'cashbox_id': cashbox.id,'id': basket.id,}) }}" method="post">
+                            <form class="bontext"
+                                  action="{{ path('BSCheckout_receipt', { 'cashbox_id': cashbox.id,'id': basket.id,}) }}"
+                                  method="post">
                                 <button class="ym-button receipt btnPrint">Quittung</button>
-                                <input type="hidden" name="cashbox_id" value="{{ cashbox.id}}">
+                                <input type="hidden" name="cashbox_id" value="{{ cashbox.id }}">
                                 <label for="bontext">Adresse</label>
-                                <textarea   name="bontext" id="bontext" >{{ basket.bontext|replace({'<br />': '\r\n'}) }}</textarea>
+                                <textarea name="bontext"
+                                          id="bontext">{{ basket.bontext|replace({'<br />': '\r\n'}) }}</textarea>
                             </form>
-
-
                         </div>
+                        <div>
+                            <form action="{{ path('BSCheckout_finish', { 'cashbox_id': cashbox.id,'checkout': basket.id,}) }}" method="post">
+                                <input type="hidden" name="cashbox_id" value="{{ cashbox.id }}">
+                                <input type="hidden" name="payment_id" value="0">
+                                <button class="ym-button return_focus">Bar</button>
+                            </form>
+                            <form action="{{ path('BSCheckout_finish', { 'cashbox_id': cashbox.id,'checkout': basket.id,}) }}" method="post">
+                                <input type="hidden" name="cashbox_id" value="{{ cashbox.id }}">
+                                <input type="hidden" name="payment_id" value="1">
+                                <button class="ym-button">EC</button>
+                            </form>
+                        </div>
+
+
 
 
 
@@ -167,28 +195,19 @@
 
 
                     <ul class="Payment_Buttons">
-                        <li>
-                            <label for="inputkeyboard">Eingabe:</label>
-                            <input type="text" id="inputkeyboard" class="inputkeyboard" data-cashbox="{{ cashbox.id }}">
-                        </li>
-                        <li>
-                            <button class="toPay ym-button">Bezahlen</button>
-                        </li>
-                        <li>
 
-                            <button class="order ym-button">Rechung</button>
-                            <div class="orderdialog" title="Rechnung erstellen" >
-                                <form action="{{ path('BSCheckout_order', { 'cashbox_id': cashbox.id,}) }}" method="post">
-                                    {{ form_widget(form) }}
-                                    <button class="ym-button" >Erstellen</button>
-                                </form>
 
-                            </div>
+                        <li>
+                            <button class="ym-button pflege">Pflegeanleitung</button>
                         </li>
                         <li>
-                            <button class="ym-button pflege" >Pflegeanleitung</button>
+                            <form action="{{ path('BSCheckout_clear', { 'cashbox_id': cashbox.id,'checkout': basket.id, }) }}" method="post">
+                                <button class="ym-button">Löschen</button>
+                            </form>
                         </li>
-
+                        <li><a class="ym-button" href="{{ path('BSData_mainmenu') }}">Hauptmenü</a></li>
+                        <li><a href="{{ path('BSCheckout_history', { 'cashbox_id': cashbox.id , 'date': "now"  }) }}" class="ym-button">History</a></li>
+                        <li><a href="{{ path('checkout_cashbox_show', { 'id': cashbox.id  }) }}" class="ym-button">Konfiguration</a></li>
 
                     </ul>
 
@@ -200,8 +219,6 @@
                 <div class="ym-cbox ">
 
 
-
-
                     <div class="co_result">
                         Betrag
                         <div class="co_toPay">
@@ -209,22 +226,16 @@
                         </div>
                     </div>
 
-                        <div class="input_buttons">
-                            {% for key,item in quickbuttons %}
+                    <div class="input_buttons">
+                        {% for key,item in quickbuttons %}
 
 
-                                <div class="checkout-box" data-code="{{ item.code }}" data-keyboard="{{ item.quickkey}}">
-                                    {{ item.name }}
-                                </div>
+                            <div class="checkout-box" data-code="{{ item.code }}" data-keyboard="{{ item.quickkey }}">
+                                {{ item.name }}
+                            </div>
 
-                            {% endfor %}
-                        </div>
-
-
-
-
-
-
+                        {% endfor %}
+                    </div>
 
 
                 </div>
@@ -234,7 +245,6 @@
     </div>
 
 {% endblock %}
-
 
 
 </body>
