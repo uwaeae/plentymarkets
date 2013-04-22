@@ -730,6 +730,10 @@ class OrderController extends Controller
                 if(count($items) > 0 && stripos($item->getItemText(), '[BUNDLE]') === false ){
                     $productList = $items;
                     $isBundle = true;
+                    $ItemQuantity = $item->getQuantity();
+                    $item = new \Acme\BSDataBundle\Entity\OrdersItem();
+                    $item->setQuantity($ItemQuantity );
+                    $item->setPrice(0);
                 }elseif( stripos($item->getItemText(), '[BUNDLE]') === 0){
                     $isBundle = false;
                     $productList = array();
@@ -743,10 +747,7 @@ class OrderController extends Controller
 
                 foreach($productList as $product){
                     if($isBundle){
-                        $item = new \Acme\BSDataBundle\Entity\OrdersItem();
                         $item->setItemText('[B]'.$product->getName());
-                        $item->setQuantity(1);
-                        $item->setPrice(0);
                     }
 
                     if(strlen($product->getLabelText()) > 10) $aCareList[$product->getArticleNo()] =  $product;
@@ -879,7 +880,7 @@ class OrderController extends Controller
                 )
             )->attach(\Swift_Attachment::fromPath("print/".$PickListName.".pdf"))
         ;
-        $this->get('mailer')->send($message);
+      //  $this->get('mailer')->send($message);
 
 
 
