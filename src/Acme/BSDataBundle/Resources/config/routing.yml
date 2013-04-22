@@ -92,6 +92,18 @@ BSData_product_search_latein:
         pattern:  /data/product/search/latein/{search}/{page}
         defaults: { _controller: BSDataBundle:Product:searchLatein,page: 1 }
 
+BSData_product_search_jason:
+        pattern:  /data/product/sjson/{type}/{search}
+        defaults: { _controller: BSDataBundle:Product:search }
+
+BSData_product_lable:
+        pattern:  /data/product/lable
+        defaults: { _controller: BSDataBundle:Product:lable }
+
+BSData_product_lable_print:
+        pattern:  /data/product/lable/print
+        defaults: { _controller: BSDataBundle:Product:printLable }
+
 BSData_product_print:
         pattern:  /data/product/print
         defaults: { _controller: BSDataBundle:Product:print }
@@ -103,8 +115,6 @@ BSData_product_printA6:
 BSData_product_dummy:
         pattern:  /data/product/dummy
         defaults: { _controller: BSDataBundle:Product:createDummy }
-
-
 
 
 

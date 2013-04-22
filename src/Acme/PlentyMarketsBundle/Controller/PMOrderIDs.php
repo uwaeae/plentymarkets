@@ -3,18 +3,15 @@
  * Created by JetBrains PhpStorm.
  * User: Florian Engler 
  * Mail: florian.engler@gmx.de
- * Date: 21.03.13
- * Time: 15:54
+ * Date: 18.04.13
+ * Time: 11:47
  */
 
 namespace Acme\PlentyMarketsBundle\Controller;
 
 
-class RequestAddOrders {
+class PMOrderIDs {
 
-
-    public $Orders;
-
-
+    public $OrderIDs;
 
 }

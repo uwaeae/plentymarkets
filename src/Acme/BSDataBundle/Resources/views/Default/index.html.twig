@@ -33,6 +33,8 @@
                 <li><a href="{{ path('BSData_product', { 'page': 1 }) }}">Waren</a></li>
                 <li><a href="{{ path('BSData_stock') }}">Lager</a></li>
 
+                <li><a href="{{ path('BSData_product_lable') }}">Etiketten</a></li>
+
             </ul>
 
         </div>
@@ -55,8 +57,7 @@
             <h2>Kasse </h2>
             <ul>
                 <li><a href="{{ path('BSCheckout_home', { 'cashbox_id': 1 } )}}" >Kasse Laden</a></li>
-
-                <li><a href="{{ path('BSCheckout_payoff' )}}" >Kassenabschluss</a></li>
+                <li><a href="{{ path('BSCheckout_history', { 'cashbox_id': 1,'date':'now' } )}}" >Historie</a></li>
 
 
             </ul>

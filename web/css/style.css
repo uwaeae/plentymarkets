@@ -272,3 +272,33 @@ tfoot tr {
     border-top: 1px solid #CCCCCC;
     text-align: left;
 }
+
+.ui-autocomplete {
+    max-height: 400px;
+    width: 90%;
+    overflow-y: visible;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+}
+/* IE 6 doesn't support max-height
+ * we use height instead, but this forces the menu to always be this tall
+ */
+* html .ui-autocomplete {
+    height: 100px;
+}
+.ui-autocomplete div.auto_name{
+    width: 30%;
+    height: 20px;
+    overflow: hidden;
+    display: inline-block;
+}
+.ui-autocomplete div.auto_name2{
+    width: 30%;
+    height: 20px;
+    overflow: hidden;
+    display: inline-block;
+}
+.ui-autocomplete div.auto_code{
+    width: 10%;
+    display: inline-block;
+}

@@ -335,32 +335,103 @@ class ProductController extends Controller
     }
 
 
-    public function printDummyAction(){
-        $form = $this->buildDummyForm();
+    public function lableAction(){
 
-        $request = $this->getRequest();
-
-        $form->bindRequest($request);
-
-        $data = $form->getData();
-
-
-
-
-        return $this->render('BSDataBundle:Product:print.html.twig', array(
-            'urlPDF'=> "/print/".$form_name.".pdf",
+        return $this->render('BSDataBundle:Product:lable.html.twig', array(
+            'urlPDF'=> "/print.pdf",
         ));
 
-    }
-    private function buildDummyForm(){
-        return $this->createFormBuilder()
-            ->add('code','hidden',array('data'=>''))
-            ->add('titel','text',array('lable'=>'Titel'))
-            ->add('titel2','text',array('lable'=>'Botanisch'))
-            ->add('desciption','text',array('lable'=>'Text'))
-            ->getForm();
+
     }
 
+    public function printLableAction(){
+        $request = $this->getRequest();
+
+        $form = $request->request->get('labelform');
+        $entity = new Product();
+        $entity->setArticleId($form['articleid']);
+        $entity->setArticleNo($form['articlecode']);
+        $entity->setName($form['name']);
+        $entity->setName2($form['name2']);
+        $entity->setLabelText($form['description']);
+
+        $pdf =  $this->get('io_tcpdf');
+        /*$pdf->init(array(
+            'Creator' => 'Blumenschule Schongau',
+            'Author' => 'Florian Engler',
+            'Title' => $entity->getArticleNo(),
+            'Subject' => $entity->getName(),
+        ));*/
+        $pdf->SetAutoPageBreak(false, 0);
+        $pdf->setPrintHeader(false);
+        $pdf->setPrintFooter(false);
+        $pdf->setCellPaddings(1, 1, 1, 1);
+        $pdf->setCellMargins(1, 1, 1, 1);
+
+        $pdf = $this->buildLable($pdf,$entity);
+
+
+        $pdfUrl = "print/".$entity->getArticleNo().".pdf";
+        $pdf->Output($pdfUrl, 'F');
+        $result = array('pdfurl'=>  '/'.$pdfUrl);
+
+        $response = new Response( json_encode($result));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+
+    }
+
+    public function searchAction($search,$type){
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $qb->add('select', 'p')
+            ->add('from', 'BSDataBundle:Product p');
+        switch($type){
+            case 'name':
+                    $qb->add('where', $qb->expr()->like('p.name', '?1'))
+                        ->setParameter('1', '%'.$search.'%');
+                    break;
+            case 'code':
+                $qb->add('where',$qb->expr()->like('p.article_no', '?1'))
+                    ->setParameter('1', $search.'%');
+                break;
+            case 'name2':
+                $qb->add('where',$qb->expr()->like('p.name2', '?1'))
+                    ->setParameter('1', $search.'%');
+                break;
+
+        }
+       $result = $qb->getQuery()->getResult();
+
+       return $this->createLabelJSON($result);
+
+    }
+
+    private function createLabelJSON($products){
+
+        $result = array();
+        $index = 1;
+
+        foreach($products as $product){
+
+            $item['articleid'] =  $product->getArticleId();
+            $item['articlecode'] = $product->getArticleNo();
+            $item['name'] = $product->getName();
+            $item['name2'] = $product->getName2();
+            $item['description'] = $product->getLabelText();
+            $item['price'] = $product->getPrice();
+            $result[$index] = $item;
+            $index ++;
+        }
+
+        $response = new Response( json_encode($result));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
 
 
     public function printAction(){

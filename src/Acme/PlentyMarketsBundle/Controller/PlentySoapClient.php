@@ -24,6 +24,7 @@ use Acme\BSDataBundle\Entity\ProductBundle;
 use Acme\PlentyMarketsBundle\Controller\PMSOAP\PlentyFactory;
 use Acme\PlentyMarketsBundle\Controller\PMSOAP\PlentySoapRequest_AddOrders;
 use \DateTime;
+use JsonSchema\Constraints\Object;
 use \SoapFault;
 use Acme\PlentyMarketsBundle\Entity\Token;
 use Acme\BSDataBundle\Entity\Product;
@@ -1131,40 +1132,6 @@ class PlentySoapClient extends \SoapClient
 
 
 
-    /**
-     * Funktion um ein Lieferschein Object mittels SOAP abzufragen
-     * @param array $option
-     * @return mixed
-     */
-    public function doGetOrdersDeliveryNoteDocumentURLs ( array $option )
-    {
-
-
-        $options['OrderIDs'] = null;
-        $options['CustomerNumber'] = null;
-        $options['ExternalCustomerID'] = null;
-        $options = $option + $options;
-
-        try
-        {
-            $oResponse	=	$this->__soapCall('GetOrdersDeliveryNoteDocumentURLs',array( $options));
-        }
-        catch(SoapFault $sf)
-        {
-            print_r("Es kam zu einem Fehler beim Call GetAuthentificationToken<br>");
-            print_r($sf->getMessage());
-        }
-
-
-        if( $oResponse->Success == true)
-        {
-            return($oResponse->ResponseObject);
-        }
-        else
-        {
-            return($oResponse->ErrorMessages);
-        }
-    }
 
 
 
@@ -1370,21 +1337,22 @@ class PlentySoapClient extends \SoapClient
 
     }
 
-    public function doGetOrdersInvoiceDocumentURLs($option = array()){
+    public function doGetOrdersInvoiceDocumentURLs($orderIds){
 
+       $options = array();
 
-        $options['OrderIDs'] = array();
-        $options['GetDocumentAsBinaryData'] = false();
+       $options['OrderIDs'] =  $orderIds;
+       $options['GetDocumentAsBinaryData'] = false;
 
+       $request = new RequestGetOrdersInvoiceDocument();
+       //$request->GetDocumentAsBinaryData = false;
+       $request->OrderIDs = $orderIds;
 
-
-
-        $options = $option + $options;
 
 
         try
         {
-            $oResponse	=	$this->__soapCall('GetOrdersInvoiceDocumentURLs',$options);
+            $oResponse	=	$this->__soapCall('GetOrdersInvoiceDocumentURLs',array($request));
         }
         catch(SoapFault $sf)
         {
@@ -1401,12 +1369,45 @@ class PlentySoapClient extends \SoapClient
             {
                 return($oResponse->ErrorMessages);
             }
-        }
-        else return($oResponse->Message);
+        }else return($oResponse);
 
     }
 
 
+    /**
+     * Funktion um ein Lieferschein Object mittels SOAP abzufragen
+     * @param array $option
+     * @return mixed
+     */
+    public function doGetOrdersDeliveryNoteDocumentURLs ( array $option )
+    {
+
+
+        $options['OrderIDs'] = null;
+        $options['CustomerNumber'] = null;
+        $options['ExternalCustomerID'] = null;
+        $options = $option + $options;
+
+        try
+        {
+            $oResponse	=	$this->__soapCall('GetOrdersDeliveryNoteDocumentURLs',array( $options));
+        }
+        catch(SoapFault $sf)
+        {
+            print_r("Es kam zu einem Fehler beim Call GetAuthentificationToken<br>");
+            print_r($sf->getMessage());
+        }
+
+
+        if( $oResponse->Success == true)
+        {
+            return($oResponse->ResponseObject);
+        }
+        else
+        {
+            return($oResponse->ErrorMessages);
+        }
+    }
 
 
 
