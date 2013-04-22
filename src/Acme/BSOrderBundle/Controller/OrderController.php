@@ -634,8 +634,10 @@ class OrderController extends Controller
             'orders'=>$orders , 'state'=> $state       ));
     }
 
+
     public function invoiceAction(Request $request){
         return "TEST";//$pdf->Output();
+
     }
 
 
@@ -928,7 +930,18 @@ class OrderController extends Controller
     }
 
 
+    public function getInvoiceAction($orderID){
+        $oPlentySoapClient	=	new PlentySoapClient($this,$this->getDoctrine());
 
+
+        $response = $oPlentySoapClient->doGetOrdersInvoiceDocumentURLs(array($orderID));
+
+        return $this->render('BSCheckoutBundle:Default:order.html.twig', array(
+                'response' => $response,
+            )
+        );
+
+    }
 
 
 }

@@ -5,6 +5,7 @@ namespace Acme\BSCheckoutBundle\Controller;
 use Acme\BSCheckoutBundle\Entity\checkout;
 use Acme\BSCheckoutBundle\Entity\checkoutItem;
 use Acme\PlentyMarketsBundle\Controller\PMDeliveryAddress;
+use Acme\PlentyMarketsBundle\Controller\PMOrder;
 use Acme\PlentyMarketsBundle\Controller\PMOrderHead;
 use Acme\PlentyMarketsBundle\Controller\PMOrderItem;
 use Acme\PlentyMarketsBundle\Controller\RequestAddOrders;
@@ -243,7 +244,7 @@ class CheckoutController extends Controller
 
         //$currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->getCurrentBasket($cashbox_id);
         $currentBasket = $em->getRepository('BSCheckoutBundle:checkout')->find($checkout);
-        $currentBasket = new checkout();
+
         $oPlentySoapClient	=	new PlentySoapClient($this,$this->getDoctrine());
 
         $request = $this->getRequest();
@@ -253,10 +254,17 @@ class CheckoutController extends Controller
         $OrderHead = new PMOrderHead();
         $OrderHead->OrderStatus = 12;
         $OrderHead->PaymentStatus = 1;
-        $OrderHead->ExternalOrderID = ' ';
+        $OrderHead->MultishopID = 0;
+        $OrderHead->ReferrerID = 0;
+        //$OrderHead->PaidTimestamp = date('U');
+        $OrderHead->MethodOfPaymentID = 2;
+        $OrderHead->ResponsibleID = 13;
+        $OrderHead->ExternalOrderID = 'kasse'.$checkout;
         $OrderHead->OrderID = null;
         $OrderHead->SalesAgentID = 13;
         $OrderHead->TotalBrutto = $currentBasket->getSummary();
+        $OrderHead->ShippingMethodID = 4;
+        $OrderHead->ShippingProfileID = 6;
 
         if(!empty($form['customerno'])){
             $OrderHead->CustomerID = $form['customerno'];
@@ -282,28 +290,36 @@ class CheckoutController extends Controller
             $OrderItem = new PMOrderItem();
             $OrderItem->ItemID = $item->getArticleId();
             $OrderItem->SKU = $item->getArticleId();
-            //$OrderItem->ItemNo =  $item->getArticleCode();
+            $OrderItem->ItemNo =  $item->getArticleCode();
             $OrderItem->Price = $item->getPrice();
             $OrderItem->Quantity = $item->getQuantity();
             $OrderItem->OrderID = null;
-
+            $OrderItem->SalesOrderProperties = array();
             $OrderItems[] = $OrderItem;
         }
 
 
-        $pm_orders = new RequestAddOrders();
-        $pm_orders->Orders[]['OrderHead'] = $OrderHead;
-        $pm_orders->Orders[]['OrderDeliveryAddress'] = $OrderDeliveryAddress;
-        $pm_orders->Orders[]['OrderItems'] = $OrderItems;
 
+        $pm_order = new PMOrder();
+        $pm_order->OrderHead = $OrderHead;
+        $pm_order->OrderDeliveryAddress = $OrderDeliveryAddress;
+        $pm_order->OrderItems = $OrderItems;
+
+
+        $pm_orders = new RequestAddOrders();
+        $pm_orders->Orders = array($pm_order);
 
         //$pmorder->Orders->item->OrderItems->item = array();
-        $response = $oPlentySoapClient->doAddOrders($pm_orders);
+
+         $response = $oPlentySoapClient->doAddOrders($pm_orders);
 
 
         $message  = explode(";",$response->Message);
         $OrderID = $message[1];
-        $RequestAddOrderItems = new RequestAddOrdersItems();
+
+        $response = $oPlentySoapClient->doGetOrdersInvoiceDocumentURLs(array($OrderID));
+        /*
+         $RequestAddOrderItems = new RequestAddOrdersItems();
         foreach($currentBasket->getCheckoutItems() as $item){
             //$item = new checkoutItem();
             $OrderItem = new PMOrderItem();
@@ -315,6 +331,10 @@ class CheckoutController extends Controller
             $RequestAddOrderItems->OrderItems[] = $OrderItem;
         }
         $response = $oPlentySoapClient->doAddOrdersItems($RequestAddOrderItems);
+        *
+         */
+
+
 
 
         // TESTEN

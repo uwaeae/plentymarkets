@@ -8,9 +8,9 @@ BSOrder_search:
     pattern:  /orders/search
     defaults: { _controller: BSOrderBundle:Order:index }
 
-BSOrder_invoice:
-    pattern:  /orders/invoice
-    defaults: { _controller: BSOrderBundle:Order:invoice }
+BSOrder_getInvoice:
+    pattern:  /orders/invoice/{orderID}
+    defaults: { _controller: BSOrderBundle:Order:getInvoice }
 
 BSOrder_packet:
     pattern:  /orders/packets
