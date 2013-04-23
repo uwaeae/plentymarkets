@@ -940,6 +940,8 @@ class PlentySoapClient extends \SoapClient
             $order->setPaidStatus($AOorder->OrderHead->PaymentStatus);
             $order->setOrderStatus($AOorder->OrderHead->OrderStatus);
             $order->setOrderType($AOorder->OrderHead->OrderType);
+            $order->setMarking1ID($AOorder->OrderHead->Marking1ID);
+            $order->setEstimatedTimeOfShipment($AOorder->OrderHead->EstimatedTimeOfShipment);
             $opm = $em->getRepository('BSDataBundle:PaymentMethods')->find($AOorder->OrderHead->MethodOfPaymentID);
             $order->setPaymentMethods($opm);
             $order->setInvoiceNumber($AOorder->OrderHead->InvoiceNumber);

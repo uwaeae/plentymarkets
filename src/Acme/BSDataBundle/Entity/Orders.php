@@ -193,7 +193,19 @@ class Orders
     private $PaidStatus;
 
 
+    /**
+     * @var string $Marking1ID
+     *
+     * @ORM\Column(name="Marking1ID", type="integer",nullable=true)
+     */
+    private $Marking1ID;
 
+    /**
+     * @var string $EstimatedTimeOfShipment
+     *
+     * @ORM\Column(name="EstimatedTimeOfShipment", type="string",length=255,nullable=true)
+     */
+    private $EstimatedTimeOfShipment;
 
 
     /**
@@ -828,5 +840,45 @@ class Orders
     public function getPaidStatus()
     {
         return $this->PaidStatus;
+    }
+
+    /**
+     * Set Marking1ID
+     *
+     * @param integer $marking1ID
+     */
+    public function setMarking1ID($marking1ID)
+    {
+        $this->Marking1ID = $marking1ID;
+    }
+
+    /**
+     * Get Marking1ID
+     *
+     * @return integer 
+     */
+    public function getMarking1ID()
+    {
+        return $this->Marking1ID;
+    }
+
+    /**
+     * Set EstimatedTimeOfShipment
+     *
+     * @param string $estimatedTimeOfShipment
+     */
+    public function setEstimatedTimeOfShipment($estimatedTimeOfShipment)
+    {
+        $this->EstimatedTimeOfShipment = $estimatedTimeOfShipment;
+    }
+
+    /**
+     * Get EstimatedTimeOfShipment
+     *
+     * @return string 
+     */
+    public function getEstimatedTimeOfShipment()
+    {
+        return $this->EstimatedTimeOfShipment;
     }
 }

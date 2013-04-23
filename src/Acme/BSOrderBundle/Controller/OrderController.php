@@ -708,8 +708,21 @@ class OrderController extends Controller
             //Betsellinformattionen holen aus localer Datenbank
             $repository = $this->getDoctrine()->getRepository('BSDataBundle:OrdersInfo');
             $aOrderInfo = $repository->findBy(array('OrderID' => $rOrder));
+            // Prüfen auf Markerungen
+            $ersatz = true;
+            $mark = $oOrder->getMarking1ID();
+            if($mark == 2 || $mark == 4 || $mark == 7 ){
+                $pdf->OrderHeader($oOrder,$aOrderInfo,"KEIN ERSATZ");
+                $ersatz = false;
+            }if($mark == 2 || $mark == 4 || $mark == 7 ){
+                $pdf->OrderHeaderOptional("KEIN ERSATZ");
+                $ersatz = false;
+            }
+                $pdf->OrderHeader($oOrder,$aOrderInfo);
+
+
             //Bestellungskopf erstellen
-            $pdf->OrderHeader($oOrder,$aOrderInfo);
+
             $pdf->SetFont('Arial','',10);
 
             // Bestell Prositionen aus der localen datenbank holen
@@ -738,7 +751,7 @@ class OrderController extends Controller
                     $isBundle = false;
                     $productList = array();
                 }elseif(stripos($item->getItemText(), '[-]') === 0){
-                    $isBundle = true;
+                    //$isBundle = true;
                     $productList = array($p);
                 }else{
                     $isBundle = false;
@@ -770,15 +783,17 @@ class OrderController extends Controller
 
                     }
 
+
+
                     // Artikel für die Pickliste zusammenführen
                     if(isset($aSortPicklistItems[ $PLIstock][$PLIartID])){
                         $PLIorder = $aSortPicklistItems[ $PLIstock][$PLIartID]['orders'];
                         if(isset($PLIorder[$rOrder])){
                             $PLIorderTemp =  $PLIorder[$rOrder];
-                            $PLIorder[$rOrder] = array('OrderID'=>$rOrder,'Name'=> utf8_decode($oOrder->getLastname()),'Quantity'=>$item->getQuantity());
+                            $PLIorder[$rOrder] = array('OrderID'=>$rOrder,'Name'=> utf8_decode($oOrder->getLastname()),'Quantity'=>$item->getQuantity(),'ersatz'=>$ersatz);
                         }
                         else{
-                            $PLIorder[$rOrder] = array('OrderID'=>$rOrder,'Name'=> utf8_decode($oOrder->getLastname()),'Quantity'=>$item->getQuantity());
+                            $PLIorder[$rOrder] = array('OrderID'=>$rOrder,'Name'=> utf8_decode($oOrder->getLastname()),'Quantity'=>$item->getQuantity(),'ersatz'=>$ersatz);
                         }
                         $PLIarray = array(  'item'=>$item,
                             'product'=>$product,
@@ -788,7 +803,7 @@ class OrderController extends Controller
 
                     }else{
                         $PLIorder = array();
-                        $PLIorder[$rOrder] = array('OrderID'=>$rOrder,'Name'=> utf8_decode($oOrder->getLastname()),'Quantity'=>$item->getQuantity());
+                        $PLIorder[$rOrder] = array('OrderID'=>$rOrder,'Name'=> utf8_decode($oOrder->getLastname()),'Quantity'=>$item->getQuantity(),'ersatz'=>$ersatz);
                         $PLIarray = array(  'item'=>$item,
                             'product'=>$product,
                             'orders'=> $PLIorder,

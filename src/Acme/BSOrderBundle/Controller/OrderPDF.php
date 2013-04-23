@@ -39,7 +39,7 @@ class OrderPDF extends \FPDF
     }
 
 
-    function OrderHeader(Orders $Order,array $aInfo){
+    function OrderHeader(Orders $Order,array $aInfo,$info = null){
 
         $this->SetFont('Arial','B',24);
         $this->SetTextColor(0,0,0);
@@ -58,6 +58,7 @@ class OrderPDF extends \FPDF
         $this->Cell(40,10,'Packetnummer',1,0,'r');
         $this->SetFont('Arial','B',16);
         $this->Text(10,40,"INFO:");
+
         $this->Ln(5);
         $i= 0 ;
         $this->SetFont('Arial','B',14);
@@ -65,6 +66,13 @@ class OrderPDF extends \FPDF
             $this->MultiCell(150,5,utf8_decode($info->getText()));
             $i++;
         }
+    }
+
+    function OrderHeaderOptional($info = null,$date = null){
+        $this->SetFont('Arial','B',14);
+        if($info) $this->Text(100,40,$info);
+
+
     }
 
     function CareListHeader(Orders $Order){
@@ -178,8 +186,8 @@ class OrderPDF extends \FPDF
            $this->SetFont('Arial','',10);
            $this->Cell(15,8,$o->getOrderID(),'B',0,'L');
            $this->Cell(50,8,utf8_decode($o->getLastname().' '.$o->getFirstname()),'B',0,'L');
-           $this->Cell(50,8,utf8_decode($o->getZIP().' '.$o->getCity()),'B',0,'L');
-           $this->Cell(50,8,$o->getTelephone(),'B',0,'L');
+           $this->Cell(60,8,utf8_decode($o->getZIP().' '.$o->getCity()),'B',0,'L');
+           $this->Cell(40,8,$o->getTelephone(),'B',0,'L');
            $this->SetFont('Arial','B',10);
            $this->Cell(25,8,($o->getCountryID()!= 1?'AUSLAND '.$o->getCountryID():' '),'B',1,'L');
        }
@@ -227,7 +235,7 @@ class OrderPDF extends \FPDF
         $STROrder = '';
 
         foreach($item['orders'] as $order){
-            $STROrder .= $order['Quantity'].' x '.$order['OrderID'].' '.$order['Name']."\n";
+            $STROrder .= $order['Quantity'].' x '.$order['OrderID'].' '.$order['Name'].' '.($order['ersatz'] == true ?'':"   KE ")."\n";
         }
         $this->MultiCell(0,$cellHight,$STROrder ,'T','J');
         //$this->Cell(100,$cellHight,substr(utf8_decode($item['item']->getItemText()),0,65),'',0,'L');
