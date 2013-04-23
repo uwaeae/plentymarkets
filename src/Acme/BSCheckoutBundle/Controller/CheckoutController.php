@@ -215,7 +215,7 @@ class CheckoutController extends Controller
 
         }
 
-        if($sum > 0){
+        if($sum != 0){
             $cb->setPayment($payment_id);
             $cb->setBuydate(new \DateTime());
             $cb->setFinish(true);

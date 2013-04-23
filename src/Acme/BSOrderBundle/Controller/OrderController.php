@@ -718,7 +718,10 @@ class OrderController extends Controller
                 $pdf->OrderHeaderOptional("KEIN ERSATZ");
                 $ersatz = false;
             }
-                $pdf->OrderHeader($oOrder,$aOrderInfo);
+            $pdf->OrderHeader($oOrder,$aOrderInfo);
+
+
+
 
 
             //Bestellungskopf erstellen
