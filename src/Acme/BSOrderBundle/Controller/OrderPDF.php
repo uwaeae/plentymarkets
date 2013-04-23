@@ -227,7 +227,7 @@ class OrderPDF extends \FPDF
         $STROrder = '';
 
         foreach($item['orders'] as $order){
-            $STROrder .= $order['Quantity'].' x '.$order['OrderID'].' '.utf8_decode($order['Name'])."\n";
+            $STROrder .= $order['Quantity'].' x '.$order['OrderID'].' '.$order['Name']."\n";
         }
         $this->MultiCell(0,$cellHight,$STROrder ,'T','J');
         //$this->Cell(100,$cellHight,substr(utf8_decode($item['item']->getItemText()),0,65),'',0,'L');

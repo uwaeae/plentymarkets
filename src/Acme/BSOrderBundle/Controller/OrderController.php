@@ -935,10 +935,14 @@ class OrderController extends Controller
         $oPlentySoapClient	=	new PlentySoapClient($this,$this->getDoctrine());
 
 
-        $response = $oPlentySoapClient->doGetOrdersInvoiceDocumentURLs(array($orderID));
+        $response = $oPlentySoapClient->doGetOrdersInvoiceDocumentURLs($orderID);
+
+        if(isset($response[0])){
+            $PDFURL = $response[0]->InvoiceDocumentURL;
+        }
 
         return $this->render('BSCheckoutBundle:Default:order.html.twig', array(
-                'response' => $response,
+                'PDFURL' => $PDFURL,
             )
         );
 

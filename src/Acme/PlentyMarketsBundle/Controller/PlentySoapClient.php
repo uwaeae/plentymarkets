@@ -1337,16 +1337,19 @@ class PlentySoapClient extends \SoapClient
 
     }
 
-    public function doGetOrdersInvoiceDocumentURLs($orderIds){
+    public function doGetOrdersInvoiceDocumentURLs($orderId){
 
        $options = array();
+       $item = new PlentySoapObject_Integer();
+       $item->intValue = $orderId;
 
-       $options['OrderIDs'] =  $orderIds;
+
+       $options['OrderIDs'] =  array($item);
        $options['GetDocumentAsBinaryData'] = false;
 
        $request = new RequestGetOrdersInvoiceDocument();
        //$request->GetDocumentAsBinaryData = false;
-       $request->OrderIDs = $orderIds;
+       $request->OrderIDs = array($item);
 
 
 
@@ -1363,7 +1366,7 @@ class PlentySoapClient extends \SoapClient
         if(isset($oResponse->Success)){
             if(  $oResponse->Success == TRUE)
             {
-                return $oResponse;
+                return $oResponse->OrderInvoiceDocumentURL->item;
             }
             else
             {

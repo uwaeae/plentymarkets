@@ -252,7 +252,7 @@ class CheckoutController extends Controller
         $form = $request->request->get('form');
 
         $OrderHead = new PMOrderHead();
-        $OrderHead->OrderStatus = 12;
+        $OrderHead->OrderStatus = 7.3;
         $OrderHead->PaymentStatus = 1;
         $OrderHead->MultishopID = 0;
         $OrderHead->ReferrerID = 0;
@@ -311,35 +311,29 @@ class CheckoutController extends Controller
 
         //$pmorder->Orders->item->OrderItems->item = array();
 
-         $response = $oPlentySoapClient->doAddOrders($pm_orders);
+        $response = $oPlentySoapClient->doAddOrders($pm_orders);
 
-
+        // Zurückgegebene Auftragsnummer extrahieren
         $message  = explode(";",$response->Message);
         $OrderID = $message[1];
 
-        $response = $oPlentySoapClient->doGetOrdersInvoiceDocumentURLs(array($OrderID));
-        /*
-         $RequestAddOrderItems = new RequestAddOrdersItems();
-        foreach($currentBasket->getCheckoutItems() as $item){
-            //$item = new checkoutItem();
-            $OrderItem = new PMOrderItem();
-            $OrderItem->OrderID = $OrderID;
-            $OrderItem->ItemID = $item->getArticleId();
-            $OrderItem->ItemNo =  $item->getArticleCode();
-            $OrderItem->Price = $item->getPrice();
-            $OrderItem->Quantity = $item->getQuantity();
-            $RequestAddOrderItems->OrderItems[] = $OrderItem;
+        sleep(5);
+        $response = $oPlentySoapClient->doGetOrdersInvoiceDocumentURLs($OrderID);
+
+        if(isset($response[0])){
+            // URL aus dem Response holen und anzeigen lassen
+            $PDFURL = $response[0]->InvoiceDocumentURL;
+            // Warenkorb Löschen
+            $checkout = $em->getRepository('BSCheckoutBundle:checkout')->clearBasket($cashbox_id,$checkout);
+            $em->remove($checkout);
+            $em->flush();
+
         }
-        $response = $oPlentySoapClient->doAddOrdersItems($RequestAddOrderItems);
-        *
-         */
 
 
 
-
-        // TESTEN
         return $this->render('BSCheckoutBundle:Default:order.html.twig', array(
-                'response' => $response,
+                'PDFURL' => $PDFURL,
                 'cashbox_id' => $cashbox_id
             )
         );
