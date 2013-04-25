@@ -220,7 +220,7 @@ class CheckoutController extends Controller
             $cb->setBuydate(new \DateTime());
             $cb->setFinish(true);
             $cb->setSummary($sum);
-            $em->persist($cb);
+            $em->persist($cb); 
             $em->flush();
         }
 
@@ -442,7 +442,7 @@ class CheckoutController extends Controller
             $mwst = 0;
             if( $item->getVAT() == 7){
                 $mwst  =  round($price * 0.07,2);
-                $summary['mwst7'] = $mwst;
+                $summary['mwst7'] += $mwst;
             }elseif( $item->getVAT() == 19){
                 $mwst  = round($price * 0.19,2);
                 $summary['mwst19'] += $mwst;
