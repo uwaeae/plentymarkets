@@ -777,10 +777,10 @@ class OrderController extends Controller
                         $aSortOrderItems[$PLIstock][$PLIartID] = array('product'=>$product,'bundle'=>$isBundle,'Quantity'=>$ItemQuantity,'price'=> $item->getPrice()  );
                         $oOrderQuantity +=  $item->getQuantity();
                     }else{
-                       $aSOItem = $aSortOrderItems[$PLIstock][$PLIartID]['item'];
+                       $Quantity = $aSortOrderItems[$PLIstock][$PLIartID]['Quantity'];
                        $oOrderQuantity +=  $item->getQuantity();
-                       $item->setQuantity($aSOItem->getQuantity() + $item->getQuantity());
-                       $aSortOrderItems[$PLIstock][$PLIartID] = array('product'=>$product,'bundle'=>$isBundle,'Quantity'=>$ItemQuantity,'price'=> $item->getPrice()  );
+
+                       $aSortOrderItems[$PLIstock][$PLIartID] = array('product'=>$product,'bundle'=>$isBundle,'Quantity'=> $Quantity + $item->getQuantity(),'price'=> $item->getPrice()  );
 
                     }
 
