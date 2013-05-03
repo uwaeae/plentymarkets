@@ -255,7 +255,7 @@ class CheckoutController extends Controller
         $OrderHead->OrderStatus = 7.3;
         $OrderHead->PaymentStatus = 1;
         $OrderHead->MultishopID = 0;
-        $OrderHead->ReferrerID = 0;
+        $OrderHead->ReferrerID = 9;
         //$OrderHead->PaidTimestamp = date('U');
         $OrderHead->MethodOfPaymentID = 2;
         $OrderHead->ResponsibleID = 13;
@@ -471,10 +471,7 @@ class CheckoutController extends Controller
 
     private function buildOrderForm(){
         return  $this->createFormBuilder()
-            ->add('prefix', 'choice', array(
-                'choices'   => array('Herr' => 'Herr', 'Frau' => 'Frau', 'Firma' => 'Firma'),
-                'label'=>'Anrede'
-            ))
+
             ->add('customerno', 'hidden',array('required'=>false))
 
             ->add('lastname','text',array('label'=>'Nachname'))

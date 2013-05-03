@@ -547,7 +547,7 @@ class PlentySoapClient extends \SoapClient
      * Mit diesem Call können mehere Artikel aus dem Shop abgerufen werden
      *
      */
-    public function doGetItemsBase( $lastUpdate = null,$output = null)
+    public function doGetItemsBase( $lastUpdate,$output = null)
 
     {
         $oResponse	= null;
@@ -555,6 +555,7 @@ class PlentySoapClient extends \SoapClient
         // um die Suche einzuschränken
         //$options['ItemNo'] = "srt%";
         $options['LastUpdate'] = $lastUpdate ;
+
         $options['LastInserted'] =null ;
         $options['Marking1ID'] =null ;
         $options['Marking2ID'] =null ;
@@ -644,7 +645,7 @@ class PlentySoapClient extends \SoapClient
             $product->setPriceID($item->PriceSet->PriceID);
             $product->setPrice($item->PriceSet->Price);
             $product->setPrice6($item->PriceSet->Price6);
-           // $product->setSKU($item->SKU);
+
 
 
             if($item->VATInternalID == 0) $product->setVAT(19);
@@ -656,6 +657,7 @@ class PlentySoapClient extends \SoapClient
                 $sets = $item->AttributeValueSets;
                 $product->setAttributeVaueSetID($sets[0]->AttributeValueSetID );
             }
+            $product->setSKU($item->ItemID."-".$item->PriceSet->PriceID."-".$product->getAttributeVaueSetID());
             $product->setEAN($item->EAN1);
             $product->setLastupdate( $item->LastUpdate);
             // $product->setShortDescription($item->Texts->ShortDescription);
@@ -716,20 +718,92 @@ class PlentySoapClient extends \SoapClient
             $em->persist($product);
             $em->flush();
             $products[] = $product;
+            $this->doGetItemsImages($product);
 
             }catch (\Exception $e){
                 if($output) {
                     $output->writeln('Fehler beim Anlegen von '.$item->ItemID);
-                    //$output->writeln($e);
+                    $output->writeln($e);
                 }
 
             }
-           // if($output) $output->writeln($product->getArticleId().' '.$product->getArticleNo());
+            //if($output) $output->writeln($product->getArticleId().' '.$product->getArticleNo());
 
         }
 
         return $products;
     }
+
+
+
+    /**
+     * Mit diesem Call können mehere Artikel aus dem Shop abgerufen werden
+     *
+     */
+    public function doGetItemsImages(Product $product )
+
+    {
+        $em = $this->doctrine->getEntityManager();
+        $oResponse	= null;
+        $page = 0;
+        // um die Suche einzuschränken
+        //$options['ItemNo'] = "srt%";
+        $SKU = $product->getArticleId()."-".$product->getPriceID()."-0";
+        $options['Availability'] =null ;
+        $options['Marking1ID'] =null ;
+        $options['Marking2ID'] =null ;
+        $options['Webshop'] = true ;
+        $options['WebAPI'] = null;
+        $options['Gimahhot'] =null;
+        $options['GoogleProducts'] =null ;
+        $options['Hitmeister'] =null ;
+        $options['Shopgate'] =null ;
+        $options['Shopperella'] =null ;
+        $options['ShopShare'] =null;
+        $options['Tradoria'] = null ;
+        $options['Yatego'] = null ;
+        $options['SumoScout'] = null ;
+        $options['Laary'] = null ;
+        $options['LastUpdate'] = null ;
+        $options['SKU'] = $SKU;
+        $options['Page'] = null;
+
+
+        try
+        {
+            $oResponse	=	$this->__soapCall('GetItemsImages',array( $options));
+        }
+        catch(\SoapFault $sf)
+        {
+            print_r("Es kam zu einem Fehler beim Call GetAuthentificationToken<br>");
+            print_r($sf->getMessage());
+        }
+        if ( isset($oResponse->Success) and $oResponse->ItemsImages ){
+            // $output = array_merge($output, $oResponse->ItemsBase->item);
+
+            $itemarray = $oResponse->ItemsImages->item;
+            if(isset($itemarray[0])){
+
+                $product->setPicurl($itemarray[0]->Images->item[0]->ImageURL);
+                $em->persist($product);
+                $em->flush();
+                return $itemarray[0]->Images->item[0]->ImageURL;
+            }
+
+
+
+
+            if(isset($oResponse->Pages)) $page = $oResponse->Pages;
+
+            return $oResponse;
+        }
+
+        return null;
+
+
+    }
+
+
 
 
     /**

@@ -12,23 +12,24 @@
     <h1>Waren </h1>
     </div>
     </header>
+
     <nav class="ym-hlist">
-
-
         <ul>
-
-            <li><a href="{{ path('BSData_mainmenu') }}">zurück</a></li>
+            {% if back %}
+                <li><a href="{{ back }}">zurück</a></li>
+            {% else %}
+                <li><a href="{{ path('BSData_mainmenu') }}">zurück</a></li>
+            {% endif %}
         </ul>
-
     </nav>
 
-    <div class="ym-grid">
+    <div class="ym-grid content" >
 
 
         <div class="ym-gl">
 
             <div class="ym-gbox">
-                <object data="{{ urlPDF }}" type="application/pdf" width="800" height="600px"></object>
+                <object id="PDF" data="{{ urlPDF }}" type="application/pdf" width="1500px" height="600px"></object>
 
             </div>
 

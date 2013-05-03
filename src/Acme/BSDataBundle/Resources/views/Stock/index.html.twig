@@ -28,6 +28,7 @@
             <tr>
                 <th>Number</th>
                 <th>Id</th>
+                <th>PlentyStockID</th>
                 <th>Name</th>
                 <th>Actions</th>
             </tr>
@@ -37,9 +38,13 @@
             <tr>
                 <td>{{ entity.number }}</td>
                 <td>{{ entity.Id }}</td>
+                <td>{{ entity.PlentyStockID }}</td>
                 <td>{{ entity.name }}</td>
                 <td>
                     <ul>
+                        <li>
+                            <a href="{{ path('BSData_stock_edit', { 'id': entity.id }) }}">edit</a>
+                        </li>
                         <li>
                             <a href="{{ path('BSData_stock_show', { 'id': entity.id }) }}">Pflanzen</a>
                         </li>

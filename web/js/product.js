@@ -24,6 +24,11 @@ $(document).ready(function(){
 
         });
          */
+    $('#PDF').width($(document).width());
+    $('#PDF').height($('.content').height());
+
+
+
 
     $("#Lable_width").keyup(function(){
         LableSize();

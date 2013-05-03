@@ -423,6 +423,7 @@ class ProductController extends Controller
             $item['name2'] = $product->getName2();
             $item['description'] = $product->getLabelText();
             $item['price'] = $product->getPrice();
+            $item['picurl'] = $product->getPicurl();
             $result[$index] = $item;
             $index ++;
         }
@@ -470,11 +471,15 @@ class ProductController extends Controller
     }
 
     public function printA6Action(){
-        $id = $this->getRequest()->get('id');
+
 
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('BSDataBundle:Product')->find($id);
+        $data = $this->get('request')->request->get('A6Lable');
+
+
+
+
         $pdf =  $this->get('io_tcpdf');
         /*$pdf->init(array(
             'Creator' => 'Blumenschule Schongau',
@@ -482,61 +487,116 @@ class ProductController extends Controller
             'Title' => $entity->getArticleNo(),
             'Subject' => $entity->getName(),
         ));*/
-        $pdf->SetAutoPageBreak(false, 0);
+        $pdf->SetAutoPageBreak(true, 0);
         $pdf->setPrintHeader(false);
         $pdf->setPrintFooter(false);
         $pdf->setCellPaddings(1, 1, 1, 1);
-        $pdf->setCellMargins(1, 1, 1, 1);
+        $pdf->setCellMargins(6, 1, 1, 1);
 
-        $pdf->AddPage('L',array(105,148));
+        $pdf->AddPage('L');
         //Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=0, $link='', $stretch=0, $ignore_min_height=false, $calign='T', $valign='M')
-
-        $pdf->SetFont('helvetica', 'B', 10);
-        //$pdf->Write(1,$entity->getName(),'',false,'L',1);
-        //$pdf->Cell(2, 6, $entity->getName(),1,1);
-        $pdf->Text(0, 0, $entity->getName(),false,false,true,0,1);
-        $pdf->SetFont('helvetica', 'B', 8);
-        //$pdf->Cell(2, 6, $entity->getName2(),1,1);
-        //$pdf->Write(1,$entity->getName(),'',false,'L',1);
-        $pdf->Text(32, 5, $entity->getName2(),false,false,true,0,1);
         $style = array(
-            'position' => '',
-            'align' => 'L',
-            'stretch' => false,
-            'fitwidth' => false,
-            'cellfitalign' => '',
-            'border' => false,
-            'hpadding' => '0',
-            'vpadding' => '0',
-            'fgcolor' => array(0,0,0),
-            'bgcolor' => false, //array(255,255,255),
-            'text' => true,
-            'font' => 'helvetica',
-            'fontsize' => 8,
-            'stretchtext' => 0
-        );
-        //( 	code,	 	type,		x = '', 	y = '',	w = '',	h = '',xres = '',style = '',align = '')
-        $pdf->SetFont('helvetica', '', 8);
+        'position' => '',
+                'align' => 'L',
+                'stretch' => false,
+                'fitwidth' => false,
+                'cellfitalign' => '',
+                'border' => false,
+                'hpadding' => '0',
+                'vpadding' => '0',
+                'fgcolor' => array(0,0,0),
+                'bgcolor' => false, //array(255,255,255),
+                'text' => true,
+                'font' => 'helvetica',
+                'fontsize' => 8,
+                'stretchtext' => 0
+            );
 
-        //$pdf->write1DBarcode( $entity->getArticleNo(), 'C128', 0, 8, 30, 15, 0.4, $style, 'T');
+//       $html ='<style>
+//            table.rotate td{
+//                -moz-transform:rotate(90deg); /* Firefox 3.6 Firefox 4 */
+//                -webkit-transform:rotate(90deg); /* Safari */
+//                -o-transform:rotate(90deg); /* Opera */
+//                -ms-transform:rotate(90deg); /* IE9 */
+//                transform:rotate(90deg); /* W3C */
+//                width: 9cm;
+//                height: 13cm;
+//            }
+//
+//
+//            </style>';
 
-        $strings = $this->split_words($entity->getLabelText());
-        $line = 0;
-        foreach($strings as $s){
-            $pdf->Text(32,8 +$line, $s,false,false,true,0,1);
-            $line += 3;
+
+
+        $index = 0;
+
+        foreach($data as $entity){
+
+           /* $pdf->SetFont('helvetica', 'B', 10);
+            //$pdf->Write(1,$entity->getName(),'',false,'L',1);
+            //$pdf->Cell(2, 6, $entity->getName(),1,1);
+            $pdf->Text(0, 0, $entity['name'],false,false,true,0,1);
+            $pdf->SetFont('helvetica', 'B', 8);
+            //$pdf->Cell(2, 6, $entity->getName2(),1,1);
+            //$pdf->Write(1,$entity->getName(),'',false,'L',1);
+            $pdf->Text(32, 5, $entity['name2'],false,false,true,0,1);
+
+            //( 	code,	 	type,		x = '', 	y = '',	w = '',	h = '',xres = '',style = '',align = '')
+            $pdf->SetFont('helvetica', '', 8);
+
+            //$pdf->write1DBarcode( $entity->getArticleNo(), 'C128', 0, 8, 30, 15, 0.4, $style, 'T');
+
+            $strings = $this->split_words($entity['description']);
+            $line = 0;
+            foreach($strings as $s){
+                $pdf->Text(32,8 +$line, $s,false,false,true,0,1);
+                $line += 3;
+            }*/
+
+
+
+
+            $html ='<h1> '.$entity['name'].'</h1>';
+            $html .='<table border=0><tr><td style="width:130px;">';
+            $html .='<img style="float:left; width: 120px ;max-height: 150px;" src="'.$entity['picurl'] .'">';
+            $html .= '</td><td >';
+            $html .= '<h2>'.$entity['name2'].'</h2>
+                <p>'.$entity['description'].'</p>';
+            $html .= '</td></tr></table>';
+            //TCPDF::writeHTMLCell	(w,h,x,y,html = '',border = 0,ln = 0,fill = false,reseth = true,align = '',autopadding = true )
+            $w = 140;
+            $h = 95;
+
+            $html.= '</div>';
+            if($index&1)  {
+                $pdf->writeHTMLCell($w,$h,'' ,'' ,$html,0,1,false,false,'',false);
+            }else{
+                $pdf->writeHTMLCell($w,$h,' ' ,'' ,$html,0,0,false,false,'',false);
+            }
+            $index++;
+
+
+
         }
+        $html .= '</body></html>';
+
+
+        //$response = new Response($html);
+        //return $response;
 
 
 
+       // $pdf->writeHTML($html, true, false, true, false, '');
 
 
-        $pdf->Output("print/".$entity->getArticleNo()."_A6.pdf", 'F');
+
+        $date = date('U');
+        $pdf->Output("print/".$date."_A6.pdf", 'F');
 
         return $this->render('BSDataBundle:Product:print.html.twig', array(
-            'urlPDF'=> "/print/".$entity->getArticleNo()."_A6.pdf",
+            'urlPDF'=> "/print/".$date."_A6.pdf",
+            'back' =>   $this->getRequest()->server->get('HTTP_REFERER')
         ));
-
 
     }
 

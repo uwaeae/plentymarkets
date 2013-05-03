@@ -113,6 +113,14 @@ class Product
     private $label_text;
 
     /**
+     * @var string $picurl
+     *
+     * @ORM\Column(name="picurl",type="string", length=255,nullable= true)
+     */
+
+    private $picurl;
+
+    /**
      * @var text $quantity
      *
      * @ORM\Column(name="quantity", type="integer",nullable= true)
@@ -522,5 +530,25 @@ class Product
     public function getProductBundles()
     {
         return $this->ProductBundles;
+    }
+
+    /**
+     * Set picurl
+     *
+     * @param string $picurl
+     */
+    public function setPicurl($picurl)
+    {
+        $this->picurl = $picurl;
+    }
+
+    /**
+     * Get picurl
+     *
+     * @return string 
+     */
+    public function getPicurl()
+    {
+        return $this->picurl;
     }
 }

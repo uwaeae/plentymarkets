@@ -30,6 +30,14 @@ class Stock
 
     private $number;
 
+    /**
+     * @var integer $PlentyStockID
+     *
+     * @ORM\Column(name="PlentyStockID", type="integer")
+     */
+
+    private $PlentyStockID;
+
 
     /**
      * @var string $name
@@ -148,5 +156,25 @@ class Stock
     public function addProduct(\Acme\BSDataBundle\Entity\Product $products)
     {
         $this->products[] = $products;
+    }
+
+    /**
+     * Set PlentyStockID
+     *
+     * @param integer $plentyStockID
+     */
+    public function setPlentyStockID($plentyStockID)
+    {
+        $this->PlentyStockID = $plentyStockID;
+    }
+
+    /**
+     * Get PlentyStockID
+     *
+     * @return integer 
+     */
+    public function getPlentyStockID()
+    {
+        return $this->PlentyStockID;
     }
 }

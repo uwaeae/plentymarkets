@@ -12,6 +12,7 @@ class StockType extends AbstractType
         $builder
             ->add('number')
             ->add('name')
+            ->add('PlentyStockID')
         ;
     }
 

@@ -112,9 +112,6 @@ BSData_product_printA6:
         pattern:  /data/product/printA6
         defaults: { _controller: BSDataBundle:Product:printA6 }
 
-BSData_product_dummy:
-        pattern:  /data/product/dummy
-        defaults: { _controller: BSDataBundle:Product:createDummy }
 
 
 

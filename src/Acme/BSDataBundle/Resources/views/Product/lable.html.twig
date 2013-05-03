@@ -35,9 +35,13 @@
 
             <div class="ym-gbox">
 
-                <h2>Suche über die Felder Name Botanisch und Code</h2>
+                <h3>Suche über die Felder Name Botanisch und Code</h3>
+
+
 
                 <form  class="ym-form LableForm" action="{{ path('BSData_product_lable_print') }}" method="post" >
+
+                    <img src="" class="article_pic">
                     <label for="name">Name</label>
                     <input type="text" id="name" name="labelform[name]">
                     <label for="name2">Botanisch</label>
@@ -50,20 +54,36 @@
                     <label for="description">Beschreibung</label>
                     <textarea style="width: 350px;height: 93px;" id="description" name="labelform[description]">   </textarea >
 
+                    <input type="hidden" id="picurl" name="labelform[picurl]">
                     <p>
-                        <button type="submit">Print</button>
+                        <button type="submit">Etikett erstellen</button>    <button style="float: right" id="addDinA6">zu DinA6 hinzufügen</button>
                     </p>
                 </form>
 
+
             </div>
-            <div class="ym-gbox">
-                <object class="PdfOut" data="{{ urlPDF }}" type="application/pdf" width="800" height="300px"></object>
+            <div class="ym-gbox pdf-print">
+                <object class="PdfOut" data="{{ urlPDF }}" type="application/pdf" width="100%" height="200px"></object>
 
             </div>
 
 
         </div>
+        <div class="ym-gl ym-g50">
+            <h3>DinA6 Druck Auswahl</h3>
+            <form class="ym-form form-dinA6" action="{{ path('BSData_product_printA6') }}"  method="post" >
+                <div id="labelsToPrint">
 
+                </div>
+                <p>
+                    <button type="submit">Print</button>
+                </p>
+            </form>
+
+
+
+
+        </div>
     </div>
 
 {% endblock %}
