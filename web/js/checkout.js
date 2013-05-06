@@ -8,7 +8,7 @@ function getSummary(){
     });
 
     $('.iteminput').keypress(function(event){
-        if(event.keyCode > 112 && event.keyCode < 120) event.preventDefault();
+        if(event.keyCode > 112 && event.keyCode < 122) event.preventDefault();
         if( event.keyCode == 13 ){
 
             $.post('/cashbox/'+$('.inputkeyboard').data('cashbox')+
