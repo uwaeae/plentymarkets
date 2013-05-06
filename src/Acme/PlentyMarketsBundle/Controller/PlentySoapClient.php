@@ -550,10 +550,11 @@ class PlentySoapClient extends \SoapClient
     public function doGetItemsBase( $lastUpdate,$output = null)
 
     {
+        $products = array();
         $oResponse	= null;
         $page = 0;
         // um die Suche einzuschränken
-        //$options['ItemNo'] = "srt%";
+        // $options['ItemNo'] = "srt%";
         $options['LastUpdate'] = $lastUpdate ;
 
         $options['LastInserted'] =null ;
@@ -607,12 +608,12 @@ class PlentySoapClient extends \SoapClient
             }
             if ( isset($oResponse->Success) and $oResponse->ItemsBase != null ){
                 //$output = array_merge($output, $oResponse->ItemsBase->item);
-                $this->syncArticle( $oResponse->ItemsBase->item,$output);
+                $products = array_merge($products,$this->syncArticle( $oResponse->ItemsBase->item,$output));
             }
 
         }
 
-        return $output;
+        return $products;
     }
 
     private function syncArticle($Items,$output = null){
@@ -689,7 +690,7 @@ class PlentySoapClient extends \SoapClient
                     $id = explode("-",  $bi->SKU);
                     $p = $ReproProduct->findOneBy(array('article_id' => $id[0]));
                     $sync = true;
-                    if($output) $output->writeln('Bundle: '.$id[0]);
+                    // if($output) $output->writeln('Bundle: '.$id[0]);
                     foreach($PItems as $PItem){
                           if($PItem->getProduct()->getID() == $product->getID()){
                                  $sync = false;
@@ -712,7 +713,7 @@ class PlentySoapClient extends \SoapClient
                 }
 
 
-                $em->flush();
+               // $em->flush();
             }
 
             $em->persist($product);
@@ -723,11 +724,12 @@ class PlentySoapClient extends \SoapClient
             }catch (\Exception $e){
                 if($output) {
                     $output->writeln('Fehler beim Anlegen von '.$item->ItemID);
-                    $output->writeln($e);
+                    //$output->writeln($e);
                 }
 
             }
-            //if($output) $output->writeln($product->getArticleId().' '.$product->getArticleNo());
+            $outputstring = sprintf("%10s | %6s | %10s | %30s",date("d m y",$product->getLastupdate()),$product->getArticleId(),$product->getArticleNo(),$product->getName());
+            if($output) $output->writeln($outputstring);
 
         }
 

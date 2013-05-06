@@ -66,7 +66,7 @@ protected function execute(InputInterface $input, OutputInterface $output)
 
         foreach($zahlungsart as $key => $article){
             $OrderHead = new PMOrderHead();
-            $OrderHead->OrderStatus = 12;
+            $OrderHead->OrderStatus = 7.3;
             $OrderHead->PaymentStatus = 1;
             $OrderHead->MultishopID = 0;
             $OrderHead->ReferrerID = 9;

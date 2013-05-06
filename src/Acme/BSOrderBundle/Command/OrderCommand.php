@@ -44,8 +44,10 @@ protected function execute(InputInterface $input, OutputInterface $output)
         //$output->writeln(' *** Gutschriften ***');
         //$this->syncOrders($oPlentySoapClient,11,$output,$back);
         $output->writeln(' *** Artikel ***');
-        $oPlentySoapClient->doGetItemsBase(date('U',mktime(0, 0, 0, date("m")  , date("d") - $back , date("Y"))),$output );
-
+        $outputstring = sprintf("%10s | %6s | %10s | %30s","DATUM","ID",'CODE',"NAME");
+        $output->writeln($outputstring);
+        $products =  $oPlentySoapClient->doGetItemsBase(date('U',mktime(0, 0, 0, date("m")  , date("d") - $back , date("Y"))),$output );
+        $output->writeln('Artikel Syncronisiert'.count($products));
 
     }
 
