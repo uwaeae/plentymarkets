@@ -314,7 +314,7 @@ class CheckoutController extends Controller
         $response = $oPlentySoapClient->doAddOrders($pm_orders);
 
         // Zurückgegebene Auftragsnummer extrahieren
-        $message  = explode(";",$response->Message);
+        $message  = explode(";",$response->Message->item[0]);
         $OrderID = $message[1];
 
         sleep(5);

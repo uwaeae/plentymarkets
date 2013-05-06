@@ -50,6 +50,13 @@ class checkout
      */
     private $closed;
 
+    /**
+     * @var string $exported
+     *
+     * @ORM\Column(name="exported", type="string",nullable = true)
+     */
+    private $exported;
+
 
     /**
      * @var string $bontext
@@ -269,5 +276,25 @@ class checkout
     public function getBontext()
     {
         return $this->bontext;
+    }
+
+    /**
+     * Set exported
+     *
+     * @param string $exported
+     */
+    public function setExported($exported)
+    {
+        $this->exported = $exported;
+    }
+
+    /**
+     * Get exported
+     *
+     * @return string 
+     */
+    public function getExported()
+    {
+        return $this->exported;
     }
 }

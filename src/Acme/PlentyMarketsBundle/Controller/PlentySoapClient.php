@@ -381,7 +381,7 @@ class PlentySoapClient extends \SoapClient
 
         if( isset($oResponse->Success) && $oResponse->Success == true)
         {
-            return $oResponse->SuccessMessages->item[0];
+            return $oResponse->SuccessMessages->item;
         }
         else
         {
