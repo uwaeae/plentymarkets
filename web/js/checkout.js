@@ -20,7 +20,7 @@ function getSummary(){
         }
     });
     $('.itemprice').keypress(function(event){
-        if(event.keyCode > 112 && event.keyCode < 120) event.preventDefault();
+        if(event.keyCode > 112 && event.keyCode < 122) event.preventDefault();
         if( event.keyCode == 13 ){
             itemFocus = '.inputkeyboard';
             $.post('/cashbox/'+$('.inputkeyboard').data('cashbox')+
@@ -159,7 +159,7 @@ $(document).ready(function(){
        //console.log(event.keyCode);
        var id = $('#inputkeyboard').data('cashbox');
        var id_checkout = $('#inputkeyboard').data('checkout');
-       if(event.keyCode > 112 && event.keyCode < 120){
+       if(event.keyCode > 112 && event.keyCode < 122){
            event.preventDefault();
            // Funtkionstasten
 
