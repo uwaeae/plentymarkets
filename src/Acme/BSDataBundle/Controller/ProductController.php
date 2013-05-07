@@ -487,11 +487,11 @@ class ProductController extends Controller
             'Title' => $entity->getArticleNo(),
             'Subject' => $entity->getName(),
         ));*/
-        $pdf->SetAutoPageBreak(true, 0);
+        $pdf->SetAutoPageBreak(false, 0);
         $pdf->setPrintHeader(false);
         $pdf->setPrintFooter(false);
         $pdf->setCellPaddings(1, 1, 1, 1);
-        $pdf->setCellMargins(6, 1, 1, 1);
+        $pdf->setCellMargins(15, 5, 1, 1);
 
         $pdf->AddPage('L');
         //Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=0, $link='', $stretch=0, $ignore_min_height=false, $calign='T', $valign='M')
@@ -555,17 +555,21 @@ class ProductController extends Controller
 
 
 
+            $html = "";
 
-            $html ='<h1> '.$entity['name'].'</h1>';
-            $html .='<table border=0><tr><td style="width:130px;">';
+            $html .='<table border=0><tr><td style="width:125px;">';
             $html .='<img style="float:left; width: 120px ;max-height: 150px;" src="'.$entity['picurl'] .'">';
-            $html .= '</td><td >';
-            $html .= '<h2>'.$entity['name2'].'</h2>
-                <p>'.$entity['description'].'</p>';
+            $html .= '</td><td style=" text-align: right">'.$entity['articlecode'].'<br>';
+            $html .='<span style="font-size:24pt;font-weight: bold;"> '.$entity['name'].'</span>';
+            $html .= '<h2>'.$entity['name2'].'</h2>';
+            $html .= '</td></tr>';
+            $html .= '<tr><td colspan="2" >';
+            $html .= $entity['description'];
+
             $html .= '</td></tr></table>';
             //TCPDF::writeHTMLCell	(w,h,x,y,html = '',border = 0,ln = 0,fill = false,reseth = true,align = '',autopadding = true )
             $w = 140;
-            $h = 95;
+            $h = 90;
 
             $html.= '</div>';
             if($index&1)  {
@@ -573,7 +577,14 @@ class ProductController extends Controller
             }else{
                 $pdf->writeHTMLCell($w,$h,' ' ,'' ,$html,0,0,false,false,'',false);
             }
-            $index++;
+            if($index == 3) {
+                $pdf->AddPage('L');
+                $index = 0;
+            }else{
+                $index++;
+            }
+
+
 
 
 

@@ -25,7 +25,7 @@ $(document).ready(function(){
         });
          */
     $('#PDF').width($(document).width());
-    $('#PDF').height($('.content').height());
+    //$('#PDF').height($('.content').height());
 
 
 
