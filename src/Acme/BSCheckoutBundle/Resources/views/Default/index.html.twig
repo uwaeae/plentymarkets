@@ -174,13 +174,15 @@
                             <form action="{{ path('BSCheckout_finish', { 'cashbox_id': cashbox.id,'checkout': basket.id,}) }}" method="post">
                                 <input type="hidden" name="cashbox_id" value="{{ cashbox.id }}">
                                 <input type="hidden" name="payment_id" value="0">
-                                <button class="ym-button return_focus">Bar</button>
+                                <button class="ym-button return_focus">Bezahlt</button>
                             </form>
+                           <!--
                             <form action="{{ path('BSCheckout_finish', { 'cashbox_id': cashbox.id,'checkout': basket.id,}) }}" method="post">
                                 <input type="hidden" name="cashbox_id" value="{{ cashbox.id }}">
                                 <input type="hidden" name="payment_id" value="1">
                                 <button class="ym-button">EC</button>
                             </form>
+                             -->
                         </div>
 
 

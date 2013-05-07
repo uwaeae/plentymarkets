@@ -363,16 +363,10 @@ class cashboxController extends Controller
 
             foreach($basket->getCheckoutItems() as $item){
                 //$item = new checkoutItem();
-                if(isset( $summary[99][$item->getVAT()]) ){
-                    $summary[99][$item->getVAT()] +=$item->getPrice() + $item->getQuantity() ;
+                if(isset( $summary[$item->getVAT()]) ){
+                    $summary[$item->getVAT()] +=$item->getPrice() * $item->getQuantity() ;
                 }else{
-                    $summary[99][$item->getVAT()] = $item->getPrice() + $item->getQuantity() ;
-                }
-                if(isset( $summary[$payment][$item->getVAT()])){
-                    $summary[$payment][$item->getVAT()] +=$item->getPrice() + $item->getQuantity() ;
-
-                }else{
-                    $summary[$payment][$item->getVAT()] = $item->getPrice() + $item->getQuantity() ;
+                    $summary[$item->getVAT()] = $item->getPrice() * $item->getQuantity() ;
                 }
 
                 if(isset( $article[$item->getArticleCode()])){
@@ -421,9 +415,8 @@ class cashboxController extends Controller
         );
         ksort($summary);
         $pdf->SetLineWidth(0.3);
-        foreach($summary as $key => $p){
-            $pdf->SetFont('helvetica', 'B', 12);
-            $pdf->cell(40,6,$paymentMethods[$key],0,1);
+
+
             $pdf->SetFont('helvetica', '', 10);
             $pdf->cell(20,3,'Mwst Satz','', 0, 'L');
             $pdf->cell(30,3,'Netto','', 0, 'L');
@@ -432,7 +425,7 @@ class cashboxController extends Controller
             $pdf->Ln();
             $gesamt = 0;
             $pdf->SetFont('helvetica', '', 10);
-            foreach($p as $VAT=>$sum){
+            foreach($summary as $VAT=>$sum){
                 $pdf->cell(20,4,$VAT."%",'',0);
                 $pdf->cell(30,4, number_format($sum * (100 - $VAT)/100 , 2, ',', ' ')." €",'',0);
                 $pdf->cell(30,4, number_format($sum * ($VAT/100), 2, ',', ' ')." €",'',0);
@@ -449,7 +442,7 @@ class cashboxController extends Controller
             $pdf->ln(5);
 
 
-        }
+
 
 
 
