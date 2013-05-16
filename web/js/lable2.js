@@ -40,7 +40,10 @@ $(document).ready(function(){
                     response( $.map( data, function( item ) {
                         return {
                             label:  item.name2 + ' ' + item.name+' '+item.articlecode ,
-                            value: item.name2,
+                            name: item.name,
+                            name2: item.name2,
+                            code: item.articlecode,
+                            value: item.name,
                             data: item
                         }
                     }));
@@ -51,7 +54,7 @@ $(document).ready(function(){
         select: selected
     }) .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
         return $( "<li>" )
-            .append( "<a><div class='auto_name'> " + item.name + "</div><div class='auto_name2'>" +  item.name2+"</div><div class='auto_code'>"+item.code + "</div></a>" )
+            .append( "<a><div class='auto_name'> " + item.name2 + "</div><div class='auto_name2'>" +  item.name+"</div><div class='auto_code'>"+item.code + "</div></a>" )
             .appendTo( ul );
     };
     $( "#articlecode" ).autocomplete({
@@ -63,8 +66,11 @@ $(document).ready(function(){
                 success: function( data ) {
                     response( $.map( data, function( item ) {
                         return {
-                            label:  item.articlecode + ' ' + item.name2+' '+item.name ,
-                            value: item.articlecode,
+                            label:  item.articlecode + ' ' + item.name +' '+item.name2 ,
+                            name: item.name,
+                            name2: item.name2,
+                            code: item.articlecode,
+                            value: item.name,
                             data: item
                         }
                     }));
@@ -75,7 +81,7 @@ $(document).ready(function(){
         select: selected
     }) .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
         return $( "<li>" )
-            .append( "<a><div class='auto_name'> " + item.name + "</div><div class='auto_name2'>" +  item.name2+"</div><div class='auto_code'>"+item.code + "</div></a>" )
+            .append( "<a><div class='auto_name'> " + item.code + "</div><div class='auto_name2'>" +  item.name+"</div><div class='auto_code'>"+item.name2 + "</div></a>" )
             .appendTo( ul );
     };
 
@@ -138,9 +144,45 @@ $(document).ready(function(){
         //form-dinA6
 
     });
+    $('.LableForm').keypress(function(event){
+        if( event.keyCode == 13 ){
+            // Bei ENTER
+            event.preventDefault();
+        }
+    });
 
-
+    $('#descriptionShort').keypress(countChars);
+    countChars();
 });
+
+
+var countChars = function(){
+
+    var text =  $('#descriptionShort ').val();
+
+    var felder = text.split(" ");
+    var line = '';
+    var lines = 0;
+    var max = 58;
+    var length = 0;
+    for (var i=0; i<felder.length; i++) {
+        length =  (line + ' ' + felder[i]).length;
+        if(length <= max ){
+            line +=  ' ' + felder[i] ;
+        }
+        else {
+            lines++;
+            line = felder[i];
+        }
+
+    }
+    var result = (max * 5 ) - ((lines * max) + length);
+    console.log('lines '+lines+' length ' +length);
+    $('#available').val(result);
+    if(result < 0)   $('#available').css( "color", "red" );
+    else  $('#available').css( "color", "green" );
+
+};
 
 var selected = function( event, ui ) {
     console.log(ui);
@@ -148,9 +190,11 @@ var selected = function( event, ui ) {
     $('#name ').val(data.name);
     $('#name2 ').val(data.name2);
     $('#description ').val(data.description);
+    $('#descriptionShort ').val(data.descriptionShort);
     $('#articlecode ').val(data.articlecode);
     $('#articleid ').val(data.articleid);
     $('#picurl').val(data.picurl);
     $('.article_pic').attr('src',data.picurl);
+    countChars();
     return false;
 }

@@ -105,6 +105,15 @@ class Product
 
 
     /**
+     * @var text $description_short
+     *
+     * @ORM\Column(name="description_short", type="text",nullable= true)
+     */
+
+    private $description_short;
+
+
+    /**
      * @var text $description
      *
      * @ORM\Column(name="description", type="text",nullable= true)
@@ -550,5 +559,25 @@ class Product
     public function getPicurl()
     {
         return $this->picurl;
+    }
+
+    /**
+     * Set description_short
+     *
+     * @param text $descriptionShort
+     */
+    public function setDescriptionShort($descriptionShort)
+    {
+        $this->description_short = $descriptionShort;
+    }
+
+    /**
+     * Get description_short
+     *
+     * @return text 
+     */
+    public function getDescriptionShort()
+    {
+        return $this->description_short;
     }
 }

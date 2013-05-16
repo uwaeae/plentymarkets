@@ -354,7 +354,7 @@ class ProductController extends Controller
         $entity->setName($form['name']);
         $entity->setName2($form['name2']);
         $entity->setLabelText($form['description']);
-
+        $entity->setDescriptionShort($form['descriptionShort']);
         $pdf =  $this->get('io_tcpdf');
         /*$pdf->init(array(
             'Creator' => 'Blumenschule Schongau',
@@ -422,6 +422,7 @@ class ProductController extends Controller
             $item['name'] = $product->getName();
             $item['name2'] = $product->getName2();
             $item['description'] = $product->getLabelText();
+            $item['descriptionShort'] = $product->getDescriptionShort();
             $item['price'] = $product->getPrice();
             $item['picurl'] = $product->getPicurl();
             $result[$index] = $item;
@@ -612,7 +613,7 @@ class ProductController extends Controller
     }
 
 
-    private function buildLable($pdf,Product $entity,$width = 95,$height= 25){
+    private function buildLable($pdf,Product $entity,$width = 98,$height= 25){
 
         $pdf->AddPage('L',array($width,$height));
         //Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=0, $link='', $stretch=0, $ignore_min_height=false, $calign='T', $valign='M')
@@ -622,7 +623,7 @@ class ProductController extends Controller
         //$pdf->Cell(2, 6, $entity->getName(),1,1);
         $pdf->Text(0, 0, $entity->getName(),false,false,true,0,1);
         $pdf->SetFont('helvetica', 'B', 8);
-        $pdf->Text(32, 5, $entity->getName2(),false,false,true,0,1);
+        $pdf->Text(32, 4, $entity->getName2(),false,false,true,0,1);
         //$pdf->Cell(2, 6, $entity->getName2(),1,1);
         //$pdf->Write(1,$entity->getName(),'',false,'L',1);
 
@@ -647,10 +648,10 @@ class ProductController extends Controller
         $pdf->write1DBarcode( $entity->getArticleId(), 'EAN8', 1, 8, 30, 10, 0.5, $style, 'T');
         $pdf->Text(2, 17, $entity->getArticleNo(),false,false,true,0,1);
         $pdf->SetFont('helvetica', '', 7);
-        $strings = $this->split_words($entity->getLabelText());
+        $strings = $this->split_words($entity->getDescriptionShort());
         $line = 0;
         foreach($strings as $s){
-            $pdf->Text(32,9 +$line, $s,false,false,true,0,1);
+            $pdf->Text(30,8 +$line, $s,false,false,true,0,1);
             $line += 3;
         }
 
@@ -664,7 +665,7 @@ class ProductController extends Controller
 
     }
 
-    function split_words($string, $max = 55)
+    function split_words($string, $max = 58)
     {
         $words = preg_split('/\s/', $string);
         $lines = array();

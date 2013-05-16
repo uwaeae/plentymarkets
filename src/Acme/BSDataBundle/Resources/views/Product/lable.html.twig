@@ -4,6 +4,14 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="/css/south-street/jquery-ui-1.10.0.custom.min.css" type="text/css"/>
+
+    <style type="text/css">
+        .ui-autocomplete-loading {
+            background: white url('images/ui-anim_basic_16x16.gif') right center no-repeat;
+        }
+
+
+    </style>
 {% endblock %}
 
 
@@ -35,7 +43,8 @@
 
             <div class="ym-gbox">
 
-                <h3>Suche über die Felder Name Botanisch und Code</h3>
+                <h3>Etikettendruck</h3>
+                    Suche über die Felder  Name Botanisch oder Code
 
 
 
@@ -52,9 +61,11 @@
                     <input type="text" id="articleid" name="labelform[articleid]">
 
                     <label for="description">Beschreibung</label>
-                    <textarea style="width: 350px;height: 93px;" id="description" name="labelform[description]">   </textarea >
-
-                    <input type="hidden" id="picurl" name="labelform[picurl]">
+                    <textarea style="width:60%;height: 93px;" id="description" name="labelform[description]">   </textarea >
+                    <label for="descriptionShort">Etikettentext</label>
+                    <textarea style="width: 350px;height: 93px;" id="descriptionShort" name="labelform[descriptionShort]">   </textarea >
+                    <label for="available"> noch verfügbare zeichen</label>
+                    <input type="text" id="available" style="width:50px;">
                     <p>
                         <button type="submit">Etikett erstellen</button>    <button style="float: right" id="addDinA6">zu DinA6 hinzufügen</button>
                     </p>

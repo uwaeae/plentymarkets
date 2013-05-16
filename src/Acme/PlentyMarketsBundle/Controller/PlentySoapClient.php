@@ -589,7 +589,7 @@ class PlentySoapClient extends \SoapClient
         }
         if ( isset($oResponse->Success) and $oResponse->ItemsBase != null ){
             // $output = array_merge($output, $oResponse->ItemsBase->item);
-            $this->syncArticle( $oResponse->ItemsBase->item,$output);
+            $products =  $oResponse->ItemsBase->item;
             if(isset($oResponse->Pages)) $page = $oResponse->Pages;
         }
 
@@ -607,13 +607,16 @@ class PlentySoapClient extends \SoapClient
                 print_r($sf->getMessage());
             }
             if ( isset($oResponse->Success) and $oResponse->ItemsBase != null ){
-                //$output = array_merge($output, $oResponse->ItemsBase->item);
-                $products = array_merge($products,$this->syncArticle( $oResponse->ItemsBase->item,$output));
+                $products = array_merge($products, $oResponse->ItemsBase->item);
+                //$this->syncArticle( $oResponse->ItemsBase->item,$output);
             }
 
         }
 
-        return $products;
+
+        $this->syncArticle( $products,$output);
+
+        return true;
     }
 
     private function syncArticle($Items,$output = null){
@@ -640,6 +643,8 @@ class PlentySoapClient extends \SoapClient
             $product->setArticleNo( $item->ItemNo );
             // $product->setBotanical($item->FreeTextFields->Free2);
             // $product->setDescription($item->Texts->LongDescription);
+
+            $product->setDescriptionShort($item->FreeTextFields->Free1);
             $product->setLabelText($item->FreeTextFields->Free3);
             $product->setName($item->Texts->Name);
             $product->setName2($item->Texts->Name2);
