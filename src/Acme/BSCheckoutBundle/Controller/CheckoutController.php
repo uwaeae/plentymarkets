@@ -120,7 +120,7 @@ class CheckoutController extends Controller
         $code = $this->getRequest()->request->get('code');
         $price = $this->getRequest()->request->get('price');
         $quantity = $this->getRequest()->request->get('quantity');
-
+        $name = $this->getRequest()->request->get('name');
         $price = floatval(str_replace(',','.',$price));
 
         $em = $this->getDoctrine()->getEntityManager();
@@ -131,9 +131,9 @@ class CheckoutController extends Controller
 
 
         if(is_float($price) && $price > 0 ){
-            $em->getRepository('BSCheckoutBundle:checkoutItem')->addItem($currentBasket,$code,$price);
+            $em->getRepository('BSCheckoutBundle:checkoutItem')->addItem($currentBasket,$code,$price,$quantity,$name);
         }else{
-            $em->getRepository('BSCheckoutBundle:checkoutItem')->addItem($currentBasket,$code,null,$quantity);
+            $em->getRepository('BSCheckoutBundle:checkoutItem')->addItem($currentBasket,$code,null,$quantity,$name);
         }
 
 

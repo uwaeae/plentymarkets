@@ -112,6 +112,10 @@ BSData_product_printA6:
         pattern:  /data/product/printA6
         defaults: { _controller: BSDataBundle:Product:printA6 }
 
+BSData_product_sync:
+        pattern:  /data/product/sync/{code}
+        defaults: { _controller: BSDataBundle:Product:sync }
+
 
 
 

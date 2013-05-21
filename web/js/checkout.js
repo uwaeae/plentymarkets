@@ -189,8 +189,9 @@ $(document).ready(function(){
        if(event.keyCode > 112 && event.keyCode < 122){
            event.preventDefault();
            // Funtkionstasten
+           var item = $('.checkout-box[data-keyboard='+event.keyCode +']');
+           var code = item.data('code');
 
-           var code = $('.checkout-box[data-keyboard='+event.keyCode +']').data('code');
            $('.checkout-box[data-keyboard='+event.keyCode +']').animate({
                backgroundColor: '#ddC8dd'}, 100).animate({
                    backgroundColor: '#00c800'}, 800);
@@ -199,7 +200,7 @@ $(document).ready(function(){
            if(quantity.length == 0) quantity = 1;
                itemFocus = '.itemprice:last';
                //$.post('/cashbox/'+id+'/checkout/'+id_checkout+'/add',{ code: code,quantity: quantity},buildtable);
-               addQuery('/cashbox/'+id+'/checkout/'+id_checkout+'/add',{ code: code,quantity: quantity});
+               addQuery('/cashbox/'+id+'/checkout/'+id_checkout+'/add',{ name:item.html(),code: code,quantity: quantity});
 
        }
        if( event.keyCode == 13 ){
@@ -210,7 +211,7 @@ $(document).ready(function(){
            if(quantity.length == 0) quantity = 1;
            itemFocus = '.itemprice:last';
            // $.post('/cashbox/'+id+'/checkout/'+id_checkout+'/add',{ code: button.data('code'),quantity: quantity},buildtable);
-           addQuery('/cashbox/'+id+'/checkout/'+id_checkout+'/add',{ code: button.data('code'),quantity: quantity});
+           addQuery('/cashbox/'+id+'/checkout/'+id_checkout+'/add',{ name:button.html(),code: button.data('code'),quantity: quantity});
 
 
        }

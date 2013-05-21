@@ -104,7 +104,7 @@ $(document).ready(function(){
         var name = $('form.LableForm input[id="name"]').val();
         var name2 = $('form.LableForm input[id="name2"]').val();
         var description = $('form.LableForm textarea[id="description"]').val();
-        var picurl = $('form.LableForm input[id="picurl"]').val();
+        var picurl = $('form.LableForm img.article_pic').attr('src');
         item.append($('<img class="a6-print-item-pic" src="' +  picurl + '" />'));
         item.append($('<p><strong>Etikett '+A6Index+'</strong></p>'));
         item.append($('<p><strong>'+name+'</strong></p><p>'+name2+'</p>'));
@@ -125,7 +125,11 @@ $(document).ready(function(){
 
 
         });
-
+        item.append($('<input type=text type="hidden" ' +
+            'name="A6Lable['+A6Index+'][picurl]"'+
+            'id="A6_'+A6Index+'_picurl"'+
+            '/>').val(picurl).hide()
+        );
 
 
 
@@ -185,16 +189,22 @@ var countChars = function(){
 };
 
 var selected = function( event, ui ) {
-    console.log(ui);
+
+    // Aktueller Datenstamm auf Plenty holen
     var data = ui.item.data;
-    $('#name ').val(data.name);
-    $('#name2 ').val(data.name2);
-    $('#description ').val(data.description);
-    $('#descriptionShort ').val(data.descriptionShort);
-    $('#articlecode ').val(data.articlecode);
-    $('#articleid ').val(data.articleid);
-    $('#picurl').val(data.picurl);
-    $('.article_pic').attr('src',data.picurl);
+    $.getJSON('/data/product/sync/'+data.articlecode).done(function(data){
+        $('#name ').val(data.name);
+        $('#name2 ').val(data.name2);
+        $('#description ').val(data.description);
+        $('#descriptionShort ').val(data.descriptionShort);
+        $('#articlecode ').val(data.articlecode);
+        $('#articleid ').val(data.articleid);
+        $('#picurl').val(data.picurl);
+        $('.article_pic').attr('src',data.picurl);
+    })
+    console.log(ui);
+
+
     countChars();
     return false;
 }

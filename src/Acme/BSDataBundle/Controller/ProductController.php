@@ -2,6 +2,7 @@
 
 namespace Acme\BSDataBundle\Controller;
 
+use Acme\PlentyMarketsBundle\Controller\PlentySoapClient;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -406,9 +407,39 @@ class ProductController extends Controller
         }
        $result = $qb->getQuery()->getResult();
 
+
+
+
+
        return $this->createLabelJSON($result);
 
     }
+
+    public function syncAction($code){
+
+        $oPlentySoapClient	=	new PlentySoapClient($this,$this->getDoctrine() );
+        $oPlentySoapClient->doGetItemsBaseByOptions(array('ItemNo'=>$code));
+
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $product = $em->getRepository('BSDataBundle:Product')->findOneBy(array('article_no' => $code));
+
+        $item = array();
+        $item['articleid'] =  $product->getArticleId();
+        $item['articlecode'] = $product->getArticleNo();
+        $item['name'] = $product->getName();
+        $item['name2'] = $product->getName2();
+        $item['description'] = $product->getLabelText();
+        $item['descriptionShort'] = $product->getDescriptionShort();
+        $item['price'] = $product->getPrice();
+        $item['picurl'] = $product->getPicurl();
+        $response = new Response( json_encode( $item));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+
+    }
+
 
     private function createLabelJSON($products){
 
@@ -559,7 +590,7 @@ class ProductController extends Controller
             $html = "";
 
             $html .='<table border=0><tr><td style="width:125px;">';
-            $html .='<img style="float:left; width: 120px ;max-height: 150px;" src="'.$entity['picurl'] .'">';
+            if(strlen($entity['picurl'])>5) $html .='<img style="float:left; width: 120px ;max-height: 150px;" src="'.$entity['picurl'] .'">';
             $html .= '</td><td style=" text-align: right">'.$entity['articlecode'].'<br>';
             $html .='<span style="font-size:24pt;font-weight: bold;"> '.$entity['name'].'</span>';
             $html .= '<h2>'.$entity['name2'].'</h2>';

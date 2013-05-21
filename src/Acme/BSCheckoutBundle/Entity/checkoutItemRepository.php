@@ -14,7 +14,7 @@ class checkoutItemRepository extends EntityRepository
 {
 
 
-    public function addItem($basket,$code,$price = null,$quantity = 1){
+    public function addItem($basket,$code,$price = null,$quantity = 1,$name = null){
 
         $em = $this->getEntityManager();
         /*
@@ -51,7 +51,7 @@ class checkoutItemRepository extends EntityRepository
                 $co_item->setArticleCode($product->getArticleNo());
                 $co_item->setArticleId($product->getArticleId());
                 $co_item->setCheckout($basket);
-                $co_item->setDescription($product->getName().' '.$product->getName2());
+                $co_item->setDescription(is_null($name)  ? $product->getName().' '.$product->getName2():$name);
                 $co_item->setPrice(is_null($price) || $price == 0 ? $product->getPrice6() : $price);
                 $co_item->setVAT($product->getVAT());
                 $co_item->setQuantity($quantity);
