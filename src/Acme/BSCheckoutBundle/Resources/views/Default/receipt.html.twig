@@ -65,7 +65,13 @@
             width: 10%;
 
         }
-
+        .adresse p{
+            margin: 0;
+            padding: 0;
+        }
+        .adresse br{
+            display: none;
+        }
 
         div.fooder{
             position:absolute;
@@ -95,7 +101,10 @@
 
 <p>
 <strong>Kunde:</strong>
-{{basket.bontext|raw  }}
+<div class="adresse">
+    {{basket.bontext|raw  }}
+</div>
+
 </p>
 {% endif %}
 

@@ -135,10 +135,22 @@ $(document).ready(function(){
         $.post($(this).attr( 'action' ),{bontext:text},function(data) {
          // console.log(data);
          // $('#printPage').empty().append(data);
-            w=window.open();
+            w = window.open();
             w.document.write(data);
+            var geladen = 0
+            do{
+                geladen = 0
+                for (i = 0; i < w.document.images.length; ++i) {
+                    if (w.document.images[i].complete == true) {
+                        geladen++;
+
+                    }
+                }
+            }while(w.document.images.length != geladen  )
+
             w.print(false);
             w.close();
+
         });
     });
 

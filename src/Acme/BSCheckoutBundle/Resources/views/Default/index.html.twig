@@ -166,7 +166,7 @@
                                 <button class="ym-button receipt btnPrint">Quittung</button>
                                 <input type="hidden" name="cashbox_id" value="{{ cashbox.id }}">
                                 <label for="bontext">Adresse</label>
-                                <textarea name="bontext"
+                                <textarea name="bontext" class="ckeditor"
                                           id="bontext">{{ basket.bontext|replace({'<br />': '\r\n'}) }}</textarea>
                             </form>
                         </div>
