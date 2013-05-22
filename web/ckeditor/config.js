@@ -27,6 +27,7 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'about' }
 	];
 	*/
+    config.height = '80px';
     config.toolbar = 'MyToolbar';
 
     config.toolbar_MyToolbar =

@@ -20,8 +20,8 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/bs.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/bs.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/build-config.js" afterPath="$PROJECT_DIR$/web/ckeditor/build-config.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/ca.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/ca.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/js/checkout.js" afterPath="$PROJECT_DIR$/web/js/checkout.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/plugins/wsc/dialogs/ciframe.html" afterPath="$PROJECT_DIR$/web/ckeditor/plugins/wsc/dialogs/ciframe.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/config.js" afterPath="$PROJECT_DIR$/web/ckeditor/config.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/contents.css" afterPath="$PROJECT_DIR$/web/ckeditor/contents.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/cs.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/cs.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/cy.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/cy.js" />
@@ -64,7 +64,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/hi.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/hi.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/hr.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/hr.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/hu.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/hu.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Resources/views/Default/index.html.twig" afterPath="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Resources/views/Default/index.html.twig" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/index.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/inlineall.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/inlineall.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/inlinebycode.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/inlinebycode.html" />
@@ -94,7 +93,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/pt.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/pt.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/skins/moono/readme.md" afterPath="$PROJECT_DIR$/web/ckeditor/skins/moono/readme.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/readonly.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/readonly.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Resources/views/Default/receipt.html.twig" afterPath="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Resources/views/Default/receipt.html.twig" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/replacebyclass.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/replacebyclass.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/replacebycode.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/replacebycode.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/ro.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/ro.js" />
@@ -107,6 +105,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/sl.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/sl.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/sr-latn.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/sr-latn.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/sr.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/sr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/css/style.css" afterPath="$PROJECT_DIR$/web/css/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/styles.js" afterPath="$PROJECT_DIR$/web/ckeditor/styles.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/sv.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/sv.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/tabindex.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/tabindex.html" />
@@ -128,7 +127,7 @@
     </list>
     <ignored path="blumenschule.local.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1369139521025" ignored="false" />
+    <file path="/Dummy.txt" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1369208605369" ignored="false" />
     <file path="/Quickbutton.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363344488241" ignored="false" />
     <file path="/QuickbuttonRepository.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363344502898" ignored="false" />
     <file path="/a.dummy" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1367578980153" ignored="false" />
@@ -277,16 +276,34 @@
       <file leaf-file-name="index.html.twig" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Resources/views/Default/index.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="168" column="73" selection-start="7592" selection-end="7592" vertical-scroll-proportion="-6.0416665">
+            <state line="186" column="0" selection-start="8773" selection-end="8773" vertical-scroll-proportion="-17.291666">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="checkout.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="style.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/css/style.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="185" column="0" selection-start="2631" selection-end="2631" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="config.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/ckeditor/config.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="29" column="22" selection-start="997" selection-end="997" vertical-scroll-proportion="0.3873979">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="checkout.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/js/checkout.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="145" column="0" selection-start="5173" selection-end="5173" vertical-scroll-proportion="0.6431818">
+            <state line="145" column="0" selection-start="5173" selection-end="5173" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -329,8 +346,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Entity/checkout.php" />
-        <option value="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Command/CashboxCommand.php" />
         <option value="$PROJECT_DIR$/src/Acme/BSOrderBundle/Command/OrderCommand.php" />
         <option value="$PROJECT_DIR$/web/js/product.js" />
         <option value="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Controller/cashboxController.php" />
@@ -345,6 +360,8 @@
         <option value="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Resources/views/Default/index.html.twig" />
         <option value="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Resources/views/Default/receipt.html.twig" />
         <option value="$PROJECT_DIR$/web/js/checkout.js" />
+        <option value="$PROJECT_DIR$/web/css/style.css" />
+        <option value="$PROJECT_DIR$/web/ckeditor/config.js" />
       </list>
     </option>
   </component>
@@ -449,7 +466,25 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blumenschule.local" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blumenschule.local" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ckeditor" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1287,7 +1322,11 @@
       <created>1369139533966</created>
       <updated>1369139533966</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="Kassen Quittungsupdate">
+      <created>1369208614460</created>
+      <updated>1369208614460</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1382,7 +1421,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Etiketten Druck Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Kassen Quittungsupdate" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1396,7 +1435,6 @@
     <option name="UPDATE_FILTER_BY_SCOPE" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Pick und Pack listen Debug" />
     <MESSAGE value="Sammelpack Fix" />
     <MESSAGE value="Planzenetikett" />
     <MESSAGE value="Verbesserung Pick und Packliste" />
@@ -1421,6 +1459,7 @@
     <MESSAGE value="Etiketten DinA6" />
     <MESSAGE value="Kassen Logo Update" />
     <MESSAGE value="Etiketten Druck Update" />
+    <MESSAGE value="Kassen Quittungsupdate" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1498,39 +1537,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Command/CashboxCommand.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="95" column="43" selection-start="3471" selection-end="3471" vertical-scroll-proportion="0.3243243">
-          <folding>
-            <element signature="e#49#95#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/print.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="100" selection-start="818" selection-end="818" vertical-scroll-proportion="0.5236486" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/js/cashbox.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Entity/checkoutItem.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Entity/checkoutItemRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="54" selection-start="1657" selection-end="1657" vertical-scroll-proportion="-27.625">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Controller/CheckoutController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="137" column="0" selection-start="4684" selection-end="4684" vertical-scroll-proportion="0.51752335">
@@ -1590,13 +1596,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Resources/views/Default/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="168" column="73" selection-start="7592" selection-end="7592" vertical-scroll-proportion="-6.0416665">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Resources/views/Default/receipt.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state line="72" column="25" selection-start="1498" selection-end="1498" vertical-scroll-proportion="-22.875">
@@ -1606,7 +1605,51 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/js/checkout.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="145" column="0" selection-start="5173" selection-end="5173" vertical-scroll-proportion="0.6431818">
+        <state line="145" column="0" selection-start="5173" selection-end="5173" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/ckeditor/styles.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/ckeditor/contents.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Resources/views/Default/index.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="186" column="0" selection-start="8773" selection-end="8773" vertical-scroll-proportion="-17.291666">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/ckeditor/ckeditor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="185" column="0" selection-start="2631" selection-end="2631" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/ckeditor/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="22" selection-start="997" selection-end="997" vertical-scroll-proportion="0.3873979">
           <folding />
         </state>
       </provider>
