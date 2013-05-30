@@ -595,10 +595,11 @@ class ProductController extends Controller
             $html .='<span style="font-size:24pt;font-weight: bold;"> '.$entity['name'].'</span>';
             $html .= '<h2>'.$entity['name2'].'</h2>';
             $html .= '</td></tr>';
-            $html .= '<tr><td colspan="2" >';
-            $html .= $entity['description'];
+            $html .= '<tr><td colspan="2"><div style="height:150px;overflow:hidden;">';
+            $html .= substr($entity['description'],0,450);
+            //$html .= $entity['description'];
 
-            $html .= '</td></tr></table>';
+            $html .= '</div></td></tr></table>';
             //TCPDF::writeHTMLCell	(w,h,x,y,html = '',border = 0,ln = 0,fill = false,reseth = true,align = '',autopadding = true )
             $w = 140;
             $h = 90;
