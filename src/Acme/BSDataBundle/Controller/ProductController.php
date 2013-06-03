@@ -279,7 +279,7 @@ class ProductController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('product_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('BSData_product_edit', array('id' => $id)));
         }
 
         return array(
@@ -526,7 +526,7 @@ class ProductController extends Controller
         $pdf->setCellMargins(15, 5, 1, 1);
 
         $pdf->AddPage('L');
-        //Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=0, $link='', $stretch=0, $ignore_min_height=false, $calign='T', $valign='M')
+
         $style = array(
         'position' => '',
                 'align' => 'L',
@@ -561,68 +561,55 @@ class ProductController extends Controller
 
 
         $index = 0;
-
+        $pos_x = 0;
+        $pos_y = 0;
         foreach($data as $entity){
 
-           /* $pdf->SetFont('helvetica', 'B', 10);
-            //$pdf->Write(1,$entity->getName(),'',false,'L',1);
+            if($index == 1){
+                $pos_x += 150;
+            }
+            if($index == 2){
+                $pos_x = 0;
+                $pos_y += 100;
+            }
+            if($index == 3){
+
+                $pos_x += 150;
+            }
+
+            $pdf->SetFont('helvetica', 'B', 16);
+
+            // Image($file, $x='', $y='', $w=0, $h=0, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false)
+            if(strlen($entity['picurl'])>5) $pdf->Image($entity['picurl'], $x= $pos_x +5 , $y=$pos_y+5, $w=40, $h=40, $type='', $link='', $align='', $resize=true, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false);
+             //Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=0, $link='', $stretch=0, $ignore_min_height=false, $calign='T', $valign='M')
             //$pdf->Cell(2, 6, $entity->getName(),1,1);
-            $pdf->Text(0, 0, $entity['name'],false,false,true,0,1);
-            $pdf->SetFont('helvetica', 'B', 8);
+
+            //$pdf->MultiCell(55, 5,  $entity['name'] , 1, 'L', 1, 0, '', '', true);
+            $pdf->Text($pos_x +30, $pos_y, $entity['name'],false,false,true,0,1,"L");
+            $pdf->SetFont('helvetica', 'B', 10);
             //$pdf->Cell(2, 6, $entity->getName2(),1,1);
             //$pdf->Write(1,$entity->getName(),'',false,'L',1);
-            $pdf->Text(32, 5, $entity['name2'],false,false,true,0,1);
+
+            $pdf->Text($pos_x +30, $pos_y + 5, ''.$entity['name2'],false,false,true,0,1,"L");
 
             //( 	code,	 	type,		x = '', 	y = '',	w = '',	h = '',xres = '',style = '',align = '')
-            $pdf->SetFont('helvetica', '', 8);
 
+            $pdf->Text($pos_x +30, $pos_y + 10, $entity['articlecode'],false,false,true,0,1);
             //$pdf->write1DBarcode( $entity->getArticleNo(), 'C128', 0, 8, 30, 15, 0.4, $style, 'T');
+            $pdf->SetFont('helvetica', '', 10);
 
             $strings = $this->split_words($entity['description']);
             $line = 0;
             foreach($strings as $s){
-                $pdf->Text(32,8 +$line, $s,false,false,true,0,1);
-                $line += 3;
-            }*/
-
-
-
-            $html = "";
-
-            $html .='<table border=0><tr><td style="width:125px;">';
-            if(strlen($entity['picurl'])>5) $html .='<img style="float:left; width: 120px ;max-height: 150px;" src="'.$entity['picurl'] .'">';
-            $html .= '</td><td style=" text-align: right">'.$entity['articlecode'].'<br>';
-            $html .='<span style="font-size:24pt;font-weight: bold;"> '.$entity['name'].'</span>';
-            $html .= '<h2>'.$entity['name2'].'</h2>';
-            $html .= '</td></tr>';
-            $html .= '<tr><td colspan="2"><div style="height:150px;overflow:hidden;">';
-            $html .= substr($entity['description'],0,450);
-            //$html .= $entity['description'];
-
-            $html .= '</div></td></tr></table>';
-            //TCPDF::writeHTMLCell	(w,h,x,y,html = '',border = 0,ln = 0,fill = false,reseth = true,align = '',autopadding = true )
-            $w = 140;
-            $h = 90;
-
-            $html.= '</div>';
-            if($index&1)  {
-                $pdf->writeHTMLCell($w,$h,'' ,'' ,$html,0,1,false,false,'',false);
-            }else{
-                $pdf->writeHTMLCell($w,$h,' ' ,'' ,$html,0,0,false,false,'',false);
+                $pdf->Text($pos_x +30 ,$pos_y + 15 + $line, $s,false,false,true,0,1);
+                $line += 4;
             }
-            if($index == 3) {
-                $pdf->AddPage('L');
-                $index = 0;
-            }else{
-                $index++;
-            }
-
-
+            $index++;
 
 
 
         }
-        $html .= '</body></html>';
+    //    $html .= '</body></html>';
 
 
         //$response = new Response($html);
@@ -684,7 +671,7 @@ class ProductController extends Controller
         $line = 0;
         foreach($strings as $s){
             $pdf->Text(30,8 +$line, $s,false,false,true,0,1);
-            $line += 3;
+            $line += 4;
         }
 
 
@@ -699,17 +686,17 @@ class ProductController extends Controller
 
     function split_words($string, $max = 58)
     {
-        $words = preg_split('/\s/', $string);
+        $words = str_word_count($string, 1);
         $lines = array();
         $line = '';
 
         foreach ($words as $k => $word) {
-            $length = strlen($line . ' ' . $word);
+            $length = strlen($line . ' ' . trim($word));
             if ($length <= $max) {
-                $line .= ' ' . $word;
+                $line .= ' ' . trim($word);
             } else if ($length > $max) {
                 if (!empty($line)) $lines[] = trim($line);
-                $line = $word;
+                $line = trim($word);
             } else {
                 $lines[] = trim($line) . ' ' . $word;
                 $line = '';
