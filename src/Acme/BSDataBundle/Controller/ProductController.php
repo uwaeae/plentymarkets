@@ -686,16 +686,19 @@ class ProductController extends Controller
 
     function split_words($string, $max = 58)
     {
-        $words = str_word_count($string, 1);
+        //$words = str_word_count($string, 1);
+        $words = explode(' ',trim($string));
+
+
         $lines = array();
         $line = '';
 
         foreach ($words as $k => $word) {
-            $length = strlen($line . ' ' . trim($word));
+            $length = strlen($line . ' ' . $word);
             if ($length <= $max) {
                 $line .= ' ' . trim($word);
             } else if ($length > $max) {
-                if (!empty($line)) $lines[] = trim($line);
+                if (!empty($line)) $lines[] = $line;
                 $line = trim($word);
             } else {
                 $lines[] = trim($line) . ' ' . $word;
