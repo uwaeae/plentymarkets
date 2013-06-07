@@ -114,7 +114,7 @@ var runQuery =  function(){
             item = query[0];
             $.post(item.URL,item.DATA,buildtable);
             query.shift();
-            console.log(item);
+            //console.log(item);
         }
         running = false;
         }
@@ -128,8 +128,15 @@ $(document).ready(function(){
 // Quittung Drucken
    $('.bontext').submit(function(event){
         event.preventDefault();
+       for ( instance in CKEDITOR.instances )
+           CKEDITOR.instances[instance].updateElement();
+       var text = $(this).find('textarea').val();
+       if(text.length = 0){
+           console.log(CKEDITOR.instances.editor1.getData());
+           if ( CKEDITOR.instances.editor1.getData() != '' ) text = CKEDITOR.instances.editor1.getData();
+       }
 
-        var text = $(this).find('textarea').val();
+
        text.replace(/\r\n|\r|\n/g,"<br />");
        console.log(text);
         $.post($(this).attr( 'action' ),{bontext:text},function(data) {

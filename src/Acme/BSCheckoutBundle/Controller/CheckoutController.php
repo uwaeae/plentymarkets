@@ -429,6 +429,10 @@ class CheckoutController extends Controller
         $em->persist($currentBasket);
         $em->flush();
 
+        if( $bontext == '' ){
+            $bontext = $currentBasket->getBontext();
+        }
+
         $summary = array(
             'netto' => 0.0,
             'mwst19'=> 0.0,
@@ -452,7 +456,7 @@ class CheckoutController extends Controller
 
         }
 
-        return $this->render('BSCheckoutBundle:Default:receipt.html.twig', array('basket' => $currentBasket, 'summary'=> $summary,'info'=> $cashbox->getBonafter()));
+        return $this->render('BSCheckoutBundle:Default:receipt.html.twig', array('basket' => $currentBasket,'bontext'=>$bontext, 'summary'=> $summary,'info'=> $cashbox->getBonafter()));
 
     }
 
