@@ -953,7 +953,7 @@ class PlentySoapClient extends \SoapClient
         foreach($aoOrders  as $PMOrder){
 
 
-            try{
+           // try{
             $BSOrder =  $OrderRepro->findOneBy(array('OrderID' => $PMOrder->OrderHead->OrderID));
 
             //$aOrder[] =  $this->syncOrderData($AOorder,$oOrder);
@@ -978,7 +978,7 @@ class PlentySoapClient extends \SoapClient
                 $em->flush();
 
                 $orders[] = array('head'=> $OrderHead,'infos'=> $OrderInfo, 'items'=>$OrderItem );
-            }catch (\Exception $e){
+         /*   }catch (\Exception $e){
                 $message = \Swift_Message::newInstance();
                 $message
                     ->setSubject('Error on SyncOrders on  '.$PMOrder->OrderHead->OrderID )
@@ -992,7 +992,7 @@ class PlentySoapClient extends \SoapClient
 
                 return array();
 
-            }
+            }*/
 
 
 
@@ -1023,8 +1023,8 @@ class PlentySoapClient extends \SoapClient
             $order->setOrderType($AOorder->OrderHead->OrderType);
             $order->setMarking1ID($AOorder->OrderHead->Marking1ID);
             $order->setEstimatedTimeOfShipment($AOorder->OrderHead->EstimatedTimeOfShipment);
-            $opm = $em->getRepository('BSDataBundle:PaymentMethods')->find($AOorder->OrderHead->MethodOfPaymentID);
-            $order->setPaymentMethods($opm);
+           // $opm = $em->getRepository('BSDataBundle:PaymentMethods')->find($AOorder->OrderHead->MethodOfPaymentID);
+           // $order->setPaymentMethods($opm);
             $order->setInvoiceNumber($AOorder->OrderHead->InvoiceNumber);
 
 
