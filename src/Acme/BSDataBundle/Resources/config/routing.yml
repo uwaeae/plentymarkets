@@ -116,6 +116,9 @@ BSData_product_sync:
         pattern:  /data/product/sync/{code}
         defaults: { _controller: BSDataBundle:Product:sync }
 
+BSData_product_stock:
+        pattern:  /data/product/{id}/stock
+        defaults: { _controller: BSDataBundle:Product:stock }
 
 
 

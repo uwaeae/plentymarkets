@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+
 use Symfony\Component\HttpFoundation\Response;
 use Acme\BSDataBundle\Entity\Product;
 use Acme\BSDataBundle\Form\ProductType;
@@ -46,9 +47,41 @@ class ProductController extends Controller
 
         // parameters to template
         return compact('pagination');
+    }
+
+
+    public function stockAction($id){
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $entity = $em->getRepository('BSDataBundle:Product')->find($id);
+
+        $form  = $this->createFormBuilder($entity)
+            ->add('Stock','entity',array(
+                'class' => 'BSDataBundle:Stock',
+                'data' => $entity->getStock()
+            ))
+            //->add('id','hidden',array('label'=>'ID','read_only'=>true,'data'=>$id))
+            ->getForm();
+        ;
+        $request = $this->getRequest();
+        if('POST' === $request->getMethod()) {
+            $form->bindRequest($request);
+            if($form->isValid()){
+                $data = $form->getData();
+                $em->persist($data);
+                $em->flush();
+
+             }
+        }
+        return $this->render('BSDataBundle:Product:stock.html.twig', array(
+           'form' => $form->createView(),
+           'entity' => $entity
+        ));
 
 
     }
+
+
 
     /**
      * Search and displays a Product entity.
@@ -71,6 +104,7 @@ class ProductController extends Controller
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),  );
+
     }
 
 
