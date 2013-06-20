@@ -554,7 +554,9 @@ class PlentySoapClient extends \SoapClient
         $oResponse	= null;
         $page = 0;
         // um die Suche einzuschränken
-        // $options['ItemNo'] = "srt%";
+        //$options['ItemNo'] = "srt%";
+      //  $options['ItemID'] = "4874";
+
         $options['LastUpdate'] = $lastUpdate ;
 
         $options['LastInserted'] =null ;
@@ -616,7 +618,7 @@ class PlentySoapClient extends \SoapClient
 
         $this->syncArticle( $products,$output);
 
-        return true;
+        return $products;
     }
 
     private function syncArticle($Items,$output = null){
@@ -630,12 +632,13 @@ class PlentySoapClient extends \SoapClient
 
         foreach($Items as $item){
             try{
-
+            $newProduct = false;
            // $id = explode("-",  $item->SKU);
             $product = $ReproProduct->findOneBy(array('article_id' => $item->ItemID));
             //if($output) $output->writeln('ID: '.$item->ItemID);
             if(!$product) {
                 $product = new Product();
+                $newProduct = true;
             }
 
            // $product->PMSoapProduct($item );
@@ -667,7 +670,15 @@ class PlentySoapClient extends \SoapClient
             $product->setEAN($item->EAN1);
             $product->setLastupdate( $item->LastUpdate);
             // $product->setShortDescription($item->Texts->ShortDescription);
+
+
             //$product->setStockground();
+            if($newProduct){
+                $em->persist($product);
+                $em->flush();
+            }
+
+
             $SKU = $product->getArticleId()."-".$product->getPriceID()."-0";
             $bundleItems = $this->doGetItemBundles(array('BundleSKU'=>$SKU));
             if(count($bundleItems) > 0){
@@ -721,20 +732,20 @@ class PlentySoapClient extends \SoapClient
                // $em->flush();
             }
 
-            $em->persist($product);
-            $em->flush();
+                $em->persist($product);
+                $em->flush();
             $products[] = $product;
             $this->doGetItemsImages($product);
 
             }catch (\Exception $e){
                 if($output) {
                     $output->writeln('Fehler beim Anlegen von '.$item->ItemID);
-                    //$output->writeln($e);
+                    $output->writeln($e);
                 }
 
             }
             $outputstring = sprintf("%10s | %6s | %10s | %30s",date("d m y",$product->getLastupdate()),$product->getArticleId(),$product->getArticleNo(),$product->getName());
-            if($output) $output->writeln($outputstring);
+            //if($output) $output->writeln($outputstring);
 
         }
 

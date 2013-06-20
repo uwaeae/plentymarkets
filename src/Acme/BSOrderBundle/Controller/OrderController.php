@@ -2,6 +2,7 @@
 
 namespace Acme\BSOrderBundle\Controller;
 
+use Acme\BSDataBundle\Entity\OrdersItem;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -928,17 +929,32 @@ class OrderController extends Controller
         $repository = $this->getDoctrine()->getRepository('BSDataBundle:Product');
         $product = $repository->findOneBy(array('article_id' => $ArtileID[0]));
         if(!$product) {
-            //$product = new Product();
+
             $request = $oPlentySoapClient->doGetItemsBaseByOptions(array('ItemID'=>$ArtileID[0]));
-            $product = $request[0];
+           if(count($request) > 0){
+               $product = $request[0];
+           }else{
+               //$OrderItem = new OrdersItem();
+               /*$product = new Product();
+               $product->setName($OrderItem->getItemText());
+               $product->setArticleNo($OrderItem->getArticleCode());
+               $product->setArticleId($OrderItem->getArticleID());
+               $product->setPrice($OrderItem->getPrice());
+               $product->setSKU($OrderItem->getSKU());
+               $product->setVAT($OrderItem->getVAT());
+               $product->setAttributeVaueSetID(0);
+               $em->persist($product);
+               $em->flush();*/
+           }
+
+
            /* if(isset($PMItem->ItemID)) {
                 $product =  $repository->PMSoapProduct($product,$PMItem );
             }
             else{
                 $product = $repository->newPMSoapOrderProduct($product,$OrderItem);
             }
-            $em->persist($product);
-            $em->flush();*/
+           */
 
         }
 
