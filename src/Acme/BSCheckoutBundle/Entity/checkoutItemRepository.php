@@ -14,7 +14,7 @@ class checkoutItemRepository extends EntityRepository
 {
 
 
-    public function addItem($basket,$code,$price = null,$quantity = 1,$name = null){
+    public function addItem($basket,$code,$price = 0,$quantity = 1,$name = null){
 
         $em = $this->getEntityManager();
         /*
@@ -35,10 +35,28 @@ class checkoutItemRepository extends EntityRepository
             */
             $qb = $em->createQueryBuilder();
             $qb->add('select', 'p')
-                ->add('from', 'BSDataBundle:Product p')
+                ->add('from', 'BSDataBundle:Product p');
+
+
+
+
+        if(strlen($code) == 13 ){
+            $qb
                 ->add('where',
-                $qb->expr()->like('p.article_no', '?1')
-            )->setParameter('1', $code.'%');
+                    $qb->expr()->like('p.EAN', '?1')
+                )->setParameter('1', $code);
+        }elseif(strlen($code) === 8 && is_numeric($code) ){
+            $artikel_id = substr($code,0,7);
+            $qb
+                ->add('where',
+                    $qb->expr()->like('p.article_id', '?1')
+                )->setParameter('1', intval($artikel_id));
+        }else{
+            $qb
+                ->add('where',
+                    $qb->expr()->like('p.article_no', '?1')
+                )->setParameter('1', $code.'%');
+        }
 
             try{
                 $product =  $qb->getQuery()->setMaxResults(1)->getSingleResult();
@@ -52,7 +70,10 @@ class checkoutItemRepository extends EntityRepository
                 $co_item->setArticleId($product->getArticleId());
                 $co_item->setCheckout($basket);
                 $co_item->setDescription(is_null($name)  ? $product->getName().' '.$product->getName2():$name);
-                $co_item->setPrice(is_null($price) || $price == 0 ? $product->getPrice6() : $price);
+                //if(!$price)  $co_item->setPrice($product->getPrice6());
+                //else $co_item->setPrice($price);
+                //$co_item->setPrice(is_null($price) || $price == 0 ? $product->getPrice6() : $price);
+                $co_item->setPrice($price);
                 $co_item->setVAT($product->getVAT());
                 $co_item->setQuantity($quantity);
                 $em->persist($co_item);

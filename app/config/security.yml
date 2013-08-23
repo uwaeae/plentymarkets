@@ -21,24 +21,24 @@ security:
             #pattern:  ^/
             #security: false
 
-        login_firewall:
-                pattern:    ^/login$
-                anonymous:  ~
+        #login_firewall:
+        #        pattern:    ^/login$
+        #        anonymous:  ~
 
         secured_area:
             pattern:    ^/
-            form_login:
-                check_path: /login_check
-                login_path: /login
-            logout:
-                path:   /logout
-                target: /
-            #anonymous: ~
+        #    form_login:
+        #        check_path: /login_check
+        #        login_path: /login
+        #    logout:
+        #        path:   /logout
+        #        target: /
+            anonymous: ~
             #http_basic:
             #    realm: "Secured Demo Area"
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/data, roles: ROLE_ADMIN }
+        #- { path: ^/data, roles: ROLE_ADMIN }
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         #- { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }

@@ -120,7 +120,7 @@ class CheckoutController extends Controller
         $code = $this->getRequest()->request->get('code');
         $price = $this->getRequest()->request->get('price');
         $quantity = $this->getRequest()->request->get('quantity');
-        $name = $this->getRequest()->request->get('name');
+        $name = trim($this->getRequest()->request->get('name'));
         $price = floatval(str_replace(',','.',$price));
 
         $em = $this->getDoctrine()->getEntityManager();
@@ -133,7 +133,7 @@ class CheckoutController extends Controller
         if(is_float($price) && $price > 0 ){
             $em->getRepository('BSCheckoutBundle:checkoutItem')->addItem($currentBasket,$code,$price,$quantity,$name);
         }else{
-            $em->getRepository('BSCheckoutBundle:checkoutItem')->addItem($currentBasket,$code,null,$quantity,$name);
+            $em->getRepository('BSCheckoutBundle:checkoutItem')->addItem($currentBasket,$code,0,$quantity,$name);
         }
 
 
@@ -267,13 +267,17 @@ class CheckoutController extends Controller
         $OrderHead->ShippingProfileID = 6;
 
         if(!empty($form['customerno'])){
-            $OrderHead->CustomerID = $form['customerno'];
+            $customerNO =     $form['customerno'];
         }
-        //else todo Create New Customer
+        else{
+            $customerNO =    $oPlentySoapClient->doAddCustomers($form);
+        }
+        $OrderHead->CustomerID = $customerNO;
+        //todo Create New Customer
 
 
         $OrderDeliveryAddress = new PMDeliveryAddress();
-        $OrderDeliveryAddress->CustomerID = $form['customerno'];
+        $OrderDeliveryAddress->CustomerID = $customerNO;
         $OrderDeliveryAddress->FirstName = $form['firstname'];
         $OrderDeliveryAddress->Surname = $form['lastname'];
         $OrderDeliveryAddress->Street = $form['street'];

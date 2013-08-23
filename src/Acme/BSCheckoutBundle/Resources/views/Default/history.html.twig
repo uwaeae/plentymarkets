@@ -13,7 +13,7 @@
      <link rel="stylesheet" href="/css/yaml/navigation/hlist.css" type="text/css"/>
 
      <link rel="stylesheet" href="/css/yaml/forms/gray-theme.css" type="text/css"/>
-     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css"/>
      <link rel="stylesheet" href="/css/style.css" type="text/css"/>
      <link rel="stylesheet" href="/css/history.css" type="text/css"/>
 
@@ -43,111 +43,123 @@
 
     <div class="ym-wrapper">
 
+        <div class="ym-grid">
+            <div class="ym-g960-6 ym-gl">
 
-            <div class="ym-cbox ">
-                <!--<form action="{{ path('BSCashbox_close', { 'id': cashbox_id,}) }}" method="post">
+                <div class="ym-gl ">
+                    <!--<form action="{{ path('BSCashbox_close', { 'id': cashbox_id,}) }}" method="post">
                     <button class="ym-button" >Kassen Abschluss</button>
                 </form>
                 -->
 
-                <ul class="actions">
-                    <li>
-                        Date: <div id="datepicker" data-url="{{ path('BSCheckout_history', { 'cashbox_id': cashbox_id , 'date': "now"  }) }}"></div>
-                    </li>
-                    <li>
-                        <a  id="report" class="ym-button" href="{{ path('checkout_cashbox_print',{'id' : cashbox_id, 'date': "now"  }) }}">
-                            Kassen Bericht
-                        </a>
-                    </li>
-                </ul>
+                    <ul class="actions">
+                        <li>
+                            <div id="datepicker"
+                                 data-url="{{ path('BSCheckout_history', { 'cashbox_id': cashbox_id , 'date': "now"  }) }}"></div>
+                        </li>
+                        <li>
+                            <a id="report" class="ym-button"
+                               href="{{ path('checkout_cashbox_print',{'id' : cashbox_id, 'date': "now"  }) }}">
+                                Kassen Bericht
+                            </a>
+                        </li>
+                    </ul>
 
+
+                </div>
 
 
             </div>
 
 
-            <div id="result" class="results ym-cbox">
-                <table >
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Datum/Uhrzeit</th>
-                        <th>Zahlungsart</th>
-                        <th>Summe</th>
-                        <th>Actions</th>
-                        <th>Artikel</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for entity in Baskets %}
+            <div class="ym-g960-9 ym-gl">
+
+                <div id="result" class="results ym-gbox">
+                    <table class="bordertable">
+                        <thead>
                         <tr>
-                            <td>{{ entity.id }}</td>
-                            <td>{{ entity.buydate|date("d.m.Y H:i:s ") }}</td>
-                            <td>{{ entity.payment }}</td>
-                            <td>{{ entity.summary|number_format(2, '.', ',')  }} &euro;</td>
+                            <th>ID</th>
+                            <th>Datum/Uhrzeit</th>
 
-                            <td>
-                                <ul>
-                                    <li>
-                                        <a class="bsbutton bon" href="{{ path('BSCheckout_receipt', { 'cashbox_id': cashbox_id,'id':entity.id}) }}" target="_blank">Bon</a>
-                                    </li>
-                                    <li>
-                                        <a class="article_button bsbutton" href="#">Artikle anzeigen</a>
-                                    </li>
-
-                                </ul>
-                            </td>
-
-                            <td>
-
-                                <div class="article_items">
-                                    <table class="">
-
-                                        <thead>
-                                        <tr>
-                                            <td>ID</td>
-                                            <td>Menge</td>
-                                            <td>Beschreibung</td>
-                                            <td>MwSt</td>
-                                            <td>Einzelpreis</td>
-                                            <td>Summe</td>
-                                        </tr>
-                                        </thead>
-                                        <tbody class="co_items">
-                                        {% for item in entity.checkoutItems %}
-                                            <tr data-sum="{{ (item.quantity * item.price) }}">
-                                                <td>{{ loop.index }}</td>
-                                                <td>{{ item.quantity }}</td>
-                                                <td>{{ item.description }}</td>
-                                                <td>{{ item.VAT }}%</td>
-                                                <td>
-                                                    {{ item.price|number_format(2, '.', ',')  }}"
-                                                </td>
-                                                <!-- <td></td> -->
-                                                <td>
-                                                    {{ (item.quantity * item.price)|number_format(2, '.', ',')  }}  &euro;
-                                                </td>
-
-                                            </tr>
-
-
-                                        {% endfor %}
-                                        </tbody>
-
-
-                                    </table>
-                                </div>
-                            </td>
+                            <th>Summe</th>
+                            <th>Actions</th>
+                            <th>Artikel</th>
                         </tr>
-                    {% endfor %}
+                        </thead>
+                        <tbody>
+                        {% for entity in Baskets %}
+                            <tr>
+                                <td>{{ entity.id }}</td>
+                                <td>{{ entity.buydate|date("d.m.Y H:i:s ") }}</td>
+
+                                <td>{{ entity.summary|number_format(2, '.', ',') }} &euro;</td>
+
+                                <td>
+                                    <ul>
+                                        <li>
+                                            <a class="ym-button ym-xsmall bon"
+                                               href="{{ path('BSCheckout_receipt', { 'cashbox_id': cashbox_id,'id':entity.id}) }}"
+                                               target="_blank">Bon</a>
+                                        </li>
+                                       <!--
+                                        <li>
+                                            <a class="article_button ym-xsmall ym-button" href="#">Artikle anzeigen</a>
+                                        </li>
+                                        -->
+                                    </ul>
+                                </td>
+
+                                <td>
+
+                                    <div class="article_items">
+                                        <table class="">
+
+                                            <thead>
+                                            <tr>
+                                                <td>ID</td>
+                                                <td>Menge</td>
+                                                <td>Beschreibung</td>
+                                                <td>MwSt</td>
+                                                <td>Einzelpreis</td>
+                                                <td>Summe</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="co_items">
+                                            {% for item in entity.checkoutItems %}
+                                                <tr data-sum="{{ (item.quantity * item.price) }}">
+                                                    <td>{{ loop.index }}</td>
+                                                    <td>{{ item.quantity }}</td>
+                                                    <td>{{ item.description }}</td>
+                                                    <td>{{ item.VAT }}%</td>
+                                                    <td>
+                                                        {{ item.price|number_format(2, '.', ',') }}"
+                                                    </td>
+                                                    <!-- <td></td> -->
+                                                    <td>
+                                                        {{ (item.quantity * item.price)|number_format(2, '.', ',') }}  &euro;
+                                                    </td>
+
+                                                </tr>
 
 
-                    </tbody>
-                </table>
+                                            {% endfor %}
+                                            </tbody>
 
 
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
     </div>
-    </div>
-
 
 {% endblock %}

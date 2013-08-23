@@ -23,7 +23,7 @@ $(document).ready(function(){
 });
 
 function init(){
-    $('.article_items').hide();
+    //$('.article_items').hide();
 
     $('.article_button').click(function(){
         $('.article_button').show();

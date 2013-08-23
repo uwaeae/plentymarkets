@@ -404,7 +404,9 @@ class cashboxController extends Controller
 
 
         $pdf->SetFont('helvetica', 'B', 12);
-        $pdf->Cell(40,15 , "Umsatz nach Zahlungsart",0,1);
+
+        //$pdf->Cell(40,15 , "Umsatz nach Zahlungsart",0,1);
+        //$pdf->Cell(40,15 , "Umsatz",0,1);
 
 
         $paymentMethods = array(
@@ -418,7 +420,7 @@ class cashboxController extends Controller
 
 
             $pdf->SetFont('helvetica', '', 10);
-            $pdf->cell(20,3,'Mwst Satz','', 0, 'L');
+            $pdf->cell(20,3,'Mwst','', 0, 'L');
             $pdf->cell(30,3,'Netto','', 0, 'L');
             $pdf->cell(30,3,'Steuer','', 0, 'L');
             $pdf->cell(30,3,'Brutto','', 0, 'L');
