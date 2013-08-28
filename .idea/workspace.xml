@@ -1,144 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" name="Default" comment="Daily Sync Update">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/PMCustomer.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/CHANGES.md" afterPath="$PROJECT_DIR$/web/ckeditor/CHANGES.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Controller/CheckoutController.php" afterPath="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Controller/CheckoutController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/LICENSE.md" afterPath="$PROJECT_DIR$/web/ckeditor/LICENSE.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/plugins/scayt/LICENSE.md" afterPath="$PROJECT_DIR$/web/ckeditor/plugins/scayt/LICENSE.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/plugins/wsc/LICENSE.md" afterPath="$PROJECT_DIR$/web/ckeditor/plugins/wsc/LICENSE.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/PlentySoapClient.php" afterPath="$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/PlentySoapClient.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/plugins/scayt/README.md" afterPath="$PROJECT_DIR$/web/ckeditor/plugins/scayt/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/plugins/wsc/README.md" afterPath="$PROJECT_DIR$/web/ckeditor/plugins/wsc/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/plugins/a11yhelp/dialogs/lang/_translationstatus.txt" afterPath="$PROJECT_DIR$/web/ckeditor/plugins/a11yhelp/dialogs/lang/_translationstatus.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/plugins/specialchar/dialogs/lang/_translationstatus.txt" afterPath="$PROJECT_DIR$/web/ckeditor/plugins/specialchar/dialogs/lang/_translationstatus.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/af.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/af.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/ajax.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/ajax.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/api.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/api.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/appendto.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/appendto.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/ar.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/ar.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/bg.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/bg.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/bn.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/bn.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/bs.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/bs.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/build-config.js" afterPath="$PROJECT_DIR$/web/ckeditor/build-config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/ca.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/ca.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Controller/cashboxController.php" afterPath="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Controller/cashboxController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/js/checkout.js" afterPath="$PROJECT_DIR$/web/js/checkout.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Entity/checkoutItemRepository.php" afterPath="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Entity/checkoutItemRepository.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/js/checkouthistory.js" afterPath="$PROJECT_DIR$/web/js/checkouthistory.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/plugins/wsc/dialogs/ciframe.html" afterPath="$PROJECT_DIR$/web/ckeditor/plugins/wsc/dialogs/ciframe.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/contents.css" afterPath="$PROJECT_DIR$/web/ckeditor/contents.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/cs.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/cs.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/cy.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/cy.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/da.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/da.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/datafiltering.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/datafiltering.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/de.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/de.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/skins/moono/dialog.css" afterPath="$PROJECT_DIR$/web/ckeditor/skins/moono/dialog.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/plugins/dialog/dialog.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/plugins/dialog/dialog.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/skins/moono/dialog_ie.css" afterPath="$PROJECT_DIR$/web/ckeditor/skins/moono/dialog_ie.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/skins/moono/dialog_ie7.css" afterPath="$PROJECT_DIR$/web/ckeditor/skins/moono/dialog_ie7.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/skins/moono/dialog_ie8.css" afterPath="$PROJECT_DIR$/web/ckeditor/skins/moono/dialog_ie8.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/skins/moono/dialog_iequirks.css" afterPath="$PROJECT_DIR$/web/ckeditor/skins/moono/dialog_iequirks.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/skins/moono/dialog_opera.css" afterPath="$PROJECT_DIR$/web/ckeditor/skins/moono/dialog_opera.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/divreplace.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/divreplace.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/skins/moono/editor.css" afterPath="$PROJECT_DIR$/web/ckeditor/skins/moono/editor.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/skins/moono/editor_gecko.css" afterPath="$PROJECT_DIR$/web/ckeditor/skins/moono/editor_gecko.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/skins/moono/editor_ie.css" afterPath="$PROJECT_DIR$/web/ckeditor/skins/moono/editor_ie.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/skins/moono/editor_ie7.css" afterPath="$PROJECT_DIR$/web/ckeditor/skins/moono/editor_ie7.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/skins/moono/editor_ie8.css" afterPath="$PROJECT_DIR$/web/ckeditor/skins/moono/editor_ie8.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/skins/moono/editor_iequirks.css" afterPath="$PROJECT_DIR$/web/ckeditor/skins/moono/editor_iequirks.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/el.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/el.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/en-au.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/en-au.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/en-ca.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/en-ca.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/en-gb.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/en-gb.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/en.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/en.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/plugins/enterkey/enterkey.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/plugins/enterkey/enterkey.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/eo.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/eo.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/es.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/es.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/et.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/et.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/eu.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/eu.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/fa.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/fa.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/fi.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/fi.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/fo.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/fo.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/fr-ca.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/fr-ca.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/fr.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/fr.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/frameworkRootSettings.xml" afterPath="$PROJECT_DIR$/.idea/frameworkRootSettings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/plugins/wysiwygarea/fullpage.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/plugins/wysiwygarea/fullpage.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/gl.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/gl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/gu.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/gu.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/he.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/he.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/hi.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/hi.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/css/history.css" afterPath="$PROJECT_DIR$/web/css/history.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Resources/views/Default/history.html.twig" afterPath="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Resources/views/Default/history.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/hr.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/hr.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/hu.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/hu.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/index.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/inlineall.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/inlineall.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/inlinebycode.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/inlinebycode.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/is.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/is.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/it.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/it.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/ja.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/ja.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/ka.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/ka.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/km.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/km.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/ko.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/ko.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/ku.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/ku.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/lt.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/lt.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/lv.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/lv.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/plugins/magicline/magicline.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/plugins/magicline/magicline.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/mk.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/mk.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/mn.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/mn.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/ms.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/ms.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/plugins/dialog/assets/my_dialog.js" afterPath="$PROJECT_DIR$/web/ckeditor/samples/plugins/dialog/assets/my_dialog.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/nb.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/nb.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/nl.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/nl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/no.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/no.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/plugins/htmlwriter/outputforflash.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/plugins/htmlwriter/outputforflash.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/plugins/htmlwriter/outputhtml.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/plugins/htmlwriter/outputhtml.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/assets/outputxhtml/outputxhtml.css" afterPath="$PROJECT_DIR$/web/ckeditor/samples/assets/outputxhtml/outputxhtml.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/pl.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/pl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/assets/posteddata.php" afterPath="$PROJECT_DIR$/web/ckeditor/samples/assets/posteddata.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Resources/views/cashbox/print.html.twig" afterPath="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Resources/views/cashbox/print.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/pt-br.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/pt-br.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/pt.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/pt.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/skins/moono/readme.md" afterPath="$PROJECT_DIR$/web/ckeditor/skins/moono/readme.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/readonly.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/readonly.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/replacebyclass.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/replacebyclass.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/replacebycode.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/replacebycode.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/ro.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/ro.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/ru.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/ru.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/sample.css" afterPath="$PROJECT_DIR$/web/ckeditor/samples/sample.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/assets/sample.css" afterPath="$PROJECT_DIR$/web/ckeditor/samples/assets/sample.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/sample.js" afterPath="$PROJECT_DIR$/web/ckeditor/samples/sample.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/sample_posteddata.php" afterPath="$PROJECT_DIR$/web/ckeditor/samples/sample_posteddata.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/security.yml" afterPath="$PROJECT_DIR$/app/config/security.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/sk.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/sk.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/sl.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/sl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/sr-latn.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/sr-latn.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/sr.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/sr.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/css/style.css" afterPath="$PROJECT_DIR$/web/css/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/styles.js" afterPath="$PROJECT_DIR$/web/ckeditor/styles.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/sv.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/sv.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/tabindex.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/tabindex.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/th.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/th.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/plugins/wsc/dialogs/tmpFrameset.html" afterPath="$PROJECT_DIR$/web/ckeditor/plugins/wsc/dialogs/tmpFrameset.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/plugins/scayt/dialogs/toolbar.css" afterPath="$PROJECT_DIR$/web/ckeditor/plugins/scayt/dialogs/toolbar.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/plugins/toolbar/toolbar.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/plugins/toolbar/toolbar.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/tr.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/tr.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/ug.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/ug.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/uicolor.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/uicolor.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/uilanguages.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/uilanguages.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/uk.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/uk.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/vi.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/vi.js" />
+    <list default="true" id="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/fonts/glyphicons-halflings-regular.eot" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/fonts/glyphicons-halflings-regular.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/fonts/glyphicons-halflings-regular.woff" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Resources/views/baseBS.html.twig" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/bootstrap-theme.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/bootstrap-theme.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/bootstrap.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/bootstrap.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/bootstrap.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/bootstrap.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/fonts/glyphicons-halflings-regular.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/styleBS.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Acme/BSDataBundle/Controller/ProductController.php" afterPath="$PROJECT_DIR$/src/Acme/BSDataBundle/Controller/ProductController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/lable.html.twig" afterPath="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/lable.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/js/lable2.js" afterPath="$PROJECT_DIR$/web/js/lable2.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/config/routing.yml" afterPath="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/config/routing.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/plugins/wsc/dialogs/wsc.css" afterPath="$PROJECT_DIR$/web/ckeditor/plugins/wsc/dialogs/wsc.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/samples/xhtmlstyle.html" afterPath="$PROJECT_DIR$/web/ckeditor/samples/xhtmlstyle.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/zh-cn.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/zh-cn.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/ckeditor/lang/zh.js" afterPath="$PROJECT_DIR$/web/ckeditor/lang/zh.js" />
     </list>
     <ignored path="blumenschule.local.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1377163504243" ignored="false" />
+    <file path="/Dummy.txt" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1377679784738" ignored="false" />
     <file path="/Quickbutton.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363344488241" ignored="false" />
     <file path="/QuickbuttonRepository.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363344502898" ignored="false" />
     <file path="/a.dummy" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1367578980153" ignored="false" />
@@ -173,7 +57,7 @@
     <file path="/PMDeliveryAdress.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363963543317" ignored="false" />
     <file path="/RequestAddOrdersItems.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1363967862335" ignored="false" />
     <file path="/parameters.ini" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1364319463873" ignored="false" />
-    <file path="/ProductController.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1370875913380" ignored="false" />
+    <file path="/ProductController.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1377633319870" ignored="false" />
     <file path="/product.js" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1370876486732" ignored="false" />
     <file path="/email.html.twig" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1364320557669" ignored="false" />
     <file path="/OrderController.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1371630195759" ignored="false" />
@@ -195,8 +79,8 @@
     <file path="/orders.html.twig" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1366653436048" ignored="false" />
     <file path="/PMOrderIDs.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1366278484431" ignored="false" />
     <file path="/RequestGetOrdersInvoceDocument.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1366280638663" ignored="false" />
-    <file path="/lable.html.twig" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1368698127102" ignored="false" />
-    <file path="/lable2.js" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1369139404470" ignored="false" />
+    <file path="/lable.html.twig" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1377673665951" ignored="false" />
+    <file path="/lable2.js" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1377673902513" ignored="false" />
     <file path="/PlentySoapObject_Integer.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1366700227998" ignored="false" />
     <file path="/Orders.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1366707944607" ignored="false" />
     <file path="/OrderPDF.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1366788280322" ignored="false" />
@@ -245,6 +129,8 @@
     <file path="$PROJECT_DIR$/../workbook2/app/cache/prod/classes.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1375952710124" ignored="false" />
     <file path="$PROJECT_DIR$/../workbook2/vendor/symfony/symfony/src/Symfony/Component/OptionsResolver/OptionsResolverInterface.php" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1375952710124" ignored="false" />
     <file path="/security.yml" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1377163888934" ignored="false" />
+    <file path="/baseBS.html.twig" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1377608043782" ignored="false" />
+    <file path="/styleBS.css" changelist="bd2c8833-e2ca-42f8-bb29-c5c1ecea675b" time="1377672629053" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -271,88 +157,67 @@
       <file leaf-file-name="ProductController.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Controller/ProductController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="481" column="0" selection-start="13481" selection-end="13481" vertical-scroll-proportion="0.0">
+            <state line="439" column="27" selection-start="12442" selection-end="12442" vertical-scroll-proportion="-14.375">
+              <folding>
+                <element signature="e#48#105#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Product.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Entity/Product.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="118" column="36" selection-start="2211" selection-end="2222" vertical-scroll-proportion="-10.625">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PMCustomer.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/PMCustomer.php">
+      <file leaf-file-name="routing.yml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/config/routing.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="214" column="51" selection-start="2423" selection-end="2423" vertical-scroll-proportion="0.0">
+            <state line="95" column="37" selection-start="2810" selection-end="2810" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EntityManager.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vendor/doctrine/lib/Doctrine/ORM/EntityManager.php">
+      <file leaf-file-name="lable.html.twig" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/lable.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="584" column="0" selection-start="18388" selection-end="18388" vertical-scroll-proportion="0.0">
+            <state line="143" column="119" selection-start="5066" selection-end="5175" vertical-scroll-proportion="-16.375">
+              <folding>
+                <element signature="e#3543#3574#0" expanded="true" />
+                <element signature="e#3968#4002#0" expanded="true" />
+                <element signature="e#4264#4283#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="lable2.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/js/lable2.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="46" column="0" selection-start="1624" selection-end="1624" vertical-scroll-proportion="0.7940161">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PlentySoapClient.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/PlentySoapClient.php">
+      <file leaf-file-name="baseBS.html.twig" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Resources/views/baseBS.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1213" column="46" selection-start="43960" selection-end="43960" vertical-scroll-proportion="0.0">
+            <state line="11" column="18" selection-start="494" selection-end="494" vertical-scroll-proportion="-6.875">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cashbox.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/js/cashbox.js">
+      <file leaf-file-name="styleBS.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/css/styleBS.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="checkout.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/js/checkout.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="180" column="62" selection-start="5968" selection-end="5968" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="security.yml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/config/security.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="0" selection-start="1333" selection-end="1333" vertical-scroll-proportion="0.7683353">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="login.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/css/login.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="0" selection-start="211" selection-end="211" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/css/main.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="style.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/css/style.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="317" column="0" selection-start="4854" selection-end="4854" vertical-scroll-proportion="0.0">
+            <state line="22" column="0" selection-start="300" selection-end="300" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -386,12 +251,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/web/js/product.js" />
-        <option value="$PROJECT_DIR$/src/Acme/BSOrderBundle/Controller/OrderController.php" />
-        <option value="$PROJECT_DIR$/src/Acme/BSOrderBundle/Command/OrderCommand.php" />
-        <option value="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Resources/views/cashbox/print.html.twig" />
-        <option value="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Controller/cashboxController.php" />
-        <option value="$PROJECT_DIR$/web/css/history.css" />
         <option value="$PROJECT_DIR$/web/js/checkouthistory.js" />
         <option value="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Resources/views/Default/history.html.twig" />
         <option value="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Entity/checkoutItemRepository.php" />
@@ -402,6 +261,12 @@
         <option value="$PROJECT_DIR$/web/css/login.css" />
         <option value="$PROJECT_DIR$/web/js/checkout.js" />
         <option value="$PROJECT_DIR$/app/config/security.yml" />
+        <option value="$PROJECT_DIR$/app/Resources/views/baseBS.html.twig" />
+        <option value="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/config/routing.yml" />
+        <option value="$PROJECT_DIR$/src/Acme/BSDataBundle/Controller/ProductController.php" />
+        <option value="$PROJECT_DIR$/web/css/styleBS.css" />
+        <option value="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/lable.html.twig" />
+        <option value="$PROJECT_DIR$/web/js/lable2.js" />
       </list>
     </option>
   </component>
@@ -419,9 +284,9 @@
   </component>
   <component name="PhpXdebugProxy" ide_key="phpstorm" host="localhost" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="53" />
+    <option name="x" value="54" />
     <option name="y" value="22" />
-    <option name="width" value="1627" />
+    <option name="width" value="1867" />
     <option name="height" value="1028" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -450,16 +315,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -552,7 +407,241 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Acme" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blumenschule.local" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blumenschule.local" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Acme" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BSDataBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blumenschule.local" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blumenschule.local" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Acme" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BSDataBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blumenschule.local" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blumenschule.local" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Acme" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BSDataBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Product" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blumenschule.local" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blumenschule.local" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Acme" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BSDataBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blumenschule.local" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blumenschule.local" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Acme" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BSDataBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blumenschule.local" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blumenschule.local" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Acme" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BSDataBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Entity" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blumenschule.local" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blumenschule.local" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Acme" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BSDataBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blumenschule.local" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blumenschule.local" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blumenschule.local" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blumenschule.local" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -576,6 +665,16 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -583,14 +682,14 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="186" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="186" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
     <property name="recentsLimit" value="5" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="186" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../php_soap_client" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="196" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="984" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="986" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="984" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="191" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="188" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
@@ -608,8 +707,8 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
-    <property name="dynamic.classpath" value="false" />
     <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="PublishConfig">
     <servers>
@@ -677,11 +776,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/Resources/views" />
       <recent name="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Command" />
       <recent name="$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Resources/views/cashbox" />
       <recent name="$PROJECT_DIR$/src/Acme/BSDataBundle/Command" />
       <recent name="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product" />
-      <recent name="$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Default" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller" />
@@ -691,7 +790,7 @@
       <recent name="$PROJECT_DIR$/src/Acme/BSLableBundle/Controller" />
     </key>
   </component>
-  <component name="RunManager" selected="PHP Web Application.Checkout">
+  <component name="RunManager" selected="PHP Web Application.Lable">
     <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner />
       <method />
@@ -705,14 +804,14 @@
     <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
       <method />
     </configuration>
-    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
-      <method />
-    </configuration>
     <configuration default="true" type="JavascriptDebugSession" factoryName="Local" singleton="true">
       <JSDebuggerConfigurationSettings>
         <option name="engineId" value="embedded" />
         <option name="fileUrl" />
       </JSDebuggerConfigurationSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
       <method />
     </configuration>
     <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
@@ -1156,24 +1255,24 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="53" y="22" width="1627" height="1028" extended-state="0" />
+    <frame x="54" y="22" width="1867" height="1028" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3283582" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2061986" sideWeight="0.07802198" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20867655" sideWeight="0.053846154" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2523719" sideWeight="0.6703418" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Framework" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2061986" sideWeight="0.921978" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4912088" sideWeight="0.9807903" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20867655" sideWeight="0.4934066" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5065934" sideWeight="0.9807903" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2972802" sideWeight="0.37582418" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36163175" sideWeight="0.5601318" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34911895" sideWeight="0.8665568" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.59030837" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913473" sideWeight="0.67022413" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296582" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913473" sideWeight="0.67022413" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1227,7 +1326,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Debug Product Sync" />
+    <option name="LAST_COMMIT_MESSAGE" value="Etiketten Umbau Teil 1" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1241,7 +1340,6 @@
     <option name="UPDATE_FILTER_BY_SCOPE" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Änderungen" />
     <MESSAGE value="Sammelpack Doppelte Orders und Fehler mail bei Syncroniserung" />
     <MESSAGE value="Sammelpack  Fehler mail Update" />
     <MESSAGE value="Kassen Update nach Sabine" />
@@ -1266,6 +1364,7 @@
     <MESSAGE value="Bug Paymentmethodes" />
     <MESSAGE value="Waren Update" />
     <MESSAGE value="Debug Product Sync" />
+    <MESSAGE value="Etiketten Umbau Teil 1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1302,7 +1401,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/src/Acme/BSDataBundle/Controller/ProductController.php</url>
-          <line>635</line>
+          <line>641</line>
           <option name="timeStamp" value="223" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
@@ -1339,79 +1438,10 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="248" />
+      <option name="time" value="250" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Entity/Product.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Entity/checkoutItemRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="0" selection-start="839" selection-end="839" vertical-scroll-proportion="0.17832167" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/PMOrder.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/PMCustomer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="214" column="51" selection-start="2423" selection-end="2423" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/doctrine/lib/Doctrine/ORM/EntityManager.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="584" column="0" selection-start="18388" selection-end="18388" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Acme/PlentyMarketsBundle/Controller/PlentySoapClient.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1213" column="46" selection-start="43960" selection-end="43960" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Controller/CheckoutController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="266" column="0" selection-start="8791" selection-end="8791" vertical-scroll-proportion="0.018248174">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Acme/BSCheckoutBundle/Controller/cashboxController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="434" column="32" selection-start="12783" selection-end="12783" vertical-scroll-proportion="0.2275449" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Controller/DefaultController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="28" selection-start="845" selection-end="845" vertical-scroll-proportion="0.502994" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Controller/ProductController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="481" column="0" selection-start="13481" selection-end="13481" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/js/cashbox.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/css/main.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -1428,21 +1458,104 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/css/login.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="0" selection-start="211" selection-end="211" vertical-scroll-proportion="0.0">
+        <state line="14" column="0" selection-start="211" selection-end="211" vertical-scroll-proportion="0.23026316">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/js/checkout.js">
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/base.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="180" column="62" selection-start="5968" selection-end="5968" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/base2.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/config/security.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="0" selection-start="1333" selection-end="1333" vertical-scroll-proportion="0.7683353">
+        <state line="44" column="0" selection-start="1333" selection-end="1333" vertical-scroll-proportion="0.7236842">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/js/checkout.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="180" column="62" selection-start="5968" selection-end="5968" vertical-scroll-proportion="0.016447369">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/js/cashbox.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/standardSchemas/xhtml1-transitional.xsd">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="353" column="4" selection-start="10089" selection-end="10089" vertical-scroll-proportion="0.33333334">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/baseBS.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="18" selection-start="494" selection-end="494" vertical-scroll-proportion="-6.875">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Entity/Product.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="118" column="36" selection-start="2211" selection-end="2222" vertical-scroll-proportion="-10.625">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/config/routing.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="95" column="37" selection-start="2810" selection-end="2810" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Controller/ProductController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="439" column="27" selection-start="12442" selection-end="12442" vertical-scroll-proportion="-14.375">
+          <folding>
+            <element signature="e#48#105#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/css/styleBS.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="0" selection-start="300" selection-end="300" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Acme/BSDataBundle/Resources/views/Product/lable.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="143" column="119" selection-start="5066" selection-end="5175" vertical-scroll-proportion="-16.375">
+          <folding>
+            <element signature="e#3543#3574#0" expanded="true" />
+            <element signature="e#3968#4002#0" expanded="true" />
+            <element signature="e#4264#4283#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/js/lable2.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="46" column="0" selection-start="1624" selection-end="1624" vertical-scroll-proportion="0.7940161">
           <folding />
         </state>
       </provider>

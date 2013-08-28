@@ -93,7 +93,7 @@ BSData_product_search_latein:
         defaults: { _controller: BSDataBundle:Product:searchLatein,page: 1 }
 
 BSData_product_search_jason:
-        pattern:  /data/product/sjson/{type}/{search}
+        pattern:  /data/product/sjson/{search}
         defaults: { _controller: BSDataBundle:Product:search }
 
 BSData_product_lable:

@@ -1,20 +1,22 @@
 $(document).ready(function(){
     var A6Index = 0;
+    $('.printA6').hide();
 
-
-    $( "#name" ).autocomplete({
+    $( "#search" ).autocomplete({
         source: function( request, response ) {
             $.ajax({
-                url: "/data/product/sjson/name/"+request.term,
+                url: "/data/product/sjson/"+request.term,
                 dataType: "json",
 
                 success: function( data ) {
                     response( $.map( data, function( item ) {
+
                         return {
-                            label:  item.name + ' ' + item.name2+' '+item.articlecode ,
+                            label:  item.name + ' ' + item.name2+' '+item.code ,
                             name: item.name,
                             name2: item.name2,
-                            code: item.articlecode,
+                            code: item.article_no,
+                            no: item.article_id,
                             value: item.name,
                             data: item
                         }
@@ -25,75 +27,26 @@ $(document).ready(function(){
         minLength: 2,
         select: selected
     })  .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+        //console.log(item);
         return $( "<li>" )
-            .append( "<a><div class='auto_name'> " + item.name + "</div><div class='auto_name2'>" +  item.name2+"</div><div class='auto_code'>"+item.code + "</div></a>" )
+            .append( "<a><div class='auto_no'> " + ( item.no == null ? '-' : item.no) + "</div><div class='auto_name'> " + item.name + "</div><div class='auto_name2'>" +  item.name2+"</div><div class='auto_code'>"+item.code + "</div></a>" )
             .appendTo( ul );
     };
 
-    $( "#name2" ).autocomplete({
-        source: function( request, response ) {
-            $.ajax({
-                url: "/data/product/sjson/name2/"+request.term,
-                dataType: "json",
-
-                success: function( data ) {
-                    response( $.map( data, function( item ) {
-                        return {
-                            label:  item.name2 + ' ' + item.name+' '+item.articlecode ,
-                            name: item.name,
-                            name2: item.name2,
-                            code: item.articlecode,
-                            value: item.name,
-                            data: item
-                        }
-                    }));
-                }
-            });
-        },
-        minLength: 2,
-        select: selected
-    }) .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
-        return $( "<li>" )
-            .append( "<a><div class='auto_name'> " + item.name2 + "</div><div class='auto_name2'>" +  item.name+"</div><div class='auto_code'>"+item.code + "</div></a>" )
-            .appendTo( ul );
-    };
-    $( "#articlecode" ).autocomplete({
-        source: function( request, response ) {
-            $.ajax({
-                url: "/data/product/sjson/code/"+request.term,
-                dataType: "json",
-
-                success: function( data ) {
-                    response( $.map( data, function( item ) {
-                        return {
-                            label:  item.articlecode + ' ' + item.name +' '+item.name2 ,
-                            name: item.name,
-                            name2: item.name2,
-                            code: item.articlecode,
-                            value: item.name,
-                            data: item
-                        }
-                    }));
-                }
-            });
-        },
-        minLength: 2,
-        select: selected
-    }) .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
-        return $( "<li>" )
-            .append( "<a><div class='auto_name'> " + item.code + "</div><div class='auto_name2'>" +  item.name+"</div><div class='auto_code'>"+item.name2 + "</div></a>" )
-            .appendTo( ul );
-    };
 
 
     $('form.LableForm').submit(function(event){
         event.preventDefault();
 
-
+        //$('.PdfOut').attr('data','/images/pdfloading.pdf ');
+        $('.PdfOut').remove();
         var data = $(this).serializeArray();
         $.post($(this).attr('action'), data)
             .done(function(data) {
-                $('.PdfOut').attr('data',data['pdfurl']);
+
+
+
+                $('.LableOutput').append('  <object class="PdfOut" data="'+data['pdfurl']+'" type="application/pdf" width="100%" height="200px"></object>');
             });
 
     });
@@ -192,17 +145,30 @@ var selected = function( event, ui ) {
 
     // Aktueller Datenstamm auf Plenty holen
     var data = ui.item.data;
-    $.getJSON('/data/product/sync/'+data.articlecode).done(function(data){
+    if(data.article_id){
+        $.getJSON('/data/product/sync/'+data.article_no).done(function(data){
+            $('#name ').val(data.name);
+            $('#name2 ').val(data.name2);
+            $('#description ').val(data.label_text);
+            $('#descriptionShort ').val(data.description_short);
+            $('#articlecode ').val(data.article_no);
+            $('#articleid ').val(data.article_id);
+            $('#picurl').val(data.picurl);
+            $('.article_pic').attr('src',data.picurl);
+        })
+    }else{
         $('#name ').val(data.name);
         $('#name2 ').val(data.name2);
-        $('#description ').val(data.description);
-        $('#descriptionShort ').val(data.descriptionShort);
-        $('#articlecode ').val(data.articlecode);
-        $('#articleid ').val(data.articleid);
+        $('#description ').val(data.label_text);
+        $('#descriptionShort ').val(data.description_short);
+        $('#articlecode ').val(data.article_no);
+        $('#articleid ').val(data.article_id);
         $('#picurl').val(data.picurl);
         $('.article_pic').attr('src',data.picurl);
-    })
-    console.log(ui);
+    }
+
+
+
 
 
     countChars();

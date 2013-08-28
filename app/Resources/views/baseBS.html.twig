@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}BSPMI{% endblock %}</title>
+
+    {% block javascripts %}
+        <script src="{{ asset('/js/jquery-1.9.0.js') }}"></script>
+        <script src="{{ asset('/js/jquery-ui-1.10.0.custom.js') }}"></script>
+        <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
+    {% endblock %}
+    {% block stylesheets %}
+
+        <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+        <link rel="stylesheet" href="/css/south-street/jquery-ui-1.10.0.custom.min.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/styleBS.css" type="text/css"/>
+
+    {% endblock %}
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+<body>
+<div class="container">
+
+
+          {% block body %}
+
+          {% endblock %}
+</div>
+
+</body>
+</html>

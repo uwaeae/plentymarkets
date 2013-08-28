@@ -1,0 +1,28 @@
+
+.ui-menu-item a div{
+    display: inline-block;
+
+}
+.ui-autocomplete-loading {
+    background: white url('/images/ui-autoloader.gif') right center no-repeat;
+}
+
+div.auto_no{
+    width: 50px;
+}
+div.auto_name{
+    width: 300px;
+}
+div.auto_name2{
+    width: 300px;
+
+}
+div.auto_code{
+    width: 150px;
+}
+
+.article_pic{
+    max-width: 200px;
+    max-height: 200px;
+
+}

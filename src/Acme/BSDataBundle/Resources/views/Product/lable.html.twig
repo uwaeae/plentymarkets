@@ -1,88 +1,159 @@
-{% extends '::base.html.twig' %}
+{% extends '::baseBS.html.twig' %}
 {% block title %}INTERN - Etiketten{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="/css/south-street/jquery-ui-1.10.0.custom.min.css" type="text/css"/>
+
 
     <style type="text/css">
         .ui-autocomplete-loading {
             background: white url('images/ui-anim_basic_16x16.gif') right center no-repeat;
         }
-
-
     </style>
 {% endblock %}
 
 
 {% block javascripts %}
-    <script src="{{ asset('/js/jquery.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('/js/jquery-ui-1.10.0.custom.js') }}" type="text/javascript"></script>
+    {{ parent() }}
+
     <script src="{{ asset('/js/lable2.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block body %}
 
-    <h1>Etiketten </h1>
-    </div>
-    </header>
-    <nav class="ym-hlist">
-
-
-        <ul>
-
-            <li><a href="{{ path('BSData_mainmenu') }}">zurück</a></li>
-        </ul>
-
-    </nav>
-
-    <div class="ym-grid">
-
-
-        <div class="ym-gl ym-g50">
-
-            <div class="ym-gbox">
-
-                <h3>Etikettendruck</h3>
-                    Suche über die Felder  Name Botanisch oder Code
 
 
 
-                <form  class="ym-form LableForm" action="{{ path('BSData_product_lable_print') }}" method="post" >
+    <nav class="navbar navbar-default" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Etiketten</a>
+        </div>
 
-                    <img src="" class="article_pic">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="labelform[name]">
-                    <label for="name2">Botanisch</label>
-                    <input type="text" id="name2" name="labelform[name2]" >
-                    <label for="articlecode">Code</label>
-                    <input type="text" id="articlecode" name="labelform[articlecode]">
-                    <label for="articleid">ArtikelID <strong>ACHTUNG BEI EIGENEN ARTIKELN ID LÖSCHEN</strong></label>
-                    <input type="text" id="articleid" name="labelform[articleid]">
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
 
-                    <label for="description">Beschreibung</label>
-                    <textarea style="width:60%;height: 93px;" id="description" name="labelform[description]">   </textarea >
-                    <label for="descriptionShort">Etikettentext</label>
-                    <textarea style="width: 350px;height: 93px;" id="descriptionShort" name="labelform[descriptionShort]">   </textarea >
-                    <label for="available"> noch verfügbare zeichen</label>
-                    <input type="text" id="available" style="width:50px;">
-                    <p>
-                        <button type="submit">Etikett erstellen</button>    <button style="float: right" id="addDinA6">zu DinA6 hinzufügen</button>
-                    </p>
-                </form>
+                <li ><a id='lableA6'href="">DinA6</a></li>
+                <li class=""><a href="{{ path('BSData_mainmenu') }}">zurück</a></li>
 
-
-            </div>
-            <div class="ym-gbox pdf-print">
-                <object class="PdfOut" data="{{ urlPDF }}" type="application/pdf" width="100%" height="200px"></object>
-
-            </div>
+            </ul>
 
 
         </div>
-        <div class="ym-gl ym-g50">
+        <!-- /.navbar-collapse -->
+    </nav>
+
+
+
+
+
+
+    <div class="row">
+
+
+
+        <div class="col-md-6">
+
+            <h3>Etikettendruck</h3>
+            <div class="form-group">
+                <label for="name">Suche</label>
+                <input class="form-control" type="text" id="search" name="search">
+            </div>
+
+
+            <form  class="form-horizontal LableForm" role="form"  action="{{ path('BSData_product_lable_print') }}" method="post">
+
+
+                <div class="form-group">
+                    <label for="name" class="col-lg-2 control-label" >Name</label>
+                    <div class="col-lg-10">
+                        <input class="form-control" type="text" id="name" name="labelform[name]">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="name2" class="col-lg-2 control-label" >Botanisch</label>
+                    <div class="col-lg-10">
+                    <input  class="form-control" type="text" id="name2" name="labelform[name2]">
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    <label for="articlecode" class="col-lg-2 control-label">Code</label>
+                    <div class="col-lg-10">
+                    <input class="form-control" type="text" id="articlecode" name="labelform[articlecode]">
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    <label for="articleid" class="col-lg-2 control-label" >ArtikelID </label>
+                    <div class="col-lg-10">
+                    <input class="form-control" type="text" id="articleid" name="labelform[articleid]">
+                        <span class="help-block">Achtung ID nicht unbedacht vergeben!</span>
+                    </div>
+                </div>
+                <div class="form-group printA6">
+
+                    <label for="description" class="col-lg-2 control-label" >Beschreibung</label>
+                    <div class="col-lg-10">
+                    <textarea  class="form-control" style="width:60%;height: 93px;" id="description"
+                              name="labelform[description]"> </textarea>
+                    </div>
+                </div>
+                <div class="form-group printLable">
+
+                    <label for="descriptionShort" class="col-lg-2 control-label" >Etikettentext</label>
+                    <div class="col-lg-10">
+                    <textarea  class="form-control" style="width: 350px;height: 93px;" id="descriptionShort"
+                              name="labelform[descriptionShort]"> </textarea>
+                        <label for="available" > noch verfügbare zeichen</label>
+
+                        <input class="form-control" type="text" id="available" style="width:50px;">
+                    </div>
+                </div>
+                <div class="form-group printLable">
+
+
+
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-10">
+                        <button class=" btn  btn-default btn-sm printLable" type="submit">Etikett erstellen</button>
+                        <button class=" btn  btn-default btn-sm printA6" id="addDinA6">zu DinA6 hinzufügen</button>
+                    </div>
+                </div>
+
+            </form>
+
+
+        </div>
+        <div class="col-md-2 col-md-offset-2">
+            <img src="/images/200px.jpg" class="article_pic img-thumbnail">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 pdf-print printLable LableOutput">
+
+            <object class="PdfOut" data="/print/lable.pdf" type="application/pdf" width="100%" height="200px"></object>
+
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 printA6">
+
+
             <h3>DinA6 Druck Auswahl</h3>
-            <form class="ym-form form-dinA6" action="{{ path('BSData_product_printA6') }}"  method="post" >
+
+            <form class="ym-form form-dinA6" action="{{ path('BSData_product_printA6') }}" method="post">
                 <div id="labelsToPrint">
 
                 </div>
@@ -90,8 +161,6 @@
                     <button type="submit">Print</button>
                 </p>
             </form>
-
-
 
 
         </div>
