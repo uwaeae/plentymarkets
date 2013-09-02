@@ -55,85 +55,83 @@ var itemFocus = '.itemprice:last';
 // Artikel Tabelle aus JSON daten Bauen
 var buildtable = function buildTable(data) {
 
-   /* if (!(typeof(data) == 'object')) {
-        var savedata = data;
-        $.get('/login', function (data) {
+    /* if (!(typeof(data) == 'object')) {
+     var savedata = data;
+     $.get('/login', function (data) {
 
-            //console.log($('div#login'));
-            if ($('div#login')) {
+     //console.log($('div#login'));
+     if ($('div#login')) {
 
-                $('.ym-column').fadeTo("fast", 0.33);
+     $('.ym-column').fadeTo("fast", 0.33);
 
-                $('.ym-wrapper').append($(data).find('div#login'));
+     $('.ym-wrapper').append($(data).find('div#login'));
 
-                $('div#login form').submit(function (event) {
-                    event.preventDefault();
-                    //console.log($(this).attr('action'))
+     $('div#login form').submit(function (event) {
+     event.preventDefault();
+     //console.log($(this).attr('action'))
 
-                    $.post($(this).attr('action'), $(this).serialize(), function (data) {
-                        console.log(data);
-                        $('.ym-column').fadeTo("fast", 1);
-                        $('div#login').remove();
+     $.post($(this).attr('action'), $(this).serialize(), function (data) {
+     console.log(data);
+     $('.ym-column').fadeTo("fast", 1);
+     $('div#login').remove();
 
-                        return false;
+     return false;
 
-                    });
+     });
 
-                })
-            }
-
-
-        });
+     })
+     }
 
 
-    }
-
-    else {*/
+     });
 
 
+     }
+
+     else {*/
 
 
-        //$('.shopinglist').empty().html($(data).find('.shopinglist table'));
-        $('.co_items').empty();
-        var index = 1;
-        $.each(data, function (key, val) {
+    //$('.shopinglist').empty().html($(data).find('.shopinglist table'));
+    $('.co_items').empty();
+    var index = 1;
+    $.each(data, function (key, val) {
 
-            var items = [];
-            items.push('<td>' + index + '</td>');
-            // items.push('<td>' + val['code'] + '</td>');
-            items.push('<td><input class="iteminput" value="' + val['quantity'] + '" data-id="' + val['id'] + '"></td>'
-                /*'<div class="itemEdit">'+
-                 '<a href="#" data-action="minus" data-id="'+ val['id'] +'">' +
-                 '<img src="/images/icons/arrow-down.png" alt="- Menge" /></a>'+
-                 '<a href="#" data-action="plus" data-id="'+ val['id'] +'">'+
-                 ' <img src="/images/icons/arrow-up.png" alt="+ Menge" /></a>'*/
-            );
-            items.push('<td>' + val['description'] + '</td>');
-            items.push('<td>' + val['VAT'] + '%</td>');
-            items.push('<td>' +
-                '<input class="itemprice" value="' + parseFloat(val['price']).toFixed(2) + '" data-id="' + val['id'] + '">' +
-                '</td>'
-            );
-            // items.push('<td>' + val['pa'] + '</td>');
-            items.push('<td>' + parseFloat(val['sum']).toFixed(2) + ' &euro;' +
-                '<div class="itemEdit">' +
-                '<a href="#" data-action="delete" data-id="' + val['id'] + '">' +
-                '<img src="/images/icons/remove2.png" alt="Löschen" /></a>' +
-                '</div></td>');
+        var items = [];
+        items.push('<td>' + index + '</td>');
+        // items.push('<td>' + val['code'] + '</td>');
+        items.push('<td><input class="iteminput" value="' + val['quantity'] + '" data-id="' + val['id'] + '"></td>'
+            /*'<div class="itemEdit">'+
+             '<a href="#" data-action="minus" data-id="'+ val['id'] +'">' +
+             '<img src="/images/icons/arrow-down.png" alt="- Menge" /></a>'+
+             '<a href="#" data-action="plus" data-id="'+ val['id'] +'">'+
+             ' <img src="/images/icons/arrow-up.png" alt="+ Menge" /></a>'*/
+        );
+        items.push('<td>' + val['description'] + '</td>');
+        items.push('<td>' + val['VAT'] + '%</td>');
+        items.push('<td>' +
+            '<input class="itemprice" value="' + parseFloat(val['price']).toFixed(2) + '" data-id="' + val['id'] + '">' +
+            '</td>'
+        );
+        // items.push('<td>' + val['pa'] + '</td>');
+        items.push('<td>' + parseFloat(val['sum']).toFixed(2) + ' &euro;' +
+            '<div class="itemEdit">' +
+            '<a href="#" data-action="delete" data-id="' + val['id'] + '">' +
+            '<img src="/images/icons/remove2.png" alt="Löschen" /></a>' +
+            '</div></td>');
 
-            $('<tr>', {
-                'id': key,
-                'data-sum': val['sum'],
-                html: items.join('')
+        $('<tr>', {
+            'id': key,
+            'data-sum': val['sum'],
+            html: items.join('')
 
-            }).appendTo('.co_items');
-            index++;
-        });
-        getSummary();
-        $('.inputkeyboard').val('');
-        $(itemFocus).val('').focus();
+        }).appendTo('.co_items');
+        index++;
+    });
+    getSummary();
+    $('.inputkeyboard').val('');
+    $(itemFocus).val('').focus();
 
-        //    }
+    //    }
 
 };
 
@@ -228,7 +226,7 @@ var init = function () {
         if (quantity.length > 0) {
             itemFocus = '.itemprice:last';
             //$.post('/cashbox/'+id+'/checkout/'+checkout+'/add',{ code: code,quantity: quantity},buildtable);
-            addQuery('/cashbox/' + id + '/checkout/' + checkout + '/add', { code: code, quantity: quantity});
+            addQuery('/cashbox/' + id + '/checkout/' + checkout + '/add', { name: $(this).html(),code: code, quantity: quantity});
         }
 
 
@@ -243,6 +241,8 @@ var init = function () {
             event.preventDefault();
             // Funtkionstasten
             var item = $('.checkout-box[data-keyboard=' + event.keyCode + ']');
+
+            console.log(item);
             var code = item.data('code');
 
             $('.checkout-box[data-keyboard=' + event.keyCode + ']').animate({
